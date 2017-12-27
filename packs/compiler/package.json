@@ -1,0 +1,16 @@
+{
+  "name": "@barlus/compiler",
+  "version": "0.0.1",
+  "description": "Barlus NodeJs Wrapper",
+  "main": "./index",
+  "types": "./index",
+  "publishConfig": {
+    "registry": "https://npm.sites.li"
+  },
+  "dependencies": {
+    "@barlus/runtime": "^0.0.1"
+  },
+  "license": "MIT",
+  "repository": "https://github.com/ecmal/elp.git",
+  "author": "Mamble LLC"
+}

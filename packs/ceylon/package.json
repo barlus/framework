@@ -1,0 +1,17 @@
+{
+  "name": "@barlus/ceylon",
+  "version": "0.0.1",
+  "description": "Barlus testing framework",
+  "license": "MIT",
+  "main": "./index",
+  "types": "./index",
+  "bin": "bin/jest",
+  "publishConfig": {
+    "registry": "https://npm.sites.li"
+  },
+  "dependencies": {
+    "@barlus/runtime": "^0.0.1"
+  },
+  "repository": "https://github.com/ecmal/elp.git",
+  "author": "Mamble LLC"
+}

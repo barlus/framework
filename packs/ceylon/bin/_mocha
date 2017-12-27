@@ -1,0 +1,24 @@
+#!/usr/bin/env node
+console.info([
+    `##teamcity[enteredTheMatrix]`,
+    `##teamcity[testingStarted]`,
+    `##teamcity[testCount count='1']`,
+    `##teamcity[testSuiteStarted nodeId='1' parentNodeId='0' name='One' running='false' nodeType='suite' locationHint='suite:///Users/Sergey/Work/EXP/lerna/src/other.test.ts.One']`,
+    `##teamcity[testStarted nodeId='2' parentNodeId='1' name='hello' running='false' nodeType='test' locationHint='test:///Users/Sergey/Work/EXP/lerna/src/other.test.ts.One.hello']`,
+    `##teamcity[testStarted nodeId='3' parentNodeId='1' name='mello' running='false' nodeType='test' locationHint='test:///Users/Sergey/Work/EXP/lerna/src/other.test.ts.One.mello']`,
+    `##teamcity[testSuiteStarted nodeId='1' running='true']`,
+    `##teamcity[testStarted nodeId='2' running='true']`,
+    `##teamcity[testStarted nodeId='3' running='true']`,
+    `##teamcity[testFinished nodeId='2' duration='0']`,
+    `##teamcity[testFinished nodeId='3' duration='0']`,
+    `##teamcity[testSuiteFinished nodeId='1']`,
+    `##teamcity[testingFinished]`,
+].join('\n'))
+
+
+
+
+
+
+
+

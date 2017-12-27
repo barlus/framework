@@ -1,0 +1,24 @@
+{
+    "name": "@barlus/framework",
+    "private": true,
+    "version": "0.0.1",
+    "description": "Barlus Project",
+    "author": "Mamble LLC",
+    "repository": "https://github.com/barlus/framework.git",
+    "license": "MIT",
+    "flat": true,
+    "workspaces": [
+        "packs/*",
+        "tests/*"
+    ],
+    "devDependencies": {
+        "typescript": "next"
+    },
+    "scripts": {
+        "release": "node ./scripts/publish.js publish",
+        "normalize": "node ./scripts/publish.js",
+        "hello":"node -r @barlus/node/register ./tool/hello",
+        "clear": "node -r @barlus/node/register ./src/clear.ts",
+        "test": "mocha -r @barlus/node/register --ui @barlus/ceylon/mocha '**/*.test.ts'"
+    }
+}

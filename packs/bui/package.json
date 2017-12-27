@@ -1,0 +1,16 @@
+{
+  "name": "@barlus/bui",
+  "version": "0.0.1",
+  "description": "Barlus ui framework",
+  "license": "MIT",
+  "main": "./index",
+  "types": "./index",
+  "publishConfig": {
+    "registry": "https://npm.sites.li"
+  },
+  "dependencies": {
+    "@barlus/runtime": "^0.0.1"
+  },
+  "repository": "https://github.com/ecmal/elp.git",
+  "author": "Mamble LLC"
+}

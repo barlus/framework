@@ -5,9 +5,6 @@
   "license": "MIT",
   "main": "./index",
   "types": "./index",
-  "publishConfig": {
-    "registry": "https://npm.sites.li"
-  },
   "dependencies": {
     "@barlus/runtime": "^0.0.1"
   },

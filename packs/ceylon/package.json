@@ -6,9 +6,6 @@
   "main": "./index",
   "types": "./index",
   "bin": "bin/jest",
-  "publishConfig": {
-    "registry": "https://npm.sites.li"
-  },
   "dependencies": {
     "@barlus/runtime": "^0.0.1"
   },

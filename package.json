@@ -16,6 +16,7 @@
     },
     "scripts": {
         "clear": "node -r @barlus/node/register ./tool/clear.ts",
-        "test": "node -r @barlus/node/register ./tool/hello.ts"
+        "test": "node -r @barlus/node/register ./tool/hello.ts",
+        "release": "node -r @barlus/node/register ./tool/publish.ts"
     }
 }

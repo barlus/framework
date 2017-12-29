@@ -154,6 +154,12 @@ async function compareProjects(){
 compareProjects().catch(
     e=>{
         console.error(e);
+        console.info("ENV",{
+            registryUrl,
+            registryUsername,
+            registryPassword,
+            registryEmail,
+        });
         process.exit(1)
     }
 );

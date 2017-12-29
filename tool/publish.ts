@@ -22,6 +22,7 @@ const npmProps = envProps.filter(k=>{
 const registryUrl       = process.env.npm_registry_url || process.env.npm_config_registry;
 const registryUsername  = process.env.npm_registry_username;
 const registryPassword  = process.env.npm_registry_password;
+const registryToken     = process.env.npm_registry_token;
 const registryEmail     = process.env.npm_registry_email;
 //NPM_REGISTRY_USERNAME
 //npm_registry_username
@@ -102,12 +103,15 @@ function createRcFiles(project){
     writeFileSync(resolve(project.packageRoot,'.yarnrc'),[
         `registry "${registryHost}"`,
         `strict-ssl false`,
+        `email ${registryEmail}`,
+        `username ${registryUsername}`,
     ].join('\n'));
     writeFileSync(resolve(project.packageRoot,'.npmrc'),[
+        `//${registryHost}/:_authToken="${registryToken}"`,
         `//${registryHost}/:_password=${registryPassword}`,
         `//${registryHost}/:username=${registryUsername}`,
         `//${registryHost}/:email=${registryEmail}`,
-        `//${registryHost}/:always-auth=false`,
+        `//${registryHost}/:always-auth=true`,
     ].join('\n'));
 }
 function removeRcFiles(project){
@@ -118,7 +122,7 @@ function removeRcFiles(project){
 
 async function publishProject(project){
     createRcFiles(project);
-    const cmd = `yarn publish --silent --new-version ${project.version}`;
+    const cmd = `yarn publish --new-version ${project.version}`;
     execSync(cmd, {
         stdio: [process.stdin, process.stdout, process.stderr],
         cwd: project.packageRoot,
@@ -158,6 +162,7 @@ compareProjects().catch(
             registryUrl,
             registryUsername,
             registryPassword,
+            registryToken,
             registryEmail,
         });
         process.exit(1)

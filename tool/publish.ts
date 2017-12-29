@@ -1,60 +1,154 @@
-import "@barlus/node";
-import {readdirSync, realpathSync, statSync, unlinkSync, writeFileSync} from "@barlus/node/fs";
-import {basename, dirname, resolve} from "@barlus/node/path";
+import {chalk} from '@barlus/http/utils/chalk';
+import {glob} from '@barlus/node/glob';
+import {readFileSync, unlinkSync, writeFileSync} from '@barlus/node/fs';
+import {dirname, relative, resolve} from '@barlus/node/path';
+
+import {request} from '@barlus/node/https';
 import {process} from '@barlus/node/process';
+import {Buffer} from '@barlus/node/buffer';
+import {URL} from '../packs/node/url';
 import {execSync} from '@barlus/node/child_process';
-function readFiles(dir, filter: (f: string) => boolean) {
-    let visited = new Set<string>();
-    function readDir(dir, files = []) {
-        dir = realpathSync(resolve(dir));
-        if (visited.has(dir)) {
-            return files;
-        }
-        readdirSync(dir).forEach(f => {
-            let file = realpathSync(resolve(dir, f));
-            let stat = statSync(file);
-            if (stat.isDirectory()) {
-                readDir(file, files);
+
+//console.info(Glob.search('**/*.{js,ts}'));
+const envProps = Object.keys(process.env);
+const npmProps = envProps.filter(k=>{
+    let key = k.toLowerCase();
+    if(key.startsWith('npm_')){
+        process.env[key] = process.env[k];
+        return true;
+    }
+}).sort();
+
+const registryUrl       = process.env.npm_registry_url || process.env.npm_config_registry;
+const registryUsername  = process.env.npm_registry_username;
+const registryPassword  = process.env.npm_registry_password;
+const registryEmail     = process.env.npm_registry_email;
+//NPM_REGISTRY_USERNAME
+async function fetch(url:URL|string){
+    let u:URL = (typeof url == 'string')?new URL(url):url;
+    return new Promise<Buffer>((accept,reject)=>{
+        const opt = {
+            method:'GET',
+            host:u.hostname,
+            path:u.pathname,
+            rejectUnauthorized: false,
+            headers : {
+                accept:'application/json'
             }
-            if (stat.isFile() && filter(file)) {
-                files.push(file)
-            }
+        };
+        const req = request(opt,res=>{
+            const chunks:Buffer[] = [];
+            res.on('error',reject);
+            res.on('data',chunk=>chunks.push(chunk as Buffer));
+            res.on('end',chunk=>{
+                if(chunk){
+                    chunks.push(chunk as Buffer)
+                }
+                accept(Buffer.concat(chunks));
+            });
         });
-        return files;
-    }
-    return readDir(dir);
-}
-let projects = readFiles(process.cwd(), f =>
-    basename(f) == 'package.json'
-).map(
-    p => Object.assign(require(p), {
-        filename: p
+        req.on('error',reject);
+        req.end();
     })
-);
-projects.forEach(p => {
-    if (!p.private) {
-        console.info(p.name, p.version);
-        const dir = dirname(p.filename);
-        const rcf = resolve(dir, '.npmrc');
-        writeFileSync(rcf, [
-            `strict-ssl=false`,
-            `registry=https://packs.sites.li`,
-            `//packs.sites.li/:_authToken="bWMDpFkEnEiFJNfJqqF4R6BIpAsyy1d0aCq31wjlsy4="`,
-            '',
-        ].join('\n'));
-        const cmd = `npm version patch && npm publish`;
-        console.info(cmd, ":", dir);
-        try {
-            execSync(cmd, {
-                stdio: [process.stdin, process.stdout, process.stderr],
-                cwd: dir,
-                env: process.env
-            })
-        } catch (ex) {
-            console.error(ex);
-            process.exit();
-        }
-        unlinkSync(rcf)
+}
+
+async function fetchText(url:string) {
+    return (await fetch(url)).toString('utf8');
+}
+
+async function fetchJson(url:string) {
+    let text = await fetchText(url);
+    try{
+        return JSON.parse(text);
+    }catch(ex){
+        console.error(ex);
+        console.info(text);
     }
-    return true;
-});
+}
+
+async function fetchProject(name:string,version:string) {
+    let url = `${registryUrl}/${name}/${version}`;
+    const project = await fetchJson(url);
+    if(project.name==name && project.version==version){
+        return project;
+    }
+    return null;
+}
+
+//
+function findProjects(){
+    const projectRoot = process.cwd();
+    const workspacePatterns = npmProps.filter(k=>k.startsWith('npm_package_workspaces'));
+    const packagePatterns = workspacePatterns.map(k=>`${process.env[k]}/package.json`);
+    const packageFiles = glob(packagePatterns,{
+        realpath : true
+    });
+    const packageJsons = packageFiles.map(f=>{
+        let packageFile = resolve(f);
+        let packageRoot = dirname(packageFile);
+        let packageJson = JSON.parse(readFileSync(packageFile,'utf8'));
+        return Object.assign(packageJson,{
+            projectRoot,
+            packageRoot,
+            packageFile
+        })
+    });
+    return packageJsons;
+}
+function createRcFiles(project){
+    let registryHost = new URL(registryUrl).host;
+    writeFileSync(resolve(project.packageRoot,'.yarnrc'),[
+        `registry "${registryHost}"`,
+        `strict-ssl false`,
+    ].join('\n'));
+    writeFileSync(resolve(project.packageRoot,'.npmrc'),[
+        `//${registryHost}/:_password=${registryPassword}`,
+        `//${registryHost}/:username=${registryUsername}`,
+        `//${registryHost}/:email=${registryEmail}`,
+        `//${registryHost}/:always-auth=false`,
+    ].join('\n'));
+}
+function removeRcFiles(project){
+    unlinkSync(resolve(project.packageRoot,'.yarnrc'));
+    unlinkSync(resolve(project.packageRoot,'.npmrc'));
+}
+
+
+async function publishProject(project){
+    createRcFiles(project);
+    const cmd = `yarn publish --silent --new-version ${project.version}`;
+    execSync(cmd, {
+        stdio: [process.stdin, process.stdout, process.stderr],
+        cwd: project.packageRoot,
+        env: process.env
+    });
+    removeRcFiles(project);
+
+}
+async function compareProject(project){
+    let subpath = relative(project.projectRoot,project.packageRoot);
+    const newProject = project;
+    const oldProject = await (fetchProject(project.name,project.version));
+    if(oldProject==null){
+        console.log(chalk.green("RELEASED"),chalk.blue(project.version),project.name,chalk.gray(subpath));
+        await publishProject(newProject);
+    }else{
+        console.log(chalk.yellow("IGNORED "),chalk.blue(project.version),project.name,chalk.gray(subpath));
+    }
+}
+async function compareProjects(){
+    // console.info({
+    //     registryUrl,
+    //     registryUsername,
+    //     registryPassword,
+    //     registryEmail,
+    // });
+    let projects = findProjects();
+    for(const p of projects){
+        await compareProject(p);
+    }
+}
+
+compareProjects().catch(
+    e=>console.error(e)
+);

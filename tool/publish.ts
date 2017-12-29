@@ -150,5 +150,8 @@ async function compareProjects(){
 }
 
 compareProjects().catch(
-    e=>console.error(e)
+    e=>{
+        console.error(e);
+        process.exit(1)
+    }
 );

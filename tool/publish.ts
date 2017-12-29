@@ -24,6 +24,8 @@ const registryUsername  = process.env.npm_registry_username;
 const registryPassword  = process.env.npm_registry_password;
 const registryEmail     = process.env.npm_registry_email;
 //NPM_REGISTRY_USERNAME
+//npm_registry_username
+//npm_registry_email
 async function fetch(url:URL|string){
     let u:URL = (typeof url == 'string')?new URL(url):url;
     return new Promise<Buffer>((accept,reject)=>{

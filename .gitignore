@@ -66,6 +66,6 @@ yarn.lock
 # dotenv environment variables file
 .env
 
-*.js
 *.map
 *.tgz
+

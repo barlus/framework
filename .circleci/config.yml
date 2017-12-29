@@ -12,5 +12,6 @@ jobs:
       - checkout
       - run: yarn config set workspaces-experimental true
       - run: yarn install
+      - run: ls -Rla node_modules
       - run: yarn test
       - run: yarn publish

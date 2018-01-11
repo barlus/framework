@@ -6,7 +6,7 @@
     "repository": "https://github.com/barlus/framework.git",
     "license": "MIT",
     "private": true,
-    "flat": true,
+    "flat": false,
     "workspaces": [
         "packs/*",
         "tests/*"

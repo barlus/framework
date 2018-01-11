@@ -1,9 +1,9 @@
 import {extname, normalize} from '@barlus/node/path';
 import {Buffer} from '@barlus/node/buffer';
 import {Context} from '../server/context';
-import {Project, Service} from '@barlus/compiler';
+import {Project, Service, ServiceOptions} from '@barlus/compiler';
 import {process} from '../../node/process';
-interface ProjectsOptions {
+interface ProjectsOptions extends ServiceOptions {
     project?: string;
     root?: string;
     base?: string;
@@ -16,7 +16,7 @@ const options: ProjectsOptions = {
 let project: Project;
 export function projects(opts: ProjectsOptions = {}) {
     Object.assign(options, opts);
-    service.init(opts.root);
+    service.init(opts);
     if (opts.project) {
         project = service.projects.get(opts.project);
     }

@@ -9,6 +9,10 @@ interface ResolvedModule {
     /** True if `resolvedFileName` comes from `node_modules`. */
     isExternalLibraryImport?: boolean;
 }
+export interface ServiceOptions {
+    root?: string;
+    ignore?: string[];
+}
 export class Project {
     dirname: string;
     manifest: any;
@@ -32,8 +36,8 @@ export class Project {
     init() {
         console.info(this.name);
     }
-    remove(){
-        this.files.forEach(f=>{
+    remove() {
+        this.files.forEach(f => {
             f.cache.package = null;
             f.cache.project = null;
         });
@@ -46,21 +50,33 @@ export class Project {
     }
 }
 export class File {
-    readonly cache:any;
+    readonly cache: any;
     readonly path: string;
     readonly service: Service;
     constructor(service: Service, path: string) {
         const cache = Object.create(null);
-        Object.defineProperties(this,{
-            path:{get(){return path}},
-            service:{get(){return service}},
-            cache:{get(){return cache}},
+        Object.defineProperties(this, {
+            path: {
+                get() {
+                    return path
+                }
+            },
+            service: {
+                get() {
+                    return service
+                }
+            },
+            cache: {
+                get() {
+                    return cache
+                }
+            },
         });
     }
-    get stat():Stats{
+    get stat(): Stats {
         return this.cache.stat;
     }
-    get content():Buffer{
+    get content(): Buffer {
         return this.cache.content;
     }
     get version() {
@@ -70,7 +86,7 @@ export class File {
         return this.cache.snapshot;
     }
     get package(): File {
-        if(!this.cache.package){
+        if (!this.cache.package) {
             let file, path = this.path.split('/');
             while (path.length) {
                 path.pop();
@@ -85,8 +101,8 @@ export class File {
         }
         return this.cache.package;
     }
-    get project():Project{
-        if(!this.cache.project){
+    get project(): Project {
+        if (!this.cache.project) {
             this.cache.project = this.service.projects.get(this.package.body.name);
         }
         return this.cache.project;
@@ -100,17 +116,17 @@ export class File {
             value: `/${this.project.name}/${this.modulename}`
         }).uri;
     }
-    get isJsonFile(){
+    get isJsonFile() {
         return this.cache.isJsonFile;
     }
-    get isSourceFile(){
+    get isSourceFile() {
         return this.cache.isSourceFile;
     }
-    get isProjectFile(){
+    get isProjectFile() {
         return this.cache.isProjectFile;
     }
     get text() {
-       return this.cache.text;
+        return this.cache.text;
     }
     get body() {
         return this.cache.body;
@@ -118,7 +134,6 @@ export class File {
     get relative() {
         return relative(this.service.root, this.path);
     }
-
     sync() {
         let oldStat = this.stat;
         let newStat = statSync(this.path);
@@ -129,27 +144,27 @@ export class File {
         }
     }
     reload() {
-        Object.keys(this.cache).forEach(key=>{
-            this.cache[key]=null;
+        Object.keys(this.cache).forEach(key => {
+            this.cache[key] = null;
         });
-        this.cache.isJsonFile = extname(this.path)=='.json';
+        this.cache.isJsonFile = extname(this.path) == '.json';
         this.cache.isSourceFile = ts.isSupportedSourceFileName(this.path);
         this.cache.isProjectFile = basename(this.path) == 'package.json';
         this.cache.stat = statSync(this.path);
         this.cache.content = readFileSync(this.path);
         this.cache.version = hash(this.content);
-        if(this.isSourceFile || this.isJsonFile){
+        if (this.isSourceFile || this.isJsonFile) {
             this.cache.text = this.content.toString('utf8');
-            if(this.isSourceFile){
+            if (this.isSourceFile) {
                 this.cache.snapshot = ts.ScriptSnapshot.fromString(this.text);
             }
-            if(this.isJsonFile){
+            if (this.isJsonFile) {
                 this.cache.body = JSON.parse(this.text);
-                if(this.isProjectFile){
+                if (this.isProjectFile) {
                     let project = this.service.projects.has(this.body.name);
-                    if(!project){
-                        this.cache.project = new Project(this.service,this);
-                        this.service.projects.set(this.cache.project.name,this.cache.project);
+                    if (!project) {
+                        this.cache.project = new Project(this.service, this);
+                        this.service.projects.set(this.cache.project.name, this.cache.project);
                     }
                 }
             }
@@ -158,7 +173,7 @@ export class File {
     }
     remove() {
         this.service.files.delete(this.path);
-        if(this.isProjectFile){
+        if (this.isProjectFile) {
             this.project.remove();
         }
     }
@@ -175,14 +190,18 @@ export class Service {
             value: new Service()
         }).service;
     }
-    static init(path: string) {
-        return this.service.init(path);
+    static init(options: ServiceOptions) {
+        return this.service.init(options);
     }
-    public root: string;
+
+    public options: ServiceOptions;
     public projects = new Map<string, Project>();
     public output = new Map<string, string>();
     public files = new Map<string, File>();
-    public sources = new Map<string,File>();
+    public sources = new Map<string, File>();
+    public get root (){
+        return this.options.root;
+    }
     public get compiler() {
         const service = this;
         const options = {
@@ -253,9 +272,13 @@ export class Service {
             value: ts.createLanguageService(host, ts.createDocumentRegistry())
         }).compiler;
     }
-    public init(root: string) {
-        this.root = resolve(root);
-         watch(this).catch(
+    public init(options: ServiceOptions) {
+        this.options = Object.assign({
+            root: '.',
+            ignore: ['typescript']
+        }, options);
+        this.options.root = resolve(this.options.root);
+        watch(this).catch(
             ex => console.error(ex)
         );
         return this;
@@ -275,14 +298,14 @@ export class Service {
             }
         });
     }
-    public compile(){
-        this.sources = new Map<string,File>();
-        this.files.forEach(f=>{
-            if(f.isSourceFile){
-                this.sources.set(f.uri,f)
+    public compile() {
+        this.sources = new Map<string, File>();
+        this.files.forEach(f => {
+            if (f.isSourceFile && !this.options.ignore.includes(f.project.name)) {
+                this.sources.set(f.uri, f)
             }
         });
-        this.sources.forEach(s=>this.compileFile(s));
+        this.sources.forEach(s => this.compileFile(s));
     }
     public compileFile(source: File) {
         let output = this.compiler.getEmitOutput(source.uri);
@@ -296,27 +319,24 @@ export class Service {
             this.logErrors(source.uri);
         }
     }
-    public compileFiles(paths:Set<string>){
-        paths.forEach(p=>{
+    public compileFiles(paths: Set<string>) {
+        paths.forEach(p => {
             let f = this.files.get(p);
-            if(!this.sources.has(f.uri)){
-                this.sources.set(f.uri,f);
+            if (!this.sources.has(f.uri)) {
+                this.sources.set(f.uri, f);
             }
-            if(f && f.isSourceFile){
+            if (f && f.isSourceFile) {
                 this.compileFile(f);
             }
         });
-
-        this.sources.forEach(s=>{
+        this.sources.forEach(s => {
             let errors = this.compiler.getSemanticDiagnostics(s.uri);
-            if(errors.length){
-                errors.forEach(e=>{
-                    console.info(e.file?e.file.path:'',e.messageText);
+            if (errors.length) {
+                errors.forEach(e => {
+                    console.info(e.file ? e.file.path : '', e.messageText);
                 })
-
             }
         })
-
     }
     public sync() {
         const debug = true;
@@ -325,7 +345,7 @@ export class Service {
                 if (debug) {
                     console.info("+", f);
                 }
-                this.files.set(f,new File(this,f).reload());
+                this.files.set(f, new File(this, f).reload());
             })
         };
         const updateFiles = (files: Set<string>) => {
@@ -351,7 +371,7 @@ export class Service {
         let removed = new Set<string>();
         let changed = new Set<string>(Array.from(this.files.keys()).sort());
         let created = new Set<string>(readFiles(this.root).sort());
-        let startup = changed.size==0;
+        let startup = changed.size == 0;
         changed.forEach(o => {
             if (!created.has(o)) {
                 removed.add(o);
@@ -376,9 +396,9 @@ export class Service {
             if (changed.size) {
                 updateFiles(changed);
             }
-            if(startup){
+            if (startup) {
                 this.compile();
-            }else{
+            } else {
                 this.compileFiles(created);
                 this.compileFiles(changed);
             }
@@ -388,8 +408,6 @@ export class Service {
         //console.timeEnd("SCAN")
     }
 }
-
-
 declare const ts;
 export const transformModuleNames = (context) => {
     return (file) => {
@@ -463,7 +481,6 @@ export const transformModuleNames = (context) => {
         }
     };
 };
-
 function readFiles(dir, exts = ['.d.ts', '.ts', '.tsx', '.js', '.json', '.png', '.svg', '.css', '.html']) {
     const dirs = [];
     function scanDir(dir, files = []) {
@@ -502,7 +519,7 @@ async function watch(service: Service) {
         console.error(ex);
     }
 }
-function hash(data:Buffer){
+function hash(data: Buffer) {
     return createHash('md5').update(data).digest('hex');
 }
 async function delay(timeout: number) {

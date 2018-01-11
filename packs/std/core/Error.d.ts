@@ -1,5 +1,6 @@
 /// <reference no-default-lib="true"/>
 declare class Error {
+    static captureStackTrace(targetObject: Object, constructorOpt?: Function): void;
     name: string;
     message: string;
     stack?: string;

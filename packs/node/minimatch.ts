@@ -375,7 +375,7 @@ class Minimatch {
                         // to do safely.  For now, this is safe and works.
                         var cs = pattern.substring(classStart + 1, i);
                         try {
-                            RegExp('[' + cs + ']')
+                            new RegExp('[' + cs + ']')
                         } catch (er) {
                             // not a valid class!
                             var sp = this.parse(cs, SUBPARSE);
@@ -923,7 +923,7 @@ function expand(str, isTop = false) {
                     c = '';
                 }
             } else {
-                c = String(i);
+                c = `${i}}`;
                 if (pad) {
                     const need = width - c.length;
                     if (need > 0) {

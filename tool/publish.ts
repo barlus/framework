@@ -6,7 +6,7 @@ import {dirname, relative, resolve} from '@barlus/node/path';
 import {request} from '@barlus/node/https';
 import {process} from '@barlus/node/process';
 import {Buffer} from '@barlus/node/buffer';
-import {URL} from '../packs/node/url';
+import {URL} from '@barlus/node/url';
 import {execSync} from '@barlus/node/child_process';
 
 //console.info(Glob.search('**/*.{js,ts}'));

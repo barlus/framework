@@ -6,7 +6,7 @@ let app = new Application();
 
 app.use(projects({
     root:process.cwd(),
-    project:'@qustomerz/crm'
+    project:'@vendor/client'
 }));
 
 app.listen(10001);

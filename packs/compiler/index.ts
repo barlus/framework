@@ -104,7 +104,7 @@ export class File {
     get project(): Project {
         if (!this.cache.project) {
             this.cache.project = this.service.projects.get(this.package.body.name);
-            this.cache.isSourceFile = this.cache.isSourceFile && !this.service.options.ignore.includes(this.cache.project.name);
+            //this.cache.isSourceFile = this.cache.isSourceFile && !this.service.options.ignore.includes(this.cache.project.name);
         }
         return this.cache.project;
     }
@@ -121,7 +121,10 @@ export class File {
         return this.cache.isJsonFile;
     }
     get isSourceFile() {
-        return this.cache.isSourceFile;
+        return !this.isIgnored && this.cache.isSourceFile;
+    }
+    get isIgnored() {
+        return this.cache.isIgnored;
     }
     get isProjectFile() {
         return this.cache.isProjectFile;
@@ -134,6 +137,9 @@ export class File {
     }
     get relative() {
         return relative(this.service.root, this.path);
+    }
+    ignore(){
+        this.cache.isIgnored=true;
     }
     sync() {
         let oldStat = this.stat;
@@ -194,13 +200,12 @@ export class Service {
     static init(options: ServiceOptions) {
         return this.service.init(options);
     }
-
     public options: ServiceOptions;
     public projects = new Map<string, Project>();
     public output = new Map<string, string>();
     public files = new Map<string, File>();
     public sources = new Map<string, File>();
-    public get root (){
+    public get root() {
         return this.options.root;
     }
     public get compiler() {
@@ -249,9 +254,9 @@ export class Service {
             },
             getScriptSnapshot(uri) {
                 let sourceFile = service.sources.get(uri);
-                if(sourceFile){
+                if (sourceFile) {
                     return sourceFile.snapshot;
-                }else{
+                } else {
                     throw new Error(`file not found for '${uri}'`)
                 }
             },
@@ -325,7 +330,6 @@ export class Service {
             this.logErrors(source.uri);
         }
     }
-
     public compileFiles(paths: Set<string>) {
         paths.forEach(p => {
             let f = this.files.get(p);
@@ -349,25 +353,25 @@ export class Service {
         const debug = true;
         const createFiles = (files: Set<string>) => {
             files.forEach(f => {
-                if (debug) {
-                    console.info("+", f);
-                }
+                // if (debug) {
+                //     console.info("+", f);
+                // }
                 this.files.set(f, new File(this, f).reload());
             })
         };
         const updateFiles = (files: Set<string>) => {
             files.forEach(f => {
-                if (debug) {
-                    console.info("~", f);
-                }
+                // if (debug) {
+                //     console.info("~", f);
+                // }
                 this.files.get(f).reload();
             })
         };
         const removeFiles = (files: Set<string>) => {
             files.forEach(f => {
-                if (debug) {
-                    console.info("-", f);
-                }
+                // if (debug) {
+                //     console.info("-", f);
+                // }
                 this.files.get(f).remove();
             })
         };
@@ -403,6 +407,28 @@ export class Service {
             if (changed.size) {
                 updateFiles(changed);
             }
+            this.files.forEach(f => {
+                f.reload();
+                if(removed.has(f.path) || changed.has(f.path)||created.has(f.path)){
+                    if (this.options.ignore.includes(f.project.name)) {
+                        f.ignore();
+                        created.delete(f.path);
+                        removed.delete(f.path);
+                        changed.delete(f.path);
+                        console.info("!", f.project.name, f.modulename);
+                    }else{
+                        if (debug && removed.has(f.path)) {
+                            console.info("-", f.project.name, f.modulename);
+                        }else
+                        if (debug && changed.has(f.path)) {
+                            console.info("~", f.project.name, f.modulename);
+                        }else
+                        if (debug && created.has(f.path)) {
+                            console.info("+", f.project.name, f.modulename);
+                        }
+                    }
+                }
+            });
             if (startup) {
                 this.compile();
             } else {

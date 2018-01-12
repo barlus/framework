@@ -8,7 +8,7 @@ require.extensions[".ts"] = req;
 require.extensions[".js"] = req;
 
 ts.path = require.resolve('typescript');
-
+ts.sys.tryEnableSourceMapsForHost();
 runMain = Module.runMain;
 function hash(dat) {
     return Crypto.createHash('md5').update(dat).digest('hex');

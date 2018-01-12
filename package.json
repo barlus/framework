@@ -9,19 +9,20 @@
     "flat": true,
     "workspaces": [
         "packs/*",
-        "tests/*"
+        "tests/*",
+        "samples/*"
     ],
-    "resolutions": {
-        "@barlus/compiler": "0.0.6",
-        "@barlus/node": "0.0.5",
-        "@barlus/runtime": "0.0.5",
-        "@barlus/std": "0.0.5"
-    },
     "devDependencies": {
         "typescript": "next"
     },
     "scripts": {
         "test": "node -r @barlus/node/register ./tests/test.ts",
         "release": "node -r @barlus/node/register ./tool/publish.ts"
+    },
+    "resolutions": {
+        "@barlus/compiler": "0.0.6",
+        "@barlus/node": "0.0.5",
+        "@barlus/runtime": "0.0.5",
+        "@barlus/std": "0.0.5"
     }
 }

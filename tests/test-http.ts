@@ -6,8 +6,7 @@ let app = new Application();
 
 app.use(projects({
     root:process.cwd(),
-    project:'@qustomerz/crm',
-    ignore:['typescript']
+    project:'@qustomerz/crm'
 }));
 
 app.listen(10001);

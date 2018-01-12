@@ -6,12 +6,17 @@
     "repository": "https://github.com/barlus/framework.git",
     "license": "MIT",
     "private": true,
-    "flat": false,
+    "flat": true,
     "workspaces": [
         "packs/*",
         "tests/*"
     ],
-    "dependencies": {},
+    "resolutions": {
+        "@barlus/compiler": "0.0.5",
+        "@barlus/node": "0.0.5",
+        "@barlus/runtime": "0.0.5",
+        "@barlus/std": "0.0.5"
+    },
     "devDependencies": {
         "typescript": "next"
     },

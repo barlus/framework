@@ -104,6 +104,7 @@ export class File {
     get project(): Project {
         if (!this.cache.project) {
             this.cache.project = this.service.projects.get(this.package.body.name);
+            this.cache.isSourceFile = this.cache.isSourceFile && !this.service.options.ignore.includes(this.cache.project.name);
         }
         return this.cache.project;
     }
@@ -247,7 +248,12 @@ export class Service {
                 return service.sources.get(uri).version;
             },
             getScriptSnapshot(uri) {
-                return service.sources.get(uri).snapshot;
+                let sourceFile = service.sources.get(uri);
+                if(sourceFile){
+                    return sourceFile.snapshot;
+                }else{
+                    throw new Error(`file not found for '${uri}'`)
+                }
             },
             getCurrentDirectory() {
                 return '/'
@@ -301,7 +307,7 @@ export class Service {
     public compile() {
         this.sources = new Map<string, File>();
         this.files.forEach(f => {
-            if (f.isSourceFile && !this.options.ignore.includes(f.project.name)) {
+            if (f.isSourceFile) {
                 this.sources.set(f.uri, f)
             }
         });
@@ -319,10 +325,11 @@ export class Service {
             this.logErrors(source.uri);
         }
     }
+
     public compileFiles(paths: Set<string>) {
         paths.forEach(p => {
             let f = this.files.get(p);
-            if (!this.sources.has(f.uri)) {
+            if (!this.sources.has(f.uri) && f.isSourceFile) {
                 this.sources.set(f.uri, f);
             }
             if (f && f.isSourceFile) {

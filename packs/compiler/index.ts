@@ -1,6 +1,6 @@
 import {} from "@barlus/std";
-import {existsSync, readdirSync, readFileSync, realpathSync, Stats, statSync} from '../node/fs';
-import {basename, dirname, extname, normalize, relative, resolve} from '../node/path';
+import {existsSync, readdirSync, readFileSync, realpathSync, Stats, statSync} from '@barlus/node/fs';
+import {basename, dirname, extname, normalize, relative, resolve} from '@barlus/node/path';
 import {Buffer} from '@barlus/node/buffer';
 import {createHash} from '@barlus/node/crypto';
 interface ResolvedModule {

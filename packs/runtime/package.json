@@ -1,13 +1,13 @@
 {
   "name": "@barlus/runtime",
-  "version": "0.0.2",
+  "version": "0.0.5",
   "description": "Barlus runtime libraries and polyfills",
   "main": "./index",
   "types": "./index",
   "license": "MIT",
   "repository": "https://github.com/ecmal/elp.git",
   "dependencies": {
-    "@barlus/std": "^0.0.1"
+    "@barlus/std": "latest"
   },
   "author": "Mamble LLC"
 }

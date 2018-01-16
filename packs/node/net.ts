@@ -3,6 +3,7 @@ import {Emitter} from "./events";
 import * as dns from "./dns";
 import {ErrnoException} from './errors';
 import {Buffer} from './buffer';
+import {proxy} from "./proxy";
 
 export type LookupFunction = (hostname: string, options: dns.LookupOneOptions, callback: (err: ErrnoException | null, address: string, family: number) => void) => void;
 export type SocketConnectOpts = TcpSocketConnectOpts | IpcSocketConnectOpts;
@@ -223,8 +224,6 @@ export declare class Server extends Emitter {
     prependOnceListener(event: "listening", listener: () => void): this;
 }
 
-
-
 export declare function createServer(connectionListener?: (socket: Socket) => void): Server;
 export declare function createServer(options?: { allowHalfOpen?: boolean, pauseOnConnect?: boolean }, connectionListener?: (socket: Socket) => void): Server;
 export declare function connect(options: NetConnectOpts, connectionListener?: Function): Socket;
@@ -236,3 +235,5 @@ export declare function createConnection(path: string, connectionListener?: Func
 export declare function isIP(input: string): number;
 export declare function isIPv4(input: string): boolean;
 export declare function isIPv6(input: string): boolean;
+
+proxy('net', module);

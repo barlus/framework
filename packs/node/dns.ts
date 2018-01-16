@@ -1,4 +1,5 @@
 import {ErrnoException} from './errors';
+import {proxy} from "./proxy";
 export interface LookupOptions {
     family?: number;
     hints?: number;
@@ -123,3 +124,5 @@ export declare var NOTINITIALIZED: string;
 export declare var LOADIPHLPAPI: string;
 export declare var ADDRGETNETWORKPARAMS: string;
 export declare var CANCELLED: string;
+
+proxy('dns', module);

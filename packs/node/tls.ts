@@ -2,6 +2,7 @@ import * as crypto from "./crypto";
 import * as net from "./net";
 import * as stream from "./stream";
 import {Buffer} from "./buffer";
+import {proxy} from "./proxy";
 
 export declare const CLIENT_RENEG_LIMIT: number;
 export declare const CLIENT_RENEG_WINDOW: number;
@@ -375,3 +376,5 @@ export declare function connect(port: number, options?: ConnectionOptions, secur
 export declare function createSecurePair(credentials?: crypto.Credentials, isServer?: boolean, requestCert?: boolean, rejectUnauthorized?: boolean): SecurePair;
 export declare function createSecureContext(details: SecureContextOptions): SecureContext;
 export declare function getCiphers(): string[];
+
+proxy('tls', module);

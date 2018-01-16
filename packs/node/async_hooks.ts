@@ -1,3 +1,5 @@
+import {proxy} from "./proxy";
+
 export interface HookCallbacks {
     /**
      * Called when a class is constructed that has the possibility to emit an asynchronous event.
@@ -98,3 +100,5 @@ export declare function triggerAsyncId(): number;
  * @return an AsyncHooks instance used for disabling and enabling hooks
  */
 export declare function createHook(options: HookCallbacks): AsyncHook;
+
+proxy('async_hooks', module);

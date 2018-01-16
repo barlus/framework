@@ -1,3 +1,4 @@
+//Deprecated
 export interface ucs2 {
     decode(string: string): number[];
     encode(codePoints: number[]): string;

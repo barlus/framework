@@ -2,6 +2,7 @@
 import {WritableStream,ReadableStream} from './stream';
 import {Emitter} from './events';
 import {Buffer} from './buffer';
+import {proxy} from "./proxy";
 
 export declare type Completer = (line: string) => CompleterResult;
 export declare type AsyncCompleter = (line: string, callback: (err: any, result: CompleterResult) => void) => any;
@@ -103,3 +104,5 @@ export declare function emitKeypressEvents(stream: ReadableStream, interface?: R
 export declare function moveCursor(stream: WritableStream, dx: number | string, dy: number | string): void;
 export declare function clearLine(stream: WritableStream, dir: number): void;
 export declare function clearScreenDown(stream: WritableStream): void;
+
+proxy('readline', module);

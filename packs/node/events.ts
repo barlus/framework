@@ -1,3 +1,5 @@
+import {proxy} from "./proxy";
+
 export declare class Emitter {
     static listenerCount(emitter: Emitter, event: string | symbol): number; // deprecated
     static defaultMaxListeners: number;
@@ -17,12 +19,14 @@ export declare class Emitter {
     listenerCount(type: string | symbol): number;
 }
 
-const M = require('events');
 
-Object.defineProperty(M.EventEmitter,'name',{
-    value:'Emitter'
-});
+proxy('events', module);
 
-Object.assign(module.exports,{
-    Emitter: M.EventEmitter
+module.exports.override({
+    get Emitter(){
+        Object.defineProperty(module.exports,'name',{
+            value:'Emitter'
+        });
+        return module.exports.EventEmitter
+    }
 });

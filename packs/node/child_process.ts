@@ -2,6 +2,8 @@ import {Buffer, BufferEncoding} from './buffer';
 import {Emitter} from './events';
 import {Readable, Writable} from './stream';
 import {Server, Socket} from './net';
+import {proxy} from "./proxy";
+
 export interface ChildProcess extends Emitter {
     stdin: Writable;
     stdout: Readable;
@@ -222,6 +224,4 @@ export declare function execFileSync(command: string, args?: string[], options?:
 export declare function execFileSync(command: string, args?: string[], options?: ExecFileSyncOptionsWithBufferEncoding): Buffer;
 export declare function execFileSync(command: string, args?: string[], options?: ExecFileSyncOptions): Buffer;
 
-
-const M = require('child_process');
-Object.assign(module.exports,M);
+proxy('child_process', module);

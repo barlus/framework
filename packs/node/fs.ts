@@ -5,6 +5,7 @@ import {Emitter} from "./events";
 import { URL } from "./url";
 import {Buffer, BufferEncoding} from './buffer';
 import {ErrnoException} from './errors';
+import {proxy} from "./proxy";
 
 /**
  * Valid types for path values in "fs".
@@ -1118,5 +1119,4 @@ export declare function copyFile(src: PathLike, dest: PathLike, flags: number, c
  */
 export declare function copyFileSync(src: PathLike, dest: PathLike, flags?: number): void;
 
-
-Object.assign(module.exports,require('fs'));
+proxy('fs', module);

@@ -1,3 +1,5 @@
+import {proxy} from "./proxy";
+
 export interface StringifyOptions {
     encodeURIComponent?: Function;
 }
@@ -12,3 +14,5 @@ export declare function parse(str: string, sep?: string, eq?: string, options?: 
 export declare function parse<T extends {}>(str: string, sep?: string, eq?: string, options?: ParseOptions): T;
 export declare function escape(str: string): string;
 export declare function unescape(str: string): string;
+
+proxy('querystring', module);

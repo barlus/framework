@@ -1,3 +1,5 @@
+import {proxy} from "./proxy";
+
 export type BufferEncoding = "ascii" | "utf8" | "utf16le" | "ucs2" | "base64" | "latin1" | "binary" | "hex";
 export declare class Buffer extends Uint8Array {
     /**
@@ -183,7 +185,4 @@ export declare class Buffer extends Uint8Array {
     values(): IterableIterator<number>;
 }
 
-const M = require('buffer');
-Object.assign(module.exports,{
-    Buffer: M.Buffer
-});
+proxy('buffer', module);

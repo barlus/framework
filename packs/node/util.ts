@@ -1,5 +1,6 @@
 import {Buffer} from './buffer';
 import {ErrnoException} from './errors';
+import {proxy} from "./proxy";
 export interface InspectOptions {
     showHidden?: boolean;
     depth?: number | null;
@@ -80,3 +81,5 @@ export declare function promisify(fn: Function): Function;
 export declare namespace promisify {
     const custom: symbol;
 }
+
+proxy('util', module);

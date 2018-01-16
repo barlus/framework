@@ -1,3 +1,5 @@
+import {proxy} from "./proxy";
+
 export interface UrlObject {
     auth?: string;
     hash?: string;
@@ -65,5 +67,4 @@ export declare class URL {
     toJSON(): string;
 }
 
-
-Object.assign(module.exports,require('url'));
+proxy('url', module);

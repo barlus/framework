@@ -1,5 +1,6 @@
 import {ReadableStream,WritableStream} from "./stream";
 import * as readline from "./readline";
+import {proxy} from "./proxy";
 
 export interface ReplOptions {
     prompt?: string;
@@ -61,3 +62,5 @@ export declare class Recoverable extends SyntaxError {
     err: Error;
     constructor(err: Error);
 }
+
+proxy('repl', module);

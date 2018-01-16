@@ -1,6 +1,4 @@
 import {} from "@barlus/std";
-
-import {RenderQueue} from "./render-queue";
 import {
     ASYNC_RENDER,
     ATTR_KEY,
@@ -13,25 +11,52 @@ import {
     COMPONENT_NAME,
     COMPONENT_EVENTS,
 } from "./constants";
+
 import {options} from "./options";
 import {Tag} from "./component";
-import {PreactElement, ComponentConstructor} from "./node";
 
+export const defer = typeof Promise=='function'
+    ? Promise.resolve().then.bind(Promise.resolve())
+    : setTimeout;
 
-export const queue = new RenderQueue(renderComponent);
+export class RenderQueue {
+    private items: Tag[] = [];
+    add(component: Tag){
+        if (!component._dirty && (component._dirty = true) && this.items.push(component) == 1) {
+            defer(()=>{
+                const list = this.items;
+                this.items = [];
+                let p;
+                while ((p = list.pop())) {
+                    if (p._dirty) {
+                        this.renderComponent(p);
+                    }
+                }
+            });
+        }
+    }
+    renderComponent(tag:Tag, opts?: number){
+        renderComponent(tag,opts)
+    }
+}
+
+export const queue = new RenderQueue();
 
 let diffLevel = 0;
 let isSvgMode = false;
 let hydrating = false;
+
 //
 const mounts: any = [];
 const components = {};
 
 
-export function render(node: JSX.Element, parent?: Element | Document, merge?: Element): Node {
+export function render(node: JSX.Element, parent?: Element, merge?: Element): Node {
     return diff(merge, node, {}, false, parent, false);
 }
-function diff(node: Node, element: PreactElement, context: any, mountAll?: boolean, parent?: Node, componentRoot?: boolean) {
+
+
+function diff(node: Element, element: JSX.Element, context: any, mountAll?: boolean, parent?: Element, componentRoot?: boolean) {
     // diffLevel having been 0 here indicates initial entry into the diff (not a sub diff)
     if (!diffLevel++) {
         // when first starting the diff, check if we're diffing an SVG or within an SVG
@@ -63,29 +88,26 @@ function isSvgNode(el: Node): el is SVGElement {
 function isTextNode(el: Node): el is Text {
     return ((el instanceof Text) && el.splitText !== undefined);
 }
-function internalDiff(node: Node, element: PreactElement | Node | null | boolean | string | number, context: any, mountAll: boolean, componentRoot?: boolean): Node {
+function internalDiff(node: Node, element: JSX.Node, context: any, mountAll: boolean, componentRoot?: boolean): Node {
     let out = node;
     let prevSvgMode = isSvgMode;
-
     // empty values (null, undefined, booleans) render as empty Text nodes
     if (element == null || typeof element === 'boolean') {
         element = '';
     }
-
-
+    if(typeof element === 'number'){
+        element = `${element}`
+    }
     // Fast case: Strings & Numbers create/update Text nodes.
-    if (typeof element === 'string' || typeof element === 'number') {
-
+    if (typeof element === 'string') {
         // update if it's already a Text element:
         if (isTextNode(node) && node.parentNode && (!node[COMPONENT] || componentRoot)) {
-            /* istanbul ignore if */
-            /* Browser quirk that can't be covered: https://github.com/developit/preact/commit/fd4f21f5c45dfd75151bd27b4c217d8003aa5eb9 */
             if (node.nodeValue != element) {
                 node.nodeValue = `${element}`;
             }
         } else {
             // it wasn't a Text element: replace it with one and recycle the old Element
-            out = document.createTextNode(element as string);
+            out = document.createTextNode(element);
             if (node) {
                 if (node.parentNode) {
                     node.parentNode.replaceChild(out, node);
@@ -93,17 +115,14 @@ function internalDiff(node: Node, element: PreactElement | Node | null | boolean
                 recollectNodeTree(node, true);
             }
         }
-
         out[ATTR_KEY] = true;
-
         return out;
     }
-
-
+    let elm = element as JSX.Element;
     // If the VNode represents a Tag, perform a component diff:
-    let elementName = element.nodeName;
+    let elementName = elm.nodeName;
     if (typeof elementName === 'function') {
-        return buildComponentFromVNode(node, element as PreactElement, context, mountAll);
+        return buildComponentFromVNode(node, elm, context, mountAll);
     }
 
     // Tracks entering and exiting SVG namespace when descending through the tree.
@@ -133,7 +152,7 @@ function internalDiff(node: Node, element: PreactElement | Node | null | boolean
 
     let fc = out.firstChild;
     let props = out[ATTR_KEY];
-    let elementChildren = (element as PreactElement).children;
+    let elementChildren = elm.children;
 
     if (props == null) {
         props = out[ATTR_KEY] = {};
@@ -155,7 +174,7 @@ function internalDiff(node: Node, element: PreactElement | Node | null | boolean
     }
 
     // Apply attributes/props from VNode to the DOM Element:
-    diffAttributes(out, element.attributes, props);
+    diffAttributes(out, elm.attributes, props);
 
     // restore previous SVG mode: (in case we're exiting an SVG namespace)
     isSvgMode = prevSvgMode;
@@ -299,7 +318,6 @@ function flushMounts() {
         if (c.componentDidMount) c.componentDidMount();
     }
 }
-
 function renderComponent(component: any, opts?: number, mountAll?: any, isChild?: any) {
     if (component._disable) {
         return;
@@ -486,7 +504,7 @@ function setComponentProps(component: Tag, props: Dictionary, opts: number, cont
         component.__ref(component);
     }
 }
-function buildComponentFromVNode(dom: Node, element: PreactElement, context: any, mountAll: any) {
+function buildComponentFromVNode(dom: Node, element: JSX.Element, context: any, mountAll: any) {
     let c = dom && dom[COMPONENT],
         originalComponent = c,
         oldDom = dom,
@@ -578,7 +596,7 @@ function createComponent(Ctor: Function, props: object, context: any) {
     }
     return inst;
 }
-function createComponentClass(Ctor: Function): ComponentConstructor<any, any> {
+function createComponentClass(Ctor: Function): JSX.ComponentConstructor<any, any> {
     let Comp: any;
     if (Ctor.prototype && Ctor.prototype instanceof Tag) {
         Comp = Ctor
@@ -680,7 +698,7 @@ function setProperty(node: HTMLElement, name: any, value: any) {
 function eventProxy(this: HTMLElement, e: any) {
     return this[COMPONENT_EVENTS][e.type](options.event && options.event(e) || e);
 }
-function isSameNodeType(node: Node, vnode: PreactElement, hydrating: boolean) {
+function isSameNodeType(node: Node, vnode: JSX.Element, hydrating: boolean) {
     if (typeof vnode === 'string' || typeof vnode === 'number') {
         return isTextNode(node);
     }
@@ -692,7 +710,7 @@ function isSameNodeType(node: Node, vnode: PreactElement, hydrating: boolean) {
 function isNamedNode(node: Node, nodeName: string) {
     return node[COMPONENT_NAME] === nodeName || node.nodeName.toLowerCase() === nodeName.toLowerCase();
 }
-function getNodeProps(vnode: PreactElement) {
+function getNodeProps(vnode: JSX.Element) {
     let props = Object.assign({}, vnode.attributes) as Dictionary;
     props.children = vnode.children;
     let defaultProps = (vnode.nodeName as any).defaultProps;

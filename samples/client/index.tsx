@@ -1,6 +1,5 @@
 import '@barlus/runtime';
-import {Tag} from '@barlus/bui/core/component';
-import {CSSProperties, TypeStyle} from '@barlus/bui';
+import {CSSProperties, TypeStyle, Tag, render} from '@barlus/bui';
 
 const ts = new TypeStyle({
     autoGenerateTag: true
@@ -13,18 +12,27 @@ function style(css:CSSProperties){
 }
 
 @style({color:'red'})
-class MyComponent extends Tag {
-    tag(...elements :(string|JSX.Element)[]){
-        return Tag.create('c',{class:`${this.constructor.name}`},...elements);
+class MyComponent extends Tag<{gago:8},{count:number}> {
+    state = {count:0};
+    componentDidMount(){
+        console.info("MOUNTED")
+        setInterval(()=>this.setState(s=>({
+            count:s.count+1
+        })),1000);
     }
-    render(){
-        return <div>{this.props.children}</div>
+    render() {
+        return (
+            <div>
+                <div class={'556'}>{this.props.children}</div>
+                <div>{this.state.count}</div>
+            </div>
+        );
     }
 }
 
 
-Tag.render(<div>
+render(<div>
     <div>1</div>
     2 {'3'} 4
-    <MyComponent>5 {6} {[ <b>7</b>, '8' ]}</MyComponent>
+    <MyComponent gago={8}>5 {6} {[ <b>7</b>, '8' ]}</MyComponent>
 </div>,document.body);

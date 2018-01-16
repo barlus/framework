@@ -1,17 +1,7 @@
-///<reference path="../typing/dom.d.ts"/>
-import {globals} from "@barlus/runtime/globals";
+///<reference path="../typing/jsx.d.ts"/>
 import {FORCE_RENDER} from "./constants";
-import {queue, render} from "./render";
-import {PreactElement,Component,ComponentConstructor,FunctionalComponent,ComponentProps} from "./node";
-
-
-export abstract class Tag<P = {}, S = {}> implements Component<P,S> {
-    static create<P,S>(node: ComponentConstructor<P, S> | FunctionalComponent<P> | string, attributes: JSX.HTMLAttributes & P = null, ...children: JSX.Nodes[]): JSX.Element {
-        return PreactElement.create<P,S>(node, attributes, ...children);
-    }
-    static render(node: JSX.Element, parent?: Element | Document, merge?: Element): Node {
-        return render(node, parent, merge);
-    }
+import {queue} from "./render";
+export abstract class Tag<P = {}, S = {}> implements JSX.Component<P,S> {
     public _disable: boolean;
     public _parentComponent?: Tag<any, any>;
     public _component?: Tag<any, any>;
@@ -22,7 +12,7 @@ export abstract class Tag<P = {}, S = {}> implements Component<P,S> {
     public context: any;
     public base: Element;
     public state: S;
-    public props: P & ComponentProps<this>;
+    public props: P & JSX.ComponentProps<this>;
     public prevProps?: P;
     public prevState?: S;
     public prevContext?: any;
@@ -37,13 +27,12 @@ export abstract class Tag<P = {}, S = {}> implements Component<P,S> {
     static displayName?: string;
     static defaultProps?: any;
     linkState: (name: string) => (event: Event) => void;
-    setState<K extends keyof S>(state: ((prev: S, props: P | void) => Pick<S, K>) | Pick<S, K>, callback?: () => void): void {
+    setState(state: Partial<S> | ((prev: S, props?: P) => Partial<S>), callback?: () => void): void {
         let s = this.state;
         if (!this.prevState) {
             this.prevState = Object.assign({}, s);
         }
-        Object.assign(s,typeof state === "function" ? state(s, this.props) : state
-        );
+        Object.assign(s,typeof state === "function" ? state(s, this.props) : state);
         if (callback) {
             if (!this._renderCallbacks) {
                 this._renderCallbacks = [];
@@ -70,15 +59,3 @@ export abstract class Tag<P = {}, S = {}> implements Component<P,S> {
     componentDidUpdate?(previousProps: P, previousState: S, previousContext: any): void;
     abstract render(props?: P, state?: S, context?: any): JSX.Element | null;
 }
-
-declare global{
-    namespace React {
-        export function createElement<P,S>(node: ComponentConstructor<P, S> | FunctionalComponent<P> | string, attributes: JSX.HTMLAttributes & P, ...children: JSX.Nodes[]): JSX.Element
-        export function render(node: JSX.Element, parent?: Element | Document, merge?: Element): Node;
-    }
-}
-globals.React = {
-    createElement:PreactElement.create,
-    render:render,
-    Fragment:'c'
-};

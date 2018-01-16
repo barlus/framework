@@ -10,4 +10,4 @@ export const COMPONENT_CLASS = Symbol('ComponentClass');
 export const COMPONENT_NAME = Symbol('ComponentName');
 export const COMPONENT_EVENTS = Symbol('ComponentEvents');
 export const IS_NON_DIMENSIONAL = /acit|ex(?:s|g|n|p|$)|rph|ows|mnc|ntw|ine[ch]|zoo|^ord/i;
-export const defer = typeof Promise=='function' ? Promise.resolve().then.bind(Promise.resolve()) : setTimeout;
+

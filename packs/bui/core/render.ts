@@ -14,9 +14,9 @@ import {
     COMPONENT_EVENTS,
 } from "./constants";
 import {options} from "./options";
-import {Component} from "./component";
-import {PreactElement} from "./vnode";
-import {ComponentConstructor, Dictionary} from "./types";
+import {Tag} from "./component";
+import {PreactElement, ComponentConstructor} from "./node";
+
 
 export const queue = new RenderQueue(renderComponent);
 
@@ -27,18 +27,10 @@ let hydrating = false;
 const mounts: any = [];
 const components = {};
 
-/**
- *
- * @param {JSX.Element} node
- * @param {Element | Document} parent
- * @param {Element} merge
- * @returns {Node}
- */
+
 export function render(node: JSX.Element, parent?: Element | Document, merge?: Element): Node {
     return diff(merge, node, {}, false, parent, false);
 }
-
-//
 function diff(node: Node, element: PreactElement, context: any, mountAll?: boolean, parent?: Node, componentRoot?: boolean) {
     // diffLevel having been 0 here indicates initial entry into the diff (not a sub diff)
     if (!diffLevel++) {
@@ -65,15 +57,12 @@ function diff(node: Node, element: PreactElement, context: any, mountAll?: boole
     }
     return ret;
 }
-
 function isSvgNode(el: Node): el is SVGElement {
     return ((el instanceof SVGElement) && el.ownerSVGElement !== undefined);
 }
-
 function isTextNode(el: Node): el is Text {
     return ((el instanceof Text) && el.splitText !== undefined);
 }
-
 function internalDiff(node: Node, element: PreactElement | Node | null | boolean | string | number, context: any, mountAll: boolean, componentRoot?: boolean): Node {
     let out = node;
     let prevSvgMode = isSvgMode;
@@ -111,7 +100,7 @@ function internalDiff(node: Node, element: PreactElement | Node | null | boolean
     }
 
 
-    // If the VNode represents a Component, perform a component diff:
+    // If the VNode represents a Tag, perform a component diff:
     let elementName = element.nodeName;
     if (typeof elementName === 'function') {
         return buildComponentFromVNode(node, element as PreactElement, context, mountAll);
@@ -173,7 +162,6 @@ function internalDiff(node: Node, element: PreactElement | Node | null | boolean
 
     return out;
 }
-
 function innerDiffNode(dom: Node, vchildren: any[], context: object, mountAll: boolean, isHydrating: boolean) {
     let originalChildren = dom.childNodes;
     let children = [];
@@ -262,11 +250,10 @@ function innerDiffNode(dom: Node, vchildren: any[], context: object, mountAll: b
         }
     }
 }
-
 function recollectNodeTree(node: Node, unmountOnly: boolean) {
     let component = node[COMPONENT];
     if (component) {
-        // if node is owned by a Component, unmount that component (ends up recursing back here)
+        // if node is owned by a Tag, unmount that component (ends up recursing back here)
         unmountComponent(component);
     } else {
         // If the node's VNode had a ref function, invoke it with null here.
@@ -280,7 +267,6 @@ function recollectNodeTree(node: Node, unmountOnly: boolean) {
         removeChildren(node);
     }
 }
-
 function removeChildren(node: Node) {
     node = node.lastChild;
     while (node) {
@@ -289,7 +275,6 @@ function removeChildren(node: Node) {
         node = next;
     }
 }
-
 function diffAttributes(dom: Node, attrs: any, old: any) {
     let name;
 
@@ -307,7 +292,6 @@ function diffAttributes(dom: Node, attrs: any, old: any) {
         }
     }
 }
-
 function flushMounts() {
     let c;
     while ((c = mounts.pop())) {
@@ -316,8 +300,7 @@ function flushMounts() {
     }
 }
 
-//
-function renderComponent(component: Component, opts?: number, mountAll?: any, isChild?: any) {
+function renderComponent(component: any, opts?: number, mountAll?: any, isChild?: any) {
     if (component._disable) {
         return;
     }
@@ -458,8 +441,7 @@ function renderComponent(component: Component, opts?: number, mountAll?: any, is
         flushMounts();
     }
 }
-
-function setComponentProps(component: Component, props: Dictionary, opts: number, context: object, mountAll: boolean) {
+function setComponentProps(component: Tag, props: Dictionary, opts: number, context: object, mountAll: boolean) {
     if (component._disable) {
         return;
     }
@@ -504,7 +486,6 @@ function setComponentProps(component: Component, props: Dictionary, opts: number
         component.__ref(component);
     }
 }
-
 function buildComponentFromVNode(dom: Node, element: PreactElement, context: any, mountAll: any) {
     let c = dom && dom[COMPONENT],
         originalComponent = c,
@@ -543,8 +524,7 @@ function buildComponentFromVNode(dom: Node, element: PreactElement, context: any
 
     return dom;
 }
-
-function unmountComponent(component: Component) {
+function unmountComponent(component: Tag) {
     if (options.beforeUnmount) {
         options.beforeUnmount(component);
     }
@@ -576,7 +556,6 @@ function unmountComponent(component: Component) {
 
     if (component.__ref) component.__ref(null);
 }
-
 function collectComponent(component: object) {
     let name = component.constructor.name;
     let comp = components[name];
@@ -585,10 +564,9 @@ function collectComponent(component: object) {
     }
     comp.push(component);
 }
-
 function createComponent(Ctor: Function, props: object, context: any) {
     let list = components[Ctor.name];
-    let inst = new (createComponentClass(Ctor))(props, context);
+    let inst:any = new (createComponentClass(Ctor))(props, context);
     if (list) {
         for (let i = list.length; i--;) {
             if (list[i].constructor === Ctor) {
@@ -600,15 +578,14 @@ function createComponent(Ctor: Function, props: object, context: any) {
     }
     return inst;
 }
-
 function createComponentClass(Ctor: Function): ComponentConstructor<any, any> {
     let Comp: any;
-    if (Ctor.prototype && Ctor.prototype instanceof Component) {
+    if (Ctor.prototype && Ctor.prototype instanceof Tag) {
         Comp = Ctor
     } else {
         Comp = Ctor[COMPONENT_CLASS];
         if (!Comp) {
-            Comp = class FunctionComponent extends Component<any, any> {
+            Comp = class FunctionComponent extends Tag<any, any> {
                 render(props: any, state: any) {
                     return Ctor.call(this, props, state);
                 }
@@ -627,12 +604,10 @@ function createNode(nodeName: string, isSvg: boolean) {
     node[COMPONENT_NAME] = nodeName;
     return node;
 }
-
 function removeNode(node: Node) {
     let parentNode = node.parentNode;
     if (parentNode) parentNode.removeChild(node);
 }
-
 function setAccessor(node: HTMLElement, name: any, old: any, value: any, isSvg: boolean) {
     if (name === 'className') name = 'class';
     if (name === 'key') {
@@ -696,18 +671,15 @@ function setAccessor(node: HTMLElement, name: any, old: any, value: any, isSvg: 
         }
     }
 }
-
 function setProperty(node: HTMLElement, name: any, value: any) {
     try {
         node[name] = value;
     } catch (e) {
     }
 }
-
 function eventProxy(this: HTMLElement, e: any) {
     return this[COMPONENT_EVENTS][e.type](options.event && options.event(e) || e);
 }
-
 function isSameNodeType(node: Node, vnode: PreactElement, hydrating: boolean) {
     if (typeof vnode === 'string' || typeof vnode === 'number') {
         return isTextNode(node);
@@ -717,11 +689,9 @@ function isSameNodeType(node: Node, vnode: PreactElement, hydrating: boolean) {
     }
     return hydrating || node[COMPONENT_CLASS] === vnode.nodeName;
 }
-
 function isNamedNode(node: Node, nodeName: string) {
     return node[COMPONENT_NAME] === nodeName || node.nodeName.toLowerCase() === nodeName.toLowerCase();
 }
-
 function getNodeProps(vnode: PreactElement) {
     let props = Object.assign({}, vnode.attributes) as Dictionary;
     props.children = vnode.children;

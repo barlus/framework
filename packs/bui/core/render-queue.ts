@@ -1,20 +1,23 @@
 import { options } from './options';
 import { defer } from './constants';
 
-import { Component } from './component';
+import { Tag } from './component';
 
 export class RenderQueue {
-    private items: Component[];
+    static queue(component:Tag,force = false){
 
-    public renderComponent:(c:Component,force?:number)=>void;
+    }
+    private items: Tag[];
 
-    constructor(renderer:(c:Component)=>void) {
+    public renderComponent:(c:Tag, force?:number)=>void;
+
+    constructor(renderer:(c:Tag)=>void) {
         this.items = [];
         this.render = this.render.bind(this, renderer);
         this.renderComponent = renderer;
     }
 
-    add(component: Component){
+    add(component: Tag){
         if (!component._dirty && (component._dirty = true) && this.items.push(component) == 1) {
             (options.debounceRendering || defer)(this.render);
         }

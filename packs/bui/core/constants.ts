@@ -5,7 +5,7 @@ export const FORCE_RENDER = 2;
 export const ASYNC_RENDER = 3;
 //
 export const ATTR_KEY = Symbol('attributes');
-export const COMPONENT = Symbol('Component');
+export const COMPONENT = Symbol('Tag');
 export const COMPONENT_CLASS = Symbol('ComponentClass');
 export const COMPONENT_NAME = Symbol('ComponentName');
 export const COMPONENT_EVENTS = Symbol('ComponentEvents');

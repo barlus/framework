@@ -1,6 +1,19 @@
-///<reference path="dom.d.ts"/>
+///<reference path="./dom.d.ts"/>
 
 declare namespace JSX {
+    type ClipboardEventHandler = EventHandler<ClipboardEvent>;
+    type CompositionEventHandler = EventHandler<CompositionEvent>;
+    type DragEventHandler = EventHandler<DragEvent>;
+    type FocusEventHandler = EventHandler<FocusEvent>;
+    type KeyboardEventHandler = EventHandler<KeyboardEvent>;
+    type MouseEventHandler = EventHandler<MouseEvent>;
+    type TouchEventHandler = EventHandler<TouchEvent>;
+    type UIEventHandler = EventHandler<UIEvent>;
+    type WheelEventHandler = EventHandler<WheelEvent>;
+    type AnimationEventHandler = EventHandler<AnimationEvent>;
+    type TransitionEventHandler = EventHandler<TransitionEvent>;
+    type GenericEventHandler = EventHandler<Event>;
+
     interface SVGAttributes extends HTMLAttributes {
         accentHeight?: number | string;
         accumulate?: "none" | "sum";
@@ -245,21 +258,6 @@ declare namespace JSX {
     interface EventHandler<E extends Event> {
         (event: E): void;
     }
-
-    type ClipboardEventHandler = EventHandler<ClipboardEvent>;
-    type CompositionEventHandler = EventHandler<CompositionEvent>;
-    type DragEventHandler = EventHandler<DragEvent>;
-    type FocusEventHandler = EventHandler<FocusEvent>;
-    type KeyboardEventHandler = EventHandler<KeyboardEvent>;
-    type MouseEventHandler = EventHandler<MouseEvent>;
-    type TouchEventHandler = EventHandler<TouchEvent>;
-    type UIEventHandler = EventHandler<UIEvent>;
-    type WheelEventHandler = EventHandler<WheelEvent>;
-    type AnimationEventHandler = EventHandler<AnimationEvent>;
-    type TransitionEventHandler = EventHandler<TransitionEvent>;
-    type GenericEventHandler = EventHandler<Event>;
-
-
     interface DOMAttributes {
         // Image Events
         onLoad?: GenericEventHandler;

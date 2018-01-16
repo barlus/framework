@@ -11,6 +11,7 @@ interface ResolvedModule {
 }
 export interface ServiceOptions {
     root?: string;
+    jsx?:string;
     ignore?: string[];
 }
 export class Project {
@@ -216,6 +217,7 @@ export class Service {
             noEmitHelpers: true,
             noEmitOnError: true,
             jsx: ts.JsxEmit.React,
+            jsxFactory:this.options.jsx,
             removeComments: true,
             experimentalDecorators: true,
             emitDecoratorMetadata: true,

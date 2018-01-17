@@ -16,6 +16,9 @@
         "test": "node -r @barlus/node/register ./tests/test.ts",
         "release": "node -r @barlus/node/register ./tool/publish.ts"
     },
+    "devDependencies": {
+        "typescript": "next"
+    },
     "resolutions": {
         "@barlus/compiler": "0.0.7",
         "@barlus/node": "0.0.5",

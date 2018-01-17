@@ -22,11 +22,11 @@ declare global {
             state: S;
             render(p?: P, s?: S, c?: any): Element | null;
         }
-        export interface ComponentConstructor<P, S> extends Function {
+        export interface ComponentConstructor<P, S>  {
             prototype: Component<P, S>;
             new(props?: P, context?: any): Component<P, S>;
         }
-        export interface FunctionalComponent<P> extends Function {
+        export interface FunctionalComponent<P> {
             (props?: P & ComponentProps<this>, context?: any): JSX.Element;
             displayName?: string;
             defaultProps?: any;
@@ -48,7 +48,8 @@ declare global {
             onLoad?: EventHandler;
             children?: Nodes;
         }
-        export interface ElementClass {
+        export interface ElementClass extends JsxComponent {
+
         }
         export interface ElementAttributesProperty {
             props: {};
@@ -59,6 +60,7 @@ declare global {
         export interface IntrinsicAttributes {
         }
         export interface IntrinsicClassAttributes<T> {
+
         }
         export interface IntrinsicElements {
             a: Attributes & { href?: string };

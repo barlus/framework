@@ -9,6 +9,10 @@ function style(css: CSSProperties) {
     }
 }
 
+function Stateless(p:{count:number}){
+    return <div>Count:{p.count}</div>
+}
+
 @style({color: 'red'})
 class MyComponent extends Component<{ gago?:number }, { count: number }> {
     state = {count: 0};
@@ -22,7 +26,7 @@ class MyComponent extends Component<{ gago?:number }, { count: number }> {
         return (
             <div>
                 <div class={'556'}>{this.props.children}</div>
-                <div>{this.state.count}</div>
+                <Stateless count={this.state.count}/>
             </div>
         );
     }

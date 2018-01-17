@@ -1,6 +1,5 @@
 {
     "compilerOptions": {
-        "experimentalDecorators": true,
         "module": "commonjs",
         "target": "esnext",
         "noEmit": true

@@ -24,3 +24,9 @@ declare type Pick<T, K extends keyof T> = { [P in K]: T[P]; };
  * Construct a type with a set of properties K of type T
  */
 declare type Record<K extends string, T> = {[P in K]: T;};
+/**
+ * Typed dictionary of object
+ */
+declare interface Dictionary<T=any> {
+    [key: string]: T;
+}

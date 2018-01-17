@@ -3,24 +3,19 @@ import * as net from "./net";
 import * as stream from "./stream";
 import * as tls from "./tls";
 import * as url from "./url";
-
-
 import {Buffer} from './buffer';
 import {Emitter} from './events';
 import {IncomingHttpHeaders, OutgoingHttpHeaders} from './http';
 import {ErrnoException} from './errors';
 import {proxy} from "./proxy";
-export { IncomingHttpHeaders, OutgoingHttpHeaders } from "./http";
-
+export {IncomingHttpHeaders, OutgoingHttpHeaders} from "./http";
 // Http2Stream
-
 export interface StreamPriorityOptions {
     exclusive?: boolean;
     parent?: number;
     weight?: number;
     silent?: boolean;
 }
-
 export interface StreamState {
     localWindowSize?: number;
     state?: number;
@@ -29,28 +24,23 @@ export interface StreamState {
     sumDependencyWeight?: number;
     weight?: number;
 }
-
 export interface ServerStreamResponseOptions {
     endStream?: boolean;
     getTrailers?: (trailers: OutgoingHttpHeaders) => void;
 }
-
 export interface StatOptions {
     offset: number;
     length: number;
 }
-
 export interface ServerStreamFileResponseOptions {
-    statCheck?: (stats: fs.Stats, headers: OutgoingHttpHeaders, statOptions: StatOptions) => void|boolean;
+    statCheck?: (stats: fs.Stats, headers: OutgoingHttpHeaders, statOptions: StatOptions) => void | boolean;
     getTrailers?: (trailers: OutgoingHttpHeaders) => void;
     offset?: number;
     length?: number;
 }
-
 export interface ServerStreamFileResponseOptionsWithError extends ServerStreamFileResponseOptions {
     onError?: (err: ErrnoException) => void;
 }
-
 export interface Http2Stream extends stream.Duplex {
     readonly aborted: boolean;
     readonly destroyed: boolean;
@@ -65,7 +55,6 @@ export interface Http2Stream extends stream.Duplex {
     readonly session: Http2Session;
     setTimeout(msecs: number, callback?: () => void): void;
     readonly state: StreamState;
-
     addListener(event: string, listener: (...args: any[]) => void): this;
     addListener(event: "aborted", listener: () => void): this;
     addListener(event: "close", listener: () => void): this;
@@ -80,7 +69,6 @@ export interface Http2Stream extends stream.Duplex {
     addListener(event: "streamClosed", listener: (code: number) => void): this;
     addListener(event: "timeout", listener: () => void): this;
     addListener(event: "trailers", listener: (trailers: IncomingHttpHeaders, flags: number) => void): this;
-
     emit(event: string | symbol, ...args: any[]): boolean;
     emit(event: "aborted"): boolean;
     emit(event: "close"): boolean;
@@ -95,7 +83,6 @@ export interface Http2Stream extends stream.Duplex {
     emit(event: "streamClosed", code: number): boolean;
     emit(event: "timeout"): boolean;
     emit(event: "trailers", trailers: IncomingHttpHeaders, flags: number): boolean;
-
     on(event: string, listener: (...args: any[]) => void): this;
     on(event: "aborted", listener: () => void): this;
     on(event: "close", listener: () => void): this;
@@ -110,7 +97,6 @@ export interface Http2Stream extends stream.Duplex {
     on(event: "streamClosed", listener: (code: number) => void): this;
     on(event: "timeout", listener: () => void): this;
     on(event: "trailers", listener: (trailers: IncomingHttpHeaders, flags: number) => void): this;
-
     once(event: string, listener: (...args: any[]) => void): this;
     once(event: "aborted", listener: () => void): this;
     once(event: "close", listener: () => void): this;
@@ -125,7 +111,6 @@ export interface Http2Stream extends stream.Duplex {
     once(event: "streamClosed", listener: (code: number) => void): this;
     once(event: "timeout", listener: () => void): this;
     once(event: "trailers", listener: (trailers: IncomingHttpHeaders, flags: number) => void): this;
-
     prependListener(event: string, listener: (...args: any[]) => void): this;
     prependListener(event: "aborted", listener: () => void): this;
     prependListener(event: "close", listener: () => void): this;
@@ -140,7 +125,6 @@ export interface Http2Stream extends stream.Duplex {
     prependListener(event: "streamClosed", listener: (code: number) => void): this;
     prependListener(event: "timeout", listener: () => void): this;
     prependListener(event: "trailers", listener: (trailers: IncomingHttpHeaders, flags: number) => void): this;
-
     prependOnceListener(event: string, listener: (...args: any[]) => void): this;
     prependOnceListener(event: "aborted", listener: () => void): this;
     prependOnceListener(event: "close", listener: () => void): this;
@@ -156,39 +140,32 @@ export interface Http2Stream extends stream.Duplex {
     prependOnceListener(event: "timeout", listener: () => void): this;
     prependOnceListener(event: "trailers", listener: (trailers: IncomingHttpHeaders, flags: number) => void): this;
 }
-
 export interface ClientHttp2Stream extends Http2Stream {
     addListener(event: string, listener: (...args: any[]) => void): this;
     addListener(event: "headers", listener: (headers: IncomingHttpHeaders, flags: number) => void): this;
     addListener(event: "push", listener: (headers: IncomingHttpHeaders, flags: number) => void): this;
     addListener(event: "response", listener: (headers: IncomingHttpHeaders, flags: number) => void): this;
-
     emit(event: string | symbol, ...args: any[]): boolean;
     emit(event: "headers", headers: IncomingHttpHeaders, flags: number): boolean;
     emit(event: "push", headers: IncomingHttpHeaders, flags: number): boolean;
     emit(event: "response", headers: IncomingHttpHeaders, flags: number): boolean;
-
     on(event: string, listener: (...args: any[]) => void): this;
     on(event: "headers", listener: (headers: IncomingHttpHeaders, flags: number) => void): this;
     on(event: "push", listener: (headers: IncomingHttpHeaders, flags: number) => void): this;
     on(event: "response", listener: (headers: IncomingHttpHeaders, flags: number) => void): this;
-
     once(event: string, listener: (...args: any[]) => void): this;
     once(event: "headers", listener: (headers: IncomingHttpHeaders, flags: number) => void): this;
     once(event: "push", listener: (headers: IncomingHttpHeaders, flags: number) => void): this;
     once(event: "response", listener: (headers: IncomingHttpHeaders, flags: number) => void): this;
-
     prependListener(event: string, listener: (...args: any[]) => void): this;
     prependListener(event: "headers", listener: (headers: IncomingHttpHeaders, flags: number) => void): this;
     prependListener(event: "push", listener: (headers: IncomingHttpHeaders, flags: number) => void): this;
     prependListener(event: "response", listener: (headers: IncomingHttpHeaders, flags: number) => void): this;
-
     prependOnceListener(event: string, listener: (...args: any[]) => void): this;
     prependOnceListener(event: "headers", listener: (headers: IncomingHttpHeaders, flags: number) => void): this;
     prependOnceListener(event: "push", listener: (headers: IncomingHttpHeaders, flags: number) => void): this;
     prependOnceListener(event: "response", listener: (headers: IncomingHttpHeaders, flags: number) => void): this;
 }
-
 export interface ServerHttp2Stream extends Http2Stream {
     additionalHeaders(headers: OutgoingHttpHeaders): void;
     readonly headersSent: boolean;
@@ -199,9 +176,7 @@ export interface ServerHttp2Stream extends Http2Stream {
     respondWithFD(fd: number, headers?: OutgoingHttpHeaders, options?: ServerStreamFileResponseOptions): void;
     respondWithFile(path: string, headers?: OutgoingHttpHeaders, options?: ServerStreamFileResponseOptionsWithError): void;
 }
-
 // Http2Session
-
 export interface Settings {
     headerTableSize?: number;
     enablePush?: boolean;
@@ -210,7 +185,6 @@ export interface Settings {
     maxConcurrentStreams?: number;
     maxHeaderListSize?: number;
 }
-
 export interface ClientSessionRequestOptions {
     endStream?: boolean;
     exclusive?: boolean;
@@ -218,14 +192,12 @@ export interface ClientSessionRequestOptions {
     weight?: number;
     getTrailers?: (trailers: OutgoingHttpHeaders, flags: number) => void;
 }
-
 export interface SessionShutdownOptions {
     graceful?: boolean;
     errorCode?: number;
     lastStreamID?: number;
     opaqueData?: Buffer | Uint8Array;
 }
-
 export interface SessionState {
     effectiveLocalWindowSize?: number;
     effectiveRecvDataLength?: number;
@@ -237,7 +209,6 @@ export interface SessionState {
     deflateDynamicTableSize?: number;
     inflateDynamicTableSize?: number;
 }
-
 export interface Http2Session extends Emitter {
     destroy(): void;
     readonly destroyed: boolean;
@@ -253,7 +224,6 @@ export interface Http2Session extends Emitter {
     priority(stream: Http2Stream, options: StreamPriorityOptions): void;
     settings(settings: Settings): void;
     readonly type: number;
-
     addListener(event: string, listener: (...args: any[]) => void): this;
     addListener(event: "close", listener: () => void): this;
     addListener(event: "error", listener: (err: Error) => void): this;
@@ -263,7 +233,6 @@ export interface Http2Session extends Emitter {
     addListener(event: "remoteSettings", listener: (settings: Settings) => void): this;
     addListener(event: "socketError", listener: (err: Error) => void): this;
     addListener(event: "timeout", listener: () => void): this;
-
     emit(event: string | symbol, ...args: any[]): boolean;
     emit(event: "close"): boolean;
     emit(event: "error", err: Error): boolean;
@@ -273,7 +242,6 @@ export interface Http2Session extends Emitter {
     emit(event: "remoteSettings", settings: Settings): boolean;
     emit(event: "socketError", err: Error): boolean;
     emit(event: "timeout"): boolean;
-
     on(event: string, listener: (...args: any[]) => void): this;
     on(event: "close", listener: () => void): this;
     on(event: "error", listener: (err: Error) => void): this;
@@ -283,7 +251,6 @@ export interface Http2Session extends Emitter {
     on(event: "remoteSettings", listener: (settings: Settings) => void): this;
     on(event: "socketError", listener: (err: Error) => void): this;
     on(event: "timeout", listener: () => void): this;
-
     once(event: string, listener: (...args: any[]) => void): this;
     once(event: "close", listener: () => void): this;
     once(event: "error", listener: (err: Error) => void): this;
@@ -293,7 +260,6 @@ export interface Http2Session extends Emitter {
     once(event: "remoteSettings", listener: (settings: Settings) => void): this;
     once(event: "socketError", listener: (err: Error) => void): this;
     once(event: "timeout", listener: () => void): this;
-
     prependListener(event: string, listener: (...args: any[]) => void): this;
     prependListener(event: "close", listener: () => void): this;
     prependListener(event: "error", listener: (err: Error) => void): this;
@@ -303,7 +269,6 @@ export interface Http2Session extends Emitter {
     prependListener(event: "remoteSettings", listener: (settings: Settings) => void): this;
     prependListener(event: "socketError", listener: (err: Error) => void): this;
     prependListener(event: "timeout", listener: () => void): this;
-
     prependOnceListener(event: string, listener: (...args: any[]) => void): this;
     prependOnceListener(event: "close", listener: () => void): this;
     prependOnceListener(event: "error", listener: (err: Error) => void): this;
@@ -314,65 +279,49 @@ export interface Http2Session extends Emitter {
     prependOnceListener(event: "socketError", listener: (err: Error) => void): this;
     prependOnceListener(event: "timeout", listener: () => void): this;
 }
-
 export interface ClientHttp2Session extends Http2Session {
     request(headers?: OutgoingHttpHeaders, options?: ClientSessionRequestOptions): ClientHttp2Stream;
-
     addListener(event: string, listener: (...args: any[]) => void): this;
     addListener(event: "connect", listener: (session: ClientHttp2Session, socket: net.Socket | tls.TLSSocket) => void): this;
     addListener(event: "stream", listener: (stream: ClientHttp2Stream, headers: IncomingHttpHeaders, flags: number) => void): this;
-
     emit(event: string | symbol, ...args: any[]): boolean;
     emit(event: "connect", session: ClientHttp2Session, socket: net.Socket | tls.TLSSocket): boolean;
     emit(event: "stream", stream: ClientHttp2Stream, headers: IncomingHttpHeaders, flags: number): boolean;
-
     on(event: string, listener: (...args: any[]) => void): this;
     on(event: "connect", listener: (session: ClientHttp2Session, socket: net.Socket | tls.TLSSocket) => void): this;
     on(event: "stream", listener: (stream: ClientHttp2Stream, headers: IncomingHttpHeaders, flags: number) => void): this;
-
     once(event: string, listener: (...args: any[]) => void): this;
     once(event: "connect", listener: (session: ClientHttp2Session, socket: net.Socket | tls.TLSSocket) => void): this;
     once(event: "stream", listener: (stream: ClientHttp2Stream, headers: IncomingHttpHeaders, flags: number) => void): this;
-
     prependListener(event: string, listener: (...args: any[]) => void): this;
     prependListener(event: "connect", listener: (session: ClientHttp2Session, socket: net.Socket | tls.TLSSocket) => void): this;
     prependListener(event: "stream", listener: (stream: ClientHttp2Stream, headers: IncomingHttpHeaders, flags: number) => void): this;
-
     prependOnceListener(event: string, listener: (...args: any[]) => void): this;
     prependOnceListener(event: "connect", listener: (session: ClientHttp2Session, socket: net.Socket | tls.TLSSocket) => void): this;
     prependOnceListener(event: "stream", listener: (stream: ClientHttp2Stream, headers: IncomingHttpHeaders, flags: number) => void): this;
 }
-
 export interface ServerHttp2Session extends Http2Session {
     readonly server: Http2Server | Http2SecureServer;
-
     addListener(event: string, listener: (...args: any[]) => void): this;
     addListener(event: "connect", listener: (session: ServerHttp2Session, socket: net.Socket | tls.TLSSocket) => void): this;
     addListener(event: "stream", listener: (stream: ServerHttp2Stream, headers: IncomingHttpHeaders, flags: number) => void): this;
-
     emit(event: string | symbol, ...args: any[]): boolean;
     emit(event: "connect", session: ServerHttp2Session, socket: net.Socket | tls.TLSSocket): boolean;
     emit(event: "stream", stream: ServerHttp2Stream, headers: IncomingHttpHeaders, flags: number): boolean;
-
     on(event: string, listener: (...args: any[]) => void): this;
     on(event: "connect", listener: (session: ServerHttp2Session, socket: net.Socket | tls.TLSSocket) => void): this;
     on(event: "stream", listener: (stream: ServerHttp2Stream, headers: IncomingHttpHeaders, flags: number) => void): this;
-
     once(event: string, listener: (...args: any[]) => void): this;
     once(event: "connect", listener: (session: ServerHttp2Session, socket: net.Socket | tls.TLSSocket) => void): this;
     once(event: "stream", listener: (stream: ServerHttp2Stream, headers: IncomingHttpHeaders, flags: number) => void): this;
-
     prependListener(event: string, listener: (...args: any[]) => void): this;
     prependListener(event: "connect", listener: (session: ServerHttp2Session, socket: net.Socket | tls.TLSSocket) => void): this;
     prependListener(event: "stream", listener: (stream: ServerHttp2Stream, headers: IncomingHttpHeaders, flags: number) => void): this;
-
     prependOnceListener(event: string, listener: (...args: any[]) => void): this;
     prependOnceListener(event: "connect", listener: (session: ServerHttp2Session, socket: net.Socket | tls.TLSSocket) => void): this;
     prependOnceListener(event: "stream", listener: (stream: ServerHttp2Stream, headers: IncomingHttpHeaders, flags: number) => void): this;
 }
-
 // Http2Server
-
 export interface SessionOptions {
     maxDeflateDynamicTableSize?: number;
     maxReservedRemoteStreams?: number;
@@ -382,21 +331,18 @@ export interface SessionOptions {
     selectPadding?: (frameLen: number, maxFrameLen: number) => number;
     settings?: Settings;
 }
-
 export type ClientSessionOptions = SessionOptions;
 export type ServerSessionOptions = SessionOptions;
-
-export interface SecureClientSessionOptions extends ClientSessionOptions, tls.ConnectionOptions { }
-export interface SecureServerSessionOptions extends ServerSessionOptions, tls.TlsOptions { }
-
+export interface SecureClientSessionOptions extends ClientSessionOptions, tls.ConnectionOptions {
+}
+export interface SecureServerSessionOptions extends ServerSessionOptions, tls.TlsOptions {
+}
 export interface ServerOptions extends ServerSessionOptions {
     allowHTTP1?: boolean;
 }
-
 export interface SecureServerOptions extends SecureServerSessionOptions {
     allowHTTP1?: boolean;
 }
-
 export interface Http2Server extends net.Server {
     addListener(event: string, listener: (...args: any[]) => void): this;
     addListener(event: "request", listener: (request: Http2ServerRequest, response: Http2ServerResponse) => void): this;
@@ -404,35 +350,30 @@ export interface Http2Server extends net.Server {
     addListener(event: "socketError", listener: (err: Error) => void): this;
     addListener(event: "stream", listener: (stream: ServerHttp2Stream, headers: IncomingHttpHeaders, flags: number) => void): this;
     addListener(event: "timeout", listener: () => void): this;
-
     emit(event: string | symbol, ...args: any[]): boolean;
     emit(event: "request", request: Http2ServerRequest, response: Http2ServerResponse): boolean;
     emit(event: "sessionError", err: Error): boolean;
     emit(event: "socketError", err: Error): boolean;
     emit(event: "stream", stream: ServerHttp2Stream, headers: IncomingHttpHeaders, flags: number): boolean;
     emit(event: "timeout"): boolean;
-
     on(event: string, listener: (...args: any[]) => void): this;
     on(event: "request", listener: (request: Http2ServerRequest, response: Http2ServerResponse) => void): this;
     on(event: "sessionError", listener: (err: Error) => void): this;
     on(event: "socketError", listener: (err: Error) => void): this;
     on(event: "stream", listener: (stream: ServerHttp2Stream, headers: IncomingHttpHeaders, flags: number) => void): this;
     on(event: "timeout", listener: () => void): this;
-
     once(event: string, listener: (...args: any[]) => void): this;
     once(event: "request", listener: (request: Http2ServerRequest, response: Http2ServerResponse) => void): this;
     once(event: "sessionError", listener: (err: Error) => void): this;
     once(event: "socketError", listener: (err: Error) => void): this;
     once(event: "stream", listener: (stream: ServerHttp2Stream, headers: IncomingHttpHeaders, flags: number) => void): this;
     once(event: "timeout", listener: () => void): this;
-
     prependListener(event: string, listener: (...args: any[]) => void): this;
     prependListener(event: "request", listener: (request: Http2ServerRequest, response: Http2ServerResponse) => void): this;
     prependListener(event: "sessionError", listener: (err: Error) => void): this;
     prependListener(event: "socketError", listener: (err: Error) => void): this;
     prependListener(event: "stream", listener: (stream: ServerHttp2Stream, headers: IncomingHttpHeaders, flags: number) => void): this;
     prependListener(event: "timeout", listener: () => void): this;
-
     prependOnceListener(event: string, listener: (...args: any[]) => void): this;
     prependOnceListener(event: "request", listener: (request: Http2ServerRequest, response: Http2ServerResponse) => void): this;
     prependOnceListener(event: "sessionError", listener: (err: Error) => void): this;
@@ -440,7 +381,6 @@ export interface Http2Server extends net.Server {
     prependOnceListener(event: "stream", listener: (stream: ServerHttp2Stream, headers: IncomingHttpHeaders, flags: number) => void): this;
     prependOnceListener(event: "timeout", listener: () => void): this;
 }
-
 export interface Http2SecureServer extends tls.Server {
     addListener(event: string, listener: (...args: any[]) => void): this;
     addListener(event: "request", listener: (request: Http2ServerRequest, response: Http2ServerResponse) => void): this;
@@ -449,7 +389,6 @@ export interface Http2SecureServer extends tls.Server {
     addListener(event: "stream", listener: (stream: ServerHttp2Stream, headers: IncomingHttpHeaders, flags: number) => void): this;
     addListener(event: "timeout", listener: () => void): this;
     addListener(event: "unknownProtocol", listener: (socket: tls.TLSSocket) => void): this;
-
     emit(event: string | symbol, ...args: any[]): boolean;
     emit(event: "request", request: Http2ServerRequest, response: Http2ServerResponse): boolean;
     emit(event: "sessionError", err: Error): boolean;
@@ -457,7 +396,6 @@ export interface Http2SecureServer extends tls.Server {
     emit(event: "stream", stream: ServerHttp2Stream, headers: IncomingHttpHeaders, flags: number): boolean;
     emit(event: "timeout"): boolean;
     emit(event: "unknownProtocol", socket: tls.TLSSocket): boolean;
-
     on(event: string, listener: (...args: any[]) => void): this;
     on(event: "request", listener: (request: Http2ServerRequest, response: Http2ServerResponse) => void): this;
     on(event: "sessionError", listener: (err: Error) => void): this;
@@ -465,7 +403,6 @@ export interface Http2SecureServer extends tls.Server {
     on(event: "stream", listener: (stream: ServerHttp2Stream, headers: IncomingHttpHeaders, flags: number) => void): this;
     on(event: "timeout", listener: () => void): this;
     on(event: "unknownProtocol", listener: (socket: tls.TLSSocket) => void): this;
-
     once(event: string, listener: (...args: any[]) => void): this;
     once(event: "request", listener: (request: Http2ServerRequest, response: Http2ServerResponse) => void): this;
     once(event: "sessionError", listener: (err: Error) => void): this;
@@ -473,7 +410,6 @@ export interface Http2SecureServer extends tls.Server {
     once(event: "stream", listener: (stream: ServerHttp2Stream, headers: IncomingHttpHeaders, flags: number) => void): this;
     once(event: "timeout", listener: () => void): this;
     once(event: "unknownProtocol", listener: (socket: tls.TLSSocket) => void): this;
-
     prependListener(event: string, listener: (...args: any[]) => void): this;
     prependListener(event: "request", listener: (request: Http2ServerRequest, response: Http2ServerResponse) => void): this;
     prependListener(event: "sessionError", listener: (err: Error) => void): this;
@@ -481,7 +417,6 @@ export interface Http2SecureServer extends tls.Server {
     prependListener(event: "stream", listener: (stream: ServerHttp2Stream, headers: IncomingHttpHeaders, flags: number) => void): this;
     prependListener(event: "timeout", listener: () => void): this;
     prependListener(event: "unknownProtocol", listener: (socket: tls.TLSSocket) => void): this;
-
     prependOnceListener(event: string, listener: (...args: any[]) => void): this;
     prependOnceListener(event: "request", listener: (request: Http2ServerRequest, response: Http2ServerResponse) => void): this;
     prependOnceListener(event: "sessionError", listener: (err: Error) => void): this;
@@ -490,7 +425,6 @@ export interface Http2SecureServer extends tls.Server {
     prependOnceListener(event: "timeout", listener: () => void): this;
     prependOnceListener(event: "unknownProtocol", listener: (socket: tls.TLSSocket) => void): this;
 }
-
 export interface Http2ServerRequest extends stream.Readable {
     headers: IncomingHttpHeaders;
     httpVersion: string;
@@ -502,26 +436,19 @@ export interface Http2ServerRequest extends stream.Readable {
     stream: ServerHttp2Stream;
     trailers: IncomingHttpHeaders;
     url: string;
-
     addListener(event: string, listener: (...args: any[]) => void): this;
     addListener(event: "aborted", listener: (hadError: boolean, code: number) => void): this;
-
     emit(event: string | symbol, ...args: any[]): boolean;
     emit(event: "aborted", hadError: boolean, code: number): boolean;
-
     on(event: string, listener: (...args: any[]) => void): this;
     on(event: "aborted", listener: (hadError: boolean, code: number) => void): this;
-
     once(event: string, listener: (...args: any[]) => void): this;
     once(event: "aborted", listener: (hadError: boolean, code: number) => void): this;
-
     prependListener(event: string, listener: (...args: any[]) => void): this;
     prependListener(event: "aborted", listener: (hadError: boolean, code: number) => void): this;
-
     prependOnceListener(event: string, listener: (...args: any[]) => void): this;
     prependOnceListener(event: "aborted", listener: (hadError: boolean, code: number) => void): this;
 }
-
 export interface Http2ServerResponse extends Emitter {
     addTrailers(trailers: OutgoingHttpHeaders): void;
     connection: net.Socket | tls.TLSSocket;
@@ -548,42 +475,36 @@ export interface Http2ServerResponse extends Emitter {
     writeHead(statusCode: number, headers?: OutgoingHttpHeaders): void;
     writeHead(statusCode: number, statusMessage?: string, headers?: OutgoingHttpHeaders): void;
     createPushResponse(headers: OutgoingHttpHeaders, callback: (err: Error | null, res: Http2ServerResponse) => void): void;
-
     addListener(event: string, listener: (...args: any[]) => void): this;
     addListener(event: "aborted", listener: (hadError: boolean, code: number) => void): this;
     addListener(event: "close", listener: () => void): this;
     addListener(event: "drain", listener: () => void): this;
     addListener(event: "error", listener: (error: Error) => void): this;
     addListener(event: "finish", listener: () => void): this;
-
     emit(event: string | symbol, ...args: any[]): boolean;
     emit(event: "aborted", hadError: boolean, code: number): boolean;
     emit(event: "close"): boolean;
     emit(event: "drain"): boolean;
     emit(event: "error", error: Error): boolean;
     emit(event: "finish"): boolean;
-
     on(event: string, listener: (...args: any[]) => void): this;
     on(event: "aborted", listener: (hadError: boolean, code: number) => void): this;
     on(event: "close", listener: () => void): this;
     on(event: "drain", listener: () => void): this;
     on(event: "error", listener: (error: Error) => void): this;
     on(event: "finish", listener: () => void): this;
-
     once(event: string, listener: (...args: any[]) => void): this;
     once(event: "aborted", listener: (hadError: boolean, code: number) => void): this;
     once(event: "close", listener: () => void): this;
     once(event: "drain", listener: () => void): this;
     once(event: "error", listener: (error: Error) => void): this;
     once(event: "finish", listener: () => void): this;
-
     prependListener(event: string, listener: (...args: any[]) => void): this;
     prependListener(event: "aborted", listener: (hadError: boolean, code: number) => void): this;
     prependListener(event: "close", listener: () => void): this;
     prependListener(event: "drain", listener: () => void): this;
     prependListener(event: "error", listener: (error: Error) => void): this;
     prependListener(event: "finish", listener: () => void): this;
-
     prependOnceListener(event: string, listener: (...args: any[]) => void): this;
     prependOnceListener(event: "aborted", listener: (hadError: boolean, code: number) => void): this;
     prependOnceListener(event: "close", listener: () => void): this;
@@ -591,9 +512,7 @@ export interface Http2ServerResponse extends Emitter {
     prependOnceListener(event: "error", listener: (error: Error) => void): this;
     prependOnceListener(event: "finish", listener: () => void): this;
 }
-
 // Public API
-
 export declare const constants: {
     NGHTTP2_SESSION_SERVER: number;
     NGHTTP2_SESSION_CLIENT: number;
@@ -804,7 +723,6 @@ export declare const constants: {
     HTTP_STATUS_NOT_EXTENDED: number;
     HTTP_STATUS_NETWORK_AUTHENTICATION_REQUIRED: number;
 };
-
 export declare function getDefaultSettings(): Settings;
 export declare function getPackedSettings(settings: Settings): Settings;
 export declare function getUnpackedSettings(buf: Buffer | Uint8Array): Settings;
@@ -814,5 +732,4 @@ export declare function createSecureServer(onRequestHandler?: (request: Http2Ser
 export declare function createSecureServer(options: SecureServerOptions, onRequestHandler?: (request: Http2ServerRequest, response: Http2ServerResponse) => void): Http2SecureServer;
 export declare function connect(authority: string | url.URL, listener?: (session: ClientHttp2Session, socket: net.Socket | tls.TLSSocket) => void): ClientHttp2Session;
 export declare function connect(authority: string | url.URL, options?: ClientSessionOptions | SecureClientSessionOptions, listener?: (session: ClientHttp2Session, socket: net.Socket | tls.TLSSocket) => void): ClientHttp2Session;
-
 proxy('http2', module);

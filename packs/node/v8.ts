@@ -24,3 +24,6 @@ interface HeapInfo {
 export declare function getHeapStatistics(): HeapInfo;
 export declare function getHeapSpaceStatistics(): HeapSpaceInfo[];
 export declare function setFlagsFromString(flags: string): void;
+
+const M = require('v8');
+Object.assign(module.exports,M);

@@ -1,5 +1,6 @@
 import {Emitter} from "./events";
 import {Buffer} from './buffer';
+import {proxy} from "./proxy";
 
 
 export interface ReadableOptions {
@@ -239,13 +240,4 @@ export declare class Transform extends Duplex {
 
 export declare class PassThrough extends Transform { }
 
-const M = require('stream');
-
-Object.assign(module.exports,{
-    Stream: M.Stream,
-    Readable: M.Readable,
-    Writable: M.Writable,
-    Duplex: M.Duplex,
-    Transform: M.Transform,
-    PassThrough: M.PassThrough
-});
+proxy('stream', module);

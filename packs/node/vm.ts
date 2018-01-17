@@ -28,3 +28,6 @@ export declare function runInContext(code: string, contextifiedSandbox: Context,
 export declare function runInDebugContext(code: string): any;
 export declare function runInNewContext(code: string, sandbox?: Context, options?: RunningScriptOptions): any;
 export declare function runInThisContext(code: string, options?: RunningScriptOptions): any;
+
+const M = require('vm');
+Object.assign(module.exports,M);

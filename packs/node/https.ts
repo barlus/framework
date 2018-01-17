@@ -1,6 +1,7 @@
 import * as tls from "./tls";
 import * as http from "./http";
 import { URL } from "./url";
+import {proxy} from "./proxy";
 
 export interface ServerOptions {
     pfx?: any;
@@ -58,19 +59,10 @@ export declare function request(options: RequestOptions | string | URL, callback
 export declare function get(options: RequestOptions | string | URL, callback?: (res: http.IncomingMessage) => void): http.ClientRequest;
 export declare const globalAgent: Agent;
 
+proxy('https', module);
 
-const M = require('https');
-
-
-Object.assign(module.exports,{
-    METHODS:M.METHODS,
-    STATUS_CODES:M.STATUS_CODES,
-    request:M.request,
-    Agent:M.Agent,
-    ServerRequest:M.ServerRequest,
-    ServerResponse:M.ServerResponse,
-    ClientRequest:M.ClientRequest,
-    ClientResponse:M.OutgoingMessage,
-    Server:  M.Server,
-    createServer:M.createServer
+module.exports.override({
+    get ClientResponse(){
+        return class ClientResponse extends module.exports.OutgoingMessage {}
+    },
 });

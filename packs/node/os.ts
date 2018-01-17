@@ -1,4 +1,5 @@
 import {Platform} from './process';
+import {proxy} from "./proxy";
 export type NetworkInterfaceInfo = NetworkInterfaceInfoIPv4 | NetworkInterfaceInfoIPv6;
 export interface CpuInfo {
     model: string;
@@ -160,3 +161,6 @@ export declare function arch(): string;
 export declare function platform(): Platform;
 export declare function tmpdir(): string;
 export declare function endianness(): "BE" | "LE";
+
+const M = require('os');
+Object.assign(module.exports,M);

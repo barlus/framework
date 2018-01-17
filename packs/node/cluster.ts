@@ -1,6 +1,8 @@
 import * as child from "./child_process";
 import * as net from "./net";
 import {Emitter} from './events';
+import {proxy} from "./proxy";
+
 // interfaces
 export interface ClusterSettings {
     execArgv?: string[]; // default: process.execArgv
@@ -234,3 +236,5 @@ export declare class Worker extends Emitter {
     prependOnceListener(event: "message", listener: (message: any, handle: net.Socket | net.Server) => void): this;  // the handle is a net.Socket or net.Server object, or undefined.
     prependOnceListener(event: "online", listener: () => void): this;
 }
+
+proxy('cluster', module);

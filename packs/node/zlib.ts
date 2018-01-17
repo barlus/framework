@@ -1,5 +1,6 @@
 import {Transform} from "./stream";
 import {Buffer} from './buffer';
+import {proxy} from "./proxy";
 
 export interface ZlibOptions {
     flush?: number; // default: zlib.constants.Z_NO_FLUSH
@@ -80,3 +81,5 @@ export declare const Z_TEXT: number;
 export declare const Z_ASCII: number;
 export declare const Z_UNKNOWN: number;
 export declare const Z_DEFLATED: number;
+
+proxy('zlib', module);

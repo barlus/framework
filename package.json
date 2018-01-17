@@ -12,15 +12,12 @@
         "tests/*",
         "samples/*"
     ],
-    "devDependencies": {
-        "typescript": "next"
-    },
     "scripts": {
         "test": "node -r @barlus/node/register ./tests/test.ts",
         "release": "node -r @barlus/node/register ./tool/publish.ts"
     },
     "resolutions": {
-        "@barlus/compiler": "0.0.6",
+        "@barlus/compiler": "0.0.7",
         "@barlus/node": "0.0.5",
         "@barlus/runtime": "0.0.5",
         "@barlus/std": "0.0.5"

@@ -156,7 +156,6 @@ interface ReadonlyArray<T> {
 }
 declare class Array<T> {
     constructor(arrayLength?: number);
-    constructor(arrayLength: number);
     constructor(...items: T[]);
     //(arrayLength?: number): any[];
     //<T>(arrayLength: number): T[];

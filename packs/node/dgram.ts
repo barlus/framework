@@ -2,6 +2,7 @@ import {Buffer} from './buffer';
 import {ErrnoException} from './errors';
 import {Emitter} from './events';
 import {LookupOneOptions} from './dns';
+import {proxy} from "./proxy";
 
 interface RemoteInfo {
     address: string;
@@ -99,3 +100,5 @@ export declare class Socket extends Emitter {
     prependOnceListener(event: "listening", listener: () => void): this;
     prependOnceListener(event: "message", listener: (msg: Buffer, rinfo: AddressInfo) => void): this;
 }
+
+proxy('dgram', module);

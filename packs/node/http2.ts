@@ -9,6 +9,7 @@ import {Buffer} from './buffer';
 import {Emitter} from './events';
 import {IncomingHttpHeaders, OutgoingHttpHeaders} from './http';
 import {ErrnoException} from './errors';
+import {proxy} from "./proxy";
 export { IncomingHttpHeaders, OutgoingHttpHeaders } from "./http";
 
 // Http2Stream
@@ -813,3 +814,5 @@ export declare function createSecureServer(onRequestHandler?: (request: Http2Ser
 export declare function createSecureServer(options: SecureServerOptions, onRequestHandler?: (request: Http2ServerRequest, response: Http2ServerResponse) => void): Http2SecureServer;
 export declare function connect(authority: string | url.URL, listener?: (session: ClientHttp2Session, socket: net.Socket | tls.TLSSocket) => void): ClientHttp2Session;
 export declare function connect(authority: string | url.URL, options?: ClientSessionOptions | SecureClientSessionOptions, listener?: (session: ClientHttp2Session, socket: net.Socket | tls.TLSSocket) => void): ClientHttp2Session;
+
+proxy('http2', module);

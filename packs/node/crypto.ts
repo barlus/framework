@@ -1,10 +1,7 @@
 import {Buffer} from './buffer';
 import {ReadWriteStream, WritableStream} from './stream';
-export interface Certificate {
-    exportChallenge(spkac: string | Buffer): Buffer;
-    exportPublicKey(spkac: string | Buffer): Buffer;
-    verifySpkac(spkac: Buffer): boolean;
-}
+import {proxy} from "./proxy";
+
 export type Utf8AsciiLatin1Encoding = "utf8" | "ascii" | "latin1";
 export type HexBase64Latin1Encoding = "latin1" | "hex" | "base64";
 export type Utf8AsciiBinaryEncoding = "utf8" | "ascii" | "binary";
@@ -115,10 +112,16 @@ export interface ECDH {
     setPrivateKey(private_key: string, encoding: HexBase64Latin1Encoding): void;
 }
 export declare const DEFAULT_ENCODING: string;
-export declare const Certificate: {
-    new(): Certificate;
-    (): Certificate;
-};
+export declare class Certificate {
+    constructor();
+    static exportChallenge(spkac: string | Buffer): Buffer;
+    static exportPublicKey(spkac: string | Buffer): Buffer;
+    static verifySpkac(spkac: Buffer): boolean;
+
+    exportChallenge(spkac: string | Buffer): Buffer;
+    exportPublicKey(spkac: string | Buffer): Buffer;
+    verifySpkac(spkac: Buffer): boolean;
+}
 export declare const fips: boolean;
 export declare function createCredentials(details: CredentialDetails): Credentials;
 export declare function createHash(algorithm: string): Hash;
@@ -157,52 +160,5 @@ export declare function getCurves(): string[];
 export declare function getHashes(): string[];
 export declare function createECDH(curve_name: string): ECDH;
 export declare function timingSafeEqual(a: Buffer, b: Buffer): boolean;
-const M = require('crypto');
-const K = [
-    "createCipher",
-    "createCipheriv",
-    "createDecipher",
-    "createDecipheriv",
-    "createDiffieHellman",
-    "createDiffieHellmanGroup",
-    "createECDH",
-    "createHash",
-    "createHmac",
-    "createSign",
-    "createVerify",
-    "getCiphers",
-    "getCurves",
-    "getDiffieHellman",
-    "getHashes",
-    "pbkdf2",
-    "pbkdf2Sync",
-    "privateDecrypt",
-    "privateEncrypt",
-    "prng",
-    "pseudoRandomBytes",
-    "publicDecrypt",
-    "publicEncrypt",
-    "randomBytes",
-    "randomFill",
-    "randomFillSync",
-    "rng",
-    "setEngine",
-    "timingSafeEqual",
-    "Certificate",
-    "Cipher",
-    "Cipheriv",
-    "Decipher",
-    "Decipheriv",
-    "DiffieHellman",
-    "DiffieHellmanGroup",
-    "ECDH",
-    "Hash",
-    "Hmac",
-    "Sign",
-    "Verify",
-    "DEFAULT_ENCODING",
-    "constants"
-];
-K.forEach(k=>{
-    module.exports[k]= M[k];
-});
+
+proxy('crypto', module);

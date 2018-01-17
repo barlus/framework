@@ -41,7 +41,7 @@ declare const process;
  */
 let uniqueId = 0;
 /**
- * Tag styles with this string to get unique hashes.
+ * Component styles with this string to get unique hashes.
  */
 const IS_UNIQUE = '__DO_NOT_DEDUPE_STYLE__';
 const upperCasePattern = /[A-Z]/g;

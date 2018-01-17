@@ -13,9 +13,16 @@ function Stateless(p:{count:number}){
     return <div>Count:{p.count}</div>
 }
 
+type MyComponentProps = {
+    gago?:number
+};
+
+type MyComponentState = {
+    count: number
+};
+
 @style({color: 'red'})
-class MyComponent extends Component<{ gago?:number }, { count: number }> {
-    state = {count: 0};
+class MyComponent extends Component<MyComponentProps,MyComponentState>{
     componentDidMount() {
         console.info("MOUNTED");
         setInterval(() => this.setState(s => ({

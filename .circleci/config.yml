@@ -15,7 +15,7 @@ jobs:
       - run: mkdir -p artifacts/junit
       - run: yarn test --report artifacts/junit/test-results.xml
       - store_test_results:
-          path: artifacts/junit
+          path: artifacts
       - store_artifacts:
-          path: artifacts/junit
+          path: artifacts
       - run: yarn run release

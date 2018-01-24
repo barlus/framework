@@ -12,10 +12,10 @@ jobs:
       - checkout
       - run: yarn config set workspaces-experimental true
       - run: yarn install
-      - run: mkdir -p ~/junit
-      - run: yarn test --report ~/junit/test-results.xml
+      - run: mkdir -p artifacts/junit
+      - run: yarn test --report artifacts/junit/test-results.xml
       - store_test_results:
-          path: ~/junit
+          path: artifacts/junit
       - store_artifacts:
-          path: ~/junit
+          path: artifacts/junit
       - run: yarn run release

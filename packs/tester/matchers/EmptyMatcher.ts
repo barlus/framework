@@ -1,5 +1,5 @@
 import { EmptyMatchError } from "../errors";
-import { Matcher } from "./matcher";
+import { Matcher } from "./Matcher";
 
 /**
  * Compares types that can be empty e.g. string, object and Array

@@ -10,9 +10,7 @@ let SourceMap;
 try {
     SourceMap = require('source-map').SourceMapConsumer;
     ts.maps = {};
-}catch(ex){
-    console.info(ex)
-}
+}catch(ex){}
 
 
 require.extensions[".ts"] = req;

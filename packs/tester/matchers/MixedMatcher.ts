@@ -2,7 +2,7 @@ import { ContainerMatcher } from "./ContainerMatcher";
 import { EmptyMatcher } from "./EmptyMatcher";
 import { FunctionMatcher } from "./FunctionMatcher";
 import { FunctionSpyMatcher } from "./FunctionSpyMatcher";
-import { Matcher } from "./matcher";
+import { Matcher } from "./Matcher";
 import { NumberMatcher } from "./NumberMatcher";
 import { PropertyMatcher } from "./PropertyMatcher";
 import { StringMatcher } from "./StringMatcher";

@@ -1,7 +1,7 @@
 import {ErrorMatchError, FunctionCallMatchError} from "../errors";
 import {Any, FunctionSpy, TypeMatcher} from "../spying";
 import {FunctionSpyMatcher} from "./FunctionSpyMatcher";
-import {Matcher} from "./matcher";
+import {Matcher} from "./Matcher";
 
 /**
  * Checks whether functions have performed as expected

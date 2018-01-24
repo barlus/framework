@@ -1,6 +1,6 @@
 import { PropertySetMatchError } from "../errors";
 import { PropertySpy } from "../spying";
-import { Matcher } from "./matcher";
+import { Matcher } from "./Matcher";
 
 /**
  * Checks whether properties have performed as expected

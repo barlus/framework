@@ -1,5 +1,5 @@
 import { GreaterThanMatchError, LessThanMatchError } from "../errors";
-import { Matcher } from "./matcher";
+import { Matcher } from "./Matcher";
 
 /**
  * Compares numbers

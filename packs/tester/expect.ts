@@ -8,6 +8,7 @@ import {EmptyMatcher} from './matchers/EmptyMatcher';
 import {StringMatcher} from './matchers/StringMatcher';
 import {Matcher} from './matchers/Matcher';
 import {MatchError} from './errors';
+export {PropertyMatcher,PropertySpy};
 //
 export declare type MatcherConstructor = new (actualValue: any) => MixedMatcher;
 export declare type MatcherFunction = (actualValue: any) => MixedMatcher;
@@ -16,13 +17,13 @@ export interface IExpect {
      * Allows checking of test outcomes
      * @param actualValue - the value or function under test
      */
+    <T>(actualValue: Array<T>): ContainerMatcher<Array<T>, T>;
+    <T>(actualValue: PropertySpy<T>): PropertyMatcher<T>;
+    <T>(actualValue: T): Matcher<T>;
     (actualValue: FunctionSpy | ((...args: Array<any>) => any)): FunctionMatcher;
     (actualValue: number): NumberMatcher;
     (actualValue: object): EmptyMatcher<object>;
     (actualValue: string): StringMatcher;
-    <T>(actualValue: Array<T>): ContainerMatcher<Array<T>, T>;
-    <T>(actualValue: PropertySpy<T>): PropertyMatcher<T>;
-    <T>(actualValue: T): Matcher<T>;
     /**
      * Fails the test with the given message
      * @param message - the message that will be shown in the failure

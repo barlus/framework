@@ -388,6 +388,6 @@ export function spyOn(target: any, functionName: string): RestorableFunctionSpy 
         throw new TypeError(`${functionName} is not a function.`);
     }
 }
-export function spyOnProperty<PropertyType>(target: any, propertyName: string): PropertySpy<PropertyType> {
-    return new PropertySpy<PropertyType>(target, propertyName);
+export function spyOnProperty<T,K extends keyof T>(target: T, propertyName: K ): PropertySpy<K> {
+    return new PropertySpy<K>(target, propertyName);
 }

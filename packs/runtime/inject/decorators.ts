@@ -19,7 +19,6 @@ const reservedNames = ["length", "name", "arguments", "caller", "prototype"];
 export function injectable<T extends any>(target: Constructor<T>): Constructor<T> {
     const params: any[] = Reflect.getMetadata("design:paramtypes", target) || [];
     const injectionTokens: Dictionary<InjectionToken<any>> = Reflect.getOwnMetadata(injectionTokenMetadataKey, target) || {};
-    console.info(injectionTokens);
     Object.keys(injectionTokens).forEach(key => {
         params[+key] = injectionTokens[key];
     });

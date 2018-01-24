@@ -1,5 +1,4 @@
-import globals from './globals'
-
+import {globals} from './globals';
 
 export const METADATA = new Map();
 export const NULL = Symbol('NULL');
@@ -7,7 +6,6 @@ export const NULL = Symbol('NULL');
 function hasOwn(hash,key){
     return Object.prototype.hasOwnProperty.call(hash,key)
 }
-
 function getMapItem(map:Map<any,any>,key:any,factory?){
     let val = map.has(key) ? map.get(key) : NULL;
     if(val===NULL && typeof factory=='function'){
@@ -235,7 +233,7 @@ export function defineMetadata(name: any, value: any, target: Object): void;
  */
 export function defineMetadata(name: any, value: any, target: Object, key: string | symbol): void;
 export function defineMetadata(name: any, value: any, target: Object, key?: string | symbol): void {
-   set({name,value,target,key})
+    set({name,value,target,key})
 }
 /**
  * Gets the metadata value for the provided metadata key on the target object or its prototype chain.
@@ -491,7 +489,6 @@ export function getMetadataKeys(target: Object, key?: string | symbol): any[] {
     }
     return keys;
 }
-
 /**
  * Gets the unique metadata keys defined on the target object.
  * @param target The target object on which the metadata is defined.
@@ -596,33 +593,6 @@ export function deleteMetadata(name: any, target: Object, key?: string | symbol)
     return del({name,target,key})
 }
 
-
-// private init 
-// const reflect = Object.assign(Reflect, {
-//     decorate,
-//     metadata,
-//     defineMetadata,
-//     hasMetadata,
-//     getMetadata,
-//     hasOwnMetadata,
-//     getOwnMetadata,
-//     getMetadataKeys,
-//     deleteMetadata
-// });
-
-// // global declaration of functime annotator
-// declare const global, window;
-// const __ = {
-//     __decorate: decorate,
-//     __metadata: metadata,
-// };
-// if(typeof global!='undefined'){
-//     Object.assign(global, __);
-// }
-// if(typeof window!='undefined'){
-//     Object.assign(window, __);
-// }
-
 Object.assign(globals.Reflect,{
     decorate,
     metadata,
@@ -636,7 +606,6 @@ Object.assign(globals.Reflect,{
     getOwnMetadataKeys,
     deleteMetadata
 });
-
 Object.assign(globals,{
     __decorate:decorate,
     __metadata:metadata,

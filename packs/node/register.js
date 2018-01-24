@@ -4,11 +4,21 @@ const ts = require("typescript");
 const Crypto = require("crypto");
 const Module = require('module');
 
+ts.path = require.resolve('typescript');
+
+let SourceMap;
+try {
+    SourceMap = require('source-map').SourceMapConsumer;
+    ts.maps = {};
+}catch(ex){
+    console.info(ex)
+}
+
+
 require.extensions[".ts"] = req;
 require.extensions[".js"] = req;
 
-ts.path = require.resolve('typescript');
-ts.sys.tryEnableSourceMapsForHost();
+//ts.sys.tryEnableSourceMapsForHost();
 runMain = Module.runMain;
 function hash(dat) {
     return Crypto.createHash('md5').update(dat).digest('hex');
@@ -38,7 +48,8 @@ function req(module, filename) {
             fs.writeFileSync(stamp,output);
         }
     }else{
-        module._compile(compile(source.toString('utf8'), filename), filename);
+        const script = compile(source.toString('utf8'), filename);
+        module._compile(script, filename);
     }
 }
 function compile(source, filename) {
@@ -48,6 +59,8 @@ function compile(source, filename) {
             noEmitHelpers: true,
             module: ts.ModuleKind.CommonJS,
             target: ts.ScriptTarget.ESNext,
+            experimentalDecorators: true,
+            emitDecoratorMetadata: true,
             sourceMap: true,
             allowJs: true
         }
@@ -56,7 +69,11 @@ function compile(source, filename) {
     //sm.file = filename;
     sm.sources[0] = filename;
     delete sm.sourceRoot;
-    result.outputText = result.outputText.replace(/^\/\/#\s+sourceMappingURL=.*$/m, `//# sourceMappingURL=data:application/json;base64,${new Buffer(JSON.stringify(sm), 'utf8').toString('base64')}`)
+    result.sourceMapText = JSON.stringify(sm);
+    if(ts.maps){
+        ts.maps[filename] = new SourceMap(result.sourceMapText)
+    }
+    result.outputText = result.outputText.replace(/^\/\/#\s+sourceMappingURL=.*$/m, `//# sourceMappingURL=data:application/json;base64,${new Buffer(result.sourceMapText, 'utf8').toString('base64')}`)
     //console.info(result.outputText);
     return result.outputText;
 }

@@ -1,0 +1,9 @@
+{
+    "compilerOptions": {
+        "noLib": true,
+        "target": "esnext",
+        "module": "commonjs",
+        "experimentalDecorators": true,
+        "emitDecoratorMetadata": true
+    }
+}

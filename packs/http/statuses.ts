@@ -90,13 +90,10 @@ export const retry = {
   504: true
 };
 
-
-
 /**
  * Populate the statuses map for given codes.
  * @private
  */
-
 function populateStatusesMap(){
   const statuses = Object.create(null);
   Object.keys(codes).forEach((code)=>{

@@ -12,5 +12,6 @@ jobs:
       - checkout
       - run: yarn config set workspaces-experimental true
       - run: yarn install
-      - run: yarn test
+      - run: mkdir -p ~/junit
+      - run: yarn test --reporter ~/junit/test-results.xml
       - run: yarn run release

@@ -11,7 +11,6 @@ export function instanceCachingFactory<T>(factoryFunc: FactoryFunction<T>): Fact
         return instance;
     };
 }
-
 export function predicateAwareClassFactory<T>(predicate: (container: DependencyContainer) => boolean, trueConstructor: Constructor<T>, falseConstructor: Constructor<T>, useCaching = true): FactoryFunction<T> {
     let instance: T;
     let previousPredicate: boolean;

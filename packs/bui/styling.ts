@@ -711,6 +711,7 @@ function composeStyles(container: FreeStyle, selector: string, styles: Styles, i
     }
     return {cache, pid, id}
 }
+
 /**
  * Cache to list to styles.
  */
@@ -719,6 +720,7 @@ function join(arr: string[]): string {
     for (let i = 0; i < arr.length; i++) res += arr[i]
     return res
 }
+
 /**
  * generate map of css number properties
  */

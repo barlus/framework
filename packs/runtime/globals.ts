@@ -1,4 +1,3 @@
-
 declare const window, global;
 
 export const globals = (function (factory) {

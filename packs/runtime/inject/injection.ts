@@ -1,7 +1,13 @@
-
-
-
-import { Constructor, DependencyContainer, InjectionToken, Provider, ClassProvider, ValueProvider, TokenProvider, FactoryProvider } from "./types";
+import {
+    Constructor,
+    DependencyContainer,
+    InjectionToken,
+    Provider,
+    ClassProvider,
+    ValueProvider,
+    TokenProvider,
+    FactoryProvider
+} from "./types";
 
 /** Dependency Container */
 export class Container implements DependencyContainer {
@@ -23,7 +29,6 @@ export class Container implements DependencyContainer {
     }
 
     private _registry = new Map<InjectionToken<any>, [Provider<any>, any]>();
-
     /**
      * Register a dependency provider.
      *
@@ -31,7 +36,10 @@ export class Container implements DependencyContainer {
      */
     public register<T>(provider: Provider<T>): void {
         // If constructor
-        if (!Container.isClassProvider(provider) && !Container.isTokenProvider(provider) && !Container.isValueProvider(provider) && !Container.isFactoryProvider(provider)) {
+        if (!Container.isClassProvider(provider) &&
+            !Container.isTokenProvider(provider) &&
+            !Container.isValueProvider(provider) &&
+            !Container.isFactoryProvider(provider)) {
             if (!this.isRegistered(provider)) {
                 this._registry.set(provider, [provider, undefined]);
             }
@@ -41,7 +49,42 @@ export class Container implements DependencyContainer {
             }
         }
     }
-
+    /**
+     * Register a token with value.
+     */
+    public useValue<T>(token: InjectionToken<T>,factory:T){
+        this.register({
+            token:token,
+            useValue:factory,
+        });
+    }
+    /**
+     * Register a token provider.
+     */
+    public useToken<T>(token: InjectionToken<T>,factory:InjectionToken<T>){
+        this.register({
+            token:token,
+            useToken:factory,
+        });
+    }
+    /**
+     * Register a class provider.
+     */
+    public useClass<T>(token: InjectionToken<T>,factory:Constructor<T>){
+        this.register({
+            token:token,
+            useClass:factory,
+        });
+    }
+    /**
+     * Register a factory provider.
+     */
+    public useFactory<T>(token: InjectionToken<T>,factory:(dependencyContainer: DependencyContainer) => T){
+        this.register({
+            token:token,
+            useFactory:factory,
+        });
+    }
     /**
      * Resolve a token into an instance
      *
@@ -82,8 +125,6 @@ export class Container implements DependencyContainer {
 
     /**
      * Check if the given dependency is registered
-     *
-     * @return {boolean}
      */
     public isRegistered<T>(token: InjectionToken<T>): boolean {
         return this._registry.has(token);

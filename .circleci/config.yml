@@ -14,4 +14,8 @@ jobs:
       - run: yarn install
       - run: mkdir -p ~/junit
       - run: yarn test --reporter ~/junit/test-results.xml
+      - store_test_results:
+          path: ~/junit
+      - store_artifacts:
+          path: ~/junit
       - run: yarn run release

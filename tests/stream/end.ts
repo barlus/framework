@@ -1,7 +1,6 @@
 import {suite,test,expect} from '@barlus/tester';
-import {Defer, delay, swallowErrors, track} from '@vendor/stream/util';
+import {Defer, delay, swallow, Track} from '@vendor/stream/util';
 import {BaseTest} from './base';
-import {AlreadyHaveReaderError} from '@vendor/stream/errors';
 import {Transform} from '@vendor/stream';
 
 
@@ -16,7 +15,7 @@ class StreamEndingTest extends BaseTest {
     @test.case()
     async mapsValues(a:number[],b:number[]){
         const mapped = this.s.map((n) => n * 2);
-        const writes = [track(this.s.write(1)), track(this.s.write(2)), track(this.s.end())];
+        const writes = [new Track(this.s.write(1)), new Track(this.s.write(2)), new Track(this.s.end())];
         this.readInto(mapped, this.results);
         await this.s.result();
         expect(this.results).toEqual([2, 4]);
@@ -34,9 +33,9 @@ class StreamEndingTest extends BaseTest {
                 return n * 2;
             }
         });
-        const writes = [track(this.s.write(1)), track(this.s.write(2)), track(this.s.end())];
+        const writes = [new Track(this.s.write(1)), new Track(this.s.write(2)), new Track(this.s.end())];
         writes.forEach((t): void => {
-            swallowErrors(t.promise);
+            swallow(t.promise);
         });
         this.readInto(mapped, this.results);
         await this.settle([this.s.result()]);
@@ -55,9 +54,9 @@ class StreamEndingTest extends BaseTest {
                 return n * 2;
             }
         });
-        const writes = [track(this.s.write(1)), track(this.s.write(2)), track(this.s.end())];
+        const writes = [new Track(this.s.write(1)), new Track(this.s.write(2)), new Track(this.s.end())];
         writes.forEach((t): void => {
-            swallowErrors(t.promise);
+            swallow(t.promise);
         });
         this.readInto(mapped, this.results);
         await this.settle([this.s.result()]);
@@ -79,10 +78,10 @@ class StreamEndingTest extends BaseTest {
                 }
             );
         });
-        const writes = [track(this.s.write(1)), track(this.s.write(2)), track(this.s.end())];
+        const writes = [new Track(this.s.write(1)), new Track(this.s.write(2)), new Track(this.s.end())];
 
         const mapped = slowEndingSource.map((n) => n * 2);
-        const mres = track(mapped.result());
+        const mres = new Track(mapped.result());
         this.readInto(mapped, this.results);
 
         await this.settle([writes[0].promise, writes[1].promise]);
@@ -109,14 +108,14 @@ class StreamEndingTest extends BaseTest {
                 }
             );
         };
-        const w1 = track(this.s.write(1));
-        const w2 = track(this.s.write(2));
-        const we = track(this.s.end());
+        const w1 = new Track(this.s.write(1));
+        const w2 = new Track(this.s.write(2));
+        const we = new Track(this.s.end());
 
         const mapped = this.s.map((n) => n * 2);
-        const mres = track(mapped.result());
+        const mres = new Track(mapped.result());
         const slowed = mapped.transform(slowEnder);
-        const sres = track(slowed.result());
+        const sres = new Track(slowed.result());
         this.readInto(slowed, this.results);
 
         await delay(1);
@@ -140,8 +139,8 @@ class StreamEndingTest extends BaseTest {
             (e) => { endResult = e; return d.promise; }
         );
         this.readInto(mapped, this.results);
-        const w1 = track(this.s.write(1));
-        const we = track(this.s.end());
+        const w1 = new Track(this.s.write(1));
+        const we = new Track(this.s.end());
 
         await delay(1);
         expect(this.results).toEqual([2]);
@@ -164,14 +163,14 @@ class StreamEndingTest extends BaseTest {
             (n) => n * 2,
             (e) => { endResult = e; return d.promise; }
         );
-        const r = track(this.readInto(mapped, this.results));
-        const w1 = track(this.s.write(1));
-        const we = track(this.s.end());
-        const res = track(this.s.result());
+        const r = new Track(this.readInto(mapped, this.results));
+        const w1 = new Track(this.s.write(1));
+        const we = new Track(this.s.end());
+        const res = new Track(this.s.result());
         [r, w1, we, res].forEach((t): void => {
-            swallowErrors(t.promise);
+            swallow(t.promise);
         });
-        swallowErrors(mapped.result());
+        swallow(mapped.result());
 
         await delay(1);
         expect(this.results).toEqual([2]);
@@ -204,13 +203,13 @@ class StreamEndingTest extends BaseTest {
                 throw new Error("some other error");
             }
         );
-        const w1 = track(this.s.write(1));
-        const we = track(this.s.end());
-        const res = track(this.s.result());
+        const w1 = new Track(this.s.write(1));
+        const we = new Track(this.s.end());
+        const res = new Track(this.s.result());
         [w1, we, res].forEach((t): void => {
-            swallowErrors(t.promise);
+            swallow(t.promise);
         });
-        swallowErrors(mapped.result());
+        swallow(mapped.result());
 
         await this.settle([res.promise]);
         expect(this.results).toEqual([2]);
@@ -231,10 +230,10 @@ class StreamEndingTest extends BaseTest {
             (n) => n * 2,
             (e) => { mapEndResult = e; throw this.boomError; }
         );
-        const w1 = track(this.s.write(1));
-        const we = track(this.s.end(endError));
-        const res = track(this.s.result());
-        swallowErrors(mapped.result());
+        const w1 = new Track(this.s.write(1));
+        const we = new Track(this.s.end(endError));
+        const res = new Track(this.s.result());
+        swallow(mapped.result());
 
         let forEachEndResult: Error = null;
         const d = new Defer();
@@ -286,7 +285,7 @@ class StreamEndingTest extends BaseTest {
     @test.case()
     async abortsFromSource(a:number[],b:number[]){
         const sink = this.s.map(this.identity).map(this.identity);
-        const ab = track(sink.aborted());
+        const ab = new Track(sink.aborted());
         this.s.abort(this.abortError);
         await this.settle([ab.promise]);
         expect(ab.reason).toEqual(this.abortError);
@@ -294,7 +293,7 @@ class StreamEndingTest extends BaseTest {
     @test
     @test.case()
     async abortsFromSink(a:number[],b:number[]){
-        const ab = track(this.s.aborted());
+        const ab = new Track(this.s.aborted());
         const sink = this.s.map(this.identity).map(this.identity);
         sink.abort(this.abortError);
         await this.settle([ab.promise]);

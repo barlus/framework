@@ -3,6 +3,13 @@ import "./stream/basic"
 
 
 
+
+
+
+
+
+
+
 @suite
 class BasicTest {
     @test("example test")

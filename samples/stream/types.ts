@@ -1,7 +1,6 @@
 export interface Transform<In, Out> {
     (readable: Readable<In>, writable: Writable<Out>): void;
 }
-
 /**
  * Required methods for both readable and writable parts of a stream.
  */
@@ -56,7 +55,6 @@ export interface Common<T> {
      */
     aborted(): Promise<void>;
 }
-
 /**
  * Required methods for the readable part of a stream.
  */
@@ -113,7 +111,6 @@ export interface Readable<T> extends Common<T> {
         aborter?: (error: Error) => void
     ): Promise<void>;
 }
-
 /**
  * Required methods for the writable part of a stream.
  */
@@ -165,7 +162,9 @@ export interface Writable<T> extends Common<T> {
      */
     end(error?: Error, result?: PromiseLike<void>): Promise<void>;
 }
-
+/**
+ * Common stream functionality for readable and writable streams
+ */
 export interface CommonStream<T> {
     /**
      * Determine whether `end()` has been called on the stream, but the stream
@@ -199,7 +198,6 @@ export interface CommonStream<T> {
      */
     hasReader(): boolean;
 }
-
 /**
  * Readable part of a generic Stream, which contains handy helpers such as
  * .map() in addition to the basic requirements of a Readable interface.
@@ -222,12 +220,7 @@ export interface ReadableStream<T> extends Readable<T>, CommonStream<T> {
      * @param aborter Called when stream is aborted
      * @return New stream with mapped values
      */
-    map<R>(
-        mapper: (value: T) => R | PromiseLike<R>,
-        ender?: (error?: Error) => void | PromiseLike<void>,
-        aborter?: (error: Error) => void
-    ): ReadableStream<R>;
-
+    map<R>(mapper: (value: T) => R | PromiseLike<R>, ender?: (error?: Error) => void | PromiseLike<void>, aborter?: (error: Error) => void): ReadableStream<R>;
     /**
      * Run all input values through a filtering callback. If the filter callback
      * returns a truthy value (or a promise for a truthy value), the input value
@@ -248,12 +241,7 @@ export interface ReadableStream<T> extends Readable<T>, CommonStream<T> {
      * @param aborter  Called when stream is aborted
      * @return New stream with filtered values.
      */
-    filter(
-        filterer: (value: T) => boolean | PromiseLike<boolean>,
-        ender?: (error?: Error) => void | PromiseLike<void>,
-        aborter?: (error: Error) => void
-    ): ReadableStream<T>;
-
+    filter(filterer: (value: T) => boolean | PromiseLike<boolean>,ender?: (error?: Error) => void | PromiseLike<void>,aborter?: (error: Error) => void): ReadableStream<T>;
     /**
      * Reduce the stream into a single value by calling a reducer callback for
      * each value in the stream. Similar to `Array#reduce()`.
@@ -286,10 +274,7 @@ export interface ReadableStream<T> extends Readable<T>, CommonStream<T> {
      *                 value is given, first value of stream is used.
      * @return Promise for final accumulator.
      */
-    reduce(
-        reducer: (accumulator: T, current: T, index: number, stream: ReadableStream<T>) => T | PromiseLike<T>,
-        initial?: T
-    ): Promise<T>;
+    reduce(reducer: (accumulator: T, current: T, index: number, stream: ReadableStream<T>) => T | PromiseLike<T>,initial?: T): Promise<T>;
     /**
      * Reduce the stream into a single value by calling a reducer callback for
      * each value in the stream. Similar to `Array#reduce()`.
@@ -322,11 +307,7 @@ export interface ReadableStream<T> extends Readable<T>, CommonStream<T> {
      *                 value is given, first value of stream is used.
      * @return Promise for final accumulator.
      */
-    reduce<R>(
-        reducer: (accumulator: R, current: T, index: number, stream: ReadableStream<T>) => R | PromiseLike<R>,
-        initial: R
-    ): Promise<R>;
-
+    reduce<R>(reducer: (accumulator: R, current: T, index: number, stream: ReadableStream<T>) => R | PromiseLike<R>,initial: R): Promise<R>;
     /**
      * Read all stream values into an array.
      *
@@ -336,7 +317,6 @@ export interface ReadableStream<T> extends Readable<T>, CommonStream<T> {
      * @return Promise for an array of all stream values
      */
     toArray(): Promise<T[]>;
-
     /**
      * Read all values and end-of-stream from this stream, writing them to
      * `writable`.
@@ -345,7 +325,6 @@ export interface ReadableStream<T> extends Readable<T>, CommonStream<T> {
      * @return The stream passed in, for easy chaining
      */
     pipe<R extends Writable<T>>(writable: R): R;
-
     /**
      * Return a new stream with the results of running the given
      * transform.
@@ -356,7 +335,6 @@ export interface ReadableStream<T> extends Readable<T>, CommonStream<T> {
      */
     transform<R>(transformer: Transform<T, R>): ReadableStream<R>;
 }
-
 /**
  * Writable part of a generic Stream, which contains handy helpers such as
  * .mappedBy() in addition to the basic requirements of a Writable interface.
@@ -393,44 +371,4 @@ export interface WritableStream<T> extends Writable<T>, CommonStream<T> {
     // TODO Experimental
     // TODO Not sure whether a 'reverse' function confuses more than it helps
     filterBy(filterer: (value: T) => boolean | PromiseLike<boolean>): WritableStream<T>;
-}
-
-export interface Deferred<T=void> {
-    promise: Promise<T>;
-    reject: (reason: Error) => void;
-    resolve: (value?:T|PromiseLike<T>) => void;
-}
-
-/**
- * Used to track the status of a promise
- */
-export interface TrackedPromise<T> {
-    /**
-     * Promise not fulfilled/rejected yet
-     */
-    isPending: boolean;
-    /**
-     * Promise is rejected; error is in 'reason' member
-     */
-    isRejected: boolean;
-    /**
-     * Promise is fulfilled, value is in 'value' member
-     */
-    isFulfilled: boolean;
-    /**
-     * The original promise
-     */
-    promise: PromiseLike<T>;
-    /**
-     * The error for a rejection
-     */
-    reason?: Error;
-    /**
-     * The value when fulfilled
-     */
-    value?: T;
-}
-
-export interface TrackedVoidPromise extends TrackedPromise<void> {
-    value?: void;
 }

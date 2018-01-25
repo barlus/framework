@@ -10,8 +10,8 @@ import * as NodeStream from "@barlus/node/stream";
 import * as fs from "@barlus/node/fs";
 
 import {Stream} from "./stream";
-import {Readable, VoidDeferred} from "./types";
-import {defer, swallowErrors} from "./util";
+import {Readable} from "./types";
+import {Defer, swallow} from "./util";
 
 
 /**
@@ -29,7 +29,6 @@ import {defer, swallowErrors} from "./util";
  */
 export class NodeReadable<T> extends NodeStream.Readable {
     private _resumer: (value?: void | PromiseLike<void>) => void;
-
     /**
      * Create new NodeJS Readable based on given ts-stream Readable.
      *
@@ -40,14 +39,14 @@ export class NodeReadable<T> extends NodeStream.Readable {
      */
     constructor(tsReadable: Readable<T>, options?: NodeStream.ReadableOptions) {
         super(options);
-        swallowErrors(tsReadable.forEach(
+        swallow(tsReadable.forEach(
             (chunk: any): void | Promise<void> => {
                 // Try to push data, returns true if there's still space
                 if (this.push(chunk)) {
                     return;
                 }
                 // Stream blocked, wait until _read() is called
-                let d = defer();
+                let d = new Defer();
                 this._resumer = d.resolve;
                 return d.promise;
             },
@@ -139,8 +138,8 @@ export function pipeToNodeStream<T>(
     nodeWritable: NodeStream.WritableStream,
     emitError: boolean = false
 ): Promise<void> {
-    let endDeferred = defer();
-    let blockedDeferred: VoidDeferred;
+    let endDeferred = new Defer();
+    let blockedDeferred: Defer<void>;
 
     // Handle errors emitted by node stream: abort ts-stream
     function handleNodeStreamError(error: Error): void {
@@ -179,7 +178,7 @@ export function pipeToNodeStream<T>(
             let canAcceptMore = nodeWritable.write(chunk);
             if (!canAcceptMore) {
                 // Stream blocked, wait until drain is emitted
-                blockedDeferred = defer();
+                blockedDeferred = new Defer();
                 nodeWritable.once("drain", blockedDeferred.resolve);
                 return blockedDeferred.promise;
             }

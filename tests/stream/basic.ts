@@ -1,6 +1,6 @@
 import {suite,test,expect} from '@barlus/tester';
 import {Stream,ReadableStream} from '@vendor/stream';
-import {Defer, track} from '@vendor/stream/util';
+import {Defer, Track} from '@vendor/stream/util';
 import {BaseTest} from './base';
 import {WriteAfterEndError} from '../../samples/stream/errors';
 
@@ -81,9 +81,9 @@ class StreamBasicTest extends BaseTest {
     @test
     @test.case()
     async disallowsMultipleEnd(){
-        const p1 = track(this.s.end());
-        const p2 = track(this.s.end());
-        const p3 = track(this.readInto(this.s, this.results));
+        const p1 = new Track(this.s.end());
+        const p2 = new Track(this.s.end());
+        const p3 = new Track(this.readInto(this.s, this.results));
         await this.settle([p1.promise, p2.promise, p3.promise]);
         expect(p1.isFulfilled).toEqual(true);
         expect(p2.reason instanceof WriteAfterEndError).toEqual(true);
@@ -94,10 +94,10 @@ class StreamBasicTest extends BaseTest {
     @test
     @test.case()
     async writeFailsOnSynchronouslyRejection(){
-        const wp1 = track(this.s.write(Promise.reject<number>(this.boomError)));
-        const wp2 = track(this.s.write(42));
-        const ep = track(this.s.end());
-        const rp = track(this.readInto(this.s, this.results));
+        const wp1 = new Track(this.s.write(Promise.reject<number>(this.boomError)));
+        const wp2 = new Track(this.s.write(42));
+        const ep = new Track(this.s.end());
+        const rp = new Track(this.readInto(this.s, this.results));
         await this.settle([wp1.promise, wp2.promise, ep.promise, rp.promise]);
         expect(wp1.reason).toEqual(this.boomError);
         expect(wp2.isFulfilled).toEqual(true);
@@ -111,10 +111,10 @@ class StreamBasicTest extends BaseTest {
     @test.case()
     async writeFailsOnSynchronouslyRejection2(){
         const d = new Defer<number>();
-        const wp1 = track(this.s.write(d.promise));
-        const wp2 = track(this.s.write(42));
-        const ep = track(this.s.end());
-        const rp = track(this.readInto(this.s, this.results));
+        const wp1 = new Track(this.s.write(d.promise));
+        const wp2 = new Track(this.s.write(42));
+        const ep = new Track(this.s.end());
+        const rp = new Track(this.readInto(this.s, this.results));
         d.reject(this.boomError);
         await this.settle([wp1.promise, wp2.promise, ep.promise, rp.promise]);
         expect(wp1.reason).toEqual(this.boomError);
@@ -134,7 +134,7 @@ class StreamWriteTest extends BaseTest {
     @test
     @test.case()
     async handlesEmptyStream(a:number[],b:number[]){
-        const result = track(this.s.write(undefined));
+        const result = new Track(this.s.write(undefined));
         await this.settle([result.promise]);
         expect(result.reason instanceof TypeError).toBe(true);
     }

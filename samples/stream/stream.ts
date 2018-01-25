@@ -1,33 +1,22 @@
 import {ok} from "@barlus/node/assert";
 import {AlreadyHaveReaderError, WriteAfterEndError} from "./errors";
 import {map, filter} from "./transform";
-import {Defer, swallowErrors, track} from "./util";
-import {ReadableStream, Deferred, Transform, Writable, WritableStream, TrackedPromise} from "./types"
-interface WriteItem<T> {
-    /**
-     * Resolver `write()`'s returned promise
-     */
-    resolveWrite: (done?: void | PromiseLike<void>) => void;
+import {Defer, swallow, Track} from "./util";
+import {ReadableStream,  Transform, Writable, WritableStream} from "./types"
 
-    /**
-     * Promise for value passed to `write()`.
-     * Either a special Eof value, or a value of type `T`.
-     */
-    value: Eof | TrackedPromise<T>;
-}
 export class Stream<T> implements ReadableStream<T>, WritableStream<T> {
     private _writers: WriteItem<T>[] = [];
     private _reader: (value: T) => void | PromiseLike<void>;
     private _ender: (error?: Error) => void | PromiseLike<void>;
     private _aborter: (error: Error) => void;
-    private _readBusy: TrackedPromise<void>;
+    private _readBusy: Track<void>;
     private _ending: Eof;
     private _endPending: Eof;
     private _ended: Error;
     private _abortPromise: Promise<void>;
     private _abortReason: Error;
-    private _abortDeferred: Deferred<void> = new Defer();
-    private _resultDeferred: Deferred<void> = new Defer();
+    private _abortDeferred: Defer<void> = new Defer();
+    private _resultDeferred: Defer<void> = new Defer();
     public async write(value: T | PromiseLike<T>): Promise<void> {
         if (value === undefined) {
             // Technically, we could allow this, but it's a common programming
@@ -41,10 +30,7 @@ export class Stream<T> implements ReadableStream<T>, WritableStream<T> {
         }
 
         let writeDone = new Defer();
-        this._writers.push({
-            resolveWrite: writeDone.resolve,
-            value: track<T>(Promise.resolve(value)),
-        });
+        this._writers.push(new WriteItem(writeDone.resolve,new Track<T>(Promise.resolve(value))));
         this._pump();
         return writeDone.promise;
     }
@@ -55,7 +41,7 @@ export class Stream<T> implements ReadableStream<T>, WritableStream<T> {
         }
         if (error && !endedResult) {
             endedResult = Promise.reject(error);
-            swallowErrors(endedResult);
+            swallow(endedResult);
         }
         let eof = new Eof(error, endedResult);
         if (!this._ending && !this._ended) {
@@ -70,7 +56,7 @@ export class Stream<T> implements ReadableStream<T>, WritableStream<T> {
         this._pump();
         return writeDone.promise;
     }
-    public forEach(reader: (value: T) => void | PromiseLike<void>,ender?: (error?: Error) => void | PromiseLike<void>,aborter?: (error: Error) => void): Promise<void> {
+    public forEach(reader: (value: T) => void | PromiseLike<void>, ender?: (error?: Error) => void | PromiseLike<void>, aborter?: (error: Error) => void): Promise<void> {
         if (this.hasReader()) {
             return Promise.reject(new AlreadyHaveReaderError());
         }
@@ -169,7 +155,7 @@ export class Stream<T> implements ReadableStream<T>, WritableStream<T> {
         this.aborted().catch((abortError) => {
             // Swallow errors from the end call, as they will be reflected in
             // result() too
-            swallowErrors(this.end(abortError));
+            swallow(this.end(abortError));
         });
         let loop = (): void | Promise<void> => {
             if (this._abortPromise) {
@@ -220,7 +206,7 @@ export class Stream<T> implements ReadableStream<T>, WritableStream<T> {
         if (this._abortPromise && this._aborter) {
             // Make sure to call it asynchronously, and without a 'this'
             // TODO: can any error thrown from the aborter be handled?
-            swallowErrors(this._abortPromise.catch(this._aborter));
+            swallow(this._abortPromise.catch(this._aborter));
             this._aborter = undefined;
         }
 
@@ -279,7 +265,7 @@ export class Stream<T> implements ReadableStream<T>, WritableStream<T> {
                     break;
                 }
                 // Reject all non-end write()'s with abort reason
-                swallowErrors(writer.value.promise);
+                swallow(writer.value.promise);
                 writer.resolveWrite(this._abortPromise);
                 this._writers.shift();
             }
@@ -322,18 +308,14 @@ export class Stream<T> implements ReadableStream<T>, WritableStream<T> {
             this._ender = undefined; // Prevent calling again
             // Call with end error or override with abort reason if any
             let enderArg = this._abortPromise ? this._abortReason : eof.error;
-            this._readBusy = track(Promise.resolve(eof).then((eofValue) => ender(enderArg)));
+            this._readBusy = new Track(Promise.resolve(eof).then((eofValue) => ender(enderArg)));
         } else {
-            this._readBusy = track(writer.value.promise.then(this._reader));
+            this._readBusy = new Track(writer.value.promise.then(this._reader));
         }
         this._readBusy.promise.then(this._pumper, this._pumper);
     }
 }
-function defaultEnder(err?: Error): void | Promise<void> {
-    if (err) {
-        return Promise.reject(err);
-    }
-}
+
 const EOF = new Error("eof");
 class Eof {
     public error?: Error;
@@ -341,5 +323,26 @@ class Eof {
     constructor(error?: Error, result?: PromiseLike<void>) {
         this.error = error;
         this.result = result;
+    }
+}
+class WriteItem<T> {
+    /**
+     * Resolver `write()`'s returned promise
+     */
+    readonly resolveWrite: (done?: void | PromiseLike<void>) => void;
+    /**
+     * Promise for value passed to `write()`.
+     * Either a special Eof value, or a value of type `T`.
+     */
+    readonly value: Eof | Track<T>;
+    constructor(resolveWrite:(done?: void | PromiseLike<void>) => void, value:Eof | Track<T>){
+        this.resolveWrite = resolveWrite;
+        this.value = value;
+    }
+}
+
+function defaultEnder(err?: Error): void | Promise<void> {
+    if (err) {
+        return Promise.reject(err);
     }
 }

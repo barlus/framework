@@ -1,5 +1,5 @@
 import {suite, test, expect} from '@barlus/tester';
-import {Defer, delay, swallowErrors, track} from '@vendor/stream/util';
+import {Defer, delay, swallow, Track} from '@vendor/stream/util';
 import {BaseTest} from './base';
 import {Stream} from '@vendor/stream';
 
@@ -111,9 +111,9 @@ class StreamReduceTest extends BaseTest {
     @test @test.case()
     async acceptPromiseFromReducer() {
         const d = new Defer<number>();
-        const reduceResult = track(this.s.reduce(() => d.promise, 0));
+        const reduceResult = new Track(this.s.reduce(() => d.promise, 0));
 
-        const writeResult = track(this.s.write(1));
+        const writeResult = new Track(this.s.write(1));
         await delay(1);
         expect(reduceResult.isPending).toEqual(true);
         expect(writeResult.isPending).toEqual(true);
@@ -129,17 +129,17 @@ class StreamReduceTest extends BaseTest {
     }
     @test @test.case()
     async returnsErrorWhenStreamIsEmpty() {
-        const reduceResult = track(this.s.reduce(() => 0));
+        const reduceResult = new Track(this.s.reduce(() => 0));
         this.s.end();
         await this.settle([reduceResult.promise]);
         expect(reduceResult.reason instanceof TypeError).toBe(true);
     }
     @test @test.case()
     async returnThrownErrorToWriter() {
-        const reduceResult = track(this.s.reduce((prev, curr): number => {
+        const reduceResult = new Track(this.s.reduce((prev, curr): number => {
             throw this.boomError;
         }, 0));
-        const writeResult = track(this.s.write(1));
+        const writeResult = new Track(this.s.write(1));
         await this.settle([writeResult.promise]);
         expect(reduceResult.isPending).toEqual(true);
         expect(writeResult.reason).toEqual(this.boomError);
@@ -149,8 +149,8 @@ class StreamReduceTest extends BaseTest {
     }
     @test @test.case()
     async returnRejectedErrorToWriter() {
-        const reduceResult = track(this.s.reduce((prev, curr) => Promise.reject<number>(this.boomError), 0));
-        const writeResult = track(this.s.write(1));
+        const reduceResult = new Track(this.s.reduce((prev, curr) => Promise.reject<number>(this.boomError), 0));
+        const writeResult = new Track(this.s.write(1));
         await this.settle([writeResult.promise]);
         expect(reduceResult.isPending).toEqual(true);
         expect(writeResult.reason).toEqual(this.boomError);
@@ -170,16 +170,16 @@ class StreamReduceTest extends BaseTest {
     }
     @test @test.case()
     async returnsEndErrorIfEndedWithError() {
-        swallowErrors(this.s.result());
-        const result = track(this.s.toArray());
-        swallowErrors(this.s.end(this.boomError));
+        swallow(this.s.result());
+        const result = new Track(this.s.toArray());
+        swallow(this.s.end(this.boomError));
         await this.settle([result.promise]);
         expect(result.reason).toEqual(this.boomError);
     }
     @test @test.case()
     async callsCallbackUntilUndefined() {
         const values = [1, 2, undefined, 3];
-        const writeResult = track(this.s.writeEach(() => values.shift()));
+        const writeResult = new Track(this.s.writeEach(() => values.shift()));
         await this.s.forEach((v) => {
             this.results.push(v);
         });
@@ -191,7 +191,7 @@ class StreamReduceTest extends BaseTest {
     @test @test.case()
     async waitForNextCallUntilPreviousProcessed() {
         const values = [1, 2];
-        const writeResult = track(this.s.writeEach(() => values.shift()));
+        const writeResult = new Track(this.s.writeEach(() => values.shift()));
         await delay(1);
         expect(values).toEqual([2]);
 
@@ -204,8 +204,8 @@ class StreamReduceTest extends BaseTest {
     }
     @test @test.case()
     async handlesSynchronousExceptionInWriter() {
-        swallowErrors(this.s.result());
-        const writeResult = track(this.s.writeEach(() => {
+        swallow(this.s.result());
+        const writeResult = new Track(this.s.writeEach(() => {
             throw this.boomError;
         }));
         const fe = this.s.forEach(this.noop);
@@ -216,7 +216,7 @@ class StreamReduceTest extends BaseTest {
     @test @test.case()
     async handlesAllValuesAndStreamEndAsPromises() {
         const values = [1, 2];
-        const writeResult = track(this.s.writeEach(() => Promise.resolve(values.shift())));
+        const writeResult = new Track(this.s.writeEach(() => Promise.resolve(values.shift())));
         const fe = this.s.forEach((v) => {
             this.results.push(v);
         });
@@ -226,12 +226,12 @@ class StreamReduceTest extends BaseTest {
     }
     @test @test.case()
     async abortsAndEndsWithErrorOnWriteError() {
-        swallowErrors(this.s.result());
-        const ab = track(this.s.aborted());
+        swallow(this.s.result());
+        const ab = new Track(this.s.aborted());
         const values = [1, 2, 3];
-        const writeResult = track(this.s.writeEach(() => values.shift()));
+        const writeResult = new Track(this.s.writeEach(() => values.shift()));
         let endResult: Error = null;
-        const forEachResult = track(this.s.forEach(
+        const forEachResult = new Track(this.s.forEach(
             (v) => {
                 if (v === 2) {
                     return Promise.reject(this.boomError);
@@ -251,11 +251,11 @@ class StreamReduceTest extends BaseTest {
     }
     @test @test.case()
     async abortsAndEndsWithErrorOnNormalEndError() {
-        swallowErrors(this.s.result());
-        const ab = track(this.s.aborted());
+        swallow(this.s.result());
+        const ab = new Track(this.s.aborted());
         const values = [1, 2];
-        const writeResult = track(this.s.writeEach(() => values.shift()));
-        const forEachResult = track(this.s.forEach(
+        const writeResult = new Track(this.s.writeEach(() => values.shift()));
+        const forEachResult = new Track(this.s.forEach(
             this.noop,
             (error?: Error) => Promise.reject(this.boomError)
         ));
@@ -268,12 +268,12 @@ class StreamReduceTest extends BaseTest {
     }
     @test @test.case()
     async endsWithErrorOnEndErrorAfterAbort() {
-        swallowErrors(this.s.result());
-        const ab = track(this.s.aborted());
+        swallow(this.s.result());
+        const ab = new Track(this.s.aborted());
         const values = [1, 2];
-        const writeResult = track(this.s.writeEach(() => values.shift()));
+        const writeResult = new Track(this.s.writeEach(() => values.shift()));
         this.s.abort(this.abortError);
-        const forEachResult = track(this.s.forEach(
+        const forEachResult = new Track(this.s.forEach(
             this.noop,
             (error?: Error) => Promise.reject(this.boomError)
         ));
@@ -286,11 +286,11 @@ class StreamReduceTest extends BaseTest {
     }
     @test @test.case()
     async handlesAbortBounce() {
-        swallowErrors(this.s.result());
-        swallowErrors(this.s.aborted());
+        swallow(this.s.result());
+        swallow(this.s.aborted());
         const values = [1, 2, 3];
-        const writeResult = track(this.s.writeEach(() => values.shift()));
-        const forEachResult = track(this.s.forEach(
+        const writeResult = new Track(this.s.writeEach(() => values.shift()));
+        const forEachResult = new Track(this.s.forEach(
             (v) => {
                 if (v === 2) {
                     return Promise.reject(this.boomError);
@@ -307,13 +307,13 @@ class StreamReduceTest extends BaseTest {
     }
     @test @test.case()
     async endsOnAbort() {
-        swallowErrors(this.s.result());
-        swallowErrors(this.s.aborted());
+        swallow(this.s.result());
+        swallow(this.s.aborted());
         const values = [1, 2, 3];
-        const writeResult = track(this.s.writeEach(() => values.shift()));
+        const writeResult = new Track(this.s.writeEach(() => values.shift()));
         let endResult: Error = null;
         const d = new Defer();
-        const forEachResult = track(this.s.forEach(
+        const forEachResult = new Track(this.s.forEach(
             (v) => d.promise,
             (err?) => {
                 endResult = err;
@@ -375,10 +375,10 @@ class StreamReduceTest extends BaseTest {
     @test @test.case()
     async abortsOnWriteError() {
         const x = Stream.from([1, 2]);
-        swallowErrors(x.result());
-        swallowErrors(x.aborted());
+        swallow(x.result());
+        swallow(x.aborted());
         let endResult: Error = null;
-        const result = track(x.forEach(
+        const result = new Track(x.forEach(
             (v) => {
                 if (v === 2) {
                     return Promise.reject(this.boomError);
@@ -396,9 +396,9 @@ class StreamReduceTest extends BaseTest {
     @test @test.case()
     async handlesAbortBounce2() {
         const x = Stream.from([1, 2]);
-        swallowErrors(x.result());
-        swallowErrors(x.aborted());
-        const result = track(x.forEach(
+        swallow(x.result());
+        swallow(x.aborted());
+        const result = new Track(x.forEach(
             (v) => {
                 if (v === 2) {
                     return Promise.reject(this.boomError);
@@ -414,11 +414,11 @@ class StreamReduceTest extends BaseTest {
     @test @test.case()
     async endsOnAbort2() {
         const x = Stream.from([1, 2]);
-        swallowErrors(x.result());
-        swallowErrors(x.aborted());
+        swallow(x.result());
+        swallow(x.aborted());
         let endResult: Error = null;
         const d = new Defer();
-        const result = track(x.forEach(
+        const result = new Track(x.forEach(
             (v) => d.promise,
             (err?) => {
                 endResult = err;

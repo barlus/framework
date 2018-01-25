@@ -40,7 +40,7 @@ export class BaseTest {
                         resolve(undefined);
                     }
                 }
-            );
+            ).catch(this.noop);
         });
     }
 
@@ -55,7 +55,6 @@ export class BaseTest {
         this.abortError = new Error("abort error");
         this.results = [];
         this.promises = [];
-
     }
 
 }

@@ -1,5 +1,5 @@
 import {suite,test,expect} from '@barlus/tester';
-import {Defer, delay, swallowErrors, track} from '@vendor/stream/util';
+import {Defer, delay, swallow, Track} from '@vendor/stream/util';
 import {BaseTest} from './base';
 import {WriteAfterEndError} from '@vendor/stream/errors';
 
@@ -12,8 +12,8 @@ class StreamAbortTest extends BaseTest {
     @test
     @test.case()
     async abortsPendingWrites(a:number[],b:number[]){
-        const w1 = track(this.s.write(1));
-        const w2 = track(this.s.write(2));
+        const w1 = new Track(this.s.write(1));
+        const w2 = new Track(this.s.write(2));
         this.s.abort(this.abortError);
         await this.settle([w1.promise, w2.promise]);
         expect(w1.reason).toEqual(this.abortError);
@@ -23,29 +23,30 @@ class StreamAbortTest extends BaseTest {
     @test.case()
     async abortsPendingWrites2(a:number[],b:number[]){
         this.s.abort(this.abortError);
-        const w1 = track(this.s.write(1));
-        const w2 = track(this.s.write(2));
+        const w1 = new Track(this.s.write(1));
+        const w2 = new Track(this.s.write(2));
         await this.settle([w1.promise, w2.promise]);
         expect(w1.reason).toEqual(this.abortError);
         expect(w2.reason).toEqual(this.abortError);
     }
+
     @test
     @test.case()
     async waitForReadThenAbort(a:number[],b:number[]){
-        swallowErrors(this.s.aborted());
-        swallowErrors(this.s.result());
+        swallow(this.s.aborted());
+        swallow(this.s.result());
 
         const endDef = new Defer();
         const endSeen = new Defer();
-        swallowErrors(endDef.promise);
+        swallow(endDef.promise);
         const r1 = new Defer();
         const reads = [r1.promise];
         let endResult: Error = null;
 
-        const w1 = track(this.s.write(1));
-        const w2 = track(this.s.write(2));
+        const w1 = new Track(this.s.write(1));
+        const w2 = new Track(this.s.write(2));
 
-        swallowErrors(this.s.forEach(
+        swallow(this.s.forEach(
             (v) => {
                 this.results.push(v);
                 return reads.shift();
@@ -63,7 +64,7 @@ class StreamAbortTest extends BaseTest {
         expect(this.results).toEqual([1]);
 
         this.s.abort(this.abortError);
-        const w3 = track(this.s.write(3));
+        const w3 = new Track(this.s.write(3));
         await delay(1);
         expect(w1.isPending).toEqual(true);
         expect(w2.isPending).toEqual(true);
@@ -78,7 +79,7 @@ class StreamAbortTest extends BaseTest {
         expect(this.results).toEqual([1]);
         expect(endResult).toEqual(null);
 
-        const we = track(this.s.end(new Error("end error")));
+        const we = new Track(this.s.end(new Error("end error")));
         await endSeen.promise;
         expect(endResult).toEqual(this.abortError);
         expect(we.isPending).toEqual(true);
@@ -102,13 +103,13 @@ class StreamAbortTest extends BaseTest {
     @test
     @test.case()
     async cabBeCalledInReader(a:number[],b:number[]){
-        swallowErrors(this.s.aborted());
-        swallowErrors(this.s.result());
+        swallow(this.s.aborted());
+        swallow(this.s.result());
         let endResult: Error = null;
-        const w1 = track(this.s.write(1));
-        const w2 = track(this.s.write(2));
+        const w1 = new Track(this.s.write(1));
+        const w2 = new Track(this.s.write(2));
         const r1 = new Defer();
-        swallowErrors(this.s.forEach(
+        swallow(this.s.forEach(
             (v) => { this.s.abort(this.abortError); return r1.promise; },
             (e) => { endResult = e; }
         ));
@@ -123,7 +124,7 @@ class StreamAbortTest extends BaseTest {
         expect(w2.reason).toEqual(this.abortError);
         expect(endResult).toEqual(null);
 
-        const we = track(this.s.end());
+        const we = new Track(this.s.end());
         await this.settle([we.promise]);
         expect(endResult).toEqual(this.abortError);
         expect(we.value).toEqual(undefined);
@@ -131,10 +132,10 @@ class StreamAbortTest extends BaseTest {
     @test
     @test.case()
     async cabBeCalledInReader2(a:number[],b:number[]){
-        swallowErrors(this.s.aborted());
-        swallowErrors(this.s.result());
+        swallow(this.s.aborted());
+        swallow(this.s.result());
         let endResult: Error = null;
-        const w1 = track(this.s.write(1));
+        const w1 = new Track(this.s.write(1));
         const r1 = new Defer();
         const firstAbortError = new Error("first abort error");
         this.s.abort(firstAbortError);
@@ -149,7 +150,7 @@ class StreamAbortTest extends BaseTest {
 
         this.s.abort(this.abortError);
         r1.resolve();
-        const we = track(this.s.end());
+        const we = new Track(this.s.end());
         await this.settle([we.promise]);
         expect(endResult).toEqual(firstAbortError);
         expect(we.value).toEqual(undefined);
@@ -158,7 +159,7 @@ class StreamAbortTest extends BaseTest {
     @test.case()
     async asynchronouslyCallAbortWhenAlreadyReading(a:number[],b:number[]){
         let abortResult: Error = null;
-        const w1 = track(this.s.write(1));
+        const w1 = new Track(this.s.write(1));
         const r1 = new Defer();
         this.s.forEach(
             (v) => r1.promise,
@@ -181,11 +182,11 @@ class StreamAbortTest extends BaseTest {
     @test
     @test.case()
     async asynchronouslyCallAbortWhenNotReading(a:number[],b:number[]){
-        swallowErrors(this.s.aborted());
-        swallowErrors(this.s.result());
+        swallow(this.s.aborted());
+        swallow(this.s.result());
         let abortResult: Error = null;
         const abortSeen = new Defer();
-        const w1 = track(this.s.write(1));
+        const w1 = new Track(this.s.write(1));
         this.s.forEach(
             (v) => undefined,
             undefined,
@@ -206,10 +207,10 @@ class StreamAbortTest extends BaseTest {
     @test
     @test.case()
     async asynchronouslyCallAbortWhenAttachingLate(a:number[],b:number[]){
-        swallowErrors(this.s.aborted());
-        swallowErrors(this.s.result());
+        swallow(this.s.aborted());
+        swallow(this.s.result());
 
-        const w1 = track(this.s.write(1));
+        const w1 = new Track(this.s.write(1));
         await delay(1);
         this.s.abort(this.abortError);
 
@@ -218,7 +219,7 @@ class StreamAbortTest extends BaseTest {
 
         let abortResult: Error = null;
         const abortSeen = new Defer();
-        swallowErrors(this.s.forEach(
+        swallow(this.s.forEach(
             (v) => undefined,
             undefined,
             (e) => {
@@ -234,8 +235,8 @@ class StreamAbortTest extends BaseTest {
     @test
     @test.case()
     async noLongerCallsAbortOnFinish(a:number[],b:number[]) {
-        const w1 = track(this.s.write(1));
-        const we = track(this.s.end());
+        const w1 = new Track(this.s.write(1));
+        const we = new Track(this.s.end());
         let abortResult: Error = null;
         this.s.forEach(
             (v) => undefined,
@@ -250,7 +251,7 @@ class StreamAbortTest extends BaseTest {
         expect(we.isFulfilled).toEqual(true);
 
         this.s.abort(this.abortError);
-        const ab = track(this.s.aborted());
+        const ab = new Track(this.s.aborted());
 
         await this.settle([ab.promise]);
         await delay(1);
@@ -260,7 +261,7 @@ class StreamAbortTest extends BaseTest {
     @test
     @test.case()
     async rejectWhenAbortCalled(a:number[],b:number[]) {
-        const ab = track(this.s.aborted());
+        const ab = new Track(this.s.aborted());
         await delay(1);
         expect(ab.isPending).toEqual(true);
         this.s.abort(this.abortError);
@@ -270,7 +271,7 @@ class StreamAbortTest extends BaseTest {
     @test
     @test.case()
     async rejectWhenAbortCalledAfterEnd(a:number[],b:number[]) {
-        const ab = track(this.s.aborted());
+        const ab = new Track(this.s.aborted());
         this.s.end();
         await this.s.forEach(()=>void 0);
         expect(ab.isPending).toEqual(true);

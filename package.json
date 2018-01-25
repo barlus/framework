@@ -20,13 +20,9 @@
         "typescript": "next"
     },
     "resolutions": {
-        "@barlus/bui": "0.0.8",
-        "@barlus/compiler": "0.0.8",
-        "@barlus/http": "0.0.8",
-        "@barlus/node": "0.0.8",
-        "@barlus/runtime": "0.0.8",
-        "@barlus/std": "0.0.8",
-        "@barlus/tar": "0.0.8",
-        "@barlus/tester": "0.0.8"
+        "@barlus/compiler": "0.0.9",
+        "@barlus/node": "0.0.9",
+        "@barlus/runtime": "0.0.9",
+        "@barlus/std": "0.0.9"
     }
 }

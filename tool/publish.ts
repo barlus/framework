@@ -1,4 +1,4 @@
-import {chalk} from '@barlus/http/utils/chalk';
+import {chalk} from '@barlus/node/chalk';
 import {glob} from '@barlus/node/glob';
 import {readFileSync, unlinkSync, writeFileSync} from '@barlus/node/fs';
 import {dirname, relative, resolve} from '@barlus/node/path';

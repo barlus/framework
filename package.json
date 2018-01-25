@@ -21,7 +21,6 @@
     },
     "resolutions": {
         "@barlus/bui": "0.0.8",
-        "@barlus/ceylon": "0.0.8",
         "@barlus/compiler": "0.0.8",
         "@barlus/http": "0.0.8",
         "@barlus/node": "0.0.8",

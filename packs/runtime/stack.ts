@@ -46,6 +46,7 @@ export class Stack {
         return `${this.name}\n`+this.calls.map(s=>`${s.toString()}`).join('\n');
     }
 }
+Error['prepareStackTrace'] = prepareStack;
 function prepareStack(target, stack) {
     target.stack = stack.map(c => {
         //console.info(c.getFunction());
@@ -58,4 +59,7 @@ function prepareStack(target, stack) {
             c.getFunctionName(),
         );
     })
+    if(target instanceof Error){
+        target.stack = target.message+target.stack.map(s=>s.toString()).join('\n');
+    }
 }

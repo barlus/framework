@@ -1,12 +1,13 @@
 import {suite,test,expect} from '@barlus/tester';
+import "./stream/basic"
+
+
 
 @suite
 class BasicTest {
-
-    @test
-    @test.case(1,1,2)
-    @test.case(5,6,11)
-    public testBasicSum(a:number,b:number,c:number){
-        expect(a+b).toBe(c)
+    @test("example test")
+    @test.case([1, 2, 3, 4],[1, 2, 3, 4])
+    async testBasicSum(a:number[],b:number[]){
+        expect(a).toEqual(b);
     }
 }

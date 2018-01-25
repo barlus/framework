@@ -1,7 +1,8 @@
 import {process} from "@barlus/node/process";
+import {chalk} from "@barlus/node/chalk";
 import {Plan, Probe, Suite, Test} from "../core";
 import {TestReporter} from "../reporter";
-import {chalk} from "./colors";
+
 
 const line: string = chalk.gray(pad(80));
 export class CliReporter extends TestReporter {

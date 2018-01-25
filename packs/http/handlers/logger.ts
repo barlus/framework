@@ -1,5 +1,5 @@
 
-import {chalk} from '../utils/chalk'
+import {chalk} from '@barlus/node/chalk'
 import {bytes} from '../utils/bytes'
 import {Counter} from '../utils/passthrough-counter'
 

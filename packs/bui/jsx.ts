@@ -67,6 +67,7 @@ declare global {
             b: Attributes;
             div: Attributes;
             span: Attributes;
+	    c: Attributes & {[k:string]:any};
         }
         //
         export interface Element extends JsxElement {

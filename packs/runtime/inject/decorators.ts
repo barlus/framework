@@ -22,12 +22,18 @@ export function injectable<T extends any>(target: Constructor<T>): Constructor<T
     Object.keys(injectionTokens).forEach(key => {
         params[+key] = injectionTokens[key];
     });
-    return Class(params, injection, target) as Constructor<T>;
+    const DecoratedClass = Class(params, injection, target) ;
+    Object.defineProperty(DecoratedClass,'name',{
+        configurable:true,
+        value:target.name
+    });
+    return DecoratedClass as Constructor<T>;
 }
+
 /**
  * Parameter decorator factory that allows for interface information to be stored in the constructor's metadata
  *
- * @return {Function} The parameter decorator
+ * @return The parameter decorator
  */
 export function inject(target: any, _propertyKey: string | symbol, parameterIndex: number): any {
     const injectionToken = Reflect.getOwnMetadata("design:paramtypes", target)[parameterIndex];

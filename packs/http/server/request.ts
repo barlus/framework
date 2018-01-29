@@ -8,9 +8,8 @@ import {fresh} from '../utils/fresh';
 import {parseContentType} from '../content/content-type';
 import {ServerRequest, ServerResponse} from "@barlus/node/http";
 import {Context} from "./context";
-
-
 export class Request {
+
   memoizedURL:URL;
   _querycache:any;
 
@@ -187,7 +186,6 @@ export class Request {
    * @return {Object}
    * @api public
    */
-
   get query() {
     const str = this.querystring as string;
     const c:any = this._querycache = this._querycache || {};
@@ -200,7 +198,6 @@ export class Request {
    * @param {Object} obj
    * @api public
    */
-
   set query(obj) {
     this.querystring = stringify(obj);
   }
@@ -225,7 +222,6 @@ export class Request {
    * @param {String} str
    * @api public
    */
-
   set querystring(str) {
     const url = parse(this.req.url);
     if (url.search === `?${str}`) {

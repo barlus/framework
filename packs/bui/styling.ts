@@ -102,7 +102,7 @@ export class TypeStyle {
      * We have a single stylesheet that we update as components register themselves
      */
     private _lastFreeStyleChangeId: number;
-    constructor({autoGenerateTag}: { autoGenerateTag: boolean }) {
+    constructor({autoGenerateTag} : { autoGenerateTag: boolean } = { autoGenerateTag: true }) {
         const freeStyle = FreeStyle.create({debug:true});
         this._autoGenerateTag = autoGenerateTag;
         this._freeStyle = freeStyle;

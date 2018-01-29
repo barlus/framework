@@ -1,14 +1,4 @@
 import {suite,test,expect} from '@barlus/tester';
-import "./stream/basic"
-
-
-
-
-
-
-
-
-
 
 @suite
 class BasicTest {

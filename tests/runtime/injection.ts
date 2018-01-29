@@ -23,6 +23,7 @@ class InjectionTest {
             }
         };
         container.useValue<Config>("config",this.config);
+
     }
 
     @test

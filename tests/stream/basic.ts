@@ -2,7 +2,7 @@ import {suite,test,expect} from '@barlus/tester';
 import {Stream,ReadableStream} from '@vendor/stream';
 import {Defer, Track} from '@vendor/stream/util';
 import {BaseTest} from './base';
-import {WriteAfterEndError} from '../../samples/stream/errors';
+import {WriteAfterEndError} from '@vendor/stream/errors';
 
 @suite
 class StreamBasicTest extends BaseTest {

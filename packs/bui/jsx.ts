@@ -32,7 +32,7 @@ declare global {
             defaultProps?: any;
         }
         export interface ComponentProps<C extends Component<any, any> | FunctionalComponent<any>> {
-            children?: JSX.Node[];
+            children?: JSX.Node[]|JSX.Node;
             key?: string | number | any;
             ref?: (el: C) => void;
         }
@@ -65,9 +65,10 @@ declare global {
         export interface IntrinsicElements {
             a: Attributes & { href?: string };
             b: Attributes;
+            c: Attributes & {[k:string]:any};
             div: Attributes;
             span: Attributes;
-	    c: Attributes & {[k:string]:any};
+
         }
         //
         export interface Element extends JsxElement {

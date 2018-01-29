@@ -23,7 +23,8 @@ export class Call {
         }
     }
     toString(){
-        return ` at ${this.className?this.className+'.':''}${this.methodName||this.functionName||''} (${this.url}:${this.line}:${this.column})`
+        const source = this.url ? `(${this.url}:${this.line}:${this.column})`:'';
+        return ` at ${this.className?this.className+'.':''}${this.methodName||this.functionName||'<anonymus>'} ${source}`
     }
 }
 export class Stack {
@@ -48,7 +49,7 @@ export class Stack {
 }
 Error['prepareStackTrace'] = prepareStack;
 function prepareStack(target, stack) {
-    target.stack = stack.map(c => {
+    const calls = stack.map(c => {
         //console.info(c.getFunction());
         return new Call(
             c.getFileName() || c.getScriptNameOrSourceURL(),
@@ -58,8 +59,11 @@ function prepareStack(target, stack) {
             c.getMethodName(),
             c.getFunctionName(),
         );
-    })
+    });
+
     if(target instanceof Error){
-        target.stack = target.message+target.stack.map(s=>s.toString()).join('\n');
+        target.stack = target.message+'\n'+calls.map(s=>s.toString()).join('\n');
+    }else{
+        target.stack = calls
     }
 }

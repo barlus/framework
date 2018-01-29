@@ -1,50 +1,67 @@
 import '@barlus/runtime';
-import {CSSProperties, TypeStyle, Component, React} from '@barlus/bui';
-const ts = new TypeStyle({
+import {container} from '@barlus/runtime/inject/injection';
+import {injectable} from '@barlus/runtime/inject/decorators';
+import {style, React, Component, TypeStyle} from '@barlus/bui';
+
+container.useValue(TypeStyle, new TypeStyle({
     autoGenerateTag: true
-});
-function style(css: CSSProperties) {
-    return (target: any) => {
-        ts.cssRule(`.${target.name}`, css);
+}));
+
+@injectable
+class Test {
+    public ts: TypeStyle;
+
+    constructor(ts: TypeStyle) {
+        this.ts = ts;
+        console.info(ts);
     }
 }
 
-function Stateless(p:{count:number}){
-    return <div>Count:{p.count}</div>
-}
-
-type MyComponentProps = {
-    gago?:number
-};
-
-type MyComponentState = {
-    count: number
-};
-
-@style({color: 'red'})
-class MyComponent extends Component<MyComponentProps,MyComponentState>{
-    componentDidMount() {
-        console.info("MOUNTED");
-        setInterval(() => this.setState(s => ({
-            count: s.count + 1
-        })), 1000);
+@injectable
+@style({
+    display: 'flex',
+    flex: 1
+})
+class Layout extends Component<{ direction: 'vertical' | 'horizontal', class?: string }> {
+    private ts: TypeStyle;
+    constructor() {
+        console.info("TYPESTYLE");
+        super();
     }
     render() {
-        return (
-            <div>
-                <div class={'556'}>{this.props.children}</div>
-                <Stateless count={this.state.count}/>
-            </div>
-        );
+        const test = container.resolve(Test);
+        test.ts.cssRule('.horizontal', {flexDirection: 'row'});
+        test.ts.cssRule('.vertical', {flexDirection: 'column'});
+        console.info(this.props.direction);
+        return <div class={[this.props.class, this.props.direction].join(' ')}>{this.props.children}</div>
     }
 }
 
-const comp = <div>
-    <a href="5656565">1</a>
-    2 {3}{true}{false}{null} 4
-    <MyComponent gago={1000}>5{6}{[<b>7</b>, '8']}</MyComponent>
-</div>;
+@injectable
+@style({
+    backgroundColor: 'red',
+    $nest: {
+        "&>.Layout.vertical":{
+            backgroundColor:'green'
+        }
+    }
+})
+class App extends Component<{}> {
+    render() {
+        return <Layout direction={'horizontal'}>
+            <Layout direction={'vertical'}>
+                <div class="one">V1</div>
+                <div>V1</div>
+                <div>V1</div>
+            </Layout>
+            <Layout direction={'horizontal'}>
+                <div>V2</div>
+                <div>V2</div>
+                <div>V2</div>
+                <div>V2</div>
+            </Layout>
+        </Layout>
+    }
+}
 
-console.info(comp);
-
-React.render(comp, document.body);
+React.render(<App/>, document.body);

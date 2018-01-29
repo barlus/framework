@@ -1,28 +1,36 @@
 {
-    "name": "@barlus/framework",
-    "version": "0.0.8",
-    "description": "Barlus Project",
-    "author": "Mamble LLC",
-    "repository": "https://github.com/barlus/framework.git",
-    "license": "MIT",
-    "private": true,
-    "flat": true,
-    "workspaces": [
-        "packs/*",
-        "tests/*",
-        "samples/*"
-    ],
-    "scripts": {
-        "test": "tester ./tests/index.ts",
-        "release": "node -r @barlus/node/register ./tool/publish.ts"
-    },
-    "devDependencies": {
-        "typescript": "next"
-    },
-    "resolutions": {
-        "@barlus/compiler": "0.0.9",
-        "@barlus/node": "0.0.9",
-        "@barlus/runtime": "0.0.9",
-        "@barlus/std": "0.0.9"
-    }
+  "name": "@barlus/framework",
+  "version": "0.0.10",
+  "description": "Barlus Project",
+  "author": "Mamble LLC",
+  "repository": "https://github.com/barlus/framework.git",
+  "license": "MIT",
+  "private": true,
+  "flat": true,
+  "workspaces": [
+    "packs/*",
+    "tests/*",
+    "samples/*"
+  ],
+  "scripts": {
+    "test": "tester ./tests/index.ts",
+    "release": "node -r @barlus/node/register ./tool/publish.ts",
+    "list": "node -r @barlus/node/register ./tool/list.ts",
+    "versions": "node -r @barlus/node/register ./tool/version.ts"
+  },
+  "devDependencies": {
+    "typescript": "next"
+  },
+  "resolutions": {
+    "@barlus/compiler": "0.0.10",
+    "@barlus/node": "0.0.10",
+    "@barlus/runtime": "0.0.10",
+    "@barlus/std": "0.0.10",
+    "@barlus/bui": "0.0.10",
+    "@barlus/http": "0.0.10",
+    "@barlus/tar": "0.0.10",
+    "@barlus/tester": "0.0.10",
+    "@vendor/client": "0.0.10",
+    "@vendor/server": "0.0.10"
+  }
 }

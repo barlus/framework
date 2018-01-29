@@ -24,13 +24,13 @@ const IS_NON_DIMENSIONAL = /acit|ex(?:s|g|n|p|$)|rph|ows|mnc|ntw|ine[ch]|zoo|^or
 const defer = Promise.resolve().then.bind(Promise.resolve());
 const options = JSX.options;
 
-export class Component<P = {}, S = {}> extends JsxComponent<P, S> {
+export class ReactComponent<P = {}, S = {}> extends JsxComponent<P, S> {
     public _disable: boolean;
-    public _parentComponent?: Component<any, any>;
-    public _component?: Component<any, any>;
+    public _parentComponent?: ReactComponent<any, any>;
+    public _component?: ReactComponent<any, any>;
     public _dirty: boolean;
     public __key: boolean;
-    public __ref: (component: Component) => void;
+    public __ref: (component: ReactComponent) => void;
     public _renderCallbacks: Function[];
     public context: any;
     public base: Element;
@@ -93,15 +93,15 @@ export class Renderer {
     protected hydrating:boolean = false;
     protected mounts: any = [];
     protected components: any = {};
-    protected items: Component[] = [];
+    protected items: ReactComponent[] = [];
     protected dom:Document = null;
     public setup(dom:Document){
         this.dom = dom;
         JSX.renderer.render = <P=any, S=any>(component: JSX.Component, force?: boolean, state?: Partial<S> | ((prev: S, props?: P) => Partial<S>), callback?: () => void): boolean => {
             if(force){
-                this.renderComponent(component as Component, FORCE_RENDER);
+                this.renderComponent(component as ReactComponent, FORCE_RENDER);
             }else{
-                this.queueComponent(component as Component)
+                this.queueComponent(component as ReactComponent)
             }
             return true;
         };
@@ -352,7 +352,7 @@ export class Renderer {
             }
         }
     }
-    protected queueComponent(component: Component){
+    protected queueComponent(component: ReactComponent){
         if (!component._dirty && (component._dirty = true) && this.items.push(component) == 1) {
             defer(() => {
                 const list = this.items;
@@ -366,7 +366,7 @@ export class Renderer {
             });
         }
     }
-    protected renderComponent(component: Component, opts?: number, mountAll?: any, isChild?: any) {
+    protected renderComponent(component: ReactComponent, opts?: number, mountAll?: any, isChild?: any) {
         if (component._disable) {
             return;
         }
@@ -488,7 +488,7 @@ export class Renderer {
             this.flushMounts();
         }
     }
-    protected setComponentProps(component: Component, props: Dictionary, opts: number, context: object, mountAll: boolean) {
+    protected setComponentProps(component: ReactComponent, props: Dictionary, opts: number, context: object, mountAll: boolean) {
         if (component._disable) {
             return;
         }
@@ -565,7 +565,7 @@ export class Renderer {
         }
         return node;
     }
-    protected unmountComponent(component: Component) {
+    protected unmountComponent(component: ReactComponent) {
         if (options.beforeUnmount) {
             options.beforeUnmount(component);
         }
@@ -616,12 +616,12 @@ export class Renderer {
     }
     protected createComponentClass(Ctor: Function): JSX.ComponentConstructor<any, any> {
         let Comp: any;
-        if (Ctor.prototype && Ctor.prototype instanceof Component) {
+        if (Ctor.prototype && Ctor.prototype instanceof ReactComponent) {
             Comp = Ctor
         } else {
             Comp = Ctor[COMPONENT_CLASS];
             if (!Comp) {
-                Comp = class FunctionComponent extends Component<any, any> {
+                Comp = class FunctionComponent extends ReactComponent<any, any> {
                     render(props: any, state: any) {
                         return Ctor.call(this, props, state);
                     }
@@ -770,7 +770,7 @@ export const React = globals.React = {
             value : new this.Renderer()
         }).renderer;
     },
-    Component: Component,
+    Component: ReactComponent,
     Renderer: Renderer,
     createElement: createElement,
     cloneElement: cloneElement,

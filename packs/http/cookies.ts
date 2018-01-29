@@ -88,13 +88,12 @@ export class Cookies {
     }
   }
 
-  public set(name, value, opts) {
-    const res = this.response
-      , req = this.request
-    ;let headers = res.getHeader("Set-Cookie") || []
-      , secure = this.secure !== undefined ? !!this.secure : req.protocol === 'https' || req.connection.encrypted
-    ;const cookie = new Cookie(name, value, opts)
-      , signed = opts && opts.signed !== undefined ? opts.signed : !!this.keys;
+  public set(name, value, opts?) {
+    const res = this.response, req = this.request;
+    let headers = res.getHeader("Set-Cookie") || [];
+    let secure = this.secure !== undefined ? !!this.secure : req.protocol === 'https' || req.connection.encrypted;
+    const cookie = new Cookie(name, value, opts);
+    let signed = opts && opts.signed !== undefined ? opts.signed : !!this.keys;
 
     if (typeof headers == "string") {
       headers = [headers];
@@ -123,7 +122,7 @@ export class Cookies {
     //
     // const setHeader = res.set ? OutgoingMessage.prototype.setHeader : res.setHeader;
     // setHeader.call(res, 'Set-Cookie', headers);
-      res.set('Set-Cookie',headers);
+      res.setHeader('Set-Cookie',headers);
     return this
   }
 }
@@ -134,13 +133,13 @@ export class Cookie {
   public path = "/";
   public expires = undefined;
   public domain = undefined;
-  public httpOnly = true;
+  public httpOnly = false;
   public sameSite: string | boolean = false;
   public secure = false;
   public overwrite = false;
   public maxAge: number;
 
-  constructor(name, value, attrs) {
+  constructor(name, value, attrs?) {
     if (!fieldContentRegExp.test(name)) {
       throw new TypeError('argument name is invalid');
     }

@@ -129,8 +129,8 @@ async function publishProject(project){
         env: process.env
     });
     removeRcFiles(project);
-
 }
+
 async function compareProject(project){
     let subpath = relative(project.projectRoot,project.packageRoot);
     const newProject = project;

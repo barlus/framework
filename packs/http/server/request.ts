@@ -213,7 +213,8 @@ export class Request {
     if (!this.req) {
       return '';
     }
-    return parse(this.req.url).search || '';
+    let qs = parseUrl(this.req).search;
+    return qs && qs.substr(1) || '';
   }
 
   /**

@@ -65,9 +65,10 @@ declare global {
         export interface IntrinsicElements {
             a: Attributes & { href?: string };
             b: Attributes;
-            c: Attributes;
+            c: Attributes & {[k:string]:any};
             div: Attributes;
             span: Attributes;
+
         }
         //
         export interface Element extends JsxElement {

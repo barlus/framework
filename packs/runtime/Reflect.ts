@@ -639,4 +639,3 @@ declare global {
         export const getOwnMetadataKeys: getOwnMetadataKeys;
     }
 }
-export {}

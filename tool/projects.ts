@@ -2,7 +2,6 @@ import {glob} from '@barlus/node/glob';
 import {resolve,dirname,relative} from '@barlus/node/path';
 import {process} from '@barlus/node/process';
 import {readFileSync, writeFileSync} from '@barlus/node/fs';
-import {chalk} from '../packs/node/chalk';
 const envProps = Object.keys(process.env);
 const npmProps = envProps.filter(k=>{
     let key = k.toLowerCase();

@@ -24,7 +24,7 @@ const PATH_REGEXP = new RegExp([
  * @param  {Object=} options
  * @return {!Array}
  */
-export function parse (str, options) {
+export function parse (str:string, options:{delimiter:string}) {
   const tokens = [];
   let key = 0;
   let index = 0;
@@ -398,7 +398,7 @@ export function tokensToRegExp (tokens, keys, options) {
  */
 export function pathToRegexp (path, keys, options?) {
   if (!Array.isArray(keys)) {
-    options = /** @type {!Object} */ (keys || options);
+    options = (keys || options);
     keys = []
   }
 

@@ -11,7 +11,7 @@ class InjectionTest {
     @suite.setup
     public setup(){
         this.config = {
-            application:'I Am Application',
+            application:'I Am HttpApplication',
             service:{
                 serviceName:'Service Name'
             },

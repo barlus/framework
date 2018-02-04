@@ -184,5 +184,4 @@ export declare class Buffer extends Uint8Array {
     keys(): IterableIterator<number>;
     values(): IterableIterator<number>;
 }
-
 proxy('buffer', module);

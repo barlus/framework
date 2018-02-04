@@ -27,9 +27,9 @@
  * CTL           = <any US-ASCII control character (octets 0 - 31) and DEL (127)>
  * OCTET         = <any 8-bit sequence of data>
  */
-var paramRegExp = /; *([!#$%&'\*\+\-\.0-9A-Z\^_`a-z\|~]+) *= *("(?:[ !\u0023-\u005b\u005d-\u007e\u0080-\u00ff]|\\[\u0020-\u007e])*"|[!#$%&'\*\+\-\.0-9A-Z\^_`a-z\|~]+) */g;
-var textRegExp = /^[\u0020-\u007e\u0080-\u00ff]+$/;
-var tokenRegExp = /^[!#$%&'\*\+\-\.0-9A-Z\^_`a-z\|~]+$/;
+const paramRegExp = /; *([!#$%&'\*\+\-\.0-9A-Z\^_`a-z\|~]+) *= *("(?:[ !\u0023-\u005b\u005d-\u007e\u0080-\u00ff]|\\[\u0020-\u007e])*"|[!#$%&'\*\+\-\.0-9A-Z\^_`a-z\|~]+) */g;
+const textRegExp = /^[\u0020-\u007e\u0080-\u00ff]+$/;
+const tokenRegExp = /^[!#$%&'\*\+\-\.0-9A-Z\^_`a-z\|~]+$/;
 
 /**
  * RegExp to match quoted-pair in RFC 2616
@@ -37,12 +37,12 @@ var tokenRegExp = /^[!#$%&'\*\+\-\.0-9A-Z\^_`a-z\|~]+$/;
  * quoted-pair = "\" CHAR
  * CHAR        = <any US-ASCII character (octets 0 - 127)>
  */
-var qescRegExp = /\\([\u0000-\u007f])/g;
+const qescRegExp = /\\([\u0000-\u007f])/g;
 
 /**
  * RegExp to match chars that must be quoted-pair in RFC 2616
  */
-var quoteRegExp = /([\\"])/g;
+const quoteRegExp = /([\\"])/g;
 
 /**
  * RegExp to match type in RFC 6838
@@ -60,11 +60,9 @@ var quoteRegExp = /([\\"])/g;
  * ALPHA =  %x41-5A / %x61-7A   ; A-Z / a-z
  * DIGIT =  %x30-39             ; 0-9
  */
-var subtypeNameRegExp = /^[A-Za-z0-9][A-Za-z0-9!#$&^_.-]{0,126}$/;
-var typeNameRegExp = /^[A-Za-z0-9][A-Za-z0-9!#$&^_-]{0,126}$/;
-var typeRegExp = /^ *([A-Za-z0-9][A-Za-z0-9!#$&^_-]{0,126})\/([A-Za-z0-9][A-Za-z0-9!#$&^_.+-]{0,126}) *$/;
-
-
+const subtypeNameRegExp = /^[A-Za-z0-9][A-Za-z0-9!#$&^_.-]{0,126}$/;
+const typeNameRegExp = /^[A-Za-z0-9][A-Za-z0-9!#$&^_-]{0,126}$/;
+const typeRegExp = /^ *([A-Za-z0-9][A-Za-z0-9!#$&^_-]{0,126})\/([A-Za-z0-9][A-Za-z0-9!#$&^_.+-]{0,126}) *$/;
 
 /**
  * Format object to media type.
@@ -75,52 +73,52 @@ var typeRegExp = /^ *([A-Za-z0-9][A-Za-z0-9!#$&^_-]{0,126})\/([A-Za-z0-9][A-Za-z
  */
 
 export function format(obj) {
-  if (!obj || typeof obj !== 'object') {
-    throw new TypeError('argument obj is required')
-  }
-
-  var parameters = obj.parameters;
-  var subtype = obj.subtype;
-  var suffix = obj.suffix;
-  var type = obj.type;
-
-  if (!type || !typeNameRegExp.test(type)) {
-    throw new TypeError('invalid type')
-  }
-
-  if (!subtype || !subtypeNameRegExp.test(subtype)) {
-    throw new TypeError('invalid subtype')
-  }
-
-  // format as type/subtype
-  var string = type + '/' + subtype;
-
-  // append +suffix
-  if (suffix) {
-    if (!typeNameRegExp.test(suffix)) {
-      throw new TypeError('invalid suffix')
+    if (!obj || typeof obj !== 'object') {
+        throw new TypeError('argument obj is required')
     }
 
-    string += '+' + suffix
-  }
+    let parameters = obj.parameters;
+    let subtype = obj.subtype;
+    const suffix = obj.suffix;
+    let type = obj.type;
 
-  // append parameters
-  if (parameters && typeof parameters === 'object') {
-    var param;
-    var params = Object.keys(parameters).sort();
-
-    for (var i = 0; i < params.length; i++) {
-      param = params[i];
-
-      if (!tokenRegExp.test(param)) {
-        throw new TypeError('invalid parameter name')
-      }
-
-      string += '; ' + param + '=' + quote(parameters[param])
+    if (!type || !typeNameRegExp.test(type)) {
+        throw new TypeError('invalid type')
     }
-  }
 
-  return string
+    if (!subtype || !subtypeNameRegExp.test(subtype)) {
+        throw new TypeError('invalid subtype')
+    }
+
+    // format as type/subtype
+    let string = type + '/' + subtype;
+
+    // append +suffix
+    if (suffix) {
+        if (!typeNameRegExp.test(suffix)) {
+            throw new TypeError('invalid suffix')
+        }
+
+        string += '+' + suffix
+    }
+
+    // append parameters
+    if (parameters && typeof parameters === 'object') {
+        let param;
+        const params = Object.keys(parameters).sort();
+
+        for (let i = 0; i < params.length; i++) {
+            param = params[i];
+
+            if (!tokenRegExp.test(param)) {
+                throw new TypeError('invalid parameter name')
+            }
+
+            string += '; ' + param + '=' + quote(parameters[param])
+        }
+    }
+
+    return string
 }
 
 /**
@@ -132,58 +130,58 @@ export function format(obj) {
  */
 
 export function parse(string) {
-  if (!string) {
-    throw new TypeError('argument string is required')
-  }
-
-  // support req/res-like objects as argument
-  if (typeof string === 'object') {
-    string = getContentType(string)
-  }
-
-  if (typeof string !== 'string') {
-    throw new TypeError('argument string is required to be a string')
-  }
-
-  var index = string.indexOf(';');
-  var type = index !== -1
-    ? string.substr(0, index)
-    : string;
-
-  var key;
-  var match;
-  var obj:any = splitType(type);
-  var params = {};
-  var value;
-
-  paramRegExp.lastIndex = index;
-
-  while (match = paramRegExp.exec(string)) {
-    if (match.index !== index) {
-      throw new TypeError('invalid parameter format')
+    if (!string) {
+        throw new TypeError('argument string is required')
     }
 
-    index += match[0].length;
-    key = match[1].toLowerCase();
-    value = match[2];
-
-    if (value[0] === '"') {
-      // remove quotes and escapes
-      value = value
-        .substr(1, value.length - 2)
-        .replace(qescRegExp, '$1')
+    // support req/res-like objects as argument
+    if (typeof string === 'object') {
+        string = getContentType(string)
     }
 
-    params[key] = value
-  }
+    if (typeof string !== 'string') {
+        throw new TypeError('argument string is required to be a string')
+    }
 
-  if (index !== -1 && index !== string.length) {
-    throw new TypeError('invalid parameter format')
-  }
+    let index = string.indexOf(';');
+    const type = index !== -1
+        ? string.substr(0, index)
+        : string;
 
-  obj.parameters = params;
+    let key;
+    let match;
+    const obj: any = splitType(type);
+    const params = {};
+    let value;
 
-  return obj
+    paramRegExp.lastIndex = index;
+
+    while (match = paramRegExp.exec(string)) {
+        if (match.index !== index) {
+            throw new TypeError('invalid parameter format')
+        }
+
+        index += match[0].length;
+        key = match[1].toLowerCase();
+        value = match[2];
+
+        if (value[0] === '"') {
+            // remove quotes and escapes
+            value = value
+                .substr(1, value.length - 2)
+                .replace(qescRegExp, '$1')
+        }
+
+        params[key] = value
+    }
+
+    if (index !== -1 && index !== string.length) {
+        throw new TypeError('invalid parameter format')
+    }
+
+    obj.parameters = params;
+
+    return obj
 }
 
 /**
@@ -195,15 +193,15 @@ export function parse(string) {
  */
 
 function getContentType(obj) {
-  if (typeof obj.getHeader === 'function') {
-    // res-like
-    return obj.getHeader('content-type')
-  }
+    if (typeof obj.getHeader === 'function') {
+        // res-like
+        return obj.getHeader('content-type')
+    }
 
-  if (typeof obj.headers === 'object') {
-    // req-like
-    return obj.headers && obj.headers['content-type']
-  }
+    if (typeof obj.headers === 'object') {
+        // req-like
+        return obj.headers && obj.headers['content-type']
+    }
 }
 
 /**
@@ -213,19 +211,19 @@ function getContentType(obj) {
  * @return {string}
  * @api private
  */
-function quote(val:string) {
-  var str = `${val}`;
+function quote(val: string) {
+    const str = `${val}`;
 
-  // no need to quote tokens
-  if (tokenRegExp.test(str)) {
-    return str
-  }
+    // no need to quote tokens
+    if (tokenRegExp.test(str)) {
+        return str
+    }
 
-  if (str.length > 0 && !textRegExp.test(str)) {
-    throw new TypeError('invalid parameter value')
-  }
+    if (str.length > 0 && !textRegExp.test(str)) {
+        throw new TypeError('invalid parameter value')
+    }
 
-  return '"' + str.replace(quoteRegExp, '\\$1') + '"'
+    return '"' + str.replace(quoteRegExp, '\\$1') + '"'
 }
 
 /**
@@ -235,28 +233,27 @@ function quote(val:string) {
  * @return {Object}
  * @api private
  */
-
 function splitType(string) {
-  var match = typeRegExp.exec(string.toLowerCase());
+    let match = typeRegExp.exec(string.toLowerCase());
 
-  if (!match) {
-    throw new TypeError('invalid media type')
-  }
+    if (!match) {
+        throw new TypeError('invalid media type')
+    }
 
-  var type = match[1];
-  var subtype = match[2];
-  var suffix;
+    const type = match[1];
+    let subtype = match[2];
+    let suffix;
 
-  // suffix after last +
-  var index = subtype.lastIndexOf('+');
-  if (index !== -1) {
-    suffix = subtype.substr(index + 1);
-    subtype = subtype.substr(0, index)
-  }
+    // suffix after last +
+    const index = subtype.lastIndexOf('+');
+    if (index !== -1) {
+        suffix = subtype.substr(index + 1);
+        subtype = subtype.substr(0, index)
+    }
 
-  return {
-    type: type,
-    subtype: subtype,
-    suffix: suffix
-  }
+    return {
+        type: type,
+        subtype: subtype,
+        suffix: suffix
+    }
 }

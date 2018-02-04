@@ -2,7 +2,6 @@ import {Emitter} from "./events";
 import {Buffer} from './buffer';
 import {proxy} from "./proxy";
 
-
 export interface ReadableOptions {
     highWaterMark?: number;
     encoding?: string;
@@ -214,7 +213,6 @@ export declare class Writable extends Stream implements WritableStream {
     removeListener(event: "pipe", listener: (src: Readable) => void): this;
     removeListener(event: "unpipe", listener: (src: Readable) => void): this;
 }
-
 export declare class Duplex extends Readable implements Writable, ReadWriteStream {
     writable: boolean;
     constructor(opts?: DuplexOptions);
@@ -231,13 +229,101 @@ export declare class Duplex extends Readable implements Writable, ReadWriteStrea
     cork(): void;
     uncork(): void;
 }
-
 export declare class Transform extends Duplex {
     constructor(opts?: TransformOptions);
     _transform(chunk: any, encoding: string, callback: Function): void;
     destroy(error?: Error): void;
 }
-
 export declare class PassThrough extends Transform { }
+
+export class AsyncStream {
+    static async write(iterable:AsyncIterable<Buffer>,writable:Writable){
+        for await (const chunk of iterable){
+            await new Promise((a,r)=>writable.write(chunk,e=>e?r(e):a()));
+        }
+        writable.end();
+    }
+    static from(readable:Readable):AsyncIterableIterator<Buffer>{
+        let started = false;
+        let listening = false;
+        const pullQueue = [];
+        const pushQueue = [];
+        const onError = (error: Error)=>{
+            done(error)
+        };
+        const onData = (data: Buffer) =>{
+            //console.info("CHUNK",data.length);
+            push(data);
+        };
+        const onEnd = () => {
+            //console.info("END");
+            done();
+        };
+        const push = (event: Buffer) => {
+            if (pullQueue.length !== 0) {
+                pullQueue.shift().resolve({value: event, done: false});
+            } else {
+                pushQueue.push(event);
+            }
+        };
+        const pull = () => {
+            return new Promise<IteratorResult<Buffer>>((resolve,reject) => {
+                if (pushQueue.length !== 0) {
+                    resolve({value: pushQueue.shift(), done: false});
+                } else {
+                    pullQueue.push({resolve,reject});
+                }
+            });
+        };
+        const start =()=> {
+            readable.addListener('data', onData);
+            readable.addListener('end', onEnd);
+            readable.addListener('error', onError);
+        };
+        const done = (error?: Error) => {
+            readable.removeListener('data', onData);
+            readable.removeListener('end', onEnd);
+            readable.removeListener('error', onError);
+            if (listening) {
+                listening = false;
+                //console.info(pullQueue.length,pushQueue.length);
+                pullQueue.forEach((p) => {
+                    if (error) {
+                        p.reject(error);
+                    } else {
+                        p.resolve({value: undefined, done: true})
+                    }
+                });
+                pullQueue.length = 0;
+                pushQueue.length = 0;
+            }
+        };
+        return {
+            [Symbol.asyncIterator](){
+                return this;
+            },
+            async next(value?:any) {
+                if (!started) {
+                    start();
+                    started = true;
+                    listening = true;
+                }
+                if (listening) {
+                    return pull()
+                } else {
+                    return this.return()
+                }
+            },
+            async return() {
+                done();
+                return {value: undefined, done: true};
+            },
+            async throw(error) {
+                done(error);
+                return Promise.reject(error);
+            }
+        };
+    }
+}
 
 proxy('stream', module);

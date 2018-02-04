@@ -1,3 +1,4 @@
+import {} from "./index";
 export function proxy(name, module) {
     return module.exports = new Proxy(module.exports, {
         set(target, key, value) {

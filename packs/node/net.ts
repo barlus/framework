@@ -40,8 +40,6 @@ export interface TcpNetConnectOpts extends TcpSocketConnectOpts, SocketConstruct
 export interface IpcNetConnectOpts extends IpcSocketConnectOpts, SocketConstructorOpts {
     timeout?: number;
 }
-
-
 export declare class Socket extends Duplex {
     constructor(options?: SocketConstructorOpts);
 

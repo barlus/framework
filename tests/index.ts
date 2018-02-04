@@ -1,4 +1,4 @@
-// import "./basic"
+import "./basic"
 // import "./runtime/injection"
 
 import "./stream/basic"

@@ -7,12 +7,10 @@ interface ArrayBufferView {
      * The ArrayBuffer instance referenced by the array.
      */
     buffer: ArrayBufferLike;
-
     /**
      * The length in bytes of the array.
      */
     byteLength: number;
-
     /**
      * The offset in bytes of the array.
      */
@@ -29,9 +27,8 @@ interface ArrayBufferTypes {
  * buffer as needed.
  */
 declare class ArrayBuffer {
-    constructor(byteLength: number);
     static isView(arg: any): arg is ArrayBufferView;
-
+    constructor(byteLength: number);
     readonly [Symbol.toStringTag]: "ArrayBuffer";
     /**
      * Read-only. The length of the ArrayBuffer (in bytes).
@@ -58,5 +55,4 @@ declare class SharedArrayBuffer {
      * Returns a section of an SharedArrayBuffer.
      */
     slice(begin: number, end?: number): SharedArrayBuffer;
-
 }

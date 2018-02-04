@@ -100,7 +100,6 @@ export declare class ReadStream extends stream.Readable {
     prependOnceListener(event: "open", listener: (fd: number) => void): this;
     prependOnceListener(event: "close", listener: () => void): this;
 }
-
 export declare class WriteStream extends stream.Writable {
     close(): void;
     bytesWritten: number;

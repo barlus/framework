@@ -1117,5 +1117,5 @@ export declare function copyFile(src: PathLike, dest: PathLike, flags: number, c
  * @param flags An optional integer that specifies the behavior of the copy operation. The only supported flag is fs.constants.COPYFILE_EXCL, which causes the copy operation to fail if dest already exists.
  */
 export declare function copyFileSync(src: PathLike, dest: PathLike, flags?: number): void;
-
+export declare const constants;
 proxy('fs', module);

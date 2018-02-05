@@ -50,10 +50,20 @@ export class RouteHandler implements Handler {
                     const handler = new route.type(cnx);
                     const result = await handler[route.action](...params.slice(1));
                     cnx.response.setStatus(200);
-                    cnx.response.headers.set('Content-Type','application/json');
-                    cnx.response.setBody(async function * (){
-                        yield Buffer.from(JSON.stringify(result))
-                    }());
+                    if(typeof result == 'string'){
+                        if(!cnx.response.headers.has('Content-Type')){
+                            cnx.response.headers.set('Content-Type','text/plain');
+                        }
+                        cnx.response.setBody(async function * (){
+                            yield Buffer.from(result)
+                        }());
+                    } else
+                    if(typeof result == 'object' && result!=null){
+                        cnx.response.headers.set('Content-Type','text/plain');
+                        cnx.response.setBody(async function * (){
+                            yield Buffer.from(JSON.stringify(result))
+                        }());
+                    }
                     return;
                 }
             }

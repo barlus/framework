@@ -16,7 +16,11 @@ class MyResourceOne extends Resource {
             query:this.context.request
         };
     }
-
+    @route.get('/:id(.+).xml')
+    public async getUserXml(id:string){
+        this.context.response.headers.set('Content-Type','application/xml');
+        return `<Voice>${id}</Voice>`;
+    }
     @route.get('/:id')
     public async getUser(id:string){
         return {user:{id},query:this.context.request.url.query};

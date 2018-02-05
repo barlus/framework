@@ -1,3 +1,5 @@
+import {type} from '../../node/os';
+
 export class HttpHeaders  {
     static from(raw:HttpHeaders['headers']){
         return new HttpHeaders().patch(raw)
@@ -25,7 +27,10 @@ export class HttpHeaders  {
     set(headers:HttpHeaders['headers']): void
     set(name: HttpHeaders['headers']|string, value: string|string[]): void
     set(name: HttpHeaders['headers']|string, value?: string|string[]): void {
-        this.patch({name:value})
+        if(typeof name == 'string'){
+            name = {[name]:value};
+        }
+        this.patch(name)
     }
     patch(headers:any){
         Object.assign(this.headers,headers);

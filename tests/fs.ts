@@ -1,9 +1,7 @@
-import {Directory} from "@barlus/bone/fs/file"
-
-async function main(){
-    const stat = await Directory.current.stats();
-    const list = await Directory.current.list();
-    console.info(list)
+import {promises} from "@barlus/bone/fs/fs"
+import {process} from '@barlus/node/process';
+async function main (){
+    console.info(await promises.stat(process.cwd()));
 }
-
 main().catch(console.error);
+

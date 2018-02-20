@@ -1,4 +1,4 @@
-declare const window, global;
+declare const window, global,require;
 
 export const globals = (function (factory) {
     if (typeof global === 'object') return global;
@@ -6,4 +6,8 @@ export const globals = (function (factory) {
     return factory();
 })(function () { return this; });
 
-export default globals;
+export function polyfill(callback){
+    return (target:Function)=>{
+        return callback(globals,target,require)||target;
+    }
+}

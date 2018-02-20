@@ -1,7 +1,10 @@
-import {URL} from '@barlus/node/url';
-import {read, readdir, stat, Stats} from '@barlus/node/fs';
+import {URL} from '@barlus/runtime/url';
+import {read, readdir, readdirSync, stat, Stats, statSync} from '@barlus/node/fs';
+import {inspect} from '@barlus/node/util';
+import {resolve, relative, parse, dirname, basename} from '@barlus/node/path';
 import {process} from '@barlus/node/process';
 import {tmpdir} from '@barlus/node/os';
+import {colors} from '../utils/colors';
 
 export enum EntryType {
     FILE,
@@ -11,7 +14,6 @@ export enum EntryType {
     FIFO,
     SOCKET,
 }
-
 export class Stat {
     readonly type: EntryType;
     readonly mode: number;
@@ -66,58 +68,61 @@ export class Stat {
         this.birthDate = stat.birthtime;
     }
 }
-async function readStat(path: string): Promise<Stat> {
-    return new Promise<Stat>((a, r) => stat(
-        path, (e, s) => e ? r(e) : a(new Stat(s))
-    ));
-}
-async function readDir(path: string) {
-    return new Promise<string[]>((a, r) => readdir(
-        path, (e, s) => e ? r(e) : a(s))
-    );
-}
 export class Entry {
-    static async isEqual(fisrt: string, second: string) {
-    }
-    static async isDirectory(path: string) {
-    }
-    static async isFile(path: string) {
-    }
-    static async isLink(path: string) {
-    }
-    static async getParent(path: string) {
-    }
-    static async getType(path: string) {
-    }
     readonly url: URL;
-    readonly parent: Directory;
+    readonly system: System;
+    readonly stat: Stat;
+    public get type(): EntryType {
+        return this.stat.type;
+    }
     public get path(): string {
         return this.url.pathname;
     }
-    public get isAbsolute(): boolean {
-        return
+    public get exists(){
+        return !!this.stat;
     }
-    constructor(path: string | URL) {
+    constructor(path: string | URL, stat?:Stat) {
         if (path instanceof URL) {
             this.url = path;
         } else {
             this.url = new URL(path, 'file:///');
         }
+        this.system = System.get(this.url);
+        this.stat = stat;
+    }
+    async refresh():Promise<this>{
+        const stat = await this.system.readStat(this.url);
+        Object.assign(this,{stat});
+        return this;
     }
     async delete(recoursive: boolean = false): Promise<Entry> {
         return;
     }
-    async exists(): Promise<boolean> {
-        return true
-    }
     async rename(name: string): Promise<Entry> {
         return this;
     }
-    async stats() {
-        return readStat(this.url.pathname)
+    public compare(target:Entry){
+        if((this.type-target.type)===0){
+            if(this.path===target.path){
+                return 0;
+            }else
+            if(this.path>target.path){
+                return 1;
+            }else{
+                return -1;
+            }
+        }else{
+            return this.type-target.type;
+        }
+    }
+    protected [inspect.custom]() {
+        return `${colors.cyan(this.constructor.name[0])} ${basename(this.path)} ${colors.gray(dirname(this.path))}`
     }
 }
 export class Directory extends Entry {
+    static get root(): Directory {
+        return new Directory('/');
+    }
     static get current(): Directory {
         return new Directory(process.cwd());
     }
@@ -127,8 +132,16 @@ export class Directory extends Entry {
     async create(recursive: boolean = false): Promise<Directory> {
         return;
     }
-    async list(recursive: boolean = false, follow: boolean = false): Promise<any> {
-        return readDir(this.url.pathname)
+    async list(recursive: boolean = false, follow: boolean = false): Entry[] {
+        let children = this.system.readDirSync(this.url);
+        if(recursive){
+            let dirs = children.filter(c=>c.type==EntryType.DIRECTORY);
+            dirs.map((c:Directory)=>{
+                c.list(recursive).forEach(e=>children.push(e));
+            })
+        }
+        //children.sort((a,b)=>a.compare(b));
+        return children;
     }
 }
 export class Link extends Entry {
@@ -148,5 +161,60 @@ export class File extends Entry {
     }
     async copy(target: string): Promise<File> {
         return;
+    }
+}
+export class System {
+    static get default(){
+        const value = new System('file:');
+        Object.defineProperty(this,'default',{
+            value
+        });
+        return value;
+    }
+    static get map(){
+        const value = new Map<string, System>([
+            ['file:', this.default]
+        ]);
+        Object.defineProperty(this,'map',{
+            value
+        });
+        return value;
+    }
+    static get(url: URL) {
+        return this.map.get(url.protocol);
+    }
+    readonly base: URL;
+    constructor(protocol: string) {
+        this.base = new URL('/', protocol + '//');
+    }
+    async readStat(url: URL): Promise<Stat> {
+        return new Stat(statSync(url.pathname));
+    }
+    async readDir(url: URL): Promise<Entry[]> {
+        return this.readDirSync(url);
+    }
+    async getDirectory(dir):Promise<string[]>{
+        return new Promise<string[]>((a,r)=>readdir(dir,(e,v)=>e?r(e):a(v)))
+    }
+    async getMetadata(dir):Promise<Stat>{
+        return new Promise<Stat>((a,r)=>stat(dir,(e,v)=>
+            e?r(e):a(new Stat(v))
+        ));
+    }
+    public readDirSync(url: URL): Entry[] {
+        return readdirSync(url.pathname).map(c => {
+            let path = resolve(url.pathname, c);
+            let curl = new URL(path, this.base);
+            let stat = new Stat(statSync(path));
+            if (stat.type==EntryType.DIRECTORY) {
+                return new Directory(curl,stat)
+            }
+            if (stat.type==EntryType.FILE) {
+                return new File(curl,stat);
+            }
+            if (stat.type==EntryType.LINK) {
+                return new Link(curl,stat);
+            }
+        });
     }
 }

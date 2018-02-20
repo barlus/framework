@@ -1,6 +1,6 @@
 {
   "name": "@vendor/stream",
-  "version": "0.0.11",
+  "version": "0.0.12",
   "description": "Barlus Tar Library",
   "types": "./index",
   "license": "MIT",

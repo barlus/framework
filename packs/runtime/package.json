@@ -1,6 +1,6 @@
 {
   "name": "@barlus/runtime",
-  "version": "0.0.11",
+  "version": "0.0.12",
   "description": "Barlus runtime libraries and polyfills",
   "main": "./index",
   "types": "./index",

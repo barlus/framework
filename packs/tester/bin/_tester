@@ -1,5 +1,6 @@
-#!/usr/bin/env node --harmony
+#!/usr/bin/env node
 // register typescript if not awailable
+require('v8').setFlagsFromString('--harmony_async_iteration --harmony_dynamic_import');
 if(typeof ts=='undefined'){
     require('@barlus/node/register')
 }

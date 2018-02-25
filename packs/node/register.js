@@ -4,6 +4,8 @@ const ts = require("typescript");
 const Crypto = require("crypto");
 const Module = require('module');
 
+require('v8').setFlagsFromString('--harmony_async_iteration --harmony_dynamic_import');
+
 ts.path = require.resolve('typescript');
 
 let SourceMap;

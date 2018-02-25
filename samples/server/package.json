@@ -1,6 +1,6 @@
 {
   "name": "@vendor/server",
-  "version": "0.0.12",
+  "version": "0.0.13",
   "description": "Barlus Tar Library",
   "types": "./index",
   "license": "MIT",

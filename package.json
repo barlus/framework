@@ -1,6 +1,6 @@
 {
   "name": "@barlus/framework",
-  "version": "0.0.12",
+  "version": "0.0.13",
   "description": "Barlus Project",
   "author": "Mamble LLC",
   "repository": "https://github.com/barlus/framework.git",
@@ -14,25 +14,25 @@
   ],
   "scripts": {
     "test": "tester ./tests/index.ts",
-    "release": "node -r @barlus/node/register ./tool/publish.ts",
-    "list": "node -r @barlus/node/register ./tool/list.ts",
-    "versions": "node -r @barlus/node/register ./tool/version.ts"
+    "release": "node --harmony -r @barlus/node/register ./tool/publish.ts",
+    "list": "node --harmony -r @barlus/node/register ./tool/list.ts",
+    "versions": "node --harmony -r @barlus/node/register ./tool/version.ts"
   },
   "devDependencies": {
     "typescript": "next"
   },
   "resolutions": {
-    "@barlus/compiler": "0.0.12",
-    "@barlus/node": "0.0.12",
-    "@barlus/runtime": "0.0.12",
-    "@barlus/std": "0.0.12",
-    "@barlus/bui": "0.0.12",
-    "@barlus/http": "0.0.12",
-    "@barlus/tar": "0.0.12",
-    "@barlus/tester": "0.0.12",
-    "@vendor/client": "0.0.12",
-    "@vendor/server": "0.0.12",
-    "@barlus/bone": "0.0.12",
-    "@vendor/stream": "0.0.12"
+    "@barlus/compiler": "0.0.13",
+    "@barlus/node": "0.0.13",
+    "@barlus/runtime": "0.0.13",
+    "@barlus/std": "0.0.13",
+    "@barlus/bui": "0.0.13",
+    "@barlus/http": "0.0.13",
+    "@barlus/tar": "0.0.13",
+    "@barlus/tester": "0.0.13",
+    "@vendor/client": "0.0.13",
+    "@vendor/server": "0.0.13",
+    "@barlus/bone": "0.0.13",
+    "@vendor/stream": "0.0.13"
   }
 }

@@ -8,9 +8,35 @@ import {NestedCSSProperties} from './typing/css';
 // new TypeStyle({
 //     autoGenerateTag: true
 // });
+class CSSHelper {
+    static extend(source:NestedCSSProperties,target:NestedCSSProperties){
+        for ( let key in target ) {
+            if ( key in source ) {
+                if ( (typeof target[key] == 'object') || (typeof source[key] == 'object') ) {
+                    source[key] = this.extend(source[key],target[key]);
+                } else {
+                    source[key] = target[key];
+                }
+            } else {
+                source[key] = target[key];
+            }
+        }
+        return source;
+    }
+
+    static merge(...args:NestedCSSProperties[]):NestedCSSProperties{
+        let properties:NestedCSSProperties = args.shift();
+
+        for ( let p of args ) {
+            properties = this.extend(properties,(p as NestedCSSProperties));
+        }
+
+        return properties;
+    }
+}
 
 let decorator:Decorator;
-export function style(css: NestedCSSProperties) {
+export function style(css: NestedCSSProperties|NestedCSSProperties[]) {
     if(!decorator){
         decorator = container.resolve(Decorator);
     }
@@ -25,16 +51,22 @@ export class Component<T> extends ReactComponent<T> {
 @injectable
 export class Decorator {
     private ts:TypeStyle;
-    constructor(ts:TypeStyle){
+    constructor( ts:TypeStyle){
         this.ts = ts;
     }
-    style(target:Function,css:NestedCSSProperties){
+    style(target:Function,css:NestedCSSProperties|NestedCSSProperties[]){
         if (!(target.prototype instanceof Component)) {
             throw new Error('Elements must extends base class Element')
         }
         const className: string = target.name;
         const render = target.prototype.render;
-        this.ts.cssRule(`.${className}`, css);
+
+
+        if (Array.isArray(css)){
+            css = CSSHelper.merge(...css);
+        }
+
+        this.ts.cssRule(`.${className}`, css as NestedCSSProperties);
         Object.defineProperty(target.prototype, 'render', {
             value() {
                 let parent = target.prototype;
@@ -58,6 +90,15 @@ export class Decorator {
                         }
                     });
                 }
+                if(this.props.className){
+                    this.props.className.trim().split(/\s+/).forEach(c => {
+                        if (!classes.includes(c)) {
+                            classes.push(c);
+                        }
+                    });
+                    //classes = classes.concat(this.classes);
+                }
+
                 node.attributes.class = classes.join(' ');
                 return node;
             }

@@ -35,6 +35,7 @@ declare global {
             children?: JSX.Node[]|JSX.Node;
             key?: string | number | any;
             ref?: (el: C) => void;
+            className?:string;
         }
         export interface Event {
         }
@@ -63,12 +64,7 @@ declare global {
 
         }
         export interface IntrinsicElements {
-            a: Attributes & { href?: string };
-            b: Attributes;
-            c: Attributes & {[k:string]:any};
-            div: Attributes;
-            span: Attributes;
-
+            [key:string]: Attributes & {[k:string]:any};
         }
         //
         export interface Element extends JsxElement {

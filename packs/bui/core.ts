@@ -44,8 +44,8 @@ export function style(css: NestedCSSProperties|NestedCSSProperties[]) {
         decorator.style(target,css);
     }
 }
-export class Component<T> extends ReactComponent<T> {
-
+export class Component<T,S={}> extends ReactComponent<T,S> {
+    classes:string[]
 }
 
 @injectable

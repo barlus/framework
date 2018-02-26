@@ -1,6 +1,7 @@
 import {HttpRequest} from './request';
 import {HttpResponse} from './response';
 import {Buffer} from './buffer';
+import {HttpUrl} from '@barlus/bone/http';
 
 export class Context {
     readonly request:HttpRequest;
@@ -12,6 +13,17 @@ export class Context {
         Object.defineProperty(this,'state',{
             value:Object.create(null)
         });
+    }
+    async form(){
+        if(typeof this.state.form=='undefined'){
+            let body = await this.text();
+            if(body!==null){
+                this.state.form = HttpUrl.query(body);
+            }else{
+                this.state.form = null;
+            }
+        }
+        return this.state.form;
     }
     async json(){
         if(typeof this.state.json=='undefined'){

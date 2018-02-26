@@ -63,6 +63,21 @@ export function registry(providers: Provider<any>[] = []): (target: any) => any 
     };
 }
 
+
+export function singleton<T>(target:Constructor<T>){
+    let instance = null;
+    injection.register({
+        token:target,
+        useFactory:()=>{
+            if(instance==null){
+                instance = new target();
+            }
+            return instance;
+        }
+    })
+    return target;
+}
+
 const Class = (params, injection, Parent) => new Function(
     'params', 'injection', 'Parent',
     `return class ${Parent.name}ᴵ extends Parent {

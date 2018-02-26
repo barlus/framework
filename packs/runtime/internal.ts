@@ -12,7 +12,7 @@ export const internal = Object.assign(<C extends {'#'}>(target:C,key:'#'='#')=>{
     })
 },{
     of<C extends {'#'}>(target:C):C['#']{
-        return target['#'];
+        return target['#'] || (target['#'] = {});
     }
 });
 export class Internal<T extends {'#'}> {

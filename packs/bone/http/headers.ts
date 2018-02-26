@@ -18,8 +18,8 @@ export class HttpHeaders  {
     delete(name: string): void{
         delete this.headers[name]
     }
-    get(name: string): string | null{
-        return this[name]
+    get(name: string): string | string[]{
+        return this.headers[name];
     }
     has(name: string): boolean {
         return !!this.headers[name];

@@ -2,6 +2,7 @@
 export type InjectionToken<T> = Constructor<T> | string;
 /** Constructor type */
 export interface Constructor<T> {
+    [key:string]:any;
     new(...args: any[]): T;
     prototype:T;
 }

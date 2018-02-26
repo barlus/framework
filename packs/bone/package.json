@@ -1,6 +1,6 @@
 {
   "name": "@barlus/bone",
-  "version": "0.0.15",
+  "version": "0.0.16",
   "description": "Barlus NodeJs Wrapper",
   "main": "./index",
   "types": "./index",

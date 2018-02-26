@@ -6,9 +6,6 @@ import {Buffer} from '../../../node/buffer';
 
 export class Resource {
     context:Context;
-    constructor(context?){
-        this.context = context;
-    }
 }
 interface Route {
     type:Class<Resource>;
@@ -44,10 +41,12 @@ export class RouteHandler implements Handler {
         const pathname = request.url.pathname;
         for(let pattern of this.patterns){
             const route = pattern.meta;
+            console.info(route.method,route.action)
             if(route.method==request.method){
                 let params = pattern.exec(pathname);
                 if(params){
-                    const handler = new route.type(cnx);
+                    const handler = new route.type();
+                    handler.context = cnx;
                     const result = await handler[route.action](...params.slice(1));
                     cnx.response.setStatus(200);
                     if(typeof result == 'string'){
@@ -87,18 +86,53 @@ export type route = ClassDecorator & {
     }
 };
 export const route: route = Object.assign<any, any>(routeDecorator, {
-    method: methodDecorator,
     get(target: Function | string, key?: string, desc?: PropertyDescriptor){
-        return methodDecorator('GET',target,key,desc)
+        const method = 'GET';
+        if (typeof target == 'object') {
+            return routeDecoratorForMethod(method,'/')(target, key, desc)
+        } else
+        // if target is sting then path is provided
+        if (typeof target == 'string') {
+            return routeDecoratorForMethod(method,target)
+        } else {
+            throw new TypeError('Invalid argument for route decorator');
+        }
     },
     put(target: Function | string, key?: string, desc?: PropertyDescriptor){
-        return methodDecorator('PUT',target,key,desc)
+        const method = 'PUT';
+        if (typeof target == 'object') {
+            return routeDecoratorForMethod(method,'/')(target, key, desc)
+        } else
+        // if target is sting then path is provided
+        if (typeof target == 'string') {
+            return routeDecoratorForMethod(method,target)
+        } else {
+            throw new TypeError('Invalid argument for route decorator');
+        }
     },
     post(target: Function | string, key?: string, desc?: PropertyDescriptor){
-        return methodDecorator('POST',target,key,desc)
+        const method = 'POST';
+        if (typeof target == 'object') {
+            return routeDecoratorForMethod(method,'/')(target, key, desc)
+        } else
+        // if target is sting then path is provided
+        if (typeof target == 'string') {
+            return routeDecoratorForMethod(method,target)
+        } else {
+            throw new TypeError('Invalid argument for route decorator');
+        }
     },
     detete(target: Function | string, key?: string, desc?: PropertyDescriptor){
-        return methodDecorator('DELETE',target,key,desc)
+        const method = 'DELETE';
+        if (typeof target == 'object') {
+            return routeDecoratorForMethod(method,'/')(target, key, desc)
+        } else
+        // if target is sting then path is provided
+        if (typeof target == 'string') {
+            return routeDecoratorForMethod(method,target)
+        } else {
+            throw new TypeError('Invalid argument for route decorator');
+        }
     },
 });
 function routeDecorator(target: Function | string): any {
@@ -115,21 +149,9 @@ function routeDecorator(target: Function | string): any {
         throw new TypeError('Invalid argument for route decorator');
     }
 }
-
-function methodDecorator(method:string, target: Function | string, key?: string, desc?: PropertyDescriptor): any {
-    function routeDecoratorForMethod(method: string = 'GET', path:string='/') {
-        return (target, key, desc)=>{
-            defineMetadata('method',method,target, key);
-            defineMetadata('path',path,target, key);
-        }
-    }
-    if (typeof target == 'object') {
-        return routeDecoratorForMethod()(target, key, desc)
-    } else
-    // if target is sting then path is provided
-    if (typeof target == 'string') {
-        return routeDecoratorForMethod(method,target)
-    } else {
-        throw new TypeError('Invalid argument for route decorator');
+function routeDecoratorForMethod(method: string, path:string) {
+    return (target, key, desc)=>{
+        defineMetadata('method',method,target, key);
+        defineMetadata('path',path,target, key);
     }
 }

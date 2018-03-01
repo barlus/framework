@@ -1,23 +1,34 @@
-export const internal = Object.assign(<C extends {'#'}>(target:C,key:'#'='#')=>{
-    const Type = Reflect.getOwnMetadata('design:type',target,key);
-    Object.defineProperty(target,key,{
+
+const target: unique symbol = Symbol('target');
+const source: unique symbol = Symbol('internal');
+
+
+const internalObject = {
+    of<C extends {'#'}>(target:C):C['#']{
+        return target[source];
+    }
+};
+
+function internalDecor<C extends {'#'}>(proto:C,key:'#'='#'){
+    const Type = Reflect.getOwnMetadata('design:type',proto,key);
+    Object.defineProperty(proto,source,{
         configurable:true,
         get(){
-            return Object.defineProperty(this,key,{
-                enumerable:false,
+            const value  = new Type();
+            value[target] = this;
+            return Object.defineProperty(this,source,{
+                enumerable:true,
                 configurable:true,
-                value:new Type(this)
-            })[key]
+                value
+            })[source]
         }
     })
-},{
-    of<C extends {'#'}>(target:C):C['#']{
-        return target['#'] || (target['#'] = {});
-    }
-});
+}
+
+export const internal = Object.assign(internalDecor,internalObject);
+
 export class Internal<T extends {'#'}> {
-    protected target:Permit<T>;
-    constructor(target:Permit<T>){
-        this.target = target;
-    }
+    protected get target(){
+        return this[target];
+    };
 }

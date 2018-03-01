@@ -1,4 +1,4 @@
-import {URL,URLSearchParams} from "@barlus/node/url";
+import {URL,URLSearchParams} from "../node/url";
 
 export class HttpQuery extends URLSearchParams {
     get query(){

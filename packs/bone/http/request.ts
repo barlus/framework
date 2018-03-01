@@ -1,6 +1,6 @@
+import {Buffer} from '../node/buffer';
 import {HttpUrl} from './url';
 import {HttpMessage} from './message';
-import {Buffer} from './buffer';
 import {HttpHeaders} from './headers';
 
 export class HttpRequest extends HttpMessage {

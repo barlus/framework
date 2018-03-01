@@ -24,28 +24,28 @@ export class IdeaReporter extends TestReporter {
         });
     }
     public onTestStart(test: Test) {
-        test.duration = Date.now();
-        this.log("testSuiteStarted", {
-            nodeId: test.name,
-            parentNodeId: test.suite.key,
-            name: test.description,
-            running: "true",
-            nodeType: "suite",
-            locationHint: `file://${test.file}:${test.line}:${test.column}`,
-        });
+        // test.duration = Date.now();
+        // this.log("testSuiteStarted", {
+        //     nodeId: test.name,
+        //     parentNodeId: test.suite.key,
+        //     name: test.description,
+        //     running: "true",
+        //     nodeType: "suite",
+        //     locationHint: `file://${test.file}:${test.line}:${test.column}`,
+        // });
     }
     public onProbeStart(probe: Probe) {
         probe.duration = Date.now();
         this.log("testStarted", {
             nodeId: this.plan.cases.indexOf(probe) + 1,
-            parentNodeId: probe.test.name,
-            name: probe.args.join(", "),
+            parentNodeId: probe.test.suite.key,
+            name:  probe.test.description + (probe.primary?'':`(${probe.args.join(", ")})`),
             running: "true",
             nodeType: "test",
             locationHint: `file://${probe.test.file}:${probe.test.line}:${probe.test.column}`,
         });
     }
-    public onCaseFinish(probe: Probe) {
+    public onProbeFinish(probe: Probe) {
         const duration = probe.duration = Date.now() - probe.duration;
         let result = "testFinished";
         switch (probe.result) {
@@ -82,10 +82,10 @@ export class IdeaReporter extends TestReporter {
         this.log(result, command);
     }
     public onTestFinish(test: Test) {
-        test.duration = Date.now() - test.duration;
-        this.log("testSuiteFinished", {
-            nodeId: test.name,
-        });
+        // test.duration = Date.now() - test.duration;
+        // this.log("testSuiteFinished", {
+        //     nodeId: test.name,
+        // });
     }
     public onSuiteFinish(suite: Suite) {
         suite.duration = Date.now() - suite.duration;

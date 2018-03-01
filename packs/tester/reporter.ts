@@ -14,7 +14,7 @@ export class TestReporter {
     }
     public onProbeStart(input: Probe) {
     }
-    public onCaseFinish(output: Probe) {
+    public onProbeFinish(output: Probe) {
         let result = ` ✓`;
         switch (output.result) {
             case 'ERROR':

@@ -1,8 +1,9 @@
 import {defineMetadata, getOwnMetadata, metadata} from "@barlus/runtime/Reflect";
 import {Pattern} from "../../utils/matcher";
+import {Buffer} from '../../node/buffer';
 import {Handler} from '../application';
 import {Context} from '../context';
-import {Buffer} from '../../../node/buffer';
+
 
 export class Resource {
     context:Context;
@@ -13,9 +14,6 @@ interface Route {
     action:string;
 }
 export class RouteHandler implements Handler {
-    static register(type: Function) {
-        console.info(type.name)
-    }
     patterns:Pattern<Route>[];
     constructor(apiPath:string='/', resources: Class<Resource>[]=[]) {
         this.patterns = [];
@@ -25,7 +23,7 @@ export class RouteHandler implements Handler {
                 if(k!='constructor'){
                     const methodPath = getOwnMetadata('path', r.prototype, k);
                     const methodType = getOwnMetadata('method', r.prototype, k);
-                    const routePath = `${apiPath}${resourcePath}${methodPath}`;
+                    const routePath = `${apiPath}${resourcePath}${methodPath}`.replace(/\/{2,}/m,'/');
                     const routePattern = Pattern.regexp(routePath,{
                         type:r,
                         method:methodType,
@@ -41,14 +39,16 @@ export class RouteHandler implements Handler {
         const pathname = request.url.pathname;
         for(let pattern of this.patterns){
             const route = pattern.meta;
-            console.info(route.method,route.action)
             if(route.method==request.method){
                 let params = pattern.exec(pathname);
                 if(params){
                     const handler = new route.type();
                     handler.context = cnx;
                     const result = await handler[route.action](...params.slice(1));
-                    cnx.response.setStatus(200);
+                    if(!cnx.response.status){
+                        cnx.response.setStatus(200);
+                    }
+
                     if(typeof result == 'string'){
                         if(!cnx.response.headers.has('Content-Type')){
                             cnx.response.headers.set('Content-Type','text/plain');

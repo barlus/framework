@@ -1,5 +1,3 @@
-import {type} from '../../node/os';
-
 export class HttpHeaders  {
     static from(raw:HttpHeaders['headers']){
         return new HttpHeaders().patch(raw)

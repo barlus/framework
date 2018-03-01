@@ -1,29 +1,30 @@
 import {HttpRequest} from './request';
 import {HttpResponse} from './response';
-import {createServer} from '../../node/http';
+import {Server} from '../node/http';
 
 export class HttpServer {
+    private native: Server;
     protected callback() {
-        return async(req, res) => {
+        return async (req, res) => {
             res.end();
         }
     }
     public async listen(...args) {
-        const server = createServer(this.callback());
+        this.native = new Server(this.callback());
         await new Promise((accept, reject) => {
             const cleanup = (error) => {
-                server.removeListener('listening', cleanup);
-                server.removeListener('error', cleanup);
+                this.native.removeListener('listening', cleanup);
+                this.native.removeListener('error', cleanup);
                 if (error) {
                     reject()
                 } else {
                     accept()
                 }
             };
-            server.once('listening', cleanup);
-            server.once('error', cleanup);
-            server.listen(...args)
+            this.native.once('listening', cleanup);
+            this.native.once('error', cleanup);
+            this.native.listen(...args)
         });
-        return server.address();
+        return this.native.address();
     }
 }

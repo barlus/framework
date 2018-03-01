@@ -1,6 +1,6 @@
 {
   "name": "@barlus/framework",
-  "version": "0.0.16",
+  "version": "0.0.17",
   "description": "Barlus Project",
   "author": "Mamble LLC",
   "repository": "https://github.com/barlus/framework.git",
@@ -22,17 +22,17 @@
     "typescript": "next"
   },
   "resolutions": {
-    "@barlus/compiler": "0.0.16",
-    "@barlus/node": "0.0.16",
-    "@barlus/runtime": "0.0.16",
-    "@barlus/std": "0.0.16",
-    "@barlus/bui": "0.0.16",
-    "@barlus/http": "0.0.16",
-    "@barlus/tar": "0.0.16",
-    "@barlus/tester": "0.0.16",
-    "@vendor/client": "0.0.16",
-    "@vendor/server": "0.0.16",
-    "@barlus/bone": "0.0.16",
-    "@vendor/stream": "0.0.16"
+    "@barlus/compiler": "0.0.17",
+    "@barlus/node": "0.0.17",
+    "@barlus/runtime": "0.0.17",
+    "@barlus/std": "0.0.17",
+    "@barlus/bui": "0.0.17",
+    "@barlus/http": "0.0.17",
+    "@barlus/tar": "0.0.17",
+    "@barlus/tester": "0.0.17",
+    "@vendor/client": "0.0.17",
+    "@vendor/server": "0.0.17",
+    "@barlus/bone": "0.0.17",
+    "@vendor/stream": "0.0.17"
   }
 }

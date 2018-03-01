@@ -27,7 +27,6 @@ export class TestRunner {
                 }
             }
         }
-
         if (plan.cases.length === 0) {
             throw new Error("no tests to run.");
         }
@@ -56,15 +55,17 @@ export class TestRunner {
     }
     protected async runProbe(probe:Probe){
         this.reporter.onProbeStart(probe);
-        if(probe.test.isIgnored) {
+        const test = probe.test;
+        if(test.isIgnored) {
             probe.result = 'SKIPED';
         }else{
             try {
                 await this.setupTest(probe);
-                if (isAsync(this.instance[probe.test.key])) {
-                    await timeout(this.instance[probe.test.key](...probe.args), probe.test.timeout);
+                const method = this.instance[test.key];
+                if (isAsync(method)) {
+                    await timeout(method.apply(this.instance,probe.args), test.timeout);
                 } else {
-                    this.instance[probe.test.key](...probe.args)
+                    method.apply(this.instance,probe.args);
                 }
                 probe.result = 'PASSED';
                 probe.error = null;
@@ -80,7 +81,7 @@ export class TestRunner {
                 }
             }
         }
-        this.reporter.onCaseFinish(probe);
+        this.reporter.onProbeFinish(probe);
     }
     protected async setupTest(probe:Probe){
         if(probe.test.suite.testSetupMethod){

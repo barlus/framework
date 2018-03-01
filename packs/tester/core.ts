@@ -23,6 +23,9 @@ class Plan {
             this.suits.push(s);
             s.tests.forEach((t) => {
                 this.tests.push(t);
+                if(!t.cases.length){
+                    t.case([],true);
+                }
                 t.cases.forEach((c) => {
                     this.cases.push(c);
                 });
@@ -126,8 +129,8 @@ class Test {
         this.isIgnored = true;
         this.ignoreReason = reason;
     }
-    public case(args: any[]) {
-        this.cases.push(new Probe(this, args));
+    public case(args: any[],primary=false) {
+        this.cases.unshift(new Probe(this, args,primary));
     }
 }
 class Probe {
@@ -136,9 +139,11 @@ class Probe {
     public result: Result;
     public error: Error;
     public duration: number;
-    constructor(test: Test, args: any[]) {
+    public primary: boolean;
+    constructor(test: Test, args: any[], primary=false) {
         this.test = test;
         this.args = args;
+        this.primary = primary;
         this.result = null;
         this.error = null;
     }

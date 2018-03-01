@@ -21,7 +21,6 @@ interface AsyncIterator<T> {
     next(value?: any): Promise<IteratorResult<T>>;
     return?(value?: any): Promise<IteratorResult<T>>;
     throw?(e?: any): Promise<IteratorResult<T>>;
-    [Symbol.asyncIterator](): AsyncIterator<T>;
 }
 interface AsyncIterable<T> {
     [Symbol.asyncIterator](): AsyncIterator<T>;

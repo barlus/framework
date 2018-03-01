@@ -1,14 +1,15 @@
 import '@barlus/std';
-import * as HTTP from '@barlus/node/http';
-import * as HTTPS from '@barlus/node/https';
-import {AsyncStream} from '@barlus/node/stream';
+import {Http} from '../node/http';
+//import * as HTTPS from '../node/https';
+import {AsyncStream} from '../node/stream';
 import {HttpRequest} from './request';
 import {HttpResponse} from './response';
 import {HttpHeaders} from './headers';
 
 export class HttpClient {
     async send(request: HttpRequest): Promise<HttpResponse> {
-        let transport = request.url.protocol == 'https:' ? HTTPS.request : HTTP.request;
+        //let transport = request.url.protocol == 'https:' ? Http.request : HTTP.request;
+        let transport =  Http.request;
         let promised;
         let promise = new Promise<HttpResponse>((accept, reject) => {
             promised = {accept, reject};

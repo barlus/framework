@@ -15,3 +15,4 @@
 /// <reference path="./extra/Intl.d.ts"/>
 /// <reference path="./extra/Console.d.ts"/>
 /// <reference path="./extra/timers.d.ts"/>
+export {};

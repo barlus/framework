@@ -1,7 +1,6 @@
-import '@barlus/std';
+import {Buffer} from '../node/buffer';
 import {HttpStatus} from './contsants';
 import {HttpHeaders} from './headers';
-import {Buffer} from './buffer';
 import {HttpMessage} from './message';
 
 export class HttpResponse extends HttpMessage {

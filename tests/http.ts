@@ -47,8 +47,8 @@ class HttpTest {
         );
         const client = new HttpClient();
         const res = await client.send(req);
-        console.info(res.status.code);
-        console.info(res.status.message);
+        console.info(res.status);
+        console.info(res.message);
         console.info(res.headers);
 
         if(res.body){

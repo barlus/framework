@@ -30,19 +30,20 @@ export class CliReporter extends TestReporter {
         const description = chalk.yellow(`# ${test.description}`);
         const location = chalk.cyan(`at ${test.file}:${test.line}:${test.column}`);
         this.log(`  ${test.key} ${description}\n`);
-        this.log(`    ${location}\n`);
+        this.log(`  ${location}\n`);
     }
     public onProbeStart(input: Probe){
         this.case = input;
     }
-    public onCaseFinish(output: Probe){
-        let result = chalk.green(` ✓`);
+    public onProbeFinish(output: Probe){
+        const id = output.test.cases.indexOf(output)+1;
+        let result = chalk.green(` ✓${id}`);
         switch (output.result){
             case "ERROR":
-            case "FAILED": result = chalk.red(` ✘`); break;
-            case "SKIPED": result = chalk.blue(` !`); break;
+            case "FAILED": result = chalk.red(` ✘${id}`); break;
+            case "SKIPED": result = chalk.blue(` !${id}`); break;
         }
-        this.log(`    ${result} ${output.args.join(", ")}${formatError(output.error)}\n`);
+        this.log(`  ${result} ${chalk.gray(output.test.key)} (${output.args.join(", ")})${formatError(output.error)}\n`);
     }
     public onTestFinish(plan: Test){}
     public onSuiteFinish(plan: Suite){}

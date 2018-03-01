@@ -1,11 +1,11 @@
 import {HttpServer} from './server';
 import {HttpRequest} from './request';
 import {Context} from './context';
-import {createServer, ServerRequest, ServerResponse} from '@barlus/node/http';
+import {ServerRequest, ServerResponse} from '../node/http';
 import {HttpResponse} from './response';
 import {HttpUrl} from './url';
 import {HttpHeaders} from './headers';
-import {AsyncStream} from '@barlus/node/stream';
+import {AsyncStream} from '../node/stream';
 
 export interface Handler {
     handle(cnx: Context, next: () => Promise<any>): Promise<any>;
@@ -30,7 +30,14 @@ export class HttpApplication extends HttpServer {
             const request = new HttpRequest(req.method, url, headers, body);
             const response = new HttpResponse();
             const context = new Context(request, response);
-            await this.handler(context, null);
+            await Promise.race([
+                this.handler(context, null),
+                new Promise(
+                    (a,r)=>setTimeout(
+                        ()=>r(new Error('TIMEOUT')),2000
+                    )
+                )
+            ]);
             if(!response.headers){
                 response.setHeaders(new HttpHeaders());
             }
@@ -45,6 +52,7 @@ export class HttpApplication extends HttpServer {
             if (response.body) {
                 await AsyncStream.write(response.body, res);
             } else {
+                console.info("NO BODY?")
                 res.end();
             }
         }
@@ -84,9 +92,7 @@ function compose(middleware: Middleware[]): Middleware {
             if (!fn) {
                 return;
             }
-            return await fn(context, async () => {
-                return dispatch(i + 1)
-            })
+            return fn(context, () => dispatch(i + 1))
         }
     }
 }

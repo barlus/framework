@@ -1,7 +1,7 @@
+import {Buffer} from '../node/buffer';
 import {HttpRequest} from './request';
 import {HttpResponse} from './response';
-import {Buffer} from './buffer';
-import {HttpUrl} from '@barlus/bone/http';
+import {HttpUrl} from './url';
 
 export class Context {
     readonly request:HttpRequest;
@@ -50,6 +50,7 @@ export class Context {
         }
         return this.state.body;
     }
+    
     async text(){
         if(typeof this.state.text=='undefined'){
             let body = await this.body();

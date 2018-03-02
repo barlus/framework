@@ -37,7 +37,7 @@ interface ProjectsOptions extends ServiceOptions {
 export class ProjectRoute extends RouteHandler {
     protected options: ProjectsOptions;
     constructor(options: ProjectsOptions) {
-        super("/projects", [FilesRoute]);
+        super("/", [FilesRoute]);
         Service.service.init(Object.assign({
             root: process.cwd(),
             base: '/'

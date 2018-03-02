@@ -3,6 +3,7 @@ declare module "buffer";
 declare module "url";
 declare module "stream";
 declare module "net";
+declare module "tls";
 declare module "http";
 declare module "https";
 declare module "fs";

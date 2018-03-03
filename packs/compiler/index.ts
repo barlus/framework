@@ -516,7 +516,7 @@ export const transformModuleNames = (context) => {
         }
     };
 };
-function readFiles(dir, exts = ['.d.ts', '.ts', '.tsx', '.js', '.json', '.png', '.svg', '.css', '.html']) {
+function readFiles(dir, exts = ['.d.ts', '.ts', '.tsx', '.js', '.json', '.png', '.ico', '.svg', '.css', '.html']) {
     const dirs = [];
     function scanDir(dir, files = []) {
         if (!existsSync(dir) || basename(dir).startsWith('.')) {

@@ -2,7 +2,7 @@
 import {HttpApplication,Context,HttpClient,Handler,HttpRequest,HttpResponse} from "@barlus/bone/http"
 import {RouteHandler,Resource,route} from "@barlus/bone/http/handlers/router"
 import {HttpStatus,HttpMethod,HttpHeaders} from '@barlus/bone/http';
-import {Buffer} from '@barlus/node/buffer';
+import {Buffer} from '@barlus/bone/node/buffer';
 import {randomBytes} from '@barlus/node/crypto';
 import {HttpUrl} from '@barlus/bone/http/url';
 

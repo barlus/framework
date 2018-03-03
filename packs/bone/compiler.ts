@@ -1,7 +1,8 @@
-import {Fs,Stats} from './node/fs';
-import {Path} from './node/path';
-import {Buffer} from './node/buffer';
-import {Crypto} from './node/crypto';
+import { Fs, Stats } from './node/fs';
+import { Path } from './node/path';
+import { Buffer } from './node/buffer';
+import { Crypto } from './node/crypto';
+import { colors } from './utils/colors';
 
 interface ResolvedModule {
     /** Path of the file the module was resolved to. */
@@ -12,7 +13,7 @@ interface ResolvedModule {
 export interface ServiceOptions {
     cache?: string;
     root?: string;
-    jsx?:string;
+    jsx?: string;
     ignore?: string[];
 }
 export class Project {
@@ -92,7 +93,7 @@ export class File {
             let file, path = this.path.split('/');
             while (path.length) {
                 path.pop();
-                file = [...path, 'package.json'].join('/');
+                file = [ ...path, 'package.json' ].join('/');
                 if (this.service.files.has(file)) {
                     break;
                 }
@@ -140,8 +141,8 @@ export class File {
     get relative() {
         return Path.relative(this.service.root, this.path);
     }
-    ignore(){
-        this.cache.isIgnored=true;
+    ignore() {
+        this.cache.isIgnored = true;
     }
     sync() {
         let oldStat = this.stat;
@@ -154,7 +155,7 @@ export class File {
     }
     reload() {
         Object.keys(this.cache).forEach(key => {
-            this.cache[key] = null;
+            this.cache[ key ] = null;
         });
         this.cache.isJsonFile = Path.extname(this.path) == '.json';
         this.cache.isSourceFile = ts.isSupportedSourceFileName(this.path);
@@ -202,6 +203,7 @@ export class Service {
     static init(options: ServiceOptions) {
         return this.service.init(options);
     }
+    public seq: number=0;
     public options: ServiceOptions;
     public projects = new Map<string, Project>();
     public output = new Map<string, string>();
@@ -218,7 +220,7 @@ export class Service {
             noEmitHelpers: true,
             noEmitOnError: true,
             jsx: ts.JsxEmit.React,
-            jsxFactory:this.options.jsx,
+            jsxFactory: this.options.jsx,
             removeComments: true,
             experimentalDecorators: true,
             emitDecoratorMetadata: true,
@@ -246,7 +248,7 @@ export class Service {
             },
             getCustomTransformers() {
                 return {
-                    after: [transformModuleNames]
+                    after: [ transformModuleNames ]
                 }
             },
             getScriptFileNames() {
@@ -290,7 +292,7 @@ export class Service {
         this.options = Object.assign({
             root: '.',
             cache: './.cache',
-            ignore: ['typescript']
+            ignore: [ 'typescript' ]
         }, options);
         this.options.root = Path.resolve(this.options.root);
         this.options.cache = Path.resolve(this.options.cache);
@@ -301,17 +303,25 @@ export class Service {
         return this;
     }
     public logErrors(fileName: string) {
-        let allDiagnostics = this.compiler.getCompilerOptionsDiagnostics()
-            .concat(this.compiler.getSyntacticDiagnostics(fileName))
-            .concat(this.compiler.getSemanticDiagnostics(fileName));
+        this.logDiagnostics(
+            this.compiler.getCompilerOptionsDiagnostics()
+                .concat(this.compiler.getSyntacticDiagnostics(fileName))
+                .concat(this.compiler.getSemanticDiagnostics(fileName))
+        );
+    }
+
+    public logDiagnostics(allDiagnostics) {
         allDiagnostics.forEach(diagnostic => {
             let message = ts.flattenDiagnosticMessageText(diagnostic.messageText, "\n");
             if (diagnostic.file) {
-                let {line, character} = diagnostic.file.getLineAndCharacterOfPosition(diagnostic.start!);
-                console.log(`  Error ${diagnostic.file.fileName} (${line + 1},${character + 1}): ${message}`);
+                const file = this.sources.get(diagnostic.file.fileName);
+                const path = file.path;
+                let { line, character } = diagnostic.file.getLineAndCharacterOfPosition(diagnostic.start!);
+                console.log(`  at ${path}:${line + 1}:${character + 1}`);
+                console.log(colors.cyan(message));
             }
             else {
-                console.log(`  Error: ${message}`);
+                console.log(colors.cyan(message));
             }
         });
     }
@@ -322,47 +332,62 @@ export class Service {
                 this.sources.set(f.uri, f)
             }
         });
-        this.sources.forEach(s => this.compileFile(s));
+        let files = new Set<string>();
+        this.sources.forEach(s => files.add(s.path));
+        this.compileFiles(files);
     }
     public compileFile(source: File) {
         let output = this.compiler.getEmitOutput(source.uri);
         if (!output.emitSkipped) {
             output.outputFiles.forEach(o => {
-                o.name = o.name.replace(/\.js$/,'.mjs');
+                o.name = o.name.replace(/\.js$/, '.mjs');
                 this.output.set(o.name, o.text);
                 this.writeFile(o.name, o.text)
                 //console.info('//', o.name, o.text.length);
             });
+            //console.log(`${colors.green('COMPILED')} : ${colors.gray(modName(source.uri))}`);
+            return false;
         } else {
-            console.log(`Emitting ${source.uri} failed`);
-            this.logErrors(source.uri);
+            //console.log(`${colors.red('FAILED  ')} : ${colors.gray(modName(source.uri))}`);
+            //this.logErrors(source.uri);
+            return true;
         }
     }
-    public writeFile(path,content){
-        let file = dir(Path.resolve(this.options.cache,`.${path}`));
-        Fs.writeFileSync(file,content);
+    public writeFile(path, content) {
+        let file = dir(Path.resolve(this.options.cache, `.${path}`));
+        Fs.writeFileSync(file, content);
     }
     public compileFiles(paths: Set<string>) {
+        const results = {};
+        let errors = 0;
         paths.forEach(p => {
             let f = this.files.get(p);
-            if (!this.sources.has(f.uri) && f.isSourceFile) {
+            if (f && !this.sources.has(f.uri) && f.isSourceFile) {
                 this.sources.set(f.uri, f);
             }
             if (f && f.isSourceFile) {
-                this.compileFile(f);
+                if(results[f.uri] = this.compileFile(f)){
+                    errors++
+                }
             }
         });
         this.sources.forEach(s => {
             let errors = this.compiler.getSemanticDiagnostics(s.uri);
             if (errors.length) {
-                errors.forEach(e => {
-                    console.info(e.file ? e.file.path : '', e.messageText);
-                })
+                results[s.uri] = true;
             }
-        })
+        });
+        for(var uri in results){
+            if(!results[uri]){
+                console.log(`${colors.green('COMPILED')} : ${colors.gray(modName(uri))}`);
+            }else{
+                console.log(`${colors.red('FAILED  ')} : ${colors.gray(modName(uri))}`);
+                this.logErrors(uri);
+            }
+        }
     }
     public sync() {
-        const debug = true;
+        const debug = false;
         const createFiles = (files: Set<string>) => {
             files.forEach(f => {
                 // if (debug) {
@@ -421,55 +446,64 @@ export class Service {
             }
             this.files.forEach(f => {
                 f.reload();
-                if(removed.has(f.path) || changed.has(f.path)||created.has(f.path)){
+                if (removed.has(f.path) || changed.has(f.path) || created.has(f.path)) {
                     if (this.options.ignore.includes(f.project.name)) {
                         f.ignore();
                         created.delete(f.path);
                         removed.delete(f.path);
                         changed.delete(f.path);
-                        console.info("!", f.project.name, f.modulename);
-                    }else{
+                        if(debug){
+                            console.info("!", f.project.name, f.modulename);
+                        }
+                    } else {
                         if (debug && removed.has(f.path)) {
                             console.info("-", f.project.name, f.modulename);
-                        }else
-                        if (debug && changed.has(f.path)) {
+                        } else if (debug && changed.has(f.path)) {
                             console.info("~", f.project.name, f.modulename);
-                        }else
-                        if (debug && created.has(f.path)) {
+                        } else if (debug && created.has(f.path)) {
                             console.info("+", f.project.name, f.modulename);
                         }
                     }
+
                 }
             });
             if (startup) {
                 this.compile();
             } else {
-                this.compileFiles(created);
-                this.compileFiles(changed);
+                const all = new Set(created);
+                for(const a of changed){
+                    all.add(a);
+                }
+                this.compileFiles(all);
+                //console.log(colors.yellow(`------${++this.seq}------`));
             }
+
             //refresh();
             //console.log("SCAN:", created.size, changed.size, removed.size);
         }
-        //console.timeEnd("SCAN")
+        // console.timeEnd("SCAN")
     }
 }
-declare const ts;
 
-function dir(file){
+declare const ts;
+function dir(file) {
     const pathToCreate = Path.dirname(file);
     pathToCreate
         .split(Path.sep)
         .reduce((currentPath, folder) => {
             currentPath += folder + Path.sep;
-            if (!Fs.existsSync(currentPath)){
+            if (!Fs.existsSync(currentPath)) {
                 Fs.mkdirSync(currentPath);
             }
             return currentPath;
         }, '');
     return file;
 }
-
+function modName(uri){
+    return ts.removeFileExtension(uri).substring(1)
+}
 export const transformModuleNames = (context) => {
+
     return (file) => {
         function transformSpecifier(expression) {
             const literal = expression;
@@ -482,16 +516,16 @@ export const transformModuleNames = (context) => {
                         const parentPath = file.fileName;
                         const parentDir = Path.dirname(parentPath);
                         const childPath = resolved.resolvedFileName;
-                        const relativePath = Path.relative(parentDir,childPath);
+                        const relativePath = Path.relative(parentDir, childPath);
                         //console.info("RESOLVED",parentPath,childPath,relativePath,resolve(parentDir,relativePath));
                         let newSpec = ts.changeExtension(relativePath, '.mjs');
-                        if(!newSpec.startsWith('.')){
-                            newSpec=`./${newSpec}`;
+                        if (!newSpec.startsWith('.')) {
+                            newSpec = `./${newSpec}`;
                         }
                         const newListeral = ts.createLiteral(newSpec);
                         return ts.setOriginalNode(ts.setTextRange(newListeral, literal), literal);
                     } else {
-                        console.info("UNRESOLVED", file.fileName, localName);
+                        console.log(`${colors.yellow('EXTERNAL')} : ${colors.gray(modName(file.fileName))} <- ${colors.yellow(localName)}`);
                         return literal;
                     }
                 } catch (ex) {
@@ -499,7 +533,8 @@ export const transformModuleNames = (context) => {
                     return literal;
                 }
             } else {
-                console.info("UNRESOLVED LITERAL", literal);
+                console.log(`${colors.yellow('EXTERNAL')} : ${colors.gray(modName(literal))}`);
+
                 return literal;
             }
         }
@@ -550,7 +585,7 @@ export const transformModuleNames = (context) => {
         }
     };
 };
-function readFiles(dir, exts = ['.d.ts', '.ts', '.tsx', '.js', '.json', '.png', '.svg', '.css', '.html']) {
+function readFiles(dir, exts = [ '.d.ts', '.ts', '.tsx', '.js', '.json', '.png', '.svg', '.css', '.html' ]) {
     const dirs = [];
     function scanDir(dir, files = []) {
         if (!Fs.existsSync(dir) || Path.basename(dir).startsWith('.')) {
@@ -582,7 +617,7 @@ async function watch(service: Service) {
         // noinspection InfiniteLoopJS
         while (true) {
             service.sync();
-            await delay(2000);
+            await delay(1000);
         }
     } catch (ex) {
         console.error(ex);

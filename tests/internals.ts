@@ -1,9 +1,5 @@
-import '@barlus/runtime/Reflect';
+import '@barlus/runtime';
 import {internal,Internal} from '@barlus/runtime';
-
-
-
-
 
 
 export class Parent {

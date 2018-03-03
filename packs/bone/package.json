@@ -1,9 +1,12 @@
 {
   "name": "@barlus/bone",
-  "version": "0.0.17",
+  "version": "0.0.18",
   "description": "Barlus NodeJs Wrapper",
   "main": "./index",
   "types": "./index",
+  "bin": {
+    "bone": "./bin/bone.rjs"
+  },
   "dependencies": {
     "@barlus/runtime": "latest"
   },

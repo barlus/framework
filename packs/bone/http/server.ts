@@ -27,4 +27,17 @@ export class HttpServer {
         });
         return this.native.address();
     }
+    public async close():Promise<void>{
+        return new Promise<void>((accept,reject)=>{
+            this.native.close(()=>{
+                try{
+                    this.native.removeAllListeners('request');
+                    this.native.unref();
+                    accept();
+                }catch (e) {
+                    reject(e)
+                }
+            })
+        })
+    }
 }

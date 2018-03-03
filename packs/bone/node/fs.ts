@@ -81,7 +81,7 @@ export class WriteStream extends Writable {
 @builtin(native,(module)=>{
     Object.getOwnPropertyNames(module).forEach(key=>{
         Object.defineProperty(Fs,key,Object.getOwnPropertyDescriptor(module,key))
-    })
+    });
     //Object.assign(Crypto,module);
     return Fs;
 })

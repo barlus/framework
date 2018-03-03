@@ -1,7 +1,5 @@
 import {Child, Parent} from './internals';
-import {internal} from '../packs/runtime';
-
-
+import {internal} from '@barlus/runtime';
 
 const parent:Parent = new Parent();
 const child:Child = new Child();

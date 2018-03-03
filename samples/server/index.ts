@@ -1,14 +1,27 @@
-import {Application} from "@barlus/http/server/application";
-import {process} from "@barlus/node/process";
-import {projects} from "@barlus/http/handlers/projects";
+import {HttpApplication} from "@barlus/bone/http";
+import {process} from "@barlus/bone/node/process";
+import {ProjectRoute} from "@barlus/bone/http/handlers/projects";
 
-let app = new Application();
 
-app.use(projects({
-    root:process.cwd(),
-    project:'@vendor/client'
-}));
+class MyApplication extends HttpApplication {
+    static instance:MyApplication;
+    static async start(){
+        if(!this.instance){
+            const app = new MyApplication();
+            const {address,port} = await app.listen(10001,'0.0.0.0');
+            console.info("Application started");
+            console.info(` -> http://${address}:${port}`);
+            this.instance = app;
+        }
+        return this.instance;
+    }
+    constructor(){
+        super();
+        this.use(new ProjectRoute({
+            root:process.cwd(),
+            project:'@vendor/client'
+        }))
+    }
+}
 
-app.listen(10001);
-
-console.info("Hello Server");
+MyApplication.start().catch(console.error);

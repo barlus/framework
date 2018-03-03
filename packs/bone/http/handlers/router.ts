@@ -44,11 +44,13 @@ export class RouteHandler implements Handler {
                 if(params){
                     const handler = new route.type();
                     handler.context = cnx;
-                    const result = await handler[route.action](...params.slice(1));
+                    let result = await handler[route.action](...params.slice(1));
                     if(!cnx.response.status){
                         cnx.response.setStatus(200);
                     }
-
+                    if(typeof result == "boolean"){
+                        result = `${result}`
+                    }
                     if(typeof result == 'string'){
                         if(!cnx.response.headers.has('Content-Type')){
                             cnx.response.headers.set('Content-Type','text/plain');
@@ -58,7 +60,9 @@ export class RouteHandler implements Handler {
                         }());
                     } else
                     if(typeof result == 'object' && result!=null){
-                        cnx.response.headers.set('Content-Type','text/plain');
+                        if(!cnx.response.headers.has('Content-Type')){
+                            cnx.response.headers.set('Content-Type','text/plain');
+                        }
                         cnx.response.setBody(async function * (){
                             yield Buffer.from(JSON.stringify(result))
                         }());

@@ -204,7 +204,6 @@ export class AsyncStream {
                 return this;
             },
             async next(value?:any) {
-                console.info("NEXT")
                 if (!started) {
                     start();
                     started = true;

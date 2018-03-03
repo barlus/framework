@@ -1,6 +1,6 @@
 import '@barlus/std';
 import {Http} from '../node/http';
-//import * as HTTPS from '../node/https';
+import {Https} from '../node/https';
 import {AsyncStream} from '../node/stream';
 import {HttpRequest} from './request';
 import {HttpResponse} from './response';
@@ -8,8 +8,7 @@ import {HttpHeaders} from './headers';
 
 export class HttpClient {
     async send(request: HttpRequest): Promise<HttpResponse> {
-        //let transport = request.url.protocol == 'https:' ? Http.request : HTTP.request;
-        let transport =  Http.request;
+        const transport = request.url.protocol == 'https:' ? Https.request : Http.request;
         let promised;
         let promise = new Promise<HttpResponse>((accept, reject) => {
             promised = {accept, reject};
@@ -19,7 +18,7 @@ export class HttpClient {
             protocol: request.url.protocol,
             hostname: request.url.hostname,
             port: request.url.port,
-            pathname: request.url.pathname,
+            path: request.url.pathname,
             headers: request.headers.toJSON(),
         }, (res) => {
             const response = new HttpResponse();
@@ -35,6 +34,6 @@ export class HttpClient {
         } else {
             req.end();
         }
-        return await promise;
+        return promise;
     }
 }

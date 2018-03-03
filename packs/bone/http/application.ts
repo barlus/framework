@@ -6,6 +6,7 @@ import {HttpResponse} from './response';
 import {HttpUrl} from './url';
 import {HttpHeaders} from './headers';
 import {AsyncStream} from '../node/stream';
+import {HttpStatus} from "./contsants";
 
 export interface Handler {
     handle(cnx: Context, next: () => Promise<any>): Promise<any>;
@@ -30,19 +31,24 @@ export class HttpApplication extends HttpServer {
             const request = new HttpRequest(req.method, url, headers, body);
             const response = new HttpResponse();
             const context = new Context(request, response);
-            await Promise.race([
-                this.handler(context, null),
-                new Promise(
-                    (a,r)=>setTimeout(
-                        ()=>r(new Error('TIMEOUT')),2000
+            try {
+                await Promise.race([
+                    this.handler(context, null),
+                    new Promise(
+                        (a,r)=>setTimeout(
+                            ()=>r(new Error('TIMEOUT')),2000
+                        )
                     )
-                )
-            ]);
+                ]);
+            }catch (e){
+                response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR,"Internal Server Error");
+
+            }
             if(!response.headers){
                 response.setHeaders(new HttpHeaders());
             }
             if(!response.status){
-                response.setStatus(404)
+                response.setStatus(HttpStatus.NOT_FOUND)
             }
             res.writeHead(
                 response.status,

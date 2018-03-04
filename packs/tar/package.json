@@ -1,6 +1,6 @@
 {
   "name": "@barlus/tar",
-  "version": "0.0.18",
+  "version": "0.0.19",
   "description": "Barlus Tar Library",
   "types": "./index",
   "license": "MIT",

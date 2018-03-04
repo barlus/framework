@@ -55,17 +55,13 @@ export class RouteHandler implements Handler {
                         if(!cnx.response.headers.has('Content-Type')){
                             cnx.response.headers.set('Content-Type','text/plain');
                         }
-                        cnx.response.setBody(async function * (){
-                            yield Buffer.from(result)
-                        }());
+                        cnx.response.setBody(result);
                     } else
                     if(typeof result == 'object' && result!=null){
                         if(!cnx.response.headers.has('Content-Type')){
                             cnx.response.headers.set('Content-Type','text/plain');
                         }
-                        cnx.response.setBody(async function * (){
-                            yield Buffer.from(JSON.stringify(result))
-                        }());
+                        cnx.response.setBody(JSON.stringify(result));
                     }
                     return;
                 }

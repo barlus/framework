@@ -12,10 +12,11 @@ export class Pattern<T> extends RegExp {
      * @return
      */
     static regexp<T>(path:string|string[]|RegExp, meta:T, options:RegExpOptions={}):Pattern<T>{
-        return Object.assign(pathToRegexp<T>(path, [], options),{meta});
+        return Object.assign(pathToRegexp<T>(path, [], options),{path,meta});
     }
     readonly keys:Key[];
     readonly meta:T;
+    readonly path:string;
     constructor(pattern: string, flags?: string){
         super(pattern, flags);
     }

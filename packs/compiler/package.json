@@ -1,6 +1,6 @@
 {
   "name": "@barlus/compiler",
-  "version": "0.0.18",
+  "version": "0.0.19",
   "description": "Barlus NodeJs Wrapper",
   "main": "./index",
   "types": "./index",

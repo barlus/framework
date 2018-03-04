@@ -1,7 +1,41 @@
-import {HttpApplication} from "@barlus/bone/http";
+import {HttpApplication,Context} from "@barlus/bone/http";
 import {process} from "@barlus/bone/node/process";
 import {ProjectRoute} from "@barlus/bone/http/handlers/projects";
+import {RouteHandler,Resource,route} from "@barlus/bone/http/handlers/router";
 
+
+
+@route('/users')
+export class MyApiRoute extends Resource {
+
+    @route.get
+    getUsers(){
+        return [{
+            hello:'World'
+        }]
+    }
+
+    @route.get('/:id')
+    getUser(id:string){
+        return [{
+            id:id,
+            hello:'World'
+        }]
+    }
+
+}
+
+
+class ApiRouter extends RouteHandler {
+    constructor(){
+        super('/api',[
+            MyApiRoute
+        ]);
+    }
+    async handle(cnx: Context, next: () => Promise<any>) {
+        return super.handle(cnx,next);
+    }
+}
 
 class MyApplication extends HttpApplication {
     static instance:MyApplication;
@@ -17,6 +51,7 @@ class MyApplication extends HttpApplication {
     }
     constructor(){
         super();
+        this.use(new ApiRouter());
         this.use(new ProjectRoute({
             root:process.cwd(),
             project:'@vendor/client'

@@ -1,5 +1,3 @@
-import {HttpRequest} from './request';
-import {HttpResponse} from './response';
 import {Server} from '../node/http';
 
 export class HttpServer {

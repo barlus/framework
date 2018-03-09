@@ -10,18 +10,18 @@ function contentType(ext) {
         case '.js':
         case '.mjs':
         case '.ts':
-            return "application/javascript; charset=utf-8"
+            return "application/javascript; charset=utf-8";
         case '.json':
         case '.js.map':
-            return "application/json; charset=utf-8"
+            return "application/json; charset=utf-8";
         case '.xml':
-            return "application/xml; charset=utf-8"
+            return "application/xml; charset=utf-8";
         case '.html':
-            return "text/html; charset=utf-8"
+            return "text/html; charset=utf-8";
         case '.css':
-            return "text/css; charset=utf-8"
+            return "text/css; charset=utf-8";
         case '.svg':
-            return "image/svg; charset=utf-8"
+            return "image/svg; charset=utf-8";
         case '.png':
             return "image/png;"
     }
@@ -41,7 +41,10 @@ export class ProjectRoute extends RouteHandler {
             root: process.cwd(),
             base: '/'
         }, options);
-        super(options.base, [FilesRoute]);
+        super({
+            apiPath     : options.base,
+            resources   : [FilesRoute]
+        });
         Service.service.init(options);
         if (options.project) {
             project = Service.service.projects.get(options.project);

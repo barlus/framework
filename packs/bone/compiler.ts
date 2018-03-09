@@ -2,6 +2,7 @@ import { Fs, Stats } from './node/fs';
 import { Path } from './node/path';
 import { Buffer } from './node/buffer';
 import { Crypto } from './node/crypto';
+import { process } from './node/process';
 import { colors } from './utils/colors';
 
 interface ResolvedModule {
@@ -477,13 +478,13 @@ export class Service {
                 this.compileFiles(all);
                 //console.log(colors.yellow(`------${++this.seq}------`));
             }
-
             //refresh();
             //console.log("SCAN:", created.size, changed.size, removed.size);
         }
         // console.timeEnd("SCAN")
     }
 }
+
 
 declare const ts;
 function dir(file) {
@@ -503,7 +504,6 @@ function modName(uri){
     return ts.removeFileExtension(uri).substring(1)
 }
 export const transformModuleNames = (context) => {
-
     return (file) => {
         function transformSpecifier(expression) {
             const literal = expression;

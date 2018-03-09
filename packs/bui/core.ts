@@ -69,6 +69,23 @@ export class Component<T,S = {}> extends ReactComponent<T,S> {
             writable:true
         }).classNames;
     }
+
+    addClassName(className:string){
+        if ( className && !this.classNames.includes(className) ) {
+            this.classNames.push(className);
+        }
+    }
+
+    removeClassName(className:string){
+        if ( this.classNames.includes(className) ) {
+            for (var i = 0; i < this.classNames.length; i++) {
+                if (this.classNames[i] === className) {
+                    this.classNames.splice(i, 1);
+                    i--;
+                }
+            }
+        }
+    }
 }
 
 @injectable

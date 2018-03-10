@@ -42,8 +42,10 @@ export function style(css: NestedCSSProperties|NestedCSSProperties[]) {
     }
 }
 export class Component<T,S = {}> extends ReactComponent<T,S> {
+    private _classNames:Array<string> = [];
+
     get classNames():Array<string>{
-        return Object.defineProperty(this,'classNames',{
+        /*return Object.defineProperty(this,'classNames',{
             value:function(thiz):Array<string>{
                 let classes:Array<string> = [];
                 let parent = Object.getPrototypeOf(thiz);
@@ -67,20 +69,49 @@ export class Component<T,S = {}> extends ReactComponent<T,S> {
                 return classes;
             }(this),
             writable:true
-        }).classNames;
+        }).classNames;*/
+
+        let classes:Array<string> = [];
+        let parent = Object.getPrototypeOf(this);
+        while (parent instanceof Component) {
+            if ( Reflect.hasOwnMetadata('component:style',parent.constructor) ) {
+                let cname = parent.constructor.name;
+                classes.push(cname);
+            }
+            parent = Object.getPrototypeOf(parent);
+
+        }
+
+        if( this.props.className ) {
+            this.props.className.trim().split(/\s+/).forEach(c => {
+                if (!classes.includes(c)) {
+                    classes.push(c);
+                }
+            });
+        }
+
+        if( this._classNames ) {
+            this._classNames.forEach(c => {
+                if (!classes.includes(c)) {
+                    classes.push(c);
+                }
+            });
+        }
+
+        return classes;
     }
 
     addClassName(className:string){
-        if ( className && !this.classNames.includes(className) ) {
-            this.classNames.push(className);
+        if ( className && !this._classNames.includes(className) ) {
+            this._classNames.push(className);
         }
     }
 
     removeClassName(className:string){
-        if ( this.classNames.includes(className) ) {
-            for (var i = 0; i < this.classNames.length; i++) {
-                if (this.classNames[i] === className) {
-                    this.classNames.splice(i, 1);
+        if ( this._classNames.includes(className) ) {
+            for (var i = 0; i < this._classNames.length; i++) {
+                if (this._classNames[i] === className) {
+                    this._classNames.splice(i, 1);
                     i--;
                 }
             }

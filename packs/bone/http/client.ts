@@ -18,7 +18,7 @@ export class HttpClient {
             protocol: request.url.protocol,
             hostname: request.url.hostname,
             port: request.url.port,
-            path: request.url.pathname,
+            path: request.url.pathname+request.url.search,
             headers: request.headers.toJSON(),
         }, (res) => {
             const response = new HttpResponse();

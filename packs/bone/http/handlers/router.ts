@@ -58,70 +58,78 @@ export class RouteHandler implements Handler {
         const request = cnx.request;
         const pathname = request.url.pathname;
         for(let pattern of this.patterns){
-            const route = pattern.meta;
-            if(route.method==request.method){
-                let params = pattern.exec(pathname);
-                if(params){
-                    const handler = new route.type();
-                    let isProtected = route.scopes && route.scopes.length;
-                    if(isProtected){
-                        if(!this.secret){
-                            return sendUnauthorized({
-                                secretMissing:true
-                            })
-                        }
-                        let token = cnx.request.headers.get("authorization") as string;
-                        if(!token){
-                            return sendUnauthorized({
-                                authHeaderMissing : true
+            try{
+                const route = pattern.meta;
+                if(route.method==request.method){
+                    let params = pattern.exec(pathname);
+                    if(params){
+                        const handler = new route.type();
+                        let isProtected = route.scopes && route.scopes.length;
+                        if(isProtected){
+                            if(!this.secret){
+                                return sendUnauthorized({
+                                    secretMissing:true
+                                })
+                            }
+                            let token = cnx.request.headers.get("authorization") as string;
+                            if(!token){
+                                return sendUnauthorized({
+                                    authHeaderMissing : true
+                                });
+                            }
+                            token = token.replace(/Bearer\s+/,'');
+                            let {payload} = Jwt.toJson(token);
+                            if(!payload){
+                                cnx.response.setStatus(HttpStatus.UNAUTHORIZED);
+                                return sendUnauthorized({
+                                    payloadMissing : true
+                                });
+                            }
+                            let verify = Jwt.verify({
+                                token,
+                                secret : this.secret
                             });
+                            if(!verify){
+                                return sendUnauthorized(verify)
+                            }
+                            let hasAccess = route.scopes.reduce((p,c)=>{
+                                return payload.scopes.indexOf(c)>=0 && p
+                            },true);
+                            if(!hasAccess){
+                                cnx.response.setStatus(HttpStatus.FORBIDDEN);
+                                return
+                            }
                         }
-                        token = token.replace(/Bearer\s+/,'');
-                        let {payload} = Jwt.toJson(token);
-                        if(!payload){
-                            cnx.response.setStatus(HttpStatus.UNAUTHORIZED);
-                            return sendUnauthorized({
-                                payloadMissing : true
-                            });
+                        handler.context = cnx;
+                        let result = await handler[route.action](...params.slice(1));
+                        if(!cnx.response.status){
+                            cnx.response.setStatus(HttpStatus.OK);
                         }
-                        let verify = Jwt.verify({
-                           token,
-                           secret : this.secret
-                        });
-                        if(!verify){
-                            return sendUnauthorized(verify)
+                        if(typeof result == "boolean"){
+                            result = `${result}`
                         }
-                        let hasAccess = route.scopes.reduce((p,c)=>{
-                            return payload.scopes.indexOf(c)>=0 && p
-                        },true);
-                        if(!hasAccess){
-                            cnx.response.setStatus(HttpStatus.FORBIDDEN);
-                            return
+                        if(typeof result == 'string'){
+                            if(!cnx.response.headers.has('Content-Type')){
+                                cnx.response.headers.set('Content-Type','text/plain');
+                            }
+                            cnx.response.setBody(result);
+                        } else
+                        if(typeof result == 'object' && result!=null){
+                            if(!cnx.response.headers.has('Content-Type')){
+                                cnx.response.headers.set('Content-Type','text/plain');
+                            }
+                            cnx.response.setBody(JSON.stringify(result));
                         }
+                        return;
                     }
-                    handler.context = cnx;
-                    let result = await handler[route.action](...params.slice(1));
-                    if(!cnx.response.status){
-                        cnx.response.setStatus(HttpStatus.OK);
-                    }
-                    if(typeof result == "boolean"){
-                        result = `${result}`
-                    }
-                    if(typeof result == 'string'){
-                        if(!cnx.response.headers.has('Content-Type')){
-                            cnx.response.headers.set('Content-Type','text/plain');
-                        }
-                        cnx.response.setBody(result);
-                    } else
-                    if(typeof result == 'object' && result!=null){
-                        if(!cnx.response.headers.has('Content-Type')){
-                            cnx.response.headers.set('Content-Type','text/plain');
-                        }
-                        cnx.response.setBody(JSON.stringify(result));
-                    }
-                    return;
                 }
+            }catch (e) {
+                if(!cnx.response.headers.has('Content-Type')){
+                    cnx.response.headers.set('Content-Type','text/plain');
+                }
+                cnx.response.setBody(`${e.stack||e}`);
             }
+
         }
         return next();
     }

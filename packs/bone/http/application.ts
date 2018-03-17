@@ -36,7 +36,7 @@ export class HttpApplication extends HttpServer {
                     this.handler(context, null),
                     new Promise(
                         (a,r)=>setTimeout(
-                            ()=>r(new Error('TIMEOUT')),2000
+                            ()=>r(new Error('TIMEOUT')), 20000
                         )
                     )
                 ]);

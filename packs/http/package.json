@@ -1,6 +1,6 @@
 {
   "name": "@barlus/http",
-  "version": "0.0.22",
+  "version": "0.0.23",
   "description": "Barlus NodeJs Wrapper",
   "main": "./index",
   "types": "./index",

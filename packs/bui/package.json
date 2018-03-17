@@ -1,6 +1,6 @@
 {
   "name": "@barlus/bui",
-  "version": "0.0.25",
+  "version": "0.0.26",
   "description": "Barlus ui framework",
   "license": "MIT",
   "main": "./index",

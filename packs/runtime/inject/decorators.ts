@@ -1,5 +1,4 @@
 import "../Reflect";
-import { type } from '../../node/os';
 
 import injection from "./injection";
 

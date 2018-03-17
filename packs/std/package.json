@@ -1,6 +1,6 @@
 {
   "name": "@barlus/std",
-  "version": "0.0.25",
+  "version": "0.0.26",
   "description": "Barlus standard type definitions",
   "types": "./index",
   "license": "MIT",

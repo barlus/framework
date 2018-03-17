@@ -14,7 +14,7 @@ export class HttpServer {
                 this.native.removeListener('listening', cleanup);
                 this.native.removeListener('error', cleanup);
                 if (error) {
-                    reject()
+                    reject(error)
                 } else {
                     accept()
                 }

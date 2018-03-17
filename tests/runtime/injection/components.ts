@@ -1,15 +1,17 @@
-import {injectable, named} from '@barlus/runtime/inject/decorators';
-import {Service} from './service';
-import {Config} from './types';
-
+import { injectable, token, inject } from '@barlus/runtime/decor';
+import { Service } from './service';
+import { Config } from './types';
 
 @injectable
 export class ComponentOne {
+
+    @inject
     private service: Service;
+
+    @inject
+    @token("config")
     private config: Config;
-    constructor(service: Service, @named("config") config:Config)  {
-        this.service = service;
-    }
+
     public doOne() {
         return this.service.say(this.config.componentOne.message);
     }
@@ -18,10 +20,11 @@ export class ComponentOne {
 @injectable
 export class ComponentTwo {
     private service: Service;
+    @inject
+    @token("config")
     private config: Config;
-    constructor(service: Service, @named("config") config:Config) {
+    constructor(service: Service) {
         this.service = service;
-        this.config = config;
     }
     public doTwo() {
         return this.service.say(this.config.componentTwo.message);

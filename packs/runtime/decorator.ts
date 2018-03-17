@@ -1,6 +1,5 @@
 import {Call, Stack} from './stack';
 export class Decorator {
-
     static info(args:IArguments){
         let stack = Stack.get('');
         let decDef:Call,decUse:Call;

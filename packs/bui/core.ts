@@ -4,9 +4,30 @@ import {injectable} from '@barlus/runtime/inject/decorators';
 
 import {TypeStyle, ReactComponent} from '@barlus/bui';
 import {NestedCSSProperties} from './typing/css';
+import {CSSProperties} from "@barlus/bui/index";
 
-class CSSHelper {
-    static extend(source:NestedCSSProperties,target:NestedCSSProperties){
+export interface Properties<T={}> extends JSX.ComponentProps<Component<T>> {
+    style?:CSSProperties
+}
+
+let decorator:Decorator;
+export function style(css: NestedCSSProperties|NestedCSSProperties[]) {
+    if(!decorator){
+        decorator = container.resolve(Decorator);
+    }
+    return (target: Function) => {
+        decorator.style(target,css);
+    }
+}
+
+export namespace style {
+    export function global(selector:string,css:NestedCSSProperties){
+        return decorator.global(selector,css);
+    }
+    export function local(css:CSSProperties){
+        return decorator.local(css);
+    }
+    export function extend(source:NestedCSSProperties,target:NestedCSSProperties){
         for ( let key in target ) {
             if ( key in source ) {
                 if ( (typeof target[key] == 'object') || (typeof source[key] == 'object') ) {
@@ -20,8 +41,7 @@ class CSSHelper {
         }
         return source;
     }
-
-    static merge(...args:NestedCSSProperties[]):NestedCSSProperties{
+    export function merge(...args:NestedCSSProperties[]):NestedCSSProperties{
         let properties:NestedCSSProperties = args.shift();
 
         for ( let p of args ) {
@@ -32,46 +52,20 @@ class CSSHelper {
     }
 }
 
-let decorator:Decorator;
-export function style(css: NestedCSSProperties|NestedCSSProperties[]) {
-    if(!decorator){
-        decorator = container.resolve(Decorator);
+export class Component<T,S = {}> extends ReactComponent<T&Properties,S> {
+    private _classNames:Set<string> = new Set();
+    private _cssProperties:CSSProperties = {};
+
+    addCssProperty(css:CSSProperties){
+        style.merge(this._cssProperties,css);
     }
-    return (target: Function) => {
-        decorator.style(target,css);
+
+    get cssProperties(){
+        return this._cssProperties;
     }
-}
-export class Component<T,S = {}> extends ReactComponent<T,S> {
-    private _classNames:Array<string> = [];
 
-    get classNames():Array<string>{
-        /*return Object.defineProperty(this,'classNames',{
-            value:function(thiz):Array<string>{
-                let classes:Array<string> = [];
-                let parent = Object.getPrototypeOf(thiz);
-                while (parent instanceof Component) {
-                    if ( Reflect.hasOwnMetadata('component:style',parent.constructor) ) {
-                        let cname = parent.constructor.name;
-                        classes.push(cname);
-                    }
-                    parent = Object.getPrototypeOf(parent);
-
-                }
-
-                if( thiz.props.className ) {
-                    thiz.props.className.trim().split(/\s+/).forEach(c => {
-                        if (!classes.includes(c)) {
-                            classes.push(c);
-                        }
-                    });
-                }
-
-                return classes;
-            }(this),
-            writable:true
-        }).classNames;*/
-
-        let classes:Array<string> = [];
+    get classNames():string[]{
+        let classes:string[] = [];
         let parent = Object.getPrototypeOf(this);
         while (parent instanceof Component) {
             if ( Reflect.hasOwnMetadata('component:style',parent.constructor) ) {
@@ -102,21 +96,32 @@ export class Component<T,S = {}> extends ReactComponent<T,S> {
     }
 
     addClassName(className:string){
-        if ( className && !this._classNames.includes(className) ) {
-            this._classNames.push(className);
+        if ( className && !this._classNames.has(className) ) {
+            this._classNames.add(className);
         }
     }
 
     removeClassName(className:string){
-        if ( this._classNames.includes(className) ) {
-            for (var i = 0; i < this._classNames.length; i++) {
-                if (this._classNames[i] === className) {
-                    this._classNames.splice(i, 1);
-                    i--;
-                }
-            }
+        if ( this._classNames.has(className) ) {
+            this._classNames.delete(className);
         }
     }
+
+    collectClassNames(p){
+        const {...props} = p;
+        props.className = this.classNames.join(' ');
+        return props;
+    }
+
+    collectCssProperties(p){
+        const {...props} = p;
+
+        if ( this.cssProperties )
+            props.style = props.style ? style.merge(props.style,this.cssProperties) : this.cssProperties;
+
+        return props;
+    }
+
 }
 
 @injectable
@@ -124,6 +129,12 @@ export class Decorator {
     private ts:TypeStyle;
     constructor( ts:TypeStyle){
         this.ts = ts;
+    }
+    global(selector:string,css:CSSProperties){
+        return this.ts.cssRule(selector,css);
+    }
+    local(css:CSSProperties){
+        return this.ts.style(css);
     }
     style(target:Function,css:NestedCSSProperties|NestedCSSProperties[]){
         Reflect.defineMetadata('component:style',css,target);
@@ -133,7 +144,7 @@ export class Decorator {
         const className: string = target.name;
         const render = target.prototype.render;
         if (Array.isArray(css)){
-            css = CSSHelper.merge(...css);
+            css = style.merge(...css);
         }
         this.ts.cssRule(`.${className}`, css as NestedCSSProperties);
     }

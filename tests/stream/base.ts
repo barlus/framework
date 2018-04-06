@@ -1,6 +1,20 @@
 import {expect} from '@barlus/tester';
 import {Stream, ReadableStream} from '@vendor/stream';
-import {Defer} from '../../samples/stream/util';
+import {Defer, delay} from '@vendor/stream/util';
+import {process} from '@barlus/node/process';
+
+
+let unhandledRejectionCount = 0;
+process.on("unhandledRejection", (reason: Error): void => {
+    console.log("unhandled rejection:", reason);
+    unhandledRejectionCount++;
+    //throw reason;
+});
+process.prependListener("exit", (code: number): void => {
+    if (code === 0 && unhandledRejectionCount !== 0) {
+        process.exit(1);
+    }
+});
 
 export class BaseTest {
     protected noop(n: number): void {
@@ -49,6 +63,13 @@ export class BaseTest {
     protected abortError: Error;
     protected results: any[];
     protected promises: any[];
+    protected unhandled:any[]=[];
+    constructor() {
+        process.on('unhandledRejection',this.onUnhandledPromise.bind(this));
+    }
+    protected onUnhandledPromise(reason, p) {
+        this.unhandled.push(reason);
+    }
     protected async setup() {
         this.s = new Stream<number>();
         this.boomError = new Error("boom");
@@ -56,5 +77,6 @@ export class BaseTest {
         this.results = [];
         this.promises = [];
     }
+
 
 }

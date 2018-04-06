@@ -172,20 +172,21 @@ class StreamEndingTest extends BaseTest {
         });
         swallow(mapped.result());
 
+
         await delay(1);
         expect(this.results).toEqual([2]);
         expect(mapped.isEnded()).toEqual(false);
         expect(endResult).toEqual(undefined);
         expect(w1.isFulfilled).toEqual(true);
         expect(we.isPending).toEqual(true);
-
-        d.reject(this.boomError);
+        const error = new Error('Boom Error');
+        d.reject(error);
         await this.settle([r.promise, res.promise]);
-        expect(we.reason).toEqual(this.boomError);
+        expect(we.reason).toEqual(error);
         expect(mapped.isEnded()).toEqual(true);
         expect(this.s.isEnded()).toEqual(true);
-        expect(res.reason).toEqual(this.boomError);
-        expect(r.reason).toEqual(this.boomError);
+        expect(res.reason).toEqual(error);
+        expect(r.reason).toEqual(error);
     }
     @test
     @test.case()

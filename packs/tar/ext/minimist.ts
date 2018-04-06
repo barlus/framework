@@ -1,8 +1,8 @@
 export default function (args, opts) {
     if (!opts) opts = {};
-    
-    var flags = { bools : {}, strings : {} };
-    
+
+    const flags = {bools: {}, strings: {}};
+
     [].concat(opts['boolean']).filter(s=>!!s).forEach(function (key) {
         flags.bools[key] = true;
     });
@@ -10,8 +10,8 @@ export default function (args, opts) {
     [].concat(opts.string).filter(s=>!!s).forEach(function (key) {
         flags.strings[key] = true;
     });
-    
-    var aliases = {};
+
+    const aliases = {};
     Object.keys(opts.alias || {}).forEach(function (key) {
         aliases[key] = [].concat(opts.alias[key]);
         aliases[key].forEach(function (x) {
@@ -20,15 +20,15 @@ export default function (args, opts) {
             }));
         });
     });
-    
-    var defaults = opts['default'] || {};
-    
-    var argv = { _ : [] };
+
+    const defaults = opts['default'] || {};
+
+    const argv = {_: []};
     Object.keys(flags.bools).forEach(function (key) {
         setArg(key, defaults[key] === undefined ? false : defaults[key]);
     });
-    
-    var notFlags = [];
+
+    let notFlags = [];
 
     if (args.indexOf('--') !== -1) {
         notFlags = args.slice(args.indexOf('--')+1);
@@ -36,7 +36,7 @@ export default function (args, opts) {
     }
 
     function setArg (key, val) {
-        var value = !flags.strings[key] && isNumber(val)
+        const value = !flags.strings[key] && isNumber(val)
             ? parseFloat(val) : val
         ;
         setKey(argv, key.split('.'), value);
@@ -46,14 +46,14 @@ export default function (args, opts) {
         });
     }
     
-    for (var i = 0; i < args.length; i++) {
-        var arg = args[i];
-        
+    for (let i = 0; i < args.length; i++) {
+        const arg = args[i];
+
         if (/^--.+=/.test(arg)) {
             // Using [\s\S] instead of . because js doesn't support the
             // 'dotall' regex modifier. See:
             // http://stackoverflow.com/a/1068308/13216
-            var m = arg.match(/^--([^=]+)=([\s\S]*)$/);
+            const m = arg.match(/^--([^=]+)=([\s\S]*)$/);
             setArg(m[1], m[2]);
         }
         else if (/^--no-.+/.test(arg)) {
@@ -78,10 +78,10 @@ export default function (args, opts) {
             }
         }
         else if (/^-[^-]+/.test(arg)) {
-            var letters = arg.slice(1,-1).split('');
-            
-            var broken = false;
-            for (var j = 0; j < letters.length; j++) {
+            const letters = arg.slice(1, -1).split('');
+
+            let broken = false;
+            for (let j = 0; j < letters.length; j++) {
                 var next = arg.slice(j+2);
                 
                 if (next === '-') {
@@ -148,7 +148,7 @@ export default function (args, opts) {
 };
 
 function hasKey (obj, keys) {
-    var o = obj;
+    let o = obj;
     keys.slice(0,-1).forEach(function (key) {
         o = (o[key] || {});
     });
@@ -158,7 +158,7 @@ function hasKey (obj, keys) {
 }
 
 function setKey (obj, keys, value) {
-    var o = obj;
+    let o = obj;
     keys.slice(0,-1).forEach(function (key) {
         if (o[key] === undefined) o[key] = {};
         o = o[key];

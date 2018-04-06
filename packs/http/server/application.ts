@@ -25,7 +25,7 @@ export class Application extends Emitter {
     keys: string[];
     silent: boolean;
     /**
-     * Initialize a new `Application`.
+     * Initialize a new `HttpApplication`.
      *
      * @api public
      */

@@ -2,7 +2,7 @@ import {ok} from "@barlus/node/assert";
 import {AlreadyHaveReaderError, WriteAfterEndError} from "./errors";
 import {map, filter} from "./transform";
 import {Defer, swallow, Track} from "./util";
-import {ReadableStream,  Transform, Writable, WritableStream} from "./types"
+import {ReadableStream, Transform, Writable, WritableStream} from "./types"
 
 export class Stream<T> implements ReadableStream<T>, WritableStream<T> {
     private _writers: WriteItem<T>[] = [];
@@ -17,27 +17,24 @@ export class Stream<T> implements ReadableStream<T>, WritableStream<T> {
     private _abortReason: Error;
     private _abortDeferred: Defer<void> = new Defer();
     private _resultDeferred: Defer<void> = new Defer();
-    public async write(value: T | PromiseLike<T>): Promise<void> {
+    public write(value: T | PromiseLike<T>): Promise<void> {
         if (value === undefined) {
             // Technically, we could allow this, but it's a common programming
             // error to forget to return a value, and it's arguable whether it's
             // useful to have a stream of void's, so let's prevent it for now.
             // NOTE: This behaviour may change in the future
             // TODO: prevent writing a void PromiseLike too?
-            return Promise.reject(
-                new TypeError("cannot write void value, use end() to end the stream")
-            );
+            return Promise.reject(new TypeError("cannot write void value, use end() to end the stream"))
         }
-
         let writeDone = new Defer();
-        this._writers.push(new WriteItem(writeDone.resolve,new Track<T>(Promise.resolve(value))));
+        this._writers.push(new WriteItem(writeDone.resolve, new Track<T>(Promise.resolve(value))));
         this._pump();
         return writeDone.promise;
     }
-    public async end(error?: Error, endedResult?: PromiseLike<void>): Promise<void> {
+    public end(error?: Error, endedResult?: PromiseLike<void>): Promise<void> {
         if (!(error === undefined || error === null || error instanceof Error)) {
             // tslint:disable-line:no-null-keyword
-            throw new TypeError("invalid argument to end(): must be undefined, null or Error object")
+            return Promise.reject(new TypeError("invalid argument to end(): must be undefined, null or Error object"))
         }
         if (error && !endedResult) {
             endedResult = Promise.reject(error);
@@ -48,10 +45,7 @@ export class Stream<T> implements ReadableStream<T>, WritableStream<T> {
             this._ending = eof;
         }
         let writeDone = new Defer();
-        const item: WriteItem<T> = {
-            resolveWrite: writeDone.resolve,
-            value: eof,
-        };
+        const item: WriteItem<T> = new WriteItem<T>(writeDone.resolve, eof);
         this._writers.push(item);
         this._pump();
         return writeDone.promise;
@@ -96,7 +90,7 @@ export class Stream<T> implements ReadableStream<T>, WritableStream<T> {
     public hasReader(): boolean {
         return !!this._reader;
     }
-    public map<R>(mapper: (value: T) => R | PromiseLike<R>, ender?: (error?: Error) => void | PromiseLike<void>,aborter?: (error: Error) => void): ReadableStream<R> {
+    public map<R>(mapper: (value: T) => R | PromiseLike<R>, ender?: (error?: Error) => void | PromiseLike<void>, aborter?: (error: Error) => void): ReadableStream<R> {
         let output = new Stream<R>();
         map(this, output, mapper, ender, aborter);
         return output;
@@ -335,7 +329,7 @@ class WriteItem<T> {
      * Either a special Eof value, or a value of type `T`.
      */
     readonly value: Eof | Track<T>;
-    constructor(resolveWrite:(done?: void | PromiseLike<void>) => void, value:Eof | Track<T>){
+    constructor(resolveWrite: (done?: void | PromiseLike<void>) => void, value: Eof | Track<T>) {
         this.resolveWrite = resolveWrite;
         this.value = value;
     }

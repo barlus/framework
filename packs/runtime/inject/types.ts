@@ -2,7 +2,8 @@
 export type InjectionToken<T> = Constructor<T> | string;
 /** Constructor type */
 export interface Constructor<T> {
-    new(...args: any[]): T
+    new(...args: any[]): T;
+    prototype:T;
 }
 
 export type Dictionary<T> = { [key: string]: T };

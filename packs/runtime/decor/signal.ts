@@ -2,17 +2,13 @@ export type Signal<T extends Function> = T & {
     attach(callback:T):T;
     detach(callback:T):T;
 }
-
 export function signal(target:any,key:string){
-    
     let handlers = new Set<Function>();
-    
     function signal(...args){
         for(let handler of handlers){
             handler(...args);
         }
     }
-
     Object.defineProperties(signal,{
         attach:{
             value(handler:Function){
@@ -27,9 +23,7 @@ export function signal(target:any,key:string){
             }
         }
     });
-
     Object.defineProperty(target,key,{
         value:signal
     })
-
 }

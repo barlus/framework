@@ -1,0 +1,24 @@
+/// <reference path="./builtins.d.ts"/>
+import * as native from "events";
+import {builtin} from "./builtin";
+declare const global,process;
+
+@builtin(native,(module)=>module.EventEmitter)
+export class EventEmitter {
+    static listenerCount?(emitter: EventEmitter, event: string | symbol): number; // deprecated
+    static defaultMaxListeners: number;
+
+    addListener?(event: string | symbol, listener: (...args: any[]) => void): this;
+    on?(event: string | symbol, listener: (...args: any[]) => void): this;
+    once?(event: string | symbol, listener: (...args: any[]) => void): this;
+    prependListener?(event: string | symbol, listener: (...args: any[]) => void): this;
+    prependOnceListener?(event: string | symbol, listener: (...args: any[]) => void): this;
+    removeListener?(event: string | symbol, listener: (...args: any[]) => void): this;
+    removeAllListeners?(event?: string | symbol): this;
+    setMaxListeners?(n: number): this;
+    getMaxListeners?(): number;
+    listeners?(event: string | symbol): Function[];
+    emit?(event: string | symbol, ...args: any[]): boolean;
+    eventNames?(): Array<string | symbol>;
+    listenerCount?(type: string | symbol): number;
+}

@@ -1,18 +1,19 @@
-import {injectable,named} from '@barlus/runtime/inject/decorators';
-import {Service} from './service';
-import {ComponentOne, ComponentTwo} from './components';
-import {Config} from './types';
+import { injectable, singleton, token } from '@barlus/runtime/decor';
+import { Service } from './service';
+import { ComponentOne, ComponentTwo } from './components';
+import { Config } from './types';
 
+@singleton
 @injectable
 export class Application {
     private config: Config;
     private service: Service;
-    private one: ComponentOne;
-    private two: ComponentTwo;
-    get name(){
+    readonly one: ComponentOne;
+    readonly two: ComponentTwo;
+    get name() {
         return this.config.application;
     }
-    constructor(@named('config') config: Config, service: Service, one: ComponentOne, two: ComponentTwo) {
+    constructor(@token('config') config: Config, service: Service, one: ComponentOne, two: ComponentTwo) {
         this.config = config;
         this.service = service;
         this.one = one;

@@ -4,6 +4,11 @@ const ts = require("typescript");
 const Crypto = require("crypto");
 const Module = require('module');
 
+require('v8').setFlagsFromString('--harmony_async_iteration --harmony_dynamic_import');
+if(typeof Symbol.asyncIterator=='undefined'){
+    const AsyncGenerator = eval(`Object.getPrototypeOf(async function * (){}).prototype`);
+    Symbol.asyncIterator = Object.getOwnPropertySymbols(Object.getPrototypeOf(AsyncGenerator))[0]
+}
 ts.path = require.resolve('typescript');
 
 let SourceMap;
@@ -30,20 +35,37 @@ Module.runMain = function (...args) {
     console.timeEnd("LOAD");
     process._tickCallback();
 };
+
 const cacheDir = process.env.TS_NODE_CACHE?Path.resolve('.cache'):null;
 if (cacheDir && !fs.existsSync(cacheDir)) {
     fs.mkdirSync(cacheDir)
 }
+function dir(file){
+    const pathToCreate = Path.dirname(file);
+    pathToCreate
+        .split(Path.sep)
+        .reduce((currentPath, folder) => {
+            currentPath += folder + Path.sep;
+            if (!fs.existsSync(currentPath)){
+                fs.mkdirSync(currentPath);
+            }
+            return currentPath;
+        }, '');
+    return file;
+}
 function req(module, filename) {
     const source = fs.readFileSync(filename);
     if(cacheDir){
-        const stamp = Path.resolve(cacheDir,`${hash(filename)}.${hash(source)}.js`);
-        if(fs.existsSync(stamp)){
-            return module._compile(fs.readFileSync(stamp,'utf8'), filename);
+        const outFile = dir(cacheDir+'/'+Path.relative(process.cwd(),filename.replace(/\.ts$/,'.js')));
+        const outFileVersion = outFile+'.version';
+        const stamp = `${hash(filename)}${hash(source)}`;
+        if(fs.existsSync(outFile) && fs.existsSync(outFileVersion) && fs.readFileSync(outFileVersion,'utf8')===stamp){
+            return module._compile(fs.readFileSync(outFile,'utf8'), filename);
         }else{
             const output = compile(source.toString('utf8'), filename);
+            fs.writeFileSync(outFileVersion,stamp);
+            fs.writeFileSync(outFile,output);
             module._compile(output, filename);
-            fs.writeFileSync(stamp,output);
         }
     }else{
         const script = compile(source.toString('utf8'), filename);

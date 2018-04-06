@@ -5,17 +5,11 @@ const debug = (...args)=>{};
 
 export interface Router {
   get(path: string, handler: (...args) => Promise<any>): () => Promise<any>
-
   post(path: string, handler: (...args) => Promise<any>): () => Promise<any>
-
   put(path: string, handler: (...args) => Promise<any>): () => Promise<any>
-
   trace(path: string, handler: (...args) => Promise<any>): () => Promise<any>
-
   head(path: string, handler: (...args) => Promise<any>): () => Promise<any>
-
   delete(path: string, handler: (...args) => Promise<any>): () => Promise<any>
-
   options(path: string, handler: (...args) => Promise<any>): () => Promise<any>
 }
 

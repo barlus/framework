@@ -14,7 +14,6 @@ export interface UrlObject {
     search?: string;
     slashes?: boolean;
 }
-
 export interface Url extends UrlObject {
     port?: string;
     query?: any;
@@ -48,7 +47,6 @@ export declare class URLSearchParams implements Iterable<[string, string]> {
     values(): IterableIterator<string>;
     [Symbol.iterator](): IterableIterator<[string, string]>;
 }
-
 export declare class URL {
     constructor(input: string, base?: string | URL);
     hash: string;

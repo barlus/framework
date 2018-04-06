@@ -87,7 +87,6 @@ export class Cookies {
       return value
     }
   }
-
   public set(name, value, opts?) {
     const res = this.response, req = this.request;
     let headers = res.getHeader("Set-Cookie") || [];
@@ -209,7 +208,6 @@ export class Cookie {
 
 }
 
-
 function getPattern(name) {
   if (cache[name]) {
     return cache[name];
@@ -221,7 +219,6 @@ function getPattern(name) {
     "=([^;]*)"
   )
 }
-
 function pushCookie(cookies, cookie) {
   if (cookie.overwrite) {
     cookies = cookies.filter(function (c) {

@@ -1,0 +1,13 @@
+declare module "events";
+declare module "buffer";
+declare module "url";
+declare module "stream";
+declare module "net";
+declare module "tls";
+declare module "http";
+declare module "https";
+declare module "fs";
+declare module "crypto";
+declare module "path";
+declare module "process";
+declare module "typescript";

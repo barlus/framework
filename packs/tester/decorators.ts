@@ -3,7 +3,7 @@ import {Decorator} from "@barlus/runtime/decorator";
 import {Constructor} from './interfaces';
 import {Suite} from './core';
 //
-export type suite = ClassDecorator & {
+export type SuiteDecorator = ClassDecorator & {
     (description: string): ClassDecorator;
     focus: ClassDecorator;
     setup: MethodDecorator;
@@ -12,7 +12,7 @@ export type suite = ClassDecorator & {
         (reson: string): ClassDecorator;
     }
 };
-export type test = MethodDecorator & {
+export type TestDecorator = MethodDecorator & {
     (description: string): MethodDecorator;
     async: MethodDecorator;
     focus: MethodDecorator;
@@ -25,7 +25,7 @@ export type test = MethodDecorator & {
     cases(caseArguments: (() => IterableIterator<any> | Array<Array<any>>) | IterableIterator<any> | Array<Array<any>>): MethodDecorator;
     timeout(timeoutInMs: number): MethodDecorator;
 };
-export const test: test = Object.assign<any, any>(testDecorator, {
+export const test: TestDecorator = Object.assign<any, any>(testDecorator, {
     ignore: testDecoratorIgnore,
     case: testDecoratorCase,
     cases: testDecoratorCases,
@@ -34,7 +34,7 @@ export const test: test = Object.assign<any, any>(testDecorator, {
     teardown: testDecoratorTeardown,
     timeout: testDecoratorTimeout,
 });
-export const suite: suite = Object.assign<any, any>(suiteDecorator, {
+export const suite: SuiteDecorator = Object.assign<any, any>(suiteDecorator, {
     ignore: suiteDecoratorIgnore,
     focus: suiteDecoratorFocus,
     setup: suiteDecoratorSetup,
@@ -89,7 +89,8 @@ function testDecoratorCases (caseArguments: (() => IterableIterator<any> | Array
     return (target: object, propertyKey: string, descriptor?: TypedPropertyDescriptor<any>) => {
         unused(descriptor);
         let test = Suite.for(target).test(propertyKey);
-        expandTestCases(caseArguments).forEach((val) => {
+        let cases = expandTestCases(caseArguments);
+        cases.forEach((val) => {
             test.case(val);
         })
     };

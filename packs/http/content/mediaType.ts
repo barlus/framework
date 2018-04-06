@@ -4,35 +4,32 @@
  */
 
 export function preferredMediaTypes(accept, provided) {
-  // RFC 2616 sec 14.2: no header = */*
-  var accepts = parseAccept(accept === undefined ? '*/*' : accept || '');
+    // RFC 2616 sec 14.2: no header = */*
+    const accepts = parseAccept(accept === undefined ? '*/*' : accept || '');
 
-  if (!provided) {
-    // sorted list of all types
-    return accepts
-      .filter(isQuality)
-      .sort(compareSpecs)
-      .map(getFullType);
-  }
+    if (!provided) {
+        // sorted list of all types
+        return accepts
+            .filter(isQuality)
+            .sort(compareSpecs)
+            .map(getFullType);
+    }
 
-  var priorities = provided.map(function getPriority(type, index) {
-    return getMediaTypePriority(type, accepts, index);
-  });
+    const priorities = provided.map(function getPriority(type, index) {
+        return getMediaTypePriority(type, accepts, index);
+    });
 
-  // sorted list of accepted types
-  return priorities.filter(isQuality).sort(compareSpecs).map(function getType(priority) {
-    return provided[priorities.indexOf(priority)];
-  });
+    // sorted list of accepted types
+    return priorities.filter(isQuality).sort(compareSpecs).map(function getType(priority) {
+        return provided[priorities.indexOf(priority)];
+    });
 }
-
-
 
 /**
  * Module variables.
  * @private
  */
-
-var simpleMediaTypeRegExp = /^\s*([^\s\/;]+)\/([^;\s]+)\s*(?:;(.*))?$/;
+const simpleMediaTypeRegExp = /^\s*([^\s\/;]+)\/([^;\s]+)\s*(?:;(.*))?$/;
 
 /**
  * Parse the Accept header.
@@ -40,20 +37,20 @@ var simpleMediaTypeRegExp = /^\s*([^\s\/;]+)\/([^;\s]+)\s*(?:;(.*))?$/;
  */
 
 function parseAccept(accept) {
-  var accepts = splitMediaTypes(accept);
+    const accepts = splitMediaTypes(accept);
 
-  for (var i = 0, j = 0; i < accepts.length; i++) {
-    var mediaType = parseMediaType(accepts[i].trim(), i);
+    for (var i = 0, j = 0; i < accepts.length; i++) {
+        const mediaType = parseMediaType(accepts[i].trim(), i);
 
-    if (mediaType) {
-      accepts[j++] = mediaType;
+        if (mediaType) {
+            accepts[j++] = mediaType;
+        }
     }
-  }
 
-  // trim accepts
-  accepts.length = j;
+    // trim accepts
+    accepts.length = j;
 
-  return accepts;
+    return accepts;
 }
 
 /**
@@ -62,44 +59,46 @@ function parseAccept(accept) {
  */
 
 function parseMediaType(str, i?) {
-  var match = simpleMediaTypeRegExp.exec(str);
-  if (!match) return null;
-
-  var params = Object.create(null);
-  var q = 1;
-  var subtype = match[2];
-  var type = match[1];
-
-  if (match[3]) {
-    var kvps = splitParameters(match[3]).map(splitKeyValuePair);
-
-    for (var j = 0; j < kvps.length; j++) {
-      var pair = kvps[j];
-      var key = pair[0].toLowerCase();
-      var val = pair[1];
-
-      // get the value, unwrapping quotes
-      var value = val && val[0] === '"' && val[val.length - 1] === '"'
-        ? val.substr(1, val.length - 2)
-        : val;
-
-      if (key === 'q') {
-        q = parseFloat(value);
-        break;
-      }
-
-      // store parameter
-      params[key] = value;
+    let match = simpleMediaTypeRegExp.exec(str);
+    if (!match) {
+        return null;
     }
-  }
 
-  return {
-    type: type,
-    subtype: subtype,
-    params: params,
-    q: q,
-    i: i
-  };
+    const params = Object.create(null);
+    let q = 1;
+    const subtype = match[2];
+    const type = match[1];
+
+    if (match[3]) {
+        const kvps = splitParameters(match[3]).map(splitKeyValuePair);
+
+        for (let j = 0; j < kvps.length; j++) {
+            const pair = kvps[j];
+            const key = pair[0].toLowerCase();
+            const val = pair[1];
+
+            // get the value, unwrapping quotes
+            const value = val && val[0] === '"' && val[val.length - 1] === '"'
+                ? val.substr(1, val.length - 2)
+                : val;
+
+            if (key === 'q') {
+                q = parseFloat(value);
+                break;
+            }
+
+            // store parameter
+            params[key] = value;
+        }
+    }
+
+    return {
+        type: type,
+        subtype: subtype,
+        params: params,
+        q: q,
+        i: i
+    };
 }
 
 /**
@@ -108,17 +107,17 @@ function parseMediaType(str, i?) {
  */
 
 function getMediaTypePriority(type, accepted, index) {
-  var priority = {o: -1, q: 0, s: 0};
+    let priority = {o: -1, q: 0, s: 0};
 
-  for (var i = 0; i < accepted.length; i++) {
-    var spec = specify(type, accepted[i], index);
+    for (let i = 0; i < accepted.length; i++) {
+        const spec = specify(type, accepted[i], index);
 
-    if (spec && (priority.s - spec.s || priority.q - spec.q || priority.o - spec.o) < 0) {
-      priority = spec;
+        if (spec && (priority.s - spec.s || priority.q - spec.q || priority.o - spec.o) < 0) {
+            priority = spec;
+        }
     }
-  }
 
-  return priority;
+    return priority;
 }
 
 /**
@@ -127,45 +126,43 @@ function getMediaTypePriority(type, accepted, index) {
  */
 
 function specify(type, spec, index) {
-  var p = parseMediaType(type);
-  var s = 0;
+    let p = parseMediaType(type);
+    let s = 0;
 
-  if (!p) {
-    return null;
-  }
-
-  if(spec.type.toLowerCase() == p.type.toLowerCase()) {
-    s |= 4
-  } else if(spec.type != '*') {
-    return null;
-  }
-
-  if(spec.subtype.toLowerCase() == p.subtype.toLowerCase()) {
-    s |= 2
-  } else if(spec.subtype != '*') {
-    return null;
-  }
-
-  var keys = Object.keys(spec.params);
-  if (keys.length > 0) {
-    if (keys.every(function (k) {
-      return spec.params[k] == '*' || (spec.params[k] || '').toLowerCase() == (p.params[k] || '').toLowerCase();
-    })) {
-      s |= 1
-    } else {
-      return null
+    if (!p) {
+        return null;
     }
-  }
 
-  return {
-    i: index,
-    o: spec.i,
-    q: spec.q,
-    s: s,
-  }
+    if (spec.type.toLowerCase() == p.type.toLowerCase()) {
+        s |= 4
+    } else if (spec.type != '*') {
+        return null;
+    }
+
+    if (spec.subtype.toLowerCase() == p.subtype.toLowerCase()) {
+        s |= 2
+    } else if (spec.subtype != '*') {
+        return null;
+    }
+
+    const keys = Object.keys(spec.params);
+    if (keys.length > 0) {
+        if (keys.every(function (k) {
+                return spec.params[k] == '*' || (spec.params[k] || '').toLowerCase() == (p.params[k] || '').toLowerCase();
+            })) {
+            s |= 1
+        } else {
+            return null
+        }
+    }
+
+    return {
+        i: index,
+        o: spec.i,
+        q: spec.q,
+        s: s,
+    }
 }
-
-
 
 /**
  * Compare two specs.
@@ -173,7 +170,7 @@ function specify(type, spec, index) {
  */
 
 function compareSpecs(a, b) {
-  return (b.q - a.q) || (b.s - a.s) || (a.o - b.o) || (a.i - b.i) || 0;
+    return (b.q - a.q) || (b.s - a.s) || (a.o - b.o) || (a.i - b.i) || 0;
 }
 
 /**
@@ -182,7 +179,7 @@ function compareSpecs(a, b) {
  */
 
 function getFullType(spec) {
-  return spec.type + '/' + spec.subtype;
+    return spec.type + '/' + spec.subtype;
 }
 
 /**
@@ -191,7 +188,7 @@ function getFullType(spec) {
  */
 
 function isQuality(spec) {
-  return spec.q > 0;
+    return spec.q > 0;
 }
 
 /**
@@ -200,15 +197,15 @@ function isQuality(spec) {
  */
 
 function quoteCount(string) {
-  var count = 0;
-  var index = 0;
+    let count = 0;
+    let index = 0;
 
-  while ((index = string.indexOf('"', index)) !== -1) {
-    count++;
-    index++;
-  }
+    while ((index = string.indexOf('"', index)) !== -1) {
+        count++;
+        index++;
+    }
 
-  return count;
+    return count;
 }
 
 /**
@@ -217,18 +214,18 @@ function quoteCount(string) {
  */
 
 function splitKeyValuePair(str) {
-  var index = str.indexOf('=');
-  var key;
-  var val;
+    const index = str.indexOf('=');
+    let key;
+    let val;
 
-  if (index === -1) {
-    key = str;
-  } else {
-    key = str.substr(0, index);
-    val = str.substr(index + 1);
-  }
+    if (index === -1) {
+        key = str;
+    } else {
+        key = str.substr(0, index);
+        val = str.substr(index + 1);
+    }
 
-  return [key, val];
+    return [key, val];
 }
 
 /**
@@ -237,20 +234,20 @@ function splitKeyValuePair(str) {
  */
 
 function splitMediaTypes(accept) {
-  var accepts = accept.split(',');
+    const accepts = accept.split(',');
 
-  for (var i = 1, j = 0; i < accepts.length; i++) {
-    if (quoteCount(accepts[j]) % 2 == 0) {
-      accepts[++j] = accepts[i];
-    } else {
-      accepts[j] += ',' + accepts[i];
+    for (var i = 1, j = 0; i < accepts.length; i++) {
+        if (quoteCount(accepts[j]) % 2 == 0) {
+            accepts[++j] = accepts[i];
+        } else {
+            accepts[j] += ',' + accepts[i];
+        }
     }
-  }
 
-  // trim accepts
-  accepts.length = j + 1;
+    // trim accepts
+    accepts.length = j + 1;
 
-  return accepts;
+    return accepts;
 }
 
 /**
@@ -259,22 +256,22 @@ function splitMediaTypes(accept) {
  */
 
 function splitParameters(str) {
-  var parameters = str.split(';');
+    const parameters = str.split(';');
 
-  for (var i = 1, j = 0; i < parameters.length; i++) {
-    if (quoteCount(parameters[j]) % 2 == 0) {
-      parameters[++j] = parameters[i];
-    } else {
-      parameters[j] += ';' + parameters[i];
+    for (var i = 1, j = 0; i < parameters.length; i++) {
+        if (quoteCount(parameters[j]) % 2 == 0) {
+            parameters[++j] = parameters[i];
+        } else {
+            parameters[j] += ';' + parameters[i];
+        }
     }
-  }
 
-  // trim parameters
-  parameters.length = j + 1;
+    // trim parameters
+    parameters.length = j + 1;
 
-  for (var i = 0; i < parameters.length; i++) {
-    parameters[i] = parameters[i].trim();
-  }
+    for (var i = 0; i < parameters.length; i++) {
+        parameters[i] = parameters[i].trim();
+    }
 
-  return parameters;
+    return parameters;
 }

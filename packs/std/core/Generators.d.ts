@@ -1,5 +1,7 @@
 /// <reference no-default-lib="true"/>
-interface Generator extends Iterator<any> {}
+interface Generator extends Iterator<any> {
+
+}
 interface IteratorResult<T> {
     done: boolean;
     value: T;
@@ -19,6 +21,8 @@ interface AsyncIterator<T> {
     next(value?: any): Promise<IteratorResult<T>>;
     return?(value?: any): Promise<IteratorResult<T>>;
     throw?(e?: any): Promise<IteratorResult<T>>;
+}
+interface AsyncIterable<T> {
     [Symbol.asyncIterator](): AsyncIterator<T>;
 }
 interface AsyncIterableIterator<T> extends AsyncIterator<T> {

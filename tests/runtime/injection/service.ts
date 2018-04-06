@@ -1,10 +1,10 @@
-import {injectable, named} from '@barlus/runtime/inject/decorators';
-import {Config} from './types';
+import { injectable, token } from '@barlus/runtime/decor';
+import { Config } from './types';
 
 @injectable
 export class Service {
-    private config:Config;
-    constructor(@named("config") config:Config){
+    private config: Config;
+    constructor(@token("config") config: Config) {
         this.config = config;
     }
     say(message: string) {

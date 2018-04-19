@@ -1,4 +1,3 @@
-import '@barlus/std';
 import { HttpServer, HttpClient, HttpRequest, HttpMethod, HttpUrl, HttpHeaders } from '@barlus/bone/http';
 import { suite, test, expect } from '@barlus/tester';
 import { Buffer } from '@barlus/bone/node/buffer';

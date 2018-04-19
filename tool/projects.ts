@@ -1,7 +1,7 @@
-import {glob} from '@barlus/node/glob';
-import {resolve,dirname,relative} from '@barlus/node/path';
-import {process} from '@barlus/node/process';
-import {readFileSync, writeFileSync} from '@barlus/node/fs';
+import {glob} from '@barlus/bone/glob';
+import {Path} from '@barlus/bone/node/path';
+import {process} from '@barlus/bone/node/process';
+import {Fs} from '@barlus/bone/node/fs';
 const envProps = Object.keys(process.env);
 const npmProps = envProps.filter(k=>{
     let key = k.toLowerCase();
@@ -16,9 +16,9 @@ export class Package {
     private file:string;
     private json:any;
     constructor(file:string,root:string){
-        this.root = resolve(root);
-        this.file = resolve(file);
-        this.json = JSON.parse(readFileSync(this.file,'utf8'));
+        this.root = Path.resolve(root);
+        this.file = Path.resolve(file);
+        this.json = JSON.parse(Fs.readFileSync(this.file,'utf8'));
     }
     get name(){
         return this.json.name;
@@ -30,20 +30,20 @@ export class Package {
         return this.root;
     }
     get packageRoot(){
-        return dirname(this.file);
+        return Path.dirname(this.file);
     }
     get packageFile(){
         return this.file;
     }
     get packageFolder(){
-        return relative(this.root,this.file);
+        return Path.relative(this.root,this.file);
     }
     get resolutions(){
         return this.json.resolutions||(this.json.resolutions={});
     }
     update(patch:object){
         Object.assign(this.json,patch);
-        writeFileSync(this.packageFile,JSON.stringify(this.json,null,2));
+        Fs.writeFileSync(this.packageFile,JSON.stringify(this.json,null,2));
     }
 }
 

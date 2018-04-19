@@ -1,18 +1,16 @@
-export function bound(target, key?, descriptor?) {
-    const method = descriptor.value;
-    const configurable = true;
-    if (typeof method !== 'function') {
-        throw new Error(`@bound decorator can only be applied to methods not: ${typeof method}`);
-    }
+export function bound(target: object, key: string, desc: PropertyDescriptor) {
+    const { value, configurable } = desc||Object.getOwnPropertyDescriptor(target,key);
     return {
         configurable,
-        get(){
-            const value = method.bind(this);
-            Object.defineProperty(this,key,{
-                configurable,
-                value
+        get() {
+            const binded = Object.assign(value.bind(this),{
+                original:value
             });
-            return value;
+            Object.defineProperty(this, key, {
+                configurable,
+                value:binded
+            });
+            return binded;
         }
-    };
+    }
 }

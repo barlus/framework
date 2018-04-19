@@ -1,13 +1,12 @@
-// tslint:disable:no-console
-import {process} from "@barlus/node/process";
-import {resolve} from "@barlus/node/path";
-import {writeFileSync} from "@barlus/node/fs";
+import {process} from "@barlus/bone/node/process";
+import {Path} from "@barlus/bone/node/path";
+import {Fs} from "@barlus/bone/node/fs";
 import {CliReporter} from "@barlus/tester/reporters/cli";
 import {TestRunner} from "@barlus/tester/runner";
 
 async function load(tests:string){
     for(const test of tests){
-        await import(resolve(test))
+        await import(Path.resolve(test))
     }
 }
 
@@ -20,9 +19,9 @@ async function run(getCliOptions){
         const runner = new TestRunner(reporter);
         await runner.run();
         if(options.report){
-           const file = resolve(options.report);
+           const file = Path.resolve(options.report);
            const junit = runner.plan.toString();
-           writeFileSync(file,junit,'utf8');
+           Fs.writeFileSync(file,junit,'utf8');
         }
     } catch (ex) {
         console.error(ex);

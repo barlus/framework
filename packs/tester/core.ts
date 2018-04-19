@@ -1,6 +1,6 @@
 import "@barlus/runtime/Reflect";
 import {Constructor} from "./interfaces";
-import {error} from '../node/util';
+
 
 export {Result, Plan, Suite, Test, Probe};
 

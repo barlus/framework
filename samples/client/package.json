@@ -1,12 +1,12 @@
 {
   "name": "@vendor/client",
-  "version": "0.0.27",
+  "version": "0.1.1",
   "description": "Barlus Tar Library",
   "types": "./index",
   "license": "MIT",
   "repository": "https://github.com/ecmal/elp.git",
   "author": "Mamble LLC",
   "dependencies": {
-    "@barlus/runtime": "latest"
+    "@barlus/runtime": "^0.1.1"
   }
 }

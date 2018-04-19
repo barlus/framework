@@ -1,10 +1,10 @@
-import {process} from "@barlus/node/process";
-import {chalk} from "@barlus/node/chalk";
+import {process} from "@barlus/bone/node/process";
+import {colors} from "@barlus/bone/utils/colors";
 import {Plan, Probe, Suite, Test} from "../core";
 import {TestReporter} from "../reporter";
 
 
-const line: string = chalk.gray(pad(80));
+const line: string = colors.gray(pad(80));
 export class CliReporter extends TestReporter {
     protected plan: Plan;
     protected suite: Suite;
@@ -21,14 +21,14 @@ export class CliReporter extends TestReporter {
     }
     public onSuiteStart(suite: Suite){
         this.suite = suite;
-        const description = chalk.yellow(`# ${suite.description}`);
+        const description = colors.yellow(`# ${suite.description}`);
         this.log(line + "\n");
-        this.log(`${chalk.white(suite.key)} ${description}\n`);
+        this.log(`${colors.white(suite.key)} ${description}\n`);
     }
     public onTestStart(test: Test){
         this.test = test;
-        const description = chalk.yellow(`# ${test.description}`);
-        const location = chalk.cyan(`at ${test.file}:${test.line}:${test.column}`);
+        const description = colors.yellow(`# ${test.description}`);
+        const location = colors.cyan(`at ${test.file}:${test.line}:${test.column}`);
         this.log(`  ${test.key} ${description}\n`);
         this.log(`  ${location}\n`);
     }
@@ -37,13 +37,13 @@ export class CliReporter extends TestReporter {
     }
     public onProbeFinish(output: Probe){
         const id = output.test.cases.indexOf(output)+1;
-        let result = chalk.green(` ✓${id}`);
+        let result = colors.green(` ✓${id}`);
         switch (output.result){
             case "ERROR":
-            case "FAILED": result = chalk.red(` ✘${id}`); break;
-            case "SKIPED": result = chalk.blue(` !${id}`); break;
+            case "FAILED": result = colors.red(` ✘${id}`); break;
+            case "SKIPED": result = colors.blue(` !${id}`); break;
         }
-        this.log(`  ${result} ${chalk.gray(output.test.key)} (${output.args.join(", ")})${formatError(output.error)}\n`);
+        this.log(`  ${result} ${colors.gray(output.test.key)} (${output.args.join(", ")})${formatError(output.error)}\n`);
     }
     public onTestFinish(plan: Test){}
     public onSuiteFinish(plan: Suite){}
@@ -61,9 +61,9 @@ function formatError(e){
         const stack = e.stack.split("\n").map((s) => {
             s = s.trim();
             if (s.indexOf("at ") == 0){
-                return "      " + chalk.gray(s);
+                return "      " + colors.gray(s);
             }else{
-                return "    " + chalk.red(s);
+                return "    " + colors.red(s);
             }
         });
         return "\n" + stack.join("\n");

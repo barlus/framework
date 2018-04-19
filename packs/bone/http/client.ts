@@ -1,4 +1,3 @@
-import '@barlus/std';
 import {Http} from '../node/http';
 import {Https} from '../node/https';
 import {AsyncStream} from '../node/stream';

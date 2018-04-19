@@ -1,13 +1,13 @@
-import {chalk} from '@barlus/node/chalk';
-import {glob} from '@barlus/node/glob';
-import {readFileSync, unlinkSync, writeFileSync} from '@barlus/node/fs';
-import {dirname, relative, resolve} from '@barlus/node/path';
+import {colors} from '@barlus/bone/utils/colors';
+import {glob} from '@barlus/bone/glob';
+import {Fs} from '@barlus/bone/node/fs';
+import {Path} from '@barlus/bone/node/path';
 
-import {request} from '@barlus/node/https';
-import {process} from '@barlus/node/process';
-import {Buffer} from '@barlus/node/buffer';
-import {URL} from '@barlus/node/url';
-import {execSync} from '@barlus/node/child_process';
+import {Https} from '@barlus/bone/node/https';
+import {process} from '@barlus/bone/node/process';
+import {Buffer} from '@barlus/bone/node/buffer';
+import {URL} from '@barlus/bone/node/url';
+import {Cp} from '@barlus/bone/node/child_process';
 
 //console.info(Glob.search('**/*.{js,ts}'));
 const envProps = Object.keys(process.env);
@@ -39,7 +39,7 @@ async function fetch(url:URL|string){
                 accept:'application/json'
             }
         };
-        const req = request(opt,res=>{
+        const req = Https.request(opt,res=>{
             const chunks:Buffer[] = [];
             res.on('error',reject);
             res.on('data',chunk=>chunks.push(chunk as Buffer));
@@ -87,9 +87,9 @@ function findProjects(){
         realpath : true
     });
     const packageJsons = packageFiles.map(f=>{
-        let packageFile = resolve(f);
-        let packageRoot = dirname(packageFile);
-        let packageJson = JSON.parse(readFileSync(packageFile,'utf8'));
+        let packageFile = Path.resolve(f);
+        let packageRoot = Path.dirname(packageFile);
+        let packageJson = JSON.parse(Fs.readFileSync(packageFile,'utf8'));
         return Object.assign(packageJson,{
             projectRoot,
             packageRoot,
@@ -100,13 +100,13 @@ function findProjects(){
 }
 function createRcFiles(project){
     let registryHost = new URL(registryUrl).host;
-    writeFileSync(resolve(project.packageRoot,'.yarnrc'),[
+    Fs.writeFileSync(Path.resolve(project.packageRoot,'.yarnrc'),[
         `registry "${registryHost}"`,
         `strict-ssl false`,
         `email ${registryEmail}`,
         `username ${registryUsername}`,
     ].join('\n'));
-    writeFileSync(resolve(project.packageRoot,'.npmrc'),[
+    Fs.writeFileSync(Path.resolve(project.packageRoot,'.npmrc'),[
         `//${registryHost}/:_authToken="${registryToken}"`,
         `//${registryHost}/:_password=${registryPassword}`,
         `//${registryHost}/:username=${registryUsername}`,
@@ -115,15 +115,15 @@ function createRcFiles(project){
     ].join('\n'));
 }
 function removeRcFiles(project){
-    unlinkSync(resolve(project.packageRoot,'.yarnrc'));
-    unlinkSync(resolve(project.packageRoot,'.npmrc'));
+    Fs.unlinkSync(Path.resolve(project.packageRoot,'.yarnrc'));
+    Fs.unlinkSync(Path.resolve(project.packageRoot,'.npmrc'));
 }
 
 
 async function publishProject(project){
     createRcFiles(project);
     const cmd = `yarn publish --new-version ${project.version}`;
-    execSync(cmd, {
+    Cp.execSync(cmd, {
         stdio: [process.stdin, process.stdout, process.stderr],
         cwd: project.packageRoot,
         env: process.env
@@ -132,14 +132,14 @@ async function publishProject(project){
 }
 
 async function compareProject(project){
-    let subpath = relative(project.projectRoot,project.packageRoot);
+    let subpath = Path.relative(project.projectRoot,project.packageRoot);
     const newProject = project;
     const oldProject = await (fetchProject(project.name,project.version));
     if(oldProject==null){
-        console.log(chalk.green("RELEASED"),chalk.blue(project.version),project.name,chalk.gray(subpath));
+        console.log(colors.green("RELEASED"),colors.blue(project.version),project.name,colors.gray(subpath));
         await publishProject(newProject);
     }else{
-        console.log(chalk.yellow("IGNORED "),chalk.blue(project.version),project.name,chalk.gray(subpath));
+        console.log(colors.yellow("IGNORED "),colors.blue(project.version),project.name,colors.gray(subpath));
     }
 }
 async function compareProjects(){

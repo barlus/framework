@@ -1,12 +1,12 @@
 {
   "name": "@barlus/bui",
-  "version": "0.0.27",
+  "version": "0.1.1",
   "description": "Barlus ui framework",
   "license": "MIT",
   "main": "./index",
   "types": "./index",
   "dependencies": {
-    "@barlus/runtime": "latest"
+    "@barlus/runtime": "^0.1.1"
   },
   "repository": "https://github.com/ecmal/elp.git",
   "author": "Mamble LLC"

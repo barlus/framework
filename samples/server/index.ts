@@ -1,4 +1,4 @@
-import { HttpApplication, Context } from "@barlus/bone/http";
+import { HttpApplication, Context, Handler } from "@barlus/bone/http";
 import { process } from "@barlus/bone/node/process";
 import { ProjectRoute } from "@barlus/bone/http/handlers/projects";
 import { RouteHandler, Resource, route } from "@barlus/bone/http/handlers/router";
@@ -37,6 +37,18 @@ class ApiRouter extends RouteHandler {
     }
 }
 
+class ScssHandler implements Handler {
+    async handle(cnx: Context, next: () => Promise<any>) {
+        const path = cnx.request.url.pathname;
+        if(path.match(/\.scss$/)){
+            cnx.response.headers.set('Content-Type','text/css; charset=utf8');
+            cnx.response.setBody('.myClass { color:red }');
+        }else{
+            return next();
+        }
+    }
+}
+
 class MyApplication extends HttpApplication {
     static instance: MyApplication;
     static async start() {
@@ -51,10 +63,13 @@ class MyApplication extends HttpApplication {
     }
     constructor() {
         super();
+        this.use(new ScssHandler());
         this.use(new ApiRouter());
         this.use(new ProjectRoute({
+            jsx:'React.createElement',
             root: process.cwd(),
-            project: '@vendor/client'
+            project: '@vendor/inferno',
+            ignore:['typescript','@barlus/bui','@vendor/client','@inferno/inferno']
         }))
     }
 }

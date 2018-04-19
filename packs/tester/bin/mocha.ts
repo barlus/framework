@@ -1,6 +1,5 @@
-// tslint:disable:no-console
-import {basename} from "@barlus/node/path";
-import {process} from "@barlus/node/process";
+import {Path} from "@barlus/bone/node/path";
+import {process} from "@barlus/bone/node/process";
 import {IdeaReporter} from "@barlus/tester/reporters/idea";
 import {TestRunner} from "@barlus/tester/runner";
 
@@ -12,13 +11,15 @@ class MochaRunner extends TestRunner {
         reporter: string;
         timeout?: string;
     };
+
     public constructor(options: TOptions = getCliOptions()) {
-        const reporterFilename = basename(options.reporter).toLowerCase();
+        const reporterFilename = Path.basename(options.reporter).toLowerCase();
         if (reporterFilename === "mochaintellijreporter.js") {
             super(new IdeaReporter());
         }
         this.options = options;
     }
+
     // load and run test modules
     public async run() {
         await this.load();

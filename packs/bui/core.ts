@@ -4,7 +4,7 @@ import {injectable} from '@barlus/runtime/inject/decorators';
 
 import {TypeStyle, ReactComponent} from '@barlus/bui';
 import {NestedCSSProperties} from './typing/css';
-import {CSSProperties} from "@barlus/bui/index";
+import {CSSProperties} from "@barlus/bui";
 
 export interface Properties<T={}> extends JSX.ComponentProps<Component<T>> {
     style?:CSSProperties

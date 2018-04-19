@@ -1,6 +1,5 @@
-import "@barlus/std";
 import {cloneElement, createElement, JsxComponent} from "./jsx";
-import {globals} from '../runtime/globals';
+import {globals} from '@barlus/runtime/globals';
 
 declare global {
     namespace React {
@@ -40,7 +39,7 @@ export class ReactComponent<P = {}, S = {}> extends JsxComponent<P, S> {
     public prevState?: S;
     public prevContext?: any;
     public nextBase?: Element;
-    public getChildContext: () => any;
+    public getChildContext?():any;
     constructor(props?: P, context?: any) {
         super();
         this._dirty = true;
@@ -195,8 +194,10 @@ export class Renderer {
         let elementChildren = elm.children;
         if (props == null) {
             props = out[ATTR_KEY] = {};
-            for (let a = out.attributes, i = a.length; i--;) {
-                props[a[i].name] = a[i].value;
+            if(out instanceof Element){
+                for (let a = out.attributes, i = a.length; i--;) {
+                    props[a[i].name] = a[i].value;
+                }
             }
         }
         // Optimization: fast-path for elements containing a single TextNode:

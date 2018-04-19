@@ -1,11 +1,11 @@
 {
   "name": "@barlus/bone",
-  "version": "0.0.27",
+  "version": "0.1.1",
   "description": "Barlus NodeJs Wrapper",
   "main": "./index",
   "types": "./index",
   "dependencies": {
-    "@barlus/runtime": "latest"
+    "@barlus/runtime": "^0.1.1"
   },
   "license": "MIT",
   "repository": "https://github.com/ecmal/elp.git",

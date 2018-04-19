@@ -57,6 +57,7 @@ export class File {
     readonly cache: any;
     readonly path: string;
     readonly service: Service;
+    public isLib: boolean = false;
     constructor(service: Service, path: string) {
         const cache = Object.create(null);
         Object.defineProperties(this, {
@@ -215,6 +216,7 @@ export class Service {
     }
     public get compiler() {
         const service = this;
+        console.info( this.options.jsx);
         const options = {
             module: ts.ModuleKind.ESNext,
             target: ts.ScriptTarget.ESNext,
@@ -225,7 +227,7 @@ export class Service {
             removeComments: true,
             experimentalDecorators: true,
             emitDecoratorMetadata: true,
-            noLib: true,
+            //noLib: true,
             sourceMap: true,
         };
         const host = {
@@ -263,6 +265,15 @@ export class Service {
                 if (sourceFile) {
                     return sourceFile.snapshot;
                 } else {
+                    const isTsLib = uri.match(/typescript\/lib\/(.*)\.ts$/);
+                    if(isTsLib){
+                        let file = new File(service,uri);
+                        file.reload();
+                        file.isLib = true;
+                        console.info(file);
+                        service.sources.set(file.path,file);
+                        return file.snapshot;
+                    }
                     throw new Error(`file not found for '${uri}'`)
                 }
             },
@@ -373,6 +384,9 @@ export class Service {
             }
         });
         this.sources.forEach(s => {
+            if(s.isLib){
+                return;
+            }
             let errors = this.compiler.getSemanticDiagnostics(s.uri);
             if (errors.length) {
                 results[s.uri] = true;

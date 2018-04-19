@@ -91,7 +91,6 @@ const CSS_NUMBER = createNumberProperties([
  * Maintains a single stylesheet and keeps it in sync with requested styles
  */
 export class TypeStyle {
-
     private _autoGenerateTag: boolean;
     private _freeStyle: FreeStyle;
     private _pending: number;
@@ -185,7 +184,7 @@ export class TypeStyle {
         if (!target) {
             return;
         }
-        target.textContent = this.getStyles();
+        target.textContent = this.getStyles()+'\n/*# sourceURL=styles.css*/';
     };
     /**
      * Utility function to register an @font-face
@@ -440,7 +439,7 @@ class FreeStyle extends Cache<Rule | Style> implements Container<FreeStyle> {
         this.merge(composeStyles(this, '', styles, false).cache)
     }
     getStyles(): string {
-        return join(this.sheet)
+        return this.sheet.join('\n')
     }
     getIdentifier() {
         return this.id
@@ -612,9 +611,9 @@ function stringHash(str: string): string {
  */
 function styleToString(key: string, value: PropertyValue) {
     if (typeof value === 'number' && value !== 0 && !CSS_NUMBER[key]) {
-        return `${key}:${value}px`
+        return `\n  ${key}:${value}px;`
     }
-    return `${key}:${value}`
+    return `\n  ${key}:${value};`
 }
 /**
  * Sort an array of tuples by first value.
@@ -711,7 +710,6 @@ function composeStyles(container: FreeStyle, selector: string, styles: Styles, i
     }
     return {cache, pid, id}
 }
-
 /**
  * Cache to list to styles.
  */
@@ -720,7 +718,6 @@ function join(arr: string[]): string {
     for (let i = 0; i < arr.length; i++) res += arr[i]
     return res
 }
-
 /**
  * generate map of css number properties
  */

@@ -2,7 +2,7 @@ import { HttpApplication, Context, HttpClient, Handler, HttpRequest, HttpRespons
 import { RouteHandler, Resource, route } from "@barlus/bone/http/handlers/router"
 import { HttpStatus, HttpMethod, HttpHeaders } from '@barlus/bone/http';
 import { Buffer } from '@barlus/bone/node/buffer';
-import { randomBytes } from '@barlus/node/crypto';
+import { Crypto } from '@barlus/bone/node/crypto';
 import { HttpUrl } from '@barlus/bone/http/url';
 
 @route('/users')
@@ -68,7 +68,7 @@ async function delay<T>(timeout = 200, value?: T) {
 }
 async function* body(size = 10000, count = 10, timeout = 500) {
     for (let i = 0; i < count; i++) {
-        yield delay(timeout, randomBytes(size));
+        yield delay(timeout, Crypto.randomBytes(size));
     }
 
 }

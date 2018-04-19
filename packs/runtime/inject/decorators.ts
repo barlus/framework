@@ -13,7 +13,7 @@ const reservedNames = [ "length", "name", "arguments", "caller", "prototype" ];
  *
  * @return {Function} The class decorator
  */
-export function injectable<T extends any>(target: Constructor<T>): Constructor<T> {
+export function injectable<T extends any, C extends Constructor<T>>(target:C): C {
     const params: any[] = Reflect.getMetadata("design:paramtypes", target) || [];
     const injectionTokens: Dictionary<InjectionToken<any>> = Reflect.getOwnMetadata(injectionTokenMetadataKey, target) || {};
     Object.keys(injectionTokens).forEach(key => {
@@ -24,7 +24,7 @@ export function injectable<T extends any>(target: Constructor<T>): Constructor<T
         configurable: true,
         value: target.name
     });
-    return DecoratedClass as Constructor<T>;
+    return DecoratedClass as C;
 }
 
 /**

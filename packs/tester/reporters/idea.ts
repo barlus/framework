@@ -1,4 +1,4 @@
-import {process} from "@barlus/node/process";
+import {process} from "@barlus/bone/node/process";
 import {Plan, Probe, Suite, Test} from "../core";
 import {MatchError} from "../errors";
 import {TestReporter} from "../reporter";

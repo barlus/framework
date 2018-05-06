@@ -1,0 +1,12 @@
+{
+  "name": "@vendor/todo",
+  "version": "0.1.1",
+  "description": "Barlus Tar Library",
+  "types": "./index",
+  "license": "MIT",
+  "repository": "https://github.com/ecmal/elp.git",
+  "author": "Mamble LLC",
+  "dependencies": {
+    "@barlus/runtime": "^0.1.1"
+  }
+}

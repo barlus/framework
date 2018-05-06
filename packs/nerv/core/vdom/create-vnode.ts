@@ -7,7 +7,7 @@ import {
   EMPTY_OBJ
 } from '../../shared/index'
 
-function createVNode (
+export function createVNode (
   type: string,
   props: Props,
   children: VirtualChildren,
@@ -28,5 +28,3 @@ function createVNode (
     ref: ref || null
   }
 }
-
-export default createVNode

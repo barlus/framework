@@ -14,11 +14,11 @@
   ],
   "scripts": {
     "test": "tester ./tests/index.ts",
-    "release": "node --harmony -r @barlus/node/register ./tool/publish.ts",
-    "list": "node --harmony -r @barlus/node/register ./tool/list.ts",
-    "versions": "node --harmony -r @barlus/node/register ./tool/version.ts"
+    "release": "node --harmony -r @barlus/bone/register ./tool/publish.ts",
+    "list": "node --harmony -r @barlus/bone/register ./tool/list.ts",
+    "versions": "node --harmony -r @barlus/bone/register ./tool/version.ts"
   },
   "devDependencies": {
-    "typescript": "next"
+    "typescript": "^2.9.0-dev.20180506"
   }
 }

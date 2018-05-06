@@ -102,7 +102,7 @@ export class FilesRoute extends Resource {
         }
         path = Path.normalize(path);
         if (Path.extname(path) == '') {
-            path = `${path}.mjs`;
+            path = `${path}.js`;
         }
         return path;
     }

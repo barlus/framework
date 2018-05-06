@@ -1,25 +1,47 @@
 import '@barlus/runtime';
-import {React, Component} from '@barlus/bui';
-import {Button} from './mdc/Button';
-import { TopAppBar, TopAppBarIcon, TopAppBarRow, TopAppBarSection, TopAppBarTitle } from './mdc/AppBar';
+import * as React from '@barlus/nerv';
+import * as Css from '@barlus/styles';
+import { initDevTools } from '@barlus/nerv/devtools';
+import { Provider } from '@barlus/storex';
+import { Router } from './comps/Router';
+import { RoutesStore, AuthStore } from './stores';
 
-class App extends Component<{}> {
+const routerStore = new RoutesStore();
+const authStore = new AuthStore();
+// routerStore.init([
+//     {name:'home',pattern:'/'},
+//     {name:'department',pattern:'/department/:name'}
+// ]);
+
+
+class App extends React.Component<{}> {
     render() {
-        return <TopAppBar>
-            <TopAppBarRow>
-                <TopAppBarSection align-start>
-                    <TopAppBarIcon navigation>menu</TopAppBarIcon>
-                    <TopAppBarTitle>My App</TopAppBarTitle>
-                </TopAppBarSection>
-                <TopAppBarSection align-end>
-                    <TopAppBarIcon>more_vert</TopAppBarIcon>
-                </TopAppBarSection>
-            </TopAppBarRow>
-        </TopAppBar>
-        //  <TopAppBar>
-        //     <Button><Button.Icon>favorite_border</Button.Icon>Hello</Button>
-        // </TopAppBar>
+        return <Provider router={routerStore} auth={authStore}>
+            <Router/>
+        </Provider>
     }
 }
 
+Css.normalize();
+Css.setupPage('body',false);
+Css.cssRule('body',{
+    fontFamily:'Roboto',
+    display:'flex',
+    fontWeight:'normal'
+});
+Css.cssRule('h2',{
+    fontWeight:300,
+    fontSize:20
+});
+Css.cssRule('label',{
+    fontWeight:400,
+    fontSize:9
+});
+Css.cssRule('h1,h2,h3,h4,h5',{
+    fontWeight:'lighter',
+    margin:0
+});
+
+
+initDevTools();
 React.render(<App/>, document.body);

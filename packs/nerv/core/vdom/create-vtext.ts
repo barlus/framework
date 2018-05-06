@@ -1,6 +1,6 @@
 import { VType, VText } from '../../shared/index'
 
-export default function createVText (text: string | number): VText {
+export function createVText (text: string | number): VText {
   return {
     text,
     vtype: VType.Text,

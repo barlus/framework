@@ -1,5 +1,5 @@
 import {defineMetadata, getOwnMetadata, metadata} from "@barlus/runtime/Reflect";
-import {Pattern} from "../../utils/matcher";
+import {Pattern} from "@barlus/runtime/pattern";
 import {Handler} from '../application';
 import {Context} from '../context';
 import {Jwt} from "../../utils/Jwt";

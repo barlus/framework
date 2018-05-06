@@ -5,6 +5,7 @@ import { Crypto } from './node/crypto';
 import { process } from './node/process';
 import { colors } from './utils/colors';
 
+
 interface ResolvedModule {
     /** Path of the file the module was resolved to. */
     resolvedFileName: string;
@@ -352,7 +353,7 @@ export class Service {
         let output = this.compiler.getEmitOutput(source.uri);
         if (!output.emitSkipped) {
             output.outputFiles.forEach(o => {
-                o.name = o.name.replace(/\.js$/, '.mjs');
+                //o.name = o.name.replace(/\.js$/, '.mjs');
                 this.output.set(o.name, o.text);
                 this.writeFile(o.name, o.text)
                 //console.info('//', o.name, o.text.length);
@@ -532,7 +533,7 @@ export const transformModuleNames = (context) => {
                         const childPath = resolved.resolvedFileName;
                         const relativePath = Path.relative(parentDir, childPath);
                         //console.info("RESOLVED",parentPath,childPath,relativePath,resolve(parentDir,relativePath));
-                        let newSpec = ts.changeExtension(relativePath, '.mjs');
+                        let newSpec = ts.changeExtension(relativePath, '.js'/*'.mjs'*/);
                         if (!newSpec.startsWith('.')) {
                             newSpec = `./${newSpec}`;
                         }

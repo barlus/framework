@@ -1,7 +1,10 @@
 {
-  "compilerOptions": {
-    "jsx": "react",
-    "target": "esnext",
-    "noEmit": true
-  }
+    "compilerOptions": {
+        "jsx": "react",
+        "target": "esnext",
+        "module": "commonjs",
+        "moduleResolution": "node",
+        "noEmit": true,
+        "experimentalDecorators": true
+    }
 }

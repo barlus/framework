@@ -1,5 +1,5 @@
-export { default as nextTick } from './next-tick'
-export { default as shallowEqual } from './shallow-equal'
+export { nextTick } from './next-tick'
+export { shallowEqual } from './shallow-equal'
 export { SimpleMap, MapClass } from './simple-map'
 export * from './is'
 export { isBrowser, doc } from './env'

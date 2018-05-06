@@ -389,5 +389,5 @@ export function spyOn(target: any, functionName: string): RestorableFunctionSpy 
     }
 }
 export function spyOnProperty<T,K extends keyof T>(target: T, propertyName: K ): PropertySpy<K> {
-    return new PropertySpy<K>(target, propertyName);
+    return new PropertySpy<K>(target, propertyName as string);
 }

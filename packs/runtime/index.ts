@@ -1,6 +1,7 @@
 export * from './globals';
 export * from './Reflect';
 export * from './internal';
+export * from './pattern';
 
 
 declare global {

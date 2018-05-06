@@ -1,7 +1,3 @@
-const Current: {
-  current: any
-} = {
-  current: null
-}
-
-export default Current
+export const CurrentOwner = {
+    current: null as any
+};

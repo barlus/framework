@@ -1,6 +1,6 @@
 #!/usr/bin/env node --harmony
 // register typescript if not awailable
 if(typeof ts=='undefined'){
-    require('@barlus/node/register')
+    require('@barlus/bone/register')
 }
 require('./mocha');

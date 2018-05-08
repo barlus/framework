@@ -14,6 +14,7 @@
   ],
   "scripts": {
     "test": "tester ./tests/index.ts",
+    "test-fsm": "tester ./tests/fsm/index.ts",
     "release": "node --harmony -r @barlus/bone/register ./tool/publish.ts",
     "list": "node --harmony -r @barlus/bone/register ./tool/list.ts",
     "versions": "node --harmony -r @barlus/bone/register ./tool/version.ts"

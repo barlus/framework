@@ -223,7 +223,8 @@ export type CSSDisplay =
     /* <display-box> values */
     | 'contents' | 'none'
     /* <display-legacy> values */
-    | 'inline-block' | 'inline-list-item' | 'inline-table' | 'inline-flex' | 'inline-grid';
+    | 'inline-block' | 'inline-list-item' | 'inline-table' | 'inline-flex' | 'inline-grid'
+    | '-ms-flexbox'|'-ms-inline-flexbox';
 /**
  * Type for align-items and align-self in flex
  */
@@ -753,6 +754,10 @@ export interface CSSProperties {
      * @see https://developer.mozilla.org/en-US/docs/Web/CSS/box-flex
      */
     boxFlex?: number;
+    /**
+     * @see https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter
+     */
+    backdropFilter?:string;
     /**
      * box sizing
      * @see https://developer.mozilla.org/en-US/docs/Web/CSS/box-sizing
@@ -1918,7 +1923,7 @@ export interface CSSProperties {
      * The word-break property is often used when there is long generated content that is strung together without and spaces or hyphens to beak apart. A common case of this is when there is a long URL that does not have any hyphens. This case could potentially cause the breaking of the layout as it could extend past the parent element.
      * @see https://developer.mozilla.org/en/docs/Web/CSS/word-break
      */
-    wordBreak?: CSSGlobalValues | 'normal' | 'break-all' | 'keep-all';
+    wordBreak?: CSSGlobalValues | 'normal' | 'break-all' | 'keep-all' | 'break-word';
     /**
      * The word-spacing CSS property specifies the spacing behavior between "words".
      * @see https://developer.mozilla.org/en/docs/Web/CSS/word-spacing

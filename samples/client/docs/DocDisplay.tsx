@@ -1,51 +1,38 @@
 import * as React from "@barlus/nerv"
 import { Code } from "../comps/Code";
+import {DocNote, DocPage, DocSection} from "../comps/DocPage";
 
-const E1 = ``;
-const E2 = ``;
 
-export class DocDisplay extends React.PureComponent<{}, {}> {
+export class DocDisplay extends DocPage {
+    static title = "Display";
     render() {
-        return <div id="display" className="container">
-            <h3 className="s-title"><a href="#display" className="anchor" aria-hidden="true">#</a>Display
-                utilities</h3>
-            <div className="docs-note">
-                <p>Display utilities are used for display and hidden things.</p>
-            </div>
-            <pre className="code" data-lang="HTML"><code><span
-                className="com">&lt;!-- display: block; --&gt;</span>{"\n"}&lt;<span className="tag">div</span> <span
-                className="atn">class</span>=<span className="atv">"d-block"</span>&gt;&lt;<span
-                className="tag">/div</span>&gt;{"\n"}<span
-                className="com">&lt;!-- display: inline; --&gt;</span>{"\n"}&lt;<span className="tag">div</span> <span
-                className="atn">class</span>=<span className="atv">"d-inline"</span>&gt;&lt;<span
-                className="tag">/div</span>&gt;{"\n"}<span
-                className="com">&lt;!-- display: inline-block; --&gt;</span>{"\n"}&lt;<span
-                className="tag">div</span> <span className="atn">class</span>=<span
-                className="atv">"d-inline-block"</span>&gt;&lt;<span className="tag">/div</span>&gt;{"\n"}<span
-                className="com">&lt;!-- display: flex; --&gt;</span>{"\n"}&lt;<span
-                className="tag">div</span> <span className="atn">class</span>=<span
-                className="atv">"d-flex"</span>&gt;&lt;<span className="tag">/div</span>&gt;{"\n"}<span
-                className="com">&lt;!-- display: inline-flex; --&gt;</span>{"\n"}&lt;<span
-                className="tag">div</span> <span className="atn">class</span>=<span
-                className="atv">"d-inline-flex"</span>&gt;&lt;<span className="tag">/div</span>&gt;{"\n"}<span
-                className="com">&lt;!-- display: none; --&gt;</span>{"\n"}&lt;<span
-                className="tag">div</span> <span className="atn">class</span>=<span
-                className="atv">"d-none"</span>&gt;&lt;<span className="tag">/div</span>&gt;{"\n"}&lt;<span
-                className="tag">div</span> <span className="atn">class</span>=<span
-                className="atv">"d-hide"</span>&gt;&lt;<span className="tag">/div</span>&gt;{"\n"}<span
-                className="com">&lt;!-- visibility: visible; --&gt;</span>{"\n"}&lt;<span
-                className="tag">div</span> <span className="atn">class</span>=<span
-                className="atv">"d-visible"</span>&gt;&lt;<span className="tag">/div</span>&gt;{"\n"}<span
-                className="com">&lt;!-- visibility: hidden; --&gt;</span>{"\n"}&lt;<span
-                className="tag">div</span> <span className="atn">class</span>=<span
-                className="atv">"d-invisible"</span>&gt;&lt;<span className="tag">/div</span>&gt;{"\n"}<span
-                className="com">&lt;!-- hide text contents --&gt;</span>{"\n"}&lt;<span
-                className="tag">div</span> <span className="atn">class</span>=<span
-                className="atv">"text-hide"</span>&gt;&lt;<span className="tag">/div</span>&gt;{"\n"}<span
-                className="com">&lt;!-- assistive text for screen reader --&gt;</span>{"\n"}&lt;<span
-                className="tag">div</span> <span className="atn">class</span>=<span
-                className="atv">"text-assistive"</span>&gt;&lt;<span
-                className="tag">/div</span>&gt;{"\n"}</code></pre>
-        </div>
+        return <DocSection id={this.id} title={this.title}>
+            <DocNote>
+                Display utilities are used for display and hidden things.
+            </DocNote>
+            <Code className="HTML">{E1}</Code>
+        </DocSection>
     }
 }
+
+const E1 = `<!-- display: block; -->
+<div class="d-block"></div>
+<!-- display: inline; -->
+<div class="d-inline"></div>
+<!-- display: inline-block; -->
+<div class="d-inline-block"></div>
+<!-- display: flex; -->
+<div class="d-flex"></div>
+<!-- display: inline-flex; -->
+<div class="d-inline-flex"></div>
+<!-- display: none; -->
+<div class="d-none"></div>
+<div class="d-hide"></div>
+<!-- visibility: visible; -->
+<div class="d-visible"></div>
+<!-- visibility: hidden; -->
+<div class="d-invisible"></div>
+<!-- hide text contents -->
+<div class="text-hide"></div>
+<!-- assistive text for screen reader -->
+<div class="text-assistive"></div>`;

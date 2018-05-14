@@ -1,157 +1,131 @@
 import * as React from "@barlus/nerv"
 import { Code } from "../comps/Code";
+import {DocNote, DocPage, DocSample, DocSection} from "../comps/DocPage";
 
-const E1 = ``;
-const E2 = ``;
 
-export class DocPagination extends React.PureComponent<{}, {}> {
+
+export class DocPagination extends DocPage{
+    static title = "Pagination";
     render() {
-        return <div id="pagination" className="container">
-            <h3 className="s-title"><a href="#pagination" className="anchor" aria-hidden="true">#</a>Pagination
-            </h3>
-            <div className="columns">
-                <div className="column col-xs-12">
-                    <ul className="pagination">
-                        <li className="page-item">
-                            <a href="#pagination">Prev</a>
-                        </li>
-                        <li className="page-item">
-                            <a href="#pagination">1</a>
-                        </li>
-                        <li className="page-item">
-                            <span>...</span>
-                        </li>
-                        <li className="page-item">
-                            <a href="#pagination">4</a>
-                        </li>
-                        <li className="page-item active">
-                            <a href="#pagination">5</a>
-                        </li>
-                        <li className="page-item">
-                            <a href="#pagination">6</a>
-                        </li>
-                        <li className="page-item">
-                            <span>...</span>
-                        </li>
-                        <li className="page-item">
-                            <a href="#pagination">9</a>
-                        </li>
-                        <li className="page-item">
-                            <a href="#pagination">Next</a>
-                        </li>
-                    </ul>
-                </div>
-                <div className="column col-xs-12">
-                    <ul className="pagination">
-                        <li className="page-item disabled">
-                            <a href="#pagination" tabIndex={-1}>Prev</a>
-                        </li>
-                        <li className="page-item active">
-                            <a href="#pagination">1</a>
-                        </li>
-                        <li className="page-item">
-                            <a href="#pagination">2</a>
-                        </li>
-                        <li className="page-item">
-                            <a href="#pagination">3</a>
-                        </li>
-                        <li className="page-item">
-                            <span>...</span>
-                        </li>
-                        <li className="page-item">
-                            <a href="#pagination">9</a>
-                        </li>
-                        <li className="page-item">
-                            <a href="#pagination">Next</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <div className="docs-note">
-                <p>Add a container element with the <code>pagination</code> class. And add child elements with
-                    the
-                    <code>page-item</code> class. The <code>page-item</code> with the <code>active</code> class
-                    will be
-                    highlighted. You can add the <code>disabled</code> to the <code>page-item</code> to have
-                    unclickable
-                    page links. </p>
-            </div>
-            <pre className="code" data-lang="HTML"><code>&lt;<span className="tag">ul</span> <span
-                className="atn">class</span>=<span className="atv">"pagination"</span>&gt;{"\n"}{"  "}&lt;<span
-                className="tag">li</span> <span className="atn">class</span>=<span className="atv">"page-item disabled"</span>&gt;{"\n"}{"    "}&lt;
-                <span className="tag">a</span> <span className="atn">href</span>=<span
-                    className="atv">"#"</span> <span className="atn">tabindex</span>=<span
-                    className="atv">"-1"</span>&gt;Previous&lt;<span
-                    className="tag">/a</span>&gt;{"\n"}{"  "}&lt;<span
-                    className="tag">/li</span>&gt;{"\n"}{"  "}&lt;<span className="tag">li</span> <span
-                    className="atn">class</span>=<span
-                    className="atv">"page-item active"</span>&gt;{"\n"}{"    "}&lt;<span
-                    className="tag">a</span> <span className="atn">href</span>=<span
-                    className="atv">"#"</span>&gt;1&lt;<span className="tag">/a</span>&gt;{"\n"}{"  "}&lt;<span
-                    className="tag">/li</span>&gt;{"\n"}{"  "}&lt;<span className="tag">li</span> <span
-                    className="atn">class</span>=<span className="atv">"page-item"</span>&gt;{"\n"}{"    "}&lt;
-                <span className="tag">a</span> <span className="atn">href</span>=<span
-                    className="atv">"#"</span>&gt;2&lt;<span className="tag">/a</span>&gt;{"\n"}{"  "}&lt;<span
-                    className="tag">/li</span>&gt;{"\n"}{"  "}&lt;<span className="tag">li</span> <span
-                    className="atn">class</span>=<span className="atv">"page-item"</span>&gt;{"\n"}{"    "}&lt;
-                <span className="tag">a</span> <span className="atn">href</span>=<span
-                    className="atv">"#"</span>&gt;3&lt;<span className="tag">/a</span>&gt;{"\n"}{"  "}&lt;<span
-                    className="tag">/li</span>&gt;{"\n"}{"  "}&lt;<span className="tag">li</span> <span
-                    className="atn">class</span>=<span className="atv">"page-item"</span>&gt;{"\n"}{"    "}&lt;
-                <span className="tag">span</span>&gt;...&lt;<span
-                    className="tag">/span</span>&gt;{"\n"}{"  "}&lt;<span
-                    className="tag">/li</span>&gt;{"\n"}{"  "}&lt;<span className="tag">li</span> <span
-                    className="atn">class</span>=<span className="atv">"page-item"</span>&gt;{"\n"}{"    "}&lt;
-                <span className="tag">a</span> <span className="atn">href</span>=<span
-                    className="atv">"#"</span>&gt;12&lt;<span className="tag">/a</span>&gt;{"\n"}{"  "}&lt;<span
-                    className="tag">/li</span>&gt;{"\n"}{"  "}&lt;<span className="tag">li</span> <span
-                    className="atn">class</span>=<span className="atv">"page-item"</span>&gt;{"\n"}{"    "}&lt;
-                <span className="tag">a</span> <span className="atn">href</span>=<span
-                    className="atv">"#"</span>&gt;Next&lt;<span className="tag">/a</span>&gt;{"\n"}{"  "}&lt;
-                <span className="tag">/li</span>&gt;{"\n"}&lt;<span className="tag">/ul</span>&gt;{"\n"}</code></pre>
-            <div className="columns">
-                <div className="column col-12">
-                    <ul className="pagination">
-                        <li className="page-item page-prev">
-                            <a href="#pagination">
-                                <div className="page-item-subtitle">Previous</div>
-                                <div className="page-item-title h5">Getting started</div>
-                            </a>
-                        </li>
-                        <li className="page-item page-next">
-                            <a href="#pagination">
-                                <div className="page-item-subtitle">Next</div>
-                                <div className="page-item-title h5">Layout</div>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <div className="docs-note">
-                <p>You could use previous and next pagination to navigate. </p>
-            </div>
-            <pre className="code" data-lang="HTML"><code>&lt;<span className="tag">ul</span> <span
-                className="atn">class</span>=<span className="atv">"pagination"</span>&gt;{"\n"}{"  "}&lt;<span
-                className="tag">li</span> <span className="atn">class</span>=<span className="atv">"page-item page-prev"</span>&gt;{"\n"}{"    "}&lt;
-                <span className="tag">a</span> <span className="atn">href</span>=<span
-                    className="atv">"#"</span>&gt;{"\n"}{"      "}&lt;<span className="tag">div</span> <span
-                    className="atn">class</span>=<span
-                    className="atv">"page-item-subtitle"</span>&gt;Previous&lt;<span
-                    className="tag">/div</span>&gt;{"\n"}{"      "}&lt;<span className="tag">div</span> <span
-                    className="atn">class</span>=<span className="atv">"page-item-title h5"</span>&gt;Getting started&lt;
-                <span className="tag">/div</span>&gt;{"\n"}{"    "}&lt;<span
-                    className="tag">/a</span>&gt;{"\n"}{"  "}&lt;<span
-                    className="tag">/li</span>&gt;{"\n"}{"  "}&lt;<span className="tag">li</span> <span
-                    className="atn">class</span>=<span
-                    className="atv">"page-item page-next"</span>&gt;{"\n"}{"    "}&lt;<span
-                    className="tag">a</span> <span className="atn">href</span>=<span
-                    className="atv">"#"</span>&gt;{"\n"}{"      "}&lt;<span className="tag">div</span> <span
-                    className="atn">class</span>=<span className="atv">"page-item-subtitle"</span>&gt;Next&lt;
-                <span className="tag">/div</span>&gt;{"\n"}{"      "}&lt;<span className="tag">div</span> <span
-                    className="atn">class</span>=<span className="atv">"page-item-title h5"</span>&gt;Layout&lt;
-                <span className="tag">/div</span>&gt;{"\n"}{"    "}&lt;<span
-                    className="tag">/a</span>&gt;{"\n"}{"  "}&lt;<span className="tag">/li</span>&gt;{"\n"}&lt;
-                <span className="tag">/ul</span>&gt;{"\n"}</code></pre>
-        </div>
+        return <DocSection id={this.id} title={this.title}>
+            <DocSample columns={2}>
+                <ul className="pagination">
+                    <li className="page-item">
+                        <a href="#pagination">Prev</a>
+                    </li>
+                    <li className="page-item">
+                        <a href="#pagination">1</a>
+                    </li>
+                    <li className="page-item">
+                        <span>...</span>
+                    </li>
+                    <li className="page-item">
+                        <a href="#pagination">4</a>
+                    </li>
+                    <li className="page-item active">
+                        <a href="#pagination">5</a>
+                    </li>
+                    <li className="page-item">
+                        <a href="#pagination">6</a>
+                    </li>
+                    <li className="page-item">
+                        <span>...</span>
+                    </li>
+                    <li className="page-item">
+                        <a href="#pagination">9</a>
+                    </li>
+                    <li className="page-item">
+                        <a href="#pagination">Next</a>
+                    </li>
+                </ul>
+                <ul className="pagination">
+                    <li className="page-item disabled">
+                        <a href="#pagination" tabIndex={-1}>Prev</a>
+                    </li>
+                    <li className="page-item active">
+                        <a href="#pagination">1</a>
+                    </li>
+                    <li className="page-item">
+                        <a href="#pagination">2</a>
+                    </li>
+                    <li className="page-item">
+                        <a href="#pagination">3</a>
+                    </li>
+                    <li className="page-item">
+                        <span>...</span>
+                    </li>
+                    <li className="page-item">
+                        <a href="#pagination">9</a>
+                    </li>
+                    <li className="page-item">
+                        <a href="#pagination">Next</a>
+                    </li>
+                </ul>
+            </DocSample>
+            <DocNote>
+                Add a container element with the <code>pagination</code> class. And add child elements with
+                the<code>page-item</code> class. The <code>page-item</code> with the <code>active</code> class
+                will be highlighted. You can add the <code>disabled</code> to the <code>page-item</code> to have unclickable page links.
+            </DocNote>
+            <Code className="HTML">{E1}</Code>
+            <DocSample>
+                <ul className="pagination">
+                    <li className="page-item page-prev">
+                        <a href="#pagination">
+                            <div className="page-item-subtitle">Previous</div>
+                            <div className="page-item-title h5">Getting started</div>
+                        </a>
+                    </li>
+                    <li className="page-item page-next">
+                        <a href="#pagination">
+                            <div className="page-item-subtitle">Next</div>
+                            <div className="page-item-title h5">Layout</div>
+                        </a>
+                    </li>
+                </ul>
+            </DocSample>
+            <DocNote>
+                You could use previous and next pagination to navigate.
+            </DocNote>
+            <Code className="HTML">{E2}</Code>
+        </DocSection>
     }
 }
+
+const E1 = `<ul class="pagination">
+  <li class="page-item disabled">
+    <a href="#" tabindex="-1">Previous</a>
+  </li>
+  <li class="page-item active">
+    <a href="#">1</a>
+  </li>
+  <li class="page-item">
+    <a href="#">2</a>
+  </li>
+  <li class="page-item">
+    <a href="#">3</a>
+  </li>
+  <li class="page-item">
+    <span>...</span>
+  </li>
+  <li class="page-item">
+    <a href="#">12</a>
+  </li>
+  <li class="page-item">
+    <a href="#">Next</a>
+  </li>
+</ul>`;
+const E2 = `<ul class="pagination">
+  <li class="page-item page-prev">
+    <a href="#">
+      <div class="page-item-subtitle">Previous</div>
+      <div class="page-item-title h5">Getting started</div>
+    </a>
+  </li>
+  <li class="page-item page-next">
+    <a href="#">
+      <div class="page-item-subtitle">Next</div>
+      <div class="page-item-title h5">Layout</div>
+    </a>
+  </li>
+</ul>`;

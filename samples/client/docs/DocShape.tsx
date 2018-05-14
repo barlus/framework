@@ -1,36 +1,30 @@
 import * as React from "@barlus/nerv"
 import { Code } from "../comps/Code";
+import {DocNote, DocPage, DocSample, DocSection} from "../comps/DocPage";
 
-const E1 = ``;
-const E2 = ``;
 
-export class DocShape extends React.PureComponent<{}, {}> {
+export class DocShape extends DocPage{
+    static title = "Shape";
     render() {
-        return <div id="shapes" className="container">
-            <h3 className="s-title"><a href="#shapes" className="anchor" aria-hidden="true">#</a>Shape utilities
-            </h3>
-            <div className="docs-note">
-                <p>Shape utilities are used for change element shapes.</p>
-            </div>
-            <div className="columns">
-                <div className="column col-6 text-center">
-                    <div className="bg-primary text-light docs-shape rounded centered">
-                        rounded
-                    </div>
+        return <DocSection id={this.id} title={this.title}>
+            <DocNote>
+                Shape utilities are used for change element shapes.
+            </DocNote>
+            <DocSample className="text-center" columns={2}>
+                <div className="bg-primary text-light docs-shape rounded centered">
+                    rounded
                 </div>
-                <div className="column col-6 text-center">
-                    <div className="bg-primary text-light docs-shape circle centered">
-                        circle
-                    </div>
+                <div className="bg-primary text-light docs-shape circle centered">
+                    circle
                 </div>
-            </div>
-            <pre className="code" data-lang="HTML"><code><span
-                className="com">&lt;!-- rounded element --&gt;</span>{"\n"}&lt;<span className="tag">div</span> <span
-                className="atn">class</span>=<span className="atv">"rounded"</span>&gt;&lt;<span
-                className="tag">/div</span>&gt;{"\n"}<span
-                className="com">&lt;!-- circle element --&gt;</span>{"\n"}&lt;<span
-                className="tag">div</span> <span className="atn">class</span>=<span
-                className="atv">"circle"</span>&gt;&lt;<span className="tag">/div</span>&gt;{"\n"}</code></pre>
-        </div>
+            </DocSample>
+            <Code className="HTML">{E1}</Code>
+        </DocSection>
     }
 }
+
+
+const E1 = `<!-- rounded element -->
+<div class="rounded"></div>
+<!-- circle element -->
+<div class="circle"></div>`;

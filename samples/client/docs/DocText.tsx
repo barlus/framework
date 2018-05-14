@@ -1,62 +1,48 @@
 import * as React from "@barlus/nerv"
 import { Code } from "../comps/Code";
+import {DocNote, DocPage, DocSection} from "../comps/DocPage";
 
-const E1 = ``;
-const E2 = ``;
 
-export class DocText extends React.PureComponent<{}, {}> {
+export class DocText extends DocPage {
+    static title = "Text";
     render() {
-        return <div id="text" className="container">
-            <h3 className="s-title"><a href="#text" className="anchor" aria-hidden="true">#</a>Text utilities
-            </h3>
-            <div className="docs-note">
-                <p>Text utilities are used for text alignment, styles and overflow things.</p>
-            </div>
-            <pre className="code" data-lang="HTML"><code><span
-                className="com">&lt;!-- left-aligned text --&gt;</span>{"\n"}&lt;<span
-                className="tag">div</span> <span className="atn">class</span>=<span
-                className="atv">"text-left"</span>&gt;&lt;<span className="tag">/div</span>&gt;{"\n"}<span
-                className="com">&lt;!-- center-aligned text --&gt;</span>{"\n"}&lt;<span
-                className="tag">div</span> <span className="atn">class</span>=<span
-                className="atv">"text-center"</span>&gt;&lt;<span className="tag">/div</span>&gt;{"\n"}<span
-                className="com">&lt;!-- right-aligned text --&gt;</span>{"\n"}&lt;<span
-                className="tag">div</span> <span className="atn">class</span>=<span
-                className="atv">"text-right"</span>&gt;&lt;<span className="tag">/div</span>&gt;{"\n"}<span
-                className="com">&lt;!-- justified text --&gt;</span>{"\n"}&lt;<span
-                className="tag">div</span> <span className="atn">class</span>=<span
-                className="atv">"text-justify"</span>&gt;&lt;<span
-                className="tag">/div</span>&gt;{"\n"}{"\n"}<span
-                className="com">&lt;!-- Lowercased text --&gt;</span>{"\n"}&lt;<span className="tag">div</span> <span
-                className="atn">class</span>=<span className="atv">"text-lowercase"</span>&gt;&lt;<span
-                className="tag">/div</span>&gt;{"\n"}<span
-                className="com">&lt;!-- Uppercased text --&gt;</span>{"\n"}&lt;<span className="tag">div</span> <span
-                className="atn">class</span>=<span className="atv">"text-uppercase"</span>&gt;&lt;<span
-                className="tag">/div</span>&gt;{"\n"}<span
-                className="com">&lt;!-- Capitalized text --&gt;</span>{"\n"}&lt;<span className="tag">div</span> <span
-                className="atn">class</span>=<span className="atv">"text-capitalize"</span>&gt;&lt;<span
-                className="tag">/div</span>&gt;{"\n"}{"\n"}<span
-                className="com">&lt;!-- Normal weight text --&gt;</span>{"\n"}&lt;<span
-                className="tag">div</span> <span className="atn">class</span>=<span
-                className="atv">"text-normal"</span>&gt;&lt;<span className="tag">/div</span>&gt;{"\n"}<span
-                className="com">&lt;!-- Bold text --&gt;</span>{"\n"}&lt;<span className="tag">div</span> <span
-                className="atn">class</span>=<span className="atv">"text-bold"</span>&gt;&lt;<span
-                className="tag">/div</span>&gt;{"\n"}<span
-                className="com">&lt;!-- Italicized text --&gt;</span>{"\n"}&lt;<span className="tag">div</span> <span
-                className="atn">class</span>=<span className="atv">"text-italic"</span>&gt;&lt;<span
-                className="tag">/div</span>&gt;{"\n"}<span
-                className="com">&lt;!-- Larger text (120%) --&gt;</span>{"\n"}&lt;<span
-                className="tag">div</span> <span className="atn">class</span>=<span
-                className="atv">"text-large"</span>&gt;&lt;<span
-                className="tag">/div</span>&gt;{"\n"}{"\n"}<span className="com">&lt;!-- Overflow behavior: display an ellipsis to represent clipped text --&gt;</span>{"\n"}&lt;
-                <span className="tag">div</span> <span className="atn">class</span>=<span
-                    className="atv">"text-ellipsis"</span>&gt;&lt;<span
-                    className="tag">/div</span>&gt;{"\n"}<span className="com">&lt;!-- Overflow behavior: truncate the text --&gt;</span>{"\n"}&lt;
-                <span className="tag">div</span> <span className="atn">class</span>=<span
-                    className="atv">"text-clip"</span>&gt;&lt;<span className="tag">/div</span>&gt;{"\n"}<span
-                    className="com">&lt;!-- Text may be broken at arbitrary points --&gt;</span>{"\n"}&lt;<span
-                    className="tag">div</span> <span className="atn">class</span>=<span
-                    className="atv">"text-break"</span>&gt;&lt;<span
-                    className="tag">/div</span>&gt;{"\n"}</code></pre>
-        </div>
+        return <DocSection id={this.id} title={this.title}>
+            <DocNote>
+                Text utilities are used for text alignment, styles and overflow things.
+            </DocNote>
+            <Code className="HTML">{E1}</Code>
+        </DocSection>
     }
 }
+
+const E1 = `<!-- left-aligned text -->
+<div class="text-left"></div>
+<!-- center-aligned text -->
+<div class="text-center"></div>
+<!-- right-aligned text -->
+<div class="text-right"></div>
+<!-- justified text -->
+<div class="text-justify"></div>
+
+<!-- Lowercased text -->
+<div class="text-lowercase"></div>
+<!-- Uppercased text -->
+<div class="text-uppercase"></div>
+<!-- Capitalized text -->
+<div class="text-capitalize"></div>
+
+<!-- Normal weight text -->
+<div class="text-normal"></div>
+<!-- Bold text -->
+<div class="text-bold"></div>
+<!-- Italicized text -->
+<div class="text-italic"></div>
+<!-- Larger text (120%) -->
+<div class="text-large"></div>
+
+<!-- Overflow behavior: display an ellipsis to represent clipped text -->
+<div class="text-ellipsis"></div>
+<!-- Overflow behavior: truncate the text -->
+<div class="text-clip"></div>
+<!-- Text may be broken at arbitrary points -->
+<div class="text-break"></div>`;

@@ -1,19 +1,17 @@
 import * as React from "@barlus/nerv"
 import { Code } from "../comps/Code";
+import {DocNote, DocPage, DocSection, DocTitle} from "../comps/DocPage";
 
-const E1 = ``;
-const E2 = ``;
+export class DocModals extends DocPage {
+    static title = "Modals";
 
-export class DocModals extends React.PureComponent<{}, {}> {
+
     render() {
-        return <div id="modals" className="container">
-            <h3 className="s-title"><a href="#modals" className="anchor" aria-hidden="true">#</a>Modals</h3>
-            <div className="docs-note">
-                <p>Modals are flexible dialog prompts.</p>
-            </div>
+        return <DocSection id={this.id} title={this.title}>
+            <DocNote>Modals are flexible dialog prompts.</DocNote>
             <div className="columns">
                 <div className="column">
-                    <a href="#example-modal-1" className="btn btn-primary">Open Modal</a>
+                    <a className="btn btn-primary">Open Modal</a>
                     <div className="modal" id="example-modal-1">
                         <a href="#modals" className="modal-overlay" aria-label="Close"/>
                         <div className="modal-container" role="document">
@@ -62,46 +60,18 @@ export class DocModals extends React.PureComponent<{}, {}> {
                     </div>
                 </div>
             </div>
-            <div className="docs-note">
-                <p>Add a container element with the <code>modal</code> class. And add a real
-                    container <code>modal-container</code>
-                    and overlay <code>modal-overlay</code> inside it. You can add child elements with
-                    the <code>modal-header</code>,
-                    <code>modal-body</code> and <code>modal-footer</code> - any or all of them. </p>
-                <p>Spectre.css does not include JavaScript code, you will need to implement your JS to interact
-                    with
-                    modals. To make a modal appear, add the <code>active</code> class to the <code>modal</code>
-                    container.</p>
-            </div>
-            <pre className="code" data-lang="HTML"><code>&lt;<span className="tag">div</span> <span
-                className="atn">class</span>=<span className="atv">"modal active"</span> <span
-                className="atn">id</span>=<span className="atv">"modal-id"</span>&gt;{"\n"}{"  "}&lt;<span
-                className="tag">a</span> <span className="atn">href</span>=<span className="atv">"#close"</span> <span
-                className="atn">class</span>=<span className="atv">"modal-overlay"</span> <span
-                className="atn">aria-label</span>=<span className="atv">"Close"</span>&gt;&lt;<span
-                className="tag">/a</span>&gt;{"\n"}{"  "}&lt;<span className="tag">div</span> <span
-                className="atn">class</span>=<span
-                className="atv">"modal-container"</span>&gt;{"\n"}{"    "}&lt;<span
-                className="tag">div</span> <span className="atn">class</span>=<span
-                className="atv">"modal-header"</span>&gt;{"\n"}{"      "}&lt;<span
-                className="tag">a</span> <span className="atn">href</span>=<span className="atv">"#close"</span> <span
-                className="atn">class</span>=<span className="atv">"btn btn-clear float-right"</span> <span
-                className="atn">aria-label</span>=<span className="atv">"Close"</span>&gt;&lt;<span
-                className="tag">/a</span>&gt;{"\n"}{"      "}&lt;<span className="tag">div</span> <span
-                className="atn">class</span>=<span className="atv">"modal-title h5"</span>&gt;Modal title&lt;
-                <span className="tag">/div</span>&gt;{"\n"}{"    "}&lt;<span
-                    className="tag">/div</span>&gt;{"\n"}{"    "}&lt;<span className="tag">div</span> <span
-                    className="atn">class</span>=<span
-                    className="atv">"modal-body"</span>&gt;{"\n"}{"      "}&lt;<span className="tag">div</span> <span
-                    className="atn">class</span>=<span
-                    className="atv">"content"</span>&gt;{"\n"}{"        "}<span className="com">&lt;!-- content here --&gt;</span>{"\n"}{"      "}&lt;
-                <span className="tag">/div</span>&gt;{"\n"}{"    "}&lt;<span
-                    className="tag">/div</span>&gt;{"\n"}{"    "}&lt;<span className="tag">div</span> <span
-                    className="atn">class</span>=<span
-                    className="atv">"modal-footer"</span>&gt;{"\n"}{"      "}...{"\n"}{"    "}&lt;<span
-                    className="tag">/div</span>&gt;{"\n"}{"  "}&lt;<span
-                    className="tag">/div</span>&gt;{"\n"}&lt;<span className="tag">/div</span>&gt;{"\n"}</code></pre>
-            <h4 id="modals-sizes" className="s-subtitle">Modal sizes</h4>
+            <DocNote>
+                Add a container element with the <code>modal</code> class. And add a real
+                container <code>modal-container</code>
+                and overlay <code>modal-overlay</code> inside it. You can add child elements with
+                the <code>modal-header</code>,
+                <code>modal-body</code> and <code>modal-footer</code> - any or all of them.<br/><br/>
+                Spectre.css does not include JavaScript code, you will need to implement your JS to interact
+                with modals. To make a modal appear, add the <code>active</code> class to the <code>modal</code>
+                container.
+            </DocNote>
+            <Code className="HTML">{E1}</Code>
+            <DocTitle>Modal sizes</DocTitle>
             <div className="columns">
                 <div className="column col-6 col-xs-12">
                     <a href="#example-modal-2" className="btn btn-primary">Open small size Modal</a>
@@ -143,11 +113,10 @@ export class DocModals extends React.PureComponent<{}, {}> {
                     </div>
                 </div>
             </div>
-            <div className="docs-note">
-                <p>Use the <code>modal-sm</code> class for a smaller modal dialog. The container max width
-                    is <code>320px</code>.
-                </p>
-            </div>
+            <DocNote>
+                Use the <code>modal-sm</code> class for a smaller modal dialog. The container max width
+                is <code>320px</code>.
+            </DocNote>
             <div className="columns">
                 <div className="column">
                     <a href="#example-modal-3" className="btn btn-primary">Open large size Modal</a>
@@ -200,20 +169,36 @@ export class DocModals extends React.PureComponent<{}, {}> {
                     </div>
                 </div>
             </div>
-            <div className="docs-note">
-                <p>Use the <code>modal-lg</code> class for a full size modal. The container max width is
-                    <code>960px</code>.</p>
-            </div>
-            <pre className="code" data-lang="HTML"><code>&lt;<span className="tag">div</span> <span
-                className="atn">class</span>=<span className="atv">"modal modal-sm"</span>&gt;{"\n"}{"  "}&lt;
-                <span className="tag">a</span> <span className="atn">href</span>=<span
-                    className="atv">"#close"</span> <span className="atn">class</span>=<span
-                    className="atv">"modal-overlay"</span> <span className="atn">aria-label</span>=<span
-                    className="atv">"Close"</span>&gt;&lt;<span className="tag">/a</span>&gt;{"\n"}{"  "}&lt;
-                <span className="tag">div</span> <span className="atn">class</span>=<span
-                    className="atv">"modal-container"</span>&gt;{"\n"}{"    "}<span className="com">&lt;!-- modal structure here --&gt;</span>{"\n"}{"  "}&lt;
-                <span className="tag">/div</span>&gt;{"\n"}&lt;<span
-                    className="tag">/div</span>&gt;{"\n"}</code></pre>
-        </div>
+
+            <DocNote>
+                Use the <code>modal-lg</code> class for a full size modal. The container max width is
+                <code>960px</code>.
+            </DocNote>
+            <Code className="HTML">{E2}</Code>
+        </DocSection>
     }
 }
+
+const E1 = `<div class="modal active" id="modal-id">
+  <a href="#close" class="modal-overlay" aria-label="Close"></a>
+  <div class="modal-container">
+    <div class="modal-header">
+      <a href="#close" class="btn btn-clear float-right" aria-label="Close"></a>
+      <div class="modal-title h5">Modal title</div>
+    </div>
+    <div class="modal-body">
+      <div class="content">
+        <!-- content here -->
+      </div>
+    </div>
+    <div class="modal-footer">
+      ...
+    </div>
+  </div>
+</div>`;
+const E2 = `<div class="modal modal-sm">
+  <a href="#close" class="modal-overlay" aria-label="Close"></a>
+  <div class="modal-container">
+    <!-- modal structure here -->
+  </div>
+</div>`;

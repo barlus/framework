@@ -1,19 +1,16 @@
 import * as React from "@barlus/nerv"
 import { Code } from "../comps/Code";
+import {DocNote, DocPage, DocSample, DocSection} from "../comps/DocPage";
 
-const E1 = ``;
-const E2 = ``;
 
-export class DocAccordions extends React.PureComponent<{}, {}> {
+
+export class DocAccordions extends DocPage {
+    static title = 'Accordions';
     render() {
-        return <div id="accordions" className="container">
-            <h3 className="s-title"><a href="#accordions" className="anchor" aria-hidden="true">#</a>Accordions
-            </h3>
-            <div className="docs-note">
-                <p>Accordions are used to toggle sections of content.</p>
-            </div>
-            <div className="columns">
-                <div className="column col-6 col-md-12">
+        return <DocSection id={this.id} title={this.title}>
+            <DocNote>Accordions are used to toggle sections of content.</DocNote>
+            <DocSample columns={2}>
+                <DocSample>
                     <div className="accordion">
                         <input type="radio" id="accordion-1" name="accordion-radio" hidden defaultChecked/>
                         <label className="accordion-header c-hand" htmlFor="accordion-1">
@@ -65,8 +62,8 @@ export class DocAccordions extends React.PureComponent<{}, {}> {
                             </ul>
                         </div>
                     </div>
-                </div>
-                <div className="column col-6 col-md-12">
+                </DocSample>
+                <DocSample>
                     <div className="accordion">
                         <input type="checkbox" id="accordion-4" name="accordion-checkbox" hidden
                                defaultChecked/>
@@ -116,57 +113,49 @@ export class DocAccordions extends React.PureComponent<{}, {}> {
                             </ul>
                         </div>
                     </div>
-                </div>
-            </div>
-            <pre className="code" data-lang="HTML"><code><span className="com">&lt;!-- standard Accordions example --&gt;</span>{"\n"}&lt;
-                <span className="tag">div</span> <span className="atn">class</span>=<span
-                    className="atv">"accordion"</span>&gt;{"\n"}{"  "}&lt;<span
-                    className="tag">input</span> <span className="atn">type</span>=<span
-                    className="atv">"checkbox"</span> <span className="atn">id</span>=<span
-                    className="atv">"accordion-1"</span> <span className="atn">name</span>=<span
-                    className="atv">"accordion-checkbox"</span> <span
-                    className="atn">hidden</span>&gt;{"\n"}{"  "}&lt;<span className="tag">label</span> <span
-                    className="atn">class</span>=<span
-                    className="atv">"accordion-header"</span>&gt;{"\n"}{"    "}&lt;<span
-                    className="tag">i</span> <span className="atn">class</span>=<span className="atv">"icon icon-arrow-right mr-1"</span>&gt;&lt;
-                <span className="tag">/i</span>&gt;{"\n"}{"    "}Title{"\n"}{"  "}&lt;<span
-                    className="tag">/label</span>&gt;{"\n"}{"  "}&lt;<span className="tag">div</span> <span
-                    className="atn">class</span>=<span className="atv">"accordion-body"</span>&gt;{"\n"}{"    "}<span
-                    className="com">&lt;!-- Accordions content --&gt;</span>{"\n"}{"  "}&lt;<span
-                    className="tag">/div</span>&gt;{"\n"}&lt;<span
-                    className="tag">/div</span>&gt;{"\n"}{"\n"}<span className="com">&lt;!-- mutually exclusive Accordions example (with same input names) --&gt;</span>{"\n"}&lt;
-                <span className="tag">div</span> <span className="atn">class</span>=<span
-                    className="atv">"accordion"</span>&gt;{"\n"}{"  "}&lt;<span
-                    className="tag">input</span> <span className="atn">type</span>=<span
-                    className="atv">"radio"</span> <span className="atn">id</span>=<span
-                    className="atv">"accordion-1"</span> <span className="atn">name</span>=<span
-                    className="atv">"accordion-radio"</span> <span
-                    className="atn">hidden</span>&gt;{"\n"}{"  "}&lt;<span className="tag">label</span> <span
-                    className="atn">class</span>=<span
-                    className="atv">"accordion-header"</span>&gt;{"\n"}{"    "}Title{"\n"}{"  "}&lt;<span
-                    className="tag">/label</span>&gt;{"\n"}{"  "}&lt;<span className="tag">div</span> <span
-                    className="atn">class</span>=<span className="atv">"accordion-body"</span>&gt;{"\n"}{"    "}<span
-                    className="com">&lt;!-- Accordions content --&gt;</span>{"\n"}{"  "}&lt;<span
-                    className="tag">/div</span>&gt;{"\n"}&lt;<span className="tag">/div</span>&gt;{"\n"}</code></pre>
-            <div className="docs-note">
-                <p>Alternatively, you can use <code>details</code> and <code>summary</code> instead of
-                    <code>input</code> radio or checkbox trick. Add the <code>open</code> attribute to
-                    <code>details</code> to expand it. Microsoft Edge support is <a
-                        href="https://developer.microsoft.com/en-us/microsoft-edge/platform/status/detailssummary/"
-                        target="_blank">in development</a>.</p>
-            </div>
-            <pre className="code" data-lang="HTML"><code><span className="com">&lt;!-- details and summary Accordions example --&gt;</span>{"\n"}&lt;
-                <span className="tag">details</span> <span className="atn">class</span>=<span
-                    className="atv">"accordion"</span> <span className="atn">open</span>&gt;{"\n"}{"  "}&lt;
-                <span className="tag">summary</span> <span className="atn">class</span>=<span
-                    className="atv">"accordion-header"</span>&gt;{"\n"}{"    "}&lt;<span
-                    className="tag">i</span> <span className="atn">class</span>=<span className="atv">"icon icon-arrow-right mr-1"</span>&gt;&lt;
-                <span className="tag">/i</span>&gt;{"\n"}{"    "}Title{"\n"}{"  "}&lt;<span
-                    className="tag">/summary</span>&gt;{"\n"}{"  "}&lt;<span className="tag">div</span> <span
-                    className="atn">class</span>=<span className="atv">"accordion-body"</span>&gt;{"\n"}{"    "}<span
-                    className="com">&lt;!-- Accordions content --&gt;</span>{"\n"}{"  "}&lt;<span
-                    className="tag">/div</span>&gt;{"\n"}&lt;<span
-                    className="tag">/details</span>&gt;{"\n"}</code></pre>
-        </div>
+                </DocSample>
+            </DocSample>
+            <Code className="HTML">{E1}</Code>
+            <DocNote>
+                Alternatively, you can use <code>details</code> and <code>summary</code> instead of
+                <code>input</code> radio or checkbox trick. Add the <code>open</code> attribute to
+                <code>details</code> to expand it. Microsoft Edge support is <a
+                href="https://developer.microsoft.com/en-us/microsoft-edge/platform/status/detailssummary/"
+                target="_blank">in development</a>.
+            </DocNote>
+            <Code className="HTML">{E2}</Code>
+        </DocSection>
     }
 }
+const E1 = `<!-- standard Accordions example -->
+<div class="accordion">
+  <input type="checkbox" id="accordion-1" name="accordion-checkbox" hidden>
+  <label class="accordion-header">
+    <i class="icon icon-arrow-right mr-1"></i>
+    Title
+  </label>
+  <div class="accordion-body">
+    <!-- Accordions content -->
+  </div>
+</div>
+
+<!-- mutually exclusive Accordions example (with same input names) -->
+<div class="accordion">
+  <input type="radio" id="accordion-1" name="accordion-radio" hidden>
+  <label class="accordion-header">
+    Title
+  </label>
+  <div class="accordion-body">
+    <!-- Accordions content -->
+  </div>
+</div>`;
+const E2 = `<!-- details and summary Accordions example -->
+<details class="accordion" open>
+  <summary class="accordion-header">
+    <i class="icon icon-arrow-right mr-1"></i>
+    Title
+  </summary>
+  <div class="accordion-body">
+    <!-- Accordions content -->
+  </div>
+</details>`;

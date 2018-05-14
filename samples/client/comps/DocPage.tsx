@@ -52,16 +52,19 @@ export class DocTitle extends React.PureComponent<{}, {}> {
         return <h4 className="s-subtitle">{this.props.children}</h4>
     }
 }
-export class DocSample extends React.PureComponent<{ columns?: number }, {}> {
+export class DocSample extends React.PureComponent<{ columns?: number ,wrapChildren?:boolean}, {}> {
     static defaultProps = {
-        columns: 1
+        columns: 1,
+        wrapChildren :true,
     };
     render() {
         const col = `column col-${12 / this.props.columns}`;
-        return <div className="columns">{
-            React.Children.map(this.props.children, child => {
-                return <div className={col}>{child}</div>
-            })
+        return <div className={'columns ' + ( this.props.className || '')}>{
+            this.props.wrapChildren ?
+                React.Children.map(this.props.children, child => {
+                    return <div className={col}>{child}</div>
+                })
+                : this.props.children
         }</div>
     }
 }

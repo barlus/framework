@@ -1,6 +1,6 @@
 import * as React from "@barlus/nerv"
 import { Code } from "../comps/Code";
-import { DocPage, DocSection,DocTitle,DocNote } from '../comps/DocPage';
+import {DocPage, DocSection, DocTitle, DocNote, DocSample} from '../comps/DocPage';
 
 
 export class DocForms extends DocPage {
@@ -12,8 +12,8 @@ export class DocForms extends DocPage {
                 Forms provide the most common control styles used in forms, including input, textarea,
                 select, checkbox, radio and switch.
             </DocNote>
-            <div className="columns">
-                <div className="column col-6 col-xs-12">
+            <DocSample columns={2}>
+                <div>
                     <div className="form-group">
                         <label className="form-label" htmlFor="input-example-1">Name</label>
                         <input className="form-input" type="text" id="input-example-1" placeholder="Name"/>
@@ -23,20 +23,19 @@ export class DocForms extends DocPage {
                         <input className="form-input" type="email" id="input-example-2" placeholder="Email"/>
                     </div>
                 </div>
-            </div>
+            </DocSample>
             <Code className="HTML">{E1}</Code>
-            <div className="columns">
-                <div className="column col-6 col-xs-12">
+            <DocSample columns={2}>
+                <div>
                     <div className="form-group">
                         <label className="form-label" htmlFor="input-example-3">Message</label>
-                        <textarea className="form-input" id="input-example-3" placeholder="Textarea" rows={3}
-                                  defaultValue={""}/>
+                        <textarea className="form-input" id="input-example-3" placeholder="Textarea" rows={3} defaultValue={""}/>
                     </div>
                 </div>
-            </div>
+            </DocSample>
             <Code className="HTML">{E2}</Code>
-            <div className="columns">
-                <div className="column col-6 col-xs-12">
+            <DocSample columns={2}>
+                <div>
                     <div className="form-group">
                         <select className="form-select">
                             <option>Choose an option</option>
@@ -54,28 +53,26 @@ export class DocForms extends DocPage {
                         </select>
                     </div>
                 </div>
-            </div>
+            </DocSample>
             <Code className="HTML">{E3}</Code>
-            <div className="columns">
-                <div className="column col-6 col-xs-12">
-                    <form>
-                        <div className="form-group">
-                            <label className="form-label">Gender</label>
-                            <label className="form-radio">
-                                <input type="radio" name="gender" defaultChecked/>
-                                <i className="form-icon"/> Male
-                            </label>
-                            <label className="form-radio">
-                                <input type="radio" name="gender"/>
-                                <i className="form-icon"/> Female
-                            </label>
-                        </div>
-                    </form>
-                </div>
-            </div>
+            <DocSample columns={2}>
+                <form>
+                    <div className="form-group">
+                        <label className="form-label">Gender</label>
+                        <label className="form-radio">
+                            <input type="radio" name="gender" defaultChecked/>
+                            <i className="form-icon"/> Male
+                        </label>
+                        <label className="form-radio">
+                            <input type="radio" name="gender"/>
+                            <i className="form-icon"/> Female
+                        </label>
+                    </div>
+                </form>
+            </DocSample>
             <Code className="HTML">{E4}</Code>
-            <div className="columns">
-                <div className="column col-6 col-xs-12">
+            <DocSample columns={2}>
+                <form>
                     <div className="form-group">
                         <label className="form-switch">
                             <input type="checkbox"/>
@@ -88,11 +85,11 @@ export class DocForms extends DocPage {
                             <i className="form-icon"/> Send me emails with news and tips
                         </label>
                     </div>
-                </div>
-            </div>
+                </form>
+            </DocSample>
             <Code className="HTML">{E5}</Code>
-            <div className="columns">
-                <div className="column col-6 col-xs-12">
+            <DocSample columns={2}>
+                <form>
                     <div className="form-group">
                         <label className="form-checkbox">
                             <input type="checkbox"/>
@@ -105,8 +102,8 @@ export class DocForms extends DocPage {
                             <i className="form-icon"/> Remember me
                         </label>
                     </div>
-                </div>
-            </div>
+                </form>
+            </DocSample>
             <Code className="HTML">{E6}</Code>
             <DocNote>
                 You can use <code>:indeterminate</code> pseudo class for indeterminate state of checkboxes.
@@ -118,82 +115,80 @@ export class DocForms extends DocPage {
                 to the
                 child elements for responsive form row layout.
             </DocNote>
-            <div className="columns">
-                <div className="column col-9 col-sm-12">
-                    <form className="form-horizontal" action="#forms">
-                        <div className="form-group">
-                            <div className="col-3 col-sm-12">
-                                <label className="form-label" htmlFor="input-example-4">Name</label>
-                            </div>
-                            <div className="col-9 col-sm-12">
-                                <input className="form-input" type="text" id="input-example-4"
-                                       placeholder="Name"/>
-                            </div>
+            <DocSample>
+                <form className="form-horizontal" action="#forms">
+                    <div className="form-group">
+                        <div className="col-3 col-sm-12">
+                            <label className="form-label" htmlFor="input-example-4">Name</label>
                         </div>
-                        <div className="form-group">
-                            <div className="col-3 col-sm-12">
-                                <label className="form-label" htmlFor="input-example-5">Email</label>
-                            </div>
-                            <div className="col-9 col-sm-12">
-                                <input className="form-input" type="email" id="input-example-5"
-                                       placeholder="Email"/>
-                            </div>
+                        <div className="col-9 col-sm-12">
+                            <input className="form-input" type="text" id="input-example-4"
+                                   placeholder="Name"/>
                         </div>
-                        <div className="form-group">
-                            <div className="col-3 col-sm-12">
-                                <label className="form-label">Gender</label>
-                            </div>
-                            <div className="col-9 col-sm-12">
-                                <label className="form-radio">
-                                    <input type="radio" name="gender"/>
-                                    <i className="form-icon"/> Male
-                                </label>
-                                <label className="form-radio">
-                                    <input type="radio" name="gender" defaultChecked/>
-                                    <i className="form-icon"/> Female
-                                </label>
-                            </div>
+                    </div>
+                    <div className="form-group">
+                        <div className="col-3 col-sm-12">
+                            <label className="form-label" htmlFor="input-example-5">Email</label>
                         </div>
-                        <div className="form-group">
-                            <div className="col-3 col-sm-12">
-                                <label className="form-label">Source</label>
-                            </div>
-                            <div className="col-9 col-sm-12">
-                                <select className="form-select" multiple>
-                                    <option>Slack</option>
-                                    <option>Skype</option>
-                                    <option>Hipchat</option>
-                                </select>
-                            </div>
+                        <div className="col-9 col-sm-12">
+                            <input className="form-input" type="email" id="input-example-5"
+                                   placeholder="Email"/>
                         </div>
-                        <div className="form-group">
-                            <div className="col-9 col-sm-12 col-ml-auto">
-                                <label className="form-switch">
-                                    <input type="checkbox"/>
-                                    <i className="form-icon"/> Send me emails with news and tips
-                                </label>
-                            </div>
+                    </div>
+                    <div className="form-group">
+                        <div className="col-3 col-sm-12">
+                            <label className="form-label">Gender</label>
                         </div>
-                        <div className="form-group">
-                            <div className="col-3 col-sm-12">
-                                <label className="form-label" htmlFor="input-example-6">Message</label>
-                            </div>
-                            <div className="col-9 col-sm-12">
+                        <div className="col-9 col-sm-12">
+                            <label className="form-radio">
+                                <input type="radio" name="gender"/>
+                                <i className="form-icon"/> Male
+                            </label>
+                            <label className="form-radio">
+                                <input type="radio" name="gender" defaultChecked/>
+                                <i className="form-icon"/> Female
+                            </label>
+                        </div>
+                    </div>
+                    <div className="form-group">
+                        <div className="col-3 col-sm-12">
+                            <label className="form-label">Source</label>
+                        </div>
+                        <div className="col-9 col-sm-12">
+                            <select className="form-select" multiple>
+                                <option>Slack</option>
+                                <option>Skype</option>
+                                <option>Hipchat</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div className="form-group">
+                        <div className="col-9 col-sm-12 col-ml-auto">
+                            <label className="form-switch">
+                                <input type="checkbox"/>
+                                <i className="form-icon"/> Send me emails with news and tips
+                            </label>
+                        </div>
+                    </div>
+                    <div className="form-group">
+                        <div className="col-3 col-sm-12">
+                            <label className="form-label" htmlFor="input-example-6">Message</label>
+                        </div>
+                        <div className="col-9 col-sm-12">
                                         <textarea className="form-input" id="input-example-6" placeholder="Textarea"
                                                   rows={3} defaultValue={""}/>
-                            </div>
                         </div>
-                        <div className="form-group">
-                            <div className="col-9 col-sm-12 col-ml-auto">
-                                <label className="form-checkbox">
-                                    <input type="checkbox"/>
-                                    <i className="form-icon"/> Remember me
-                                </label>
-                            </div>
+                    </div>
+                    <div className="form-group">
+                        <div className="col-9 col-sm-12 col-ml-auto">
+                            <label className="form-checkbox">
+                                <input type="checkbox"/>
+                                <i className="form-icon"/> Remember me
+                            </label>
                         </div>
-                    </form>
-                </div>
-            </div>
+                    </div>
+                </form>
+            </DocSample>
             <Code className="HTML">{E7}</Code>
             <DocTitle>Form sizes</DocTitle>
             <DocNote>
@@ -202,38 +197,40 @@ export class DocForms extends DocPage {
                 <code>select-sm</code>/<code>select-lg</code> and <code>label-sm</code>/<code>label-lg</code>
                 classes to the elements.
             </DocNote>
-            <div className="columns">
-                <div className="column col-4 col-xs-12">
-                    <label className="form-label label-sm">Label</label>
+            <DocSample>
+                <div className="columns">
+                    <div className="column col-4 col-xs-12">
+                        <label className="form-label label-sm">Label</label>
+                    </div>
+                    <div className="column col-4 col-xs-12">
+                        <input className="form-input input-sm" type="text" placeholder="Name"/>
+                    </div>
+                    <div className="column col-4 col-xs-12">
+                        <select className="form-select select-sm">
+                            <option>Choose an option</option>
+                            <option>Slack</option>
+                            <option>Skype</option>
+                            <option>Hipchat</option>
+                        </select>
+                    </div>
                 </div>
-                <div className="column col-4 col-xs-12">
-                    <input className="form-input input-sm" type="text" placeholder="Name"/>
+                <div className="columns">
+                    <div className="column col-4 col-xs-12">
+                        <label className="form-label label-lg">Label</label>
+                    </div>
+                    <div className="column col-4 col-xs-12">
+                        <input className="form-input input-lg" type="text" placeholder="Name"/>
+                    </div>
+                    <div className="column col-4 col-xs-12">
+                        <select className="form-select select-lg">
+                            <option>Choose an option</option>
+                            <option>Slack</option>
+                            <option>Skype</option>
+                            <option>Hipchat</option>
+                        </select>
+                    </div>
                 </div>
-                <div className="column col-4 col-xs-12">
-                    <select className="form-select select-sm">
-                        <option>Choose an option</option>
-                        <option>Slack</option>
-                        <option>Skype</option>
-                        <option>Hipchat</option>
-                    </select>
-                </div>
-            </div>
-            <div className="columns">
-                <div className="column col-4 col-xs-12">
-                    <label className="form-label label-lg">Label</label>
-                </div>
-                <div className="column col-4 col-xs-12">
-                    <input className="form-input input-lg" type="text" placeholder="Name"/>
-                </div>
-                <div className="column col-4 col-xs-12">
-                    <select className="form-select select-lg">
-                        <option>Choose an option</option>
-                        <option>Slack</option>
-                        <option>Skype</option>
-                        <option>Hipchat</option>
-                    </select>
-                </div>
-            </div>
+            </DocSample>
             <DocNote>
                 You can add the <code>input-sm</code>/<code>input-lg</code> classes to the input-checkbox,
                 input-radio and input-switch to have different sizes.
@@ -245,237 +242,199 @@ export class DocForms extends DocPage {
                     to &lt;input&gt;
                     element. And add the icon with <code>form-icon</code> class next to the &lt;input&gt;.
             </DocNote>
-            <div className="columns">
-                <div className="column col-4 col-xs-12">
-                    <div className="has-icon-left">
-                        <input className="form-input input-sm" type="text" placeholder="Name"/>
-                        <i className="form-icon icon icon-arrow-right"/>
-                    </div>
+            <DocSample columns={3}>
+                <div className="has-icon-left">
+                    <input className="form-input input-sm" type="text" placeholder="Name"/>
+                    <i className="form-icon icon icon-arrow-right"/>
                 </div>
-                <div className="column col-4 col-xs-12">
-                    <div className="has-icon-left tooltip" data-tooltip="Lorem ipsum dolor sit amet">
-                        <input className="form-input" type="text" placeholder="Name"/>
-                        <i className="form-icon icon icon-arrow-right"/>
-                    </div>
+                <div className="has-icon-left tooltip" data-tooltip="Lorem ipsum dolor sit amet">
+                    <input className="form-input" type="text" placeholder="Name"/>
+                    <i className="form-icon icon icon-arrow-right"/>
                 </div>
-                <div className="column col-4 col-xs-12">
-                    <div className="has-icon-left">
-                        <input className="form-input input-lg" type="text" placeholder="Name"/>
-                        <i className="form-icon icon icon-arrow-right"/>
-                    </div>
+                <div className="has-icon-left">
+                    <input className="form-input input-lg" type="text" placeholder="Name"/>
+                    <i className="form-icon icon icon-arrow-right"/>
                 </div>
-            </div>
+            </DocSample>
             <Code className="HTML">{E8}</Code>
-            <div className="columns">
-                <div className="column col-4 col-xs-12">
-                    <div className="has-icon-right">
-                        <input className="form-input input-sm" type="text" placeholder="Name"/>
-                        <i className="form-icon icon icon-check"/>
-                    </div>
+            <DocSample columns={3}>
+                <div className="has-icon-right">
+                    <input className="form-input input-sm" type="text" placeholder="Name"/>
+                    <i className="form-icon icon icon-check"/>
                 </div>
-                <div className="column col-4 col-xs-12">
-                    <div className="has-icon-right">
-                        <input className="form-input" type="text" placeholder="Name"/>
-                        <i className="form-icon icon icon-check"/>
-                    </div>
+                <div className="has-icon-right">
+                    <input className="form-input" type="text" placeholder="Name"/>
+                    <i className="form-icon icon icon-check"/>
                 </div>
-                <div className="column col-4 col-xs-12">
-                    <div className="has-icon-right">
-                        <input className="form-input input-lg" type="text" placeholder="Name"/>
-                        <i className="form-icon icon icon-check"/>
-                    </div>
+                <div className="has-icon-right">
+                    <input className="form-input input-lg" type="text" placeholder="Name"/>
+                    <i className="form-icon icon icon-check"/>
                 </div>
-            </div>
-            <div className="docs-note">
-                <p>You can use the <code>loading</code> class for loading or posting state.</p>
-            </div>
-            <div className="columns">
-                <div className="column col-4 col-xs-12">
-                    <div className="has-icon-right">
-                        <input className="form-input input-sm" type="text" placeholder="Name"/>
-                        <i className="form-icon loading"/>
-                    </div>
+            </DocSample>
+            <DocNote>You can use the <code>loading</code> class for loading or posting state.</DocNote>
+            <DocSample columns={3}>
+                <div className="has-icon-right">
+                    <input className="form-input input-sm" type="text" placeholder="Name"/>
+                    <i className="form-icon loading"/>
                 </div>
-                <div className="column col-4 col-xs-12">
-                    <div className="has-icon-right">
-                        <input className="form-input" type="text" placeholder="Name"/>
-                        <i className="form-icon loading"/>
-                    </div>
+                <div className="has-icon-right">
+                    <input className="form-input" type="text" placeholder="Name"/>
+                    <i className="form-icon loading"/>
                 </div>
-                <div className="column col-4 col-xs-12">
-                    <div className="has-icon-right">
-                        <input className="form-input input-lg" type="text" placeholder="Name"/>
-                        <i className="form-icon loading"/>
-                    </div>
+                <div className="has-icon-right">
+                    <input className="form-input input-lg" type="text" placeholder="Name"/>
+                    <i className="form-icon loading"/>
                 </div>
-            </div>
+            </DocSample>
             <Code className="HTML">{E9}</Code>
             <DocTitle>Input types</DocTitle>
-            <div className="columns">
-                <div className="column col-9 col-sm-12">
-                    <form className="form-horizontal" action="#forms">
-                        <div className="form-group">
-                            <div className="col-3">
-                                <label className="form-label" htmlFor="input-example-8">Email</label>
-                            </div>
-                            <div className="col-9">
-                                <input className="form-input" type="email" id="input-example-8"
-                                       placeholder="Email" defaultValue="spectre@example.com"
-                                       pattern="[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$"/>
-                            </div>
+            <DocSample>
+                <form className="form-horizontal" action="#forms">
+                    <div className="form-group">
+                        <div className="col-3">
+                            <label className="form-label" htmlFor="input-example-8">Email</label>
                         </div>
-                        <div className="form-group">
-                            <div className="col-3">
-                                <label className="form-label" htmlFor="input-example-9">URL</label>
-                            </div>
-                            <div className="col-9">
-                                <input className="form-input" type="url" id="input-example-9" placeholder="URL"
-                                       defaultValue="https://github.com/picturepan2/spectre"/>
-                            </div>
+                        <div className="col-9">
+                            <input className="form-input" type="email" id="input-example-8"
+                                   placeholder="Email" defaultValue="spectre@example.com"
+                                   pattern="[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$"/>
                         </div>
-                        <div className="form-group">
-                            <div className="col-3">
-                                <label className="form-label" htmlFor="input-example-10">Search</label>
-                            </div>
-                            <div className="col-9">
-                                <input className="form-input" type="search" id="input-example-10"
-                                       placeholder="Search"/>
-                            </div>
+                    </div>
+                    <div className="form-group">
+                        <div className="col-3">
+                            <label className="form-label" htmlFor="input-example-9">URL</label>
                         </div>
-                        <div className="form-group">
-                            <div className="col-3">
-                                <label className="form-label" htmlFor="input-example-11">Tel</label>
-                            </div>
-                            <div className="col-9">
-                                <input className="form-input" type="tel" id="input-example-11" placeholder="Tel"
-                                       defaultValue="1-(888)-888-8888"/>
-                            </div>
+                        <div className="col-9">
+                            <input className="form-input" type="url" id="input-example-9" placeholder="URL"
+                                   defaultValue="https://github.com/picturepan2/spectre"/>
                         </div>
-                        <div className="form-group">
-                            <div className="col-3">
-                                <label className="form-label" htmlFor="input-example-12">Password</label>
-                            </div>
-                            <div className="col-9">
-                                <input className="form-input" type="password" id="input-example-12"
-                                       placeholder="Password" defaultValue={123456789}/>
-                            </div>
+                    </div>
+                    <div className="form-group">
+                        <div className="col-3">
+                            <label className="form-label" htmlFor="input-example-10">Search</label>
                         </div>
-                        <div className="form-group">
-                            <div className="col-3">
-                                <label className="form-label" htmlFor="input-example-13">Number</label>
-                            </div>
-                            <div className="col-9">
-                                <input className="form-input" type="number" id="input-example-13"
-                                       placeholder={'00'} defaultValue={66}/>
-                            </div>
+                        <div className="col-9">
+                            <input className="form-input" type="search" id="input-example-10"
+                                   placeholder="Search"/>
                         </div>
-                        <div className="form-group">
-                            <div className="col-3">
-                                <label className="form-label" htmlFor="input-example-14">Date</label>
-                            </div>
-                            <div className="col-9">
-                                <input className="form-input" type="date" id="input-example-14"
-                                       defaultValue="2016-12-31"/>
-                            </div>
+                    </div>
+                    <div className="form-group">
+                        <div className="col-3">
+                            <label className="form-label" htmlFor="input-example-11">Tel</label>
                         </div>
-                        <div className="form-group">
-                            <div className="col-3">
-                                <label className="form-label" htmlFor="input-example-15">Color</label>
-                            </div>
-                            <div className="col-9">
-                                <input className="form-input" type="color" id="input-example-15"
-                                       defaultValue="#5755d9"/>
-                            </div>
+                        <div className="col-9">
+                            <input className="form-input" type="tel" id="input-example-11" placeholder="Tel"
+                                   defaultValue="1-(888)-888-8888"/>
                         </div>
-                        <div className="form-group">
-                            <div className="col-3">
-                                <label className="form-label" htmlFor="input-example-16">File</label>
-                            </div>
-                            <div className="col-9">
-                                <input className="form-input" type="file" id="input-example-16"/>
-                            </div>
+                    </div>
+                    <div className="form-group">
+                        <div className="col-3">
+                            <label className="form-label" htmlFor="input-example-12">Password</label>
                         </div>
-                    </form>
-                </div>
-            </div>
+                        <div className="col-9">
+                            <input className="form-input" type="password" id="input-example-12"
+                                   placeholder="Password" defaultValue={123456789}/>
+                        </div>
+                    </div>
+                    <div className="form-group">
+                        <div className="col-3">
+                            <label className="form-label" htmlFor="input-example-13">Number</label>
+                        </div>
+                        <div className="col-9">
+                            <input className="form-input" type="number" id="input-example-13"
+                                   placeholder={'00'} defaultValue={66}/>
+                        </div>
+                    </div>
+                    <div className="form-group">
+                        <div className="col-3">
+                            <label className="form-label" htmlFor="input-example-14">Date</label>
+                        </div>
+                        <div className="col-9">
+                            <input className="form-input" type="date" id="input-example-14"
+                                   defaultValue="2016-12-31"/>
+                        </div>
+                    </div>
+                    <div className="form-group">
+                        <div className="col-3">
+                            <label className="form-label" htmlFor="input-example-15">Color</label>
+                        </div>
+                        <div className="col-9">
+                            <input className="form-input" type="color" id="input-example-15"
+                                   defaultValue="#5755d9"/>
+                        </div>
+                    </div>
+                    <div className="form-group">
+                        <div className="col-3">
+                            <label className="form-label" htmlFor="input-example-16">File</label>
+                        </div>
+                        <div className="col-9">
+                            <input className="form-input" type="file" id="input-example-16"/>
+                        </div>
+                    </div>
+                </form>
+            </DocSample>
             <DocTitle>Input groups</DocTitle>
-            <div className="columns">
-                <div className="column col-xs-12">
-                    <div className="input-group">
-                        <input type="text" className="form-input input-sm" placeholder="username"/>
-                        <select className="form-select select-sm">
-                            <option>Slack</option>
-                            <option>Skype</option>
-                            <option>Hipchat</option>
-                        </select>
-                    </div>
+            <DocSample columns={2}>
+                <div className="input-group">
+                    <input type="text" className="form-input input-sm" placeholder="username"/>
+                    <select className="form-select select-sm">
+                        <option>Slack</option>
+                        <option>Skype</option>
+                        <option>Hipchat</option>
+                    </select>
                 </div>
-                <div className="column col-xs-12">
-                    <div className="input-group">
-                        <span className="input-group-addon addon-sm">slack.com/</span>
-                        <input type="text" className="form-input input-sm" placeholder="site name"/>
-                        <button className="btn btn-primary input-group-btn btn-sm">Submit</button>
-                    </div>
+                <div className="input-group">
+                    <span className="input-group-addon addon-sm">slack.com/</span>
+                    <input type="text" className="form-input input-sm" placeholder="site name"/>
+                    <button className="btn btn-primary input-group-btn btn-sm">Submit</button>
                 </div>
-            </div>
-            <div className="columns">
-                <div className="column col-xs-12">
-                    <div className="input-group">
-                        <input type="text" className="form-input" placeholder="username"/>
-                        <select className="form-select">
-                            <option>Slack</option>
-                            <option>Skype</option>
-                            <option>Hipchat</option>
-                        </select>
-                    </div>
+            </DocSample >
+            <DocSample columns={2}>
+                <div className="input-group">
+                    <input type="text" className="form-input" placeholder="username"/>
+                    <select className="form-select">
+                        <option>Slack</option>
+                        <option>Skype</option>
+                        <option>Hipchat</option>
+                    </select>
                 </div>
-                <div className="column col-xs-12">
-                    <div className="input-group">
-                        <span className="input-group-addon">slack.com/</span>
-                        <input type="text" className="form-input" placeholder="site name"/>
-                        <button className="btn btn-primary input-group-btn">Submit</button>
-                    </div>
+                <div className="input-group">
+                    <span className="input-group-addon">slack.com/</span>
+                    <input type="text" className="form-input" placeholder="site name"/>
+                    <button className="btn btn-primary input-group-btn">Submit</button>
                 </div>
-            </div>
-            <div className="columns">
-                <div className="column col-xs-12">
-                    <div className="input-group">
-                        <label className="form-switch">
-                            <input type="checkbox"/>
-                            <i className="form-icon"/>
-                        </label>
-                        <input type="text" className="form-input" placeholder="name"/>
-                    </div>
+            </DocSample>
+            <DocSample columns={2}>
+                <div className="input-group">
+                    <label className="form-switch">
+                        <input type="checkbox"/>
+                        <i className="form-icon"/>
+                    </label>
+                    <input type="text" className="form-input" placeholder="name"/>
                 </div>
-                <div className="column col-xs-12">
-                    <div className="input-group">
-                        <label className="form-checkbox">
-                            <input type="checkbox"/>
-                            <i className="form-icon"/>
-                        </label>
-                        <input type="text" className="form-input" placeholder="name"/>
-                    </div>
+                <div className="input-group">
+                    <label className="form-switch">
+                        <input type="checkbox"/>
+                        <i className="form-icon"/>
+                    </label>
+                    <input type="text" className="form-input" placeholder="name"/>
                 </div>
-            </div>
-            <div className="columns">
-                <div className="column col-xs-12">
-                    <div className="input-group">
-                        <input type="text" className="form-input input-lg" placeholder="username"/>
-                        <select className="form-select select-lg">
-                            <option>Slack</option>
-                            <option>Skype</option>
-                            <option>Hipchat</option>
-                        </select>
-                    </div>
+            </DocSample>
+            <DocSample columns={2}>
+                <div className="input-group">
+                    <input type="text" className="form-input input-lg" placeholder="username"/>
+                    <select className="form-select select-lg">
+                        <option>Slack</option>
+                        <option>Skype</option>
+                        <option>Hipchat</option>
+                    </select>
                 </div>
-                <div className="column col-xs-12">
-                    <div className="input-group">
-                        <span className="input-group-addon addon-lg">slack.com/</span>
-                        <input type="text" className="form-input input-lg" placeholder="site name"/>
-                        <button className="btn btn-primary input-group-btn btn-lg">Submit</button>
-                    </div>
+                <div className="input-group">
+                    <span className="input-group-addon addon-lg">slack.com/</span>
+                    <input type="text" className="form-input input-lg" placeholder="site name"/>
+                    <button className="btn btn-primary input-group-btn btn-lg">Submit</button>
                 </div>
-            </div>
+            </DocSample>
             <DocNote>
                 If you want to attach text and button along with an input, add
                     the <code>input-group</code> class to
@@ -494,8 +453,8 @@ export class DocForms extends DocPage {
                     messages.
 
             </DocNote>
-            <div className="columns">
-                <div className="column col-9 col-sm-12">
+            <DocSample columns={2}>
+                <div>
                     <fieldset>
                         <legend>Input</legend>
                         <div className="form-group">
@@ -564,61 +523,59 @@ export class DocForms extends DocPage {
                         </div>
                     </fieldset>
                 </div>
-            </div>
+            </DocSample>
             <Code className="HTML">{E11}</Code>
             <DocTitle>Form disabled styles</DocTitle>
             <DocNote>
                Add the <code>disabled</code> attribute to the element or &lt;fieldset&gt; for a disabled
                     form components style.
             </DocNote>
-            <div className="columns">
-                <div className="column col-6 col-xs-12">
-                    <form action="#forms">
-                        <fieldset disabled>
-                            <div className="form-group">
-                                <label className="form-label" htmlFor="input-example-19">Name</label>
-                                <input className="form-input" type="text" id="input-example-19"
-                                       placeholder="Name"/>
-                            </div>
-                            <div className="form-group">
-                                <label className="form-label">Gender</label>
-                                <label className="form-radio">
-                                    <input type="radio" name="gender" disabled/>
-                                    <i className="form-icon"/> Male
-                                </label>
-                                <label className="form-radio">
-                                    <input type="radio" name="gender" disabled/>
-                                    <i className="form-icon"/> Female
-                                </label>
-                            </div>
-                            <div className="form-group">
-                                <select className="form-select" disabled>
-                                    <option>Choose an option</option>
-                                    <option>Slack</option>
-                                    <option>Skype</option>
-                                    <option>Hipchat</option>
-                                </select>
-                            </div>
-                            <div className="form-group">
-                                <label className="form-switch">
-                                    <input type="checkbox" disabled/>
-                                    <i className="form-icon"/> Send me emails with news and tips
-                                </label>
-                            </div>
-                            <div className="form-group">
-                                <label className="form-label" htmlFor="input-example-20">Message</label>
-                                <textarea className="form-input" id="input-example-20" placeholder="Textarea" rows={3} disabled defaultValue={""}/>
-                            </div>
-                            <div className="form-group">
-                                <label className="form-checkbox">
-                                    <input type="checkbox" disabled/>
-                                    <i className="form-icon"/> Remember me
-                                </label>
-                            </div>
-                        </fieldset>
-                    </form>
-                </div>
-            </div>
+            <DocSample columns={2}>
+                <form action="#forms">
+                    <fieldset disabled>
+                        <div className="form-group">
+                            <label className="form-label" htmlFor="input-example-19">Name</label>
+                            <input className="form-input" type="text" id="input-example-19"
+                                   placeholder="Name"/>
+                        </div>
+                        <div className="form-group">
+                            <label className="form-label">Gender</label>
+                            <label className="form-radio">
+                                <input type="radio" name="gender" disabled/>
+                                <i className="form-icon"/> Male
+                            </label>
+                            <label className="form-radio">
+                                <input type="radio" name="gender" disabled/>
+                                <i className="form-icon"/> Female
+                            </label>
+                        </div>
+                        <div className="form-group">
+                            <select className="form-select" disabled>
+                                <option>Choose an option</option>
+                                <option>Slack</option>
+                                <option>Skype</option>
+                                <option>Hipchat</option>
+                            </select>
+                        </div>
+                        <div className="form-group">
+                            <label className="form-switch">
+                                <input type="checkbox" disabled/>
+                                <i className="form-icon"/> Send me emails with news and tips
+                            </label>
+                        </div>
+                        <div className="form-group">
+                            <label className="form-label" htmlFor="input-example-20">Message</label>
+                            <textarea className="form-input" id="input-example-20" placeholder="Textarea" rows={3} disabled defaultValue={""}/>
+                        </div>
+                        <div className="form-group">
+                            <label className="form-checkbox">
+                                <input type="checkbox" disabled/>
+                                <i className="form-icon"/> Remember me
+                            </label>
+                        </div>
+                    </fieldset>
+                </form>
+            </DocSample>
         </DocSection>
     }
 }

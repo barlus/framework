@@ -1,34 +1,31 @@
 import * as React from "@barlus/nerv"
 import { Code } from "../comps/Code";
+import {DocNote, DocPage, DocSample, DocSection} from "../comps/DocPage";
 
-const E1 = ``;
-const E2 = ``;
 
-export class DocChips extends React.PureComponent<{}, {}> {
+export class DocChips extends DocPage{
+    static title = "Chips";
     render() {
-        return <div id="chips" className="container">
-            <h3 className="s-title"><a href="#chips" className="anchor" aria-hidden="true">#</a>Chips</h3>
-            <div className="docs-note">
-                <p>Chips are complex entities in small blocks. </p>
-            </div>
-            <div className="columns">
-                <div className="column col-12">
-                <span className="chip">
-                  Crime
-                </span>
+        return  <DocSection id={this.id} title={this.title}>
+            <DocNote>Chips are complex entities in small blocks. </DocNote>
+            <DocSample>
+                <div>
+                      <span className="chip">
+                      Crime
+                    </span>
                     <span className="chip">
-                  Drama
-                </span>
+                      Drama
+                    </span>
                     <span className="chip">
-                  Biography
-                  <a href="#" className="btn btn-clear" aria-label="Close" role="button"/>
-                </span>
+                      Biography
+                      <a href="#" className="btn btn-clear" aria-label="Close" role="button"/>
+                    </span>
                     <span className="chip">
-                  Mystery
-                  <a href="#" className="btn btn-clear" aria-label="Close" role="button"/>
-                </span>
+                      Mystery
+                      <a href="#" className="btn btn-clear" aria-label="Close" role="button"/>
+                    </span>
                 </div>
-                <div className="column col-12">
+                <div>
                     <div className="chip">
                         <figure className="avatar avatar-sm" data-initial="TS"
                                 style={{ backgroundColor: '#5755d9' }}/>
@@ -45,32 +42,33 @@ export class DocChips extends React.PureComponent<{}, {}> {
                         Steve Rogers
                     </div>
                 </div>
+            </DocSample>
+            <div className="columns">
+                <div className="column col-12">
+
+                </div>
+                <div className="column col-12">
+
+                </div>
             </div>
-            <div className="docs-note">
-                <p>Add a container element with the <code>chip</code> class. And add child text element, buttons
-                    or
-                    avatars with the <code>avatar</code> class.</p>
-            </div>
-            <pre className="code" data-lang="HTML"><code>&lt;<span className="tag">span</span> <span
-                className="atn">class</span>=<span className="atv">"chip"</span>&gt;Crime&lt;<span
-                className="tag">/span</span>&gt;{"\n"}{"\n"}&lt;<span className="tag">span</span> <span
-                className="atn">class</span>=<span
-                className="atv">"chip"</span>&gt;{"\n"}{"  "}Biography{"\n"}{"  "}&lt;<span
-                className="tag">a</span> <span className="atn">href</span>=<span
-                className="atv">"#"</span> <span className="atn">class</span>=<span className="atv">"btn btn-clear"</span> <span
-                className="atn">aria-label</span>=<span className="atv">"Close"</span> <span
-                className="atn">role</span>=<span className="atv">"button"</span>&gt;&lt;<span
-                className="tag">/a</span>&gt;{"\n"}&lt;<span className="tag">/span</span>&gt;{"\n"}{"\n"}&lt;
-                <span className="tag">div</span> <span className="atn">class</span>=<span
-                    className="atv">"chip"</span>&gt;{"\n"}{"  "}&lt;<span className="tag">img</span> <span
-                    className="atn">src</span>=<span className="atv">"img/avatar-1.png"</span> <span
-                    className="atn">class</span>=<span className="atv">"avatar avatar-sm"</span>&gt;{"\n"}{"  "}Yan Zhu{"\n"}{"  "}&lt;
-                <span className="tag">a</span> <span className="atn">href</span>=<span
-                    className="atv">"#"</span> <span className="atn">class</span>=<span className="atv">"btn btn-clear"</span> <span
-                    className="atn">aria-label</span>=<span className="atv">"Close"</span> <span
-                    className="atn">role</span>=<span className="atv">"button"</span>&gt;&lt;<span
-                    className="tag">/a</span>&gt;{"\n"}&lt;<span
-                    className="tag">/div</span>&gt;</code>{"\n"}</pre>
-        </div>
+            <DocNote>
+                Add a container element with the <code>chip</code> class.
+                And add child text element, buttons or avatars with the <code>avatar</code> class.
+            </DocNote>
+            <Code className="HTML">{E1}</Code>
+        </DocSection>
     }
 }
+
+const E1 = `<span class="chip">Crime</span>
+
+<span class="chip">
+  Biography
+  <a href="#" class="btn btn-clear" aria-label="Close" role="button"></a>
+</span>
+
+<div class="chip">
+  <img src="img/avatar-1.png" class="avatar avatar-sm">
+  Yan Zhu
+  <a href="#" class="btn btn-clear" aria-label="Close" role="button"></a>
+</div>`;

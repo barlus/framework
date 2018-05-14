@@ -1,93 +1,109 @@
-import { stylesheet } from '@barlus/styles';
-export const cssRule = stylesheet('typography.css');
+import { stylesheet, rem, css, em } from '@barlus/styles';
+import { config } from '../config';
+import { labelBase, labelVariant } from '../mixins/label';
 
-cssRule('h1,h2,h3,h4,h5,h6', {
-    "color": "inherit",
-    "fontWeight": 500,
-    "lineHeight": 1.2,
-    "marginBottom": ".5em",
-    "marginTop": 0
+export const rule = stylesheet('typography.css');
+
+// Typography
+// Headings
+rule(`h1, h2, h3, h4, h5, h6`, {
+    color: 'inherit',
+    fontWeight: 500,
+    lineHeight: 1.2,
+    marginBottom: em(.5),
+    marginTop: 0,
 });
-cssRule('.h1,.h2,.h3,.h4,.h5,.h6', {
-    "fontWeight": 500
+rule(`.h1, .h2, .h3, .h4, .h5, .h6`, {
+    fontWeight: 500,
 });
-cssRule('.h1,h1', {
-    "fontSize": "2rem"
+rule(`h1, .h1`, {
+    fontSize: rem(2)
 });
-cssRule('.h2,h2', {
-    "fontSize": "1.6rem"
+rule(`h2, .h2`, {
+    fontSize: rem(1.6),
 });
-cssRule('.h3,h3', {
-    "fontSize": "1.4rem"
+rule(`h3, .h3`, {
+    fontSize: rem(1.4),
 });
-cssRule('.h4,h4', {
-    "fontSize": "1.2rem"
+rule(`h4, .h4`, {
+    fontSize: rem(1.2),
 });
-cssRule('.h5,h5', {
-    "fontSize": "1rem"
+rule(`h5, .h5`, {
+    fontSize: rem(1),
 });
-cssRule('.h6,h6', {
-    "fontSize": ".8rem"
+rule(`h6, .h6`, {
+    fontSize: rem(.8),
 });
-cssRule('p', {
-    "margin": "0 0 1rem"
+
+// Paragraphs
+rule(`p`, {
+    margin: css.values(0, 0, rem(config.lineHeight)),
 });
-cssRule('a,ins,u', {
-    "-webkit-text-decoration-skip": "ink edges",
-    "textDecorationSkip": "ink edges"
+// Semantic text elements
+
+rule(`a, ins, u`, {
+    textDecorationSkip: css.values('ink', 'edges'),
 });
-cssRule('abbr[title]', {
-    "borderBottom": ".05rem dotted",
-    "cursor": "help",
-    "textDecoration": "none"
+rule(`abbr[title]`, {
+    borderBottom: css.values(rem(config.borderWidth), 'dotted'),
+    cursor: 'help',
+    textDecoration: 'none',
 });
-cssRule('kbd', {
-    "background": "#454d5d",
-    "borderRadius": ".1rem",
-    "color": "#fff",
-    "fontSize": ".7rem",
-    "lineHeight": 1.2,
-    "padding": ".1rem .15rem"
+rule(`kbd`, {
+    ...labelBase(),
+    ...labelVariant(config.lightColor, config.darkColor),
+    fontSize: rem(config.fontSizeSm),
 });
-cssRule('mark', {
-    "background": "#ffe9b3",
-    "borderRadius": ".1rem",
-    "color": "#50596c",
-    "padding": ".05rem"
+rule(`mark`, {
+    ...labelVariant(config.bodyFontColor, config.highlightColor),
+    borderRadius: rem(config.borderRadius),
+    padding: rem(.05),
 });
-cssRule('blockquote', {
-    "borderLeft": ".1rem solid #e7e9ed",
-    "marginLeft": 0,
-    "padding": ".4rem .8rem"
+//
+// Blockquote
+rule(`blockquote`, {
+    borderLeft: css.values(config.borderWidthLg, css.value.solid, config.borderColor.rgba),
+    marginLeft: 0,
+    padding: css.values(rem(config.unit2), rem(config.unit4)),
+    ...css.nest(`p:last-child`, {
+        marginBottom: 0,
+    }),
 });
-cssRule('blockquote p:last-child', {
-    "marginBottom": 0
+
+// Lists
+rule(`ul, ol`, {
+    margin: css.values(rem(config.unit4), 0, rem(config.unit4), rem(config.unit4)),
+    padding: 0,
+    ...css.nest(`ul, ol`, {
+        margin: css.values(
+            rem(config.unit4),
+            rem(0),
+            rem(config.unit4),
+            rem(config.unit4)
+        ),
+    }),
+    ...css.nest(`li`, {
+        marginTop: rem(config.unit2),
+    }),
 });
-cssRule('ol,ul', {
-    "margin": ".8rem 0 .8rem .8rem",
-    "padding": 0
+
+rule(`ul`, {
+    listStyle: 'disc inside',
+    ...css.nest(`ul`, {
+        listStyleType: 'circle',
+    }),
 });
-cssRule('ol ol,ol ul,ul ol,ul ul', {
-    "margin": ".8rem 0 .8rem .8rem"
+rule(`ol`, {
+    listStyle: 'decimal inside',
+    ...css.nest('ol', {
+        listStyleType: 'lower-alpha',
+    }),
 });
-cssRule('ol li,ul li', {
-    "marginTop": ".4rem"
-});
-cssRule('ul', {
-    "listStyle": "disc inside"
-});
-cssRule('ul ul', {
-    "listStyleType": "circle"
-});
-cssRule('ol', {
-    "listStyle": "decimal inside"
-});
-cssRule('ol ol', {
-    "listStyleType": "lower-alpha"
-});
-cssRule('dl dt', {
-    "fontWeight": 700
-});
-cssRule('dl dd', {
-    "margin": ".4rem 0 .8rem 0"
+rule(`dl`, {
+    ...css.nest(`dt`, {
+        fontWeight: 'bold',
+    }),
+    ...css.nest(`dd`, {
+        margin: css.values(rem(config.unit2), 0, rem(config.unit4), 0),
+    }),
 });

@@ -41,7 +41,7 @@ export class HttpApplication extends HttpServer {
                     )
                 ]);
             }catch (e){
-                response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR,"Internal Server Error");
+                response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR,"Internal Server error");
 
             }
             if(!response.headers){

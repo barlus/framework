@@ -26,10 +26,10 @@ cssRule('.icon.icon-3x', {
 cssRule('.icon.icon-4x', {
   "fontSize": "3.2rem"
 });
-cssRule('.accordion .icon,.btn .icon,.menu .icon,.toast .icon', {
+cssRule('.accordion .icon,.Button .icon,.menu .icon,.toast .icon', {
   "verticalAlign": "-10%"
 });
-cssRule('.btn-lg .icon', {
+cssRule('.Button-lg .icon', {
   "verticalAlign": "-15%"
 });
 cssRule('.icon-arrow-down::before,.icon-arrow-left::before,.icon-arrow-right::before,.icon-arrow-up::before,.icon-back::before,.icon-downward::before,.icon-forward::before,.icon-upward::before', {

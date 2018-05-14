@@ -40,10 +40,10 @@ class ApiRouter extends RouteHandler {
 class ScssHandler implements Handler {
     async handle(cnx: Context, next: () => Promise<any>) {
         const path = cnx.request.url.pathname;
-        if(path.match(/\.scss$/)){
-            cnx.response.headers.set('Content-Type','text/css; charset=utf8');
+        if (path.match(/^\/(.*)\.css$/)) {
+            cnx.response.headers.set('Content-Type', 'text/css; charset=utf8');
             cnx.response.setBody('.myClass { color:red }');
-        }else{
+        } else {
             return next();
         }
     }
@@ -66,10 +66,10 @@ class MyApplication extends HttpApplication {
         this.use(new ScssHandler());
         this.use(new ApiRouter());
         this.use(new ProjectRoute({
-            jsx:'React.createElement',
+            jsx: 'React.createElement',
             root: process.cwd(),
             project: '@vendor/client',//@vendor/todo
-            ignore:['typescript','@barlus/bui',/*'@vendor/client'*/]
+            ignore: [ 'typescript', '@barlus/bui', /*'@vendor/client'*/ ]
         }))
     }
 }

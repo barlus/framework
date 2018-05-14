@@ -1,12 +1,19 @@
+import './mixins';
 import { cssRule } from '@barlus/styles';
 
+
+export * from './buttons/Button';
+export * from './buttons/ButtonGroup';
+export * from './layout/Column';
+export * from './layout/Columns';
+export * from './layout/Container';
+
+// Themes
 import './core/normalize';
 import './core/base';
 import './core/typography';
 import './core/table';
-import './core/buttons';
-
-
+import './buttons/theme';
 
 //
 cssRule('.form-group:not(:last-child)', {
@@ -802,7 +809,7 @@ cssRule('.badge:not([data-badge])::after,.badge[data-badge=""]::after', {
     "padding": 0,
     "width": "6px"
 });
-cssRule('.badge.btn::after', {
+cssRule('.badge.Button::after', {
     "position": "absolute",
     "right": 0,
     "top": 0,
@@ -990,7 +997,7 @@ cssRule('.dropdown.dropdown-right .menu', {
 cssRule('.dropdown .dropdown-toggle:focus+.menu,.dropdown .menu:hover,.dropdown.active .menu', {
     "display": "block"
 });
-cssRule('.dropdown .btn-group .dropdown-toggle:nth-last-child(2)', {
+cssRule('.dropdown .ButtonGroup .dropdown-toggle:nth-last-child(2)', {
     "borderBottomRightRadius": ".1rem",
     "borderTopRightRadius": ".1rem"
 });

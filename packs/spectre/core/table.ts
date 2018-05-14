@@ -1,32 +1,50 @@
-import { stylesheet } from '@barlus/styles';
-export const cssRule = stylesheet('table.css');
+import { stylesheet, rem, css, percent } from '@barlus/styles';
+import { config } from '../config';
+export const rule = stylesheet('table.css');
 
-//Table
-cssRule('.table', {
-    "borderCollapse": "collapse",
-    "borderSpacing": 0,
-    "textAlign": "left",
-    "width": "100%"
-});
-cssRule('.table.table-striped tbody tr:nth-of-type(odd)', {
-    "background": "#f8f9fa"
-});
-cssRule('.table tbody tr.active,.table.table-striped tbody tr.active', {
-    "background": "#f0f1f4"
-});
-cssRule('.table.table-hover tbody tr:hover', {
-    "background": "#f0f1f4"
-});
-cssRule('.table.table-scroll', {
-    "display": "block",
-    "overflowX": "auto",
-    "paddingBottom": ".75rem",
-    "whiteSpace": "nowrap"
-});
-cssRule('.table td,.table th', {
-    "borderBottom": ".05rem solid #e7e9ed",
-    "padding": ".6rem .4rem"
-});
-cssRule('.table th', {
-    "borderBottomWidth": ".1rem"
+// Tables
+rule(`.table`, {
+    borderCollapse: css.value.collapse,
+    borderSpacing: rem(0),
+    width: percent(100),
+    textAlign: css.value.left,
+    ...css.nest(`&.table-striped`, {
+        ...css.nest(`tbody`, {
+            ...css.nest(`tr:nth-of-type(odd)`, {
+                background: config.bgColor.rgba,
+            }),
+        }),
+    }),
+    ...css.nest(`&,&.table-striped`, {
+        ...css.nest(`tbody`, {
+            ...css.nest(`tr`, {
+                ...css.nest(`&.active`, {
+                    background: config.bgColorDark.rgba,
+                }),
+            }),
+        }),
+    }),
+    ...css.nest(`&.table-hover`, {
+        ...css.nest(`tbody`, {
+            ...css.nest(`tr`, {
+                ...css.nest(`&:hover`, {
+                    background: config.bgColorDark.rgba,
+                }),
+            }),
+        }),
+    }),
+    // Tables with horizontal scrollbar
+    ...css.nest(`&.table-scroll`, {
+        display: css.value.block,
+        overflowX: css.value.auto,
+        paddingBottom: rem(.75),
+        whiteSpace: css.value.nowrap,
+    }),
+    ...css.nest(`td,th`, {
+        borderBottom: css.values(rem(config.borderWidth), css.value.solid, config.borderColor.rgba),
+        padding: css.values(rem(config.unit3), rem(config.unit2)),
+    }),
+    ...css.nest(`th`, {
+        borderBottomWidth: rem(config.borderWidthLg),
+    }),
 });

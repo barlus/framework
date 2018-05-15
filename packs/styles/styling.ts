@@ -1,5 +1,4 @@
-
-import {CSSProperties, FontFace, KeyFrames, MediaQuery, NestedCSSProperties} from './css';
+import { CSSProperties, FontFace, KeyFrames, MediaQuery, NestedCSSProperties } from './css';
 
 /**
  * Valid CSS property values.
@@ -15,24 +14,24 @@ export type StylesTarget = { textContent: string | null };
  * Input styles object.
  */
 export interface Styles {
-    [selector: string]: null | undefined | PropertyValue | PropertyValue[] | Styles
+    [ selector: string ]: null | undefined | PropertyValue | PropertyValue[] | Styles
 }
 /**
  * Propagate change events.
  */
 export interface Changes {
-    add (style: Container<any>, index: number): void
-    change (style: Container<any>, oldIndex: number, newIndex: number): void
-    remove (style: Container<any>, index: number): void
+    add(style: Container<any>, index: number): void
+    change(style: Container<any>, oldIndex: number, newIndex: number): void
+    remove(style: Container<any>, index: number): void
 }
 /**
  * Cacheable interface.
  */
 export interface Container<T> {
     id: string
-    clone (): T
-    getIdentifier (): string
-    getStyles (): string
+    clone(): T
+    getIdentifier(): string
+    getStyles(): string
 }
 // ------
 declare const process;
@@ -87,11 +86,19 @@ const CSS_NUMBER = createNumberProperties([
     'stroke-opacity',
     'stroke-width'
 ]);
+
+export interface TypeStyleOptions {
+    autoGenerateTag?: boolean,
+    sourceName?: string
+}
+
 /**
  * Maintains a single stylesheet and keeps it in sync with requested styles
  */
+
 export class TypeStyle {
     private _autoGenerateTag: boolean;
+    private _sourceName: string;
     private _freeStyle: FreeStyle;
     private _pending: number;
     private _pendingRawChange: boolean;
@@ -101,9 +108,12 @@ export class TypeStyle {
      * We have a single stylesheet that we update as components register themselves
      */
     private _lastFreeStyleChangeId: number;
-    constructor({autoGenerateTag} : { autoGenerateTag: boolean } = { autoGenerateTag: true }) {
-        const freeStyle = FreeStyle.create({debug:true});
+    constructor({ autoGenerateTag, sourceName }: TypeStyleOptions = {
+        autoGenerateTag: true
+    }) {
+        const freeStyle = FreeStyle.create({ debug: true });
         this._autoGenerateTag = autoGenerateTag;
+        this._sourceName = sourceName;
         this._freeStyle = freeStyle;
         this._lastFreeStyleChangeId = freeStyle.changeId;
         this._pending = 0;
@@ -129,10 +139,13 @@ export class TypeStyle {
             return this._tag;
         }
         if (this._autoGenerateTag) {
-            const tag:any = typeof window === 'undefined'
-                ? {textContent: ''}
+            const tag: any = typeof window === 'undefined'
+                ? { textContent: '' }
                 : document.createElement('style');
             if (typeof document !== 'undefined') {
+                if (this._sourceName) {
+                    tag.setAttribute('id', this._sourceName);
+                }
                 document.head.appendChild(tag);
             }
             this._tag = tag;
@@ -169,6 +182,7 @@ export class TypeStyle {
      * Takes CSSProperties and registers it to a global selector (body, html, etc.)
      */
     public cssRule = (selector: string, ...objects: NestedCSSProperties[]): void => {
+        objects.forEach(o => o.$unique = true);
         const object = ensureStringObj(extend(...objects)).result;
         this._freeStyle.registerRule(selector, object);
         this._styleUpdated();
@@ -180,11 +194,16 @@ export class TypeStyle {
      * After that it is kept sync using `requestAnimationFrame` and we haven't noticed any bad flashes.
      **/
     public forceRenderStyles = (): void => {
+        console.info(this._sourceName);
         const target = this._getTag();
         if (!target) {
             return;
         }
-        target.textContent = this.getStyles()+'\n/*# sourceURL=styles.css*/';
+        let source = this.getStyles();
+        if (this._sourceName) {
+            source = `${source}\n/*# sourceURL=${this._sourceName}*/`
+        }
+        target.textContent = source;
     };
     /**
      * Utility function to register an @font-face
@@ -207,7 +226,7 @@ export class TypeStyle {
      * Takes keyframes and returns a generated animationName
      */
     public keyframes = (frames: KeyFrames): string => {
-        const {keyframes, $debugName} = explodeKeyframes(frames);
+        const { keyframes, $debugName } = explodeKeyframes(frames);
         // TODO: replace $debugName with display name
         const animationName = this._freeStyle.registerKeyframes(keyframes as Styles, $debugName);
         this._styleUpdated();
@@ -218,7 +237,7 @@ export class TypeStyle {
      */
     public reinit = (): void => {
         /** reinit freestyle */
-        const freeStyle = FreeStyle.create({debug:true});
+        const freeStyle = FreeStyle.create({ debug: true });
         this._freeStyle = freeStyle;
         this._lastFreeStyleChangeId = freeStyle.changeId;
         /** reinit raw */
@@ -245,7 +264,7 @@ export class TypeStyle {
      */
     public style = (...objects: (NestedCSSProperties | undefined | null | false)[]): string => {
         const freeStyle = this._freeStyle;
-        const {result, debugName} = ensureStringObj(extend(...objects));
+        const { result, debugName } = ensureStringObj(extend(...objects));
         const className = debugName ? freeStyle.registerStyle(result, debugName) : freeStyle.registerStyle(result);
         this._styleUpdated();
         return className;
@@ -258,16 +277,16 @@ class Cache<T extends Container<any>> {
     sheet: string[] = [];
     changeId = 0;
     private _keys: string[] = [];
-    private _children: { [id: string]: T } = Object.create(null);
-    private _counters: { [id: string]: number } = Object.create(null);
+    private _children: { [ id: string ]: T } = Object.create(null);
+    private _counters: { [ id: string ]: number } = Object.create(null);
     constructor(public hash = stringHash, public changes: Changes = noopChanges) {
     }
     add<U extends T>(style: U): U {
-        const count = this._counters[style.id] || 0;
-        const item = this._children[style.id] || style.clone();
-        this._counters[style.id] = count + 1;
+        const count = this._counters[ style.id ] || 0;
+        const item = this._children[ style.id ] || style.clone();
+        this._counters[ style.id ] = count + 1;
         if (count === 0) {
-            this._children[item.id] = item;
+            this._children[ item.id ] = item;
             this._keys.push(item.id);
             this.sheet.push(item.getStyles());
             this.changeId++;
@@ -305,14 +324,14 @@ class Cache<T extends Container<any>> {
         return item as U
     }
     remove(style: T): void {
-        const count = this._counters[style.id];
+        const count = this._counters[ style.id ];
         if (count > 0) {
-            this._counters[style.id] = count - 1;
-            const item = this._children[style.id];
+            this._counters[ style.id ] = count - 1;
+            const item = this._children[ style.id ];
             const index = this._keys.indexOf(item.id);
             if (count === 1) {
-                delete this._counters[style.id];
-                delete this._children[style.id];
+                delete this._counters[ style.id ];
+                delete this._children[ style.id ];
                 this._keys.splice(index, 1);
                 this.sheet.splice(index, 1);
                 this.changeId++;
@@ -329,11 +348,11 @@ class Cache<T extends Container<any>> {
         }
     }
     merge(cache: Cache<any>) {
-        for (const id of cache._keys) this.add(cache._children[id])
+        for (const id of cache._keys) this.add(cache._children[ id ])
         return this
     }
     unmerge(cache: Cache<any>) {
-        for (const id of cache._keys) this.remove(cache._children[id])
+        for (const id of cache._keys) this.remove(cache._children[ id ])
         return this
     }
     clone() {
@@ -344,12 +363,15 @@ class Cache<T extends Container<any>> {
  * Selector is a dumb class made to represent nested CSS selectors.
  */
 class Selector implements Container<Selector> {
-    constructor(
-        public selector: string,
-        public hash: HashFunction,
-        public id = `s${hash(selector)}`,
-        public pid = ''
-    ) {
+    public selector: string;
+    public hash: HashFunction;
+    public id: string;
+    public pid: string;
+    constructor(selector, hash: HashFunction, id = `s${hash(selector)}`, pid = '') {
+        this.selector = selector;
+        this.hash = hash;
+        this.id = id;
+        this.pid = pid;
     }
     getStyles() {
         return this.selector
@@ -365,14 +387,20 @@ class Selector implements Container<Selector> {
  * The style container registers a style string with selectors.
  */
 class Style extends Cache<Selector> implements Container<Style> {
-    constructor(public style: string, public hash: HashFunction, public id = `c${hash(style)}`) {
-        super(hash)
+    public style: string;
+    public hash: HashFunction;
+    public id: string;
+    constructor(style: string, hash: HashFunction, id = `c${hash(style)}`) {
+        super(hash);
+        this.style = style;
+        this.hash = hash;
+        this.id = id;
     }
     getStyles(): string {
-        return `${this.sheet.join(',')}{${this.style}}`
+        return `${this.sheet.join(',')} {${this.style}}`
     }
     getIdentifier() {
-        return this.style
+        return this.style;
     }
     clone(): Style {
         return new Style(this.style, this.hash, this.id).merge(this)
@@ -382,17 +410,20 @@ class Style extends Cache<Selector> implements Container<Style> {
  * Implement rule logic for style output.
  */
 class Rule extends Cache<Rule | Style> implements Container<Rule> {
-    constructor(
-        public rule: string,
-        public style = '',
-        public hash: HashFunction,
-        public id = `a${hash(`${rule}.${style}`)}`,
-        public pid = ''
-    ) {
-        super(hash)
+    public rule: string;
+    public style: string;
+    public hash: HashFunction;
+    public id: string;
+    public pid: string;
+    constructor(rule: string, style = '', hash: HashFunction, id = `a${hash(`${rule}.${style}`)}`, pid = '') {
+        super(hash);
+        this.rule = rule;
+        this.hash = hash;
+        this.id = id;
+        this.pid = pid;
     }
     getStyles(): string {
-        return `${this.rule}{${this.style}${join(this.sheet)}}`
+        return `${this.rule} {${this.style}${join(this.sheet)}}`
     }
     getIdentifier() {
         return `${this.pid}.${this.rule}.${this.style}`
@@ -410,7 +441,7 @@ class FreeStyle extends Cache<Rule | Style> implements Container<FreeStyle> {
     }
     constructor(
         public hash = stringHash,
-        public debug = typeof process !== 'undefined' && process.env['NODE_ENV'] !== 'production',
+        public debug = typeof process !== 'undefined' && process.env[ 'NODE_ENV' ] !== 'production',
         public id = `f${(++uniqueId).toString(36)}`,
         changes?: Changes
     ) {
@@ -418,7 +449,7 @@ class FreeStyle extends Cache<Rule | Style> implements Container<FreeStyle> {
     }
     registerStyle(styles: Styles, displayName?: string) {
         const debugName = this.debug ? displayName : undefined;
-        const {cache, id} = composeStyles(this, '&', styles, true, debugName);
+        const { cache, id } = composeStyles(this, '&', styles, true, debugName);
         this.merge(cache);
         return id
     }
@@ -427,7 +458,7 @@ class FreeStyle extends Cache<Rule | Style> implements Container<FreeStyle> {
     }
     registerHashRule(prefix: string, styles: Styles, displayName?: string) {
         const debugName = this.debug ? displayName : undefined;
-        const {cache, pid, id} = composeStyles(this, '', styles, false, debugName);
+        const { cache, pid, id } = composeStyles(this, '', styles, false, debugName);
         const rule = new Rule(`${prefix} ${escape(id)}`, undefined, this.hash, undefined, pid);
         this.add(rule.merge(cache));
         return id
@@ -462,24 +493,24 @@ function ensureStringObj(object: NestedCSSProperties): { result: any, debugName:
     for (const key in object) {
 
         /** Grab the value upfront */
-        const val: any = (object as any)[key];
+        const val: any = (object as any)[ key ];
 
         /** TypeStyle configuration options */
         if (key === '$unique') {
-            result[IS_UNIQUE] = val;
+            result[ IS_UNIQUE ] = val;
         }
         else if (key === '$nest') {
             const nested = val!;
             for (let selector in nested) {
-                const subproperties = nested[selector]!;
-                result[selector] = ensureStringObj(subproperties).result;
+                const subproperties = nested[ selector ]!;
+                result[ selector ] = ensureStringObj(subproperties).result;
             }
         }
         else if (key === '$debugName') {
             debugName = val;
         }
         else {
-            result[key] = val
+            result[ key ] = val
         }
     }
 
@@ -489,11 +520,11 @@ function ensureStringObj(object: NestedCSSProperties): { result: any, debugName:
 function explodeKeyframes(frames: KeyFrames): { $debugName?: string, keyframes: KeyFrames } {
     const result = { $debugName: undefined, keyframes: {} as KeyFrames };
     for (const offset in frames) {
-        const val: any = (frames as any)[offset];
+        const val: any = (frames as any)[ offset ];
         if (offset === '$debugName') {
             result.$debugName = val;
         } else {
-            result.keyframes[offset] = val;
+            result.keyframes[ offset ] = val;
         }
     }
     return result;
@@ -535,7 +566,7 @@ function media(mediaQuery: MediaQuery, ...objects: NestedCSSProperties[]): Neste
     const stringMediaQuery = `@media ${mediaQuerySections.join(' and ')}`;
     const object: NestedCSSProperties = {
         $nest: {
-            [stringMediaQuery]: extend(...objects)
+            [ stringMediaQuery ]: extend(...objects)
         }
     };
     return object;
@@ -553,20 +584,20 @@ export function extend(...objects: (NestedCSSProperties | undefined | null | fal
         }
         for (const key in object) {
             /** Falsy values except a explicit 0 is ignored */
-            const val: any = (object as any)[key];
+            const val: any = (object as any)[ key ];
             if (!val && val !== 0) {
                 continue;
             }
             /** if nested media or pseudo selector */
             if (key === '$nest' && val) {
-                result[key] = result['$nest'] ? extend(result['$nest'], val) : val;
+                result[ key ] = result[ '$nest' ] ? extend(result[ '$nest' ], val) : val;
             }
             /** if freestyle sub key that needs merging. We come here due to our recursive calls */
             else if ((key.indexOf('&') !== -1 || key.indexOf('@media') === 0)) {
-                result[key] = result[key] ? extend(result[key], val) : val;
+                result[ key ] = result[ key ] ? extend(result[ key ], val) : val;
             }
             else {
-                result[key] = val;
+                result[ key ] = val;
             }
         }
     }
@@ -576,17 +607,17 @@ function mediaLength(value: number | string) {
     return typeof value === 'string' ? value : `${value}px`
 }
 /** Raf for node + browser */
-function onRender(cb){
-    if(typeof requestAnimationFrame !== 'undefined'){
+function onRender(cb) {
+    if (typeof requestAnimationFrame !== 'undefined') {
         requestAnimationFrame(cb);
-    }else{
+    } else {
         setTimeout(cb)
     }
 }
 /**
  * Escape a CSS class name.
  */
-function escape (str: string){
+function escape(str: string) {
     return str.replace(escapePattern, '\\$&');
 }
 /**
@@ -594,7 +625,7 @@ function escape (str: string){
  */
 function hyphenate(propertyName: string): string {
     return propertyName
-        .replace(upperCasePattern,  (m: string) => `-${m.toLowerCase()}`)
+        .replace(upperCasePattern, (m: string) => `-${m.toLowerCase()}`)
         .replace(msPattern, '-ms-') // Internet Explorer vendor prefix.
 }
 /**
@@ -610,34 +641,34 @@ function stringHash(str: string): string {
  * Transform a style string to a CSS string.
  */
 function styleToString(key: string, value: PropertyValue) {
-    if (typeof value === 'number' && value !== 0 && !CSS_NUMBER[key]) {
-        return `\n  ${key}:${value}px;`
+    if (typeof value === 'number' && value !== 0 && !CSS_NUMBER[ key ]) {
+        return `${key}:${value}px`
     }
-    return `\n  ${key}:${value};`
+    return `${key}:${value}`
 }
 /**
  * Sort an array of tuples by first value.
  */
 function sortTuples<T extends any[]>(value: T[]): T[] {
-    return value.sort((a, b) => a[0] > b[0] ? 1 : -1)
+    return value.sort((a, b) => a[ 0 ] > b[ 0 ] ? 1 : -1)
 }
 /**
  * Categorize user styles.
  */
 function parseStyles(styles: Styles, hasNestedStyles: boolean) {
-    const properties: Array<[string, PropertyValue | PropertyValue[]]> = [];
-    const nestedStyles: Array<[string, Styles]> = [];
+    const properties: Array<[ string, PropertyValue | PropertyValue[] ]> = [];
+    const nestedStyles: Array<[ string, Styles ]> = [];
     let isUnique = false;
     // Sort keys before adding to styles.
     for (const key of Object.keys(styles)) {
-        const value = styles[key];
+        const value = styles[ key ];
         if (value !== null && value !== undefined) {
             if (key === IS_UNIQUE) {
                 isUnique = true
             } else if (typeof value === 'object' && !Array.isArray(value)) {
-                nestedStyles.push([key.trim(), value])
+                nestedStyles.push([ key.trim(), value ])
             } else {
-                properties.push([hyphenate(key.trim()), value])
+                properties.push([ hyphenate(key.trim()), value ])
             }
         }
     }
@@ -650,13 +681,13 @@ function parseStyles(styles: Styles, hasNestedStyles: boolean) {
 /**
  * Stringify an array of property tuples.
  */
-function stringifyProperties(properties: Array<[string, PropertyValue | PropertyValue[]]>) {
-    return properties.map(([name, value]) => {
+function stringifyProperties(properties: Array<[ string, PropertyValue | PropertyValue[] ]>) {
+    return properties.map(([ name, value ]) => {
         if (!Array.isArray(value)) {
             return styleToString(name, value);
         }
-        return value.map(x => styleToString(name, x)).join(';')
-    }).join(';')
+        return value.map(x => styleToString(name, x)).map(a=>`\n  ${a}`).join(';')
+    }).map(a=>`\n  ${a}`).join(';')+';\n'
 }
 /**
  * Interpolate CSS selectors.
@@ -670,26 +701,26 @@ function interpolate(selector: string, parent: string) {
 /**
  * Recursive loop building styles with deferred selectors.
  */
-function stylize(cache: Cache<any>, selector: string, styles: Styles, list: [string, Style][], parent?: string) {
-    const {styleString, nestedStyles, isUnique} = parseStyles(styles, !!selector);
+function stylize(cache: Cache<any>, selector: string, styles: Styles, list: [ string, Style ][], parent?: string) {
+    const { styleString, nestedStyles, isUnique } = parseStyles(styles, !!selector);
     let pid = styleString;
     if (selector.charCodeAt(0) === 64 /* @ */) {
         const rule = cache.add(new Rule(selector, parent ? undefined : styleString, cache.hash));
         // Nested styles support (e.g. `.foo > @media > .bar`).
         if (styleString && parent) {
             const style = rule.add(new Style(styleString, rule.hash, isUnique ? `u${(++uniqueId).toString(36)}` : undefined));
-            list.push([parent, style])
+            list.push([ parent, style ])
         }
-        for (const [name, value] of nestedStyles) {
+        for (const [ name, value ] of nestedStyles) {
             pid += name + stylize(rule, name, value, list, parent)
         }
     } else {
         const key = parent ? interpolate(selector, parent) : selector;
         if (styleString) {
             const style = cache.add(new Style(styleString, cache.hash, isUnique ? `u${(++uniqueId).toString(36)}` : undefined));
-            list.push([key, style])
+            list.push([ key, style ])
         }
-        for (const [name, value] of nestedStyles) {
+        for (const [ name, value ] of nestedStyles) {
             pid += name + stylize(cache, name, value, list, key)
         }
     }
@@ -700,47 +731,61 @@ function stylize(cache: Cache<any>, selector: string, styles: Styles, list: [str
  */
 function composeStyles(container: FreeStyle, selector: string, styles: Styles, isStyle: boolean, displayName?: string) {
     const cache = new Cache<Rule | Style>(container.hash);
-    const list: [string, Style][] = [];
+    const list: [ string, Style ][] = [];
     const pid = stylize(cache, selector, styles, list);
     const hash = `f${cache.hash(pid)}`;
     const id = displayName ? `${displayName}_${hash}` : hash;
-    for (const [selector, style] of list) {
+    for (const [ selector, style ] of list) {
         const key = isStyle ? interpolate(selector, `.${escape(id)}`) : selector;
         style.add(new Selector(key, style.hash, undefined, pid))
     }
-    return {cache, pid, id}
+    return { cache, pid, id }
 }
 /**
  * Cache to list to styles.
  */
 function join(arr: string[]): string {
     let res = '';
-    for (let i = 0; i < arr.length; i++) res += arr[i]
-    return res
+    for (let i = 0; i < arr.length; i++) {
+        res += arr[ i ]
+    }
+    return res;
 }
 /**
  * generate map of css number properties
  */
-function createNumberProperties(cssNumberProperties:string[]){
+function createNumberProperties(cssNumberProperties: string[]) {
     const CSS_NUMBER = Object.create(null);
     // Add vendor prefixes to all unit-less properties.
-    for (const prefix of ['-webkit-', '-ms-', '-moz-', '-o-', '']) {
+    for (const prefix of [ '-webkit-', '-ms-', '-moz-', '-o-', '' ]) {
         for (const property of cssNumberProperties) {
-            CSS_NUMBER[prefix + property] = true;
+            CSS_NUMBER[ prefix + property ] = true;
         }
     }
     return CSS_NUMBER;
 }
 
-export const master = new TypeStyle({autoGenerateTag:true});
+export const master = new TypeStyle({ autoGenerateTag: true, sourceName: 'master.css' });
 export const cssRaw = master.cssRaw;
 export const cssRule = master.cssRule;
 export const style = master.style;
 export const fontFace = master.fontFace;
 
-export function theme<T extends {defaultTheme,name}, K extends keyof T['defaultTheme']>(type: T): {[P in K]: string} {
+export function theme<T extends { defaultTheme, name }, K extends keyof T['defaultTheme']>(type: T): {[P in K]: string} {
     return Object.keys(type.defaultTheme).reduce((o, k) => (o[ k ] = style(extend(
-        {$debugName:type.name+'_'+k},
+        { $debugName: type.name + '_' + k },
         type.defaultTheme[ k ]
     )), o), {}) as {[P in K]: string};
 }
+
+export function stylesheet(sourceName: string) {
+    const normalize = new TypeStyle({
+        autoGenerateTag: true,
+        sourceName: sourceName
+    });
+    const rule = normalize.cssRule.bind(normalize);
+    return Object.assign(rule, { stylesheet }) as TypeStyle['cssRule'] & {
+        stylesheet: TypeStyle
+    }
+}
+

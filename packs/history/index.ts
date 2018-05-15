@@ -1,6 +1,5 @@
-export {default as createBrowserHistory}  from "./createBrowserHistory";
-export {default as createHashHistory} from "./createHashHistory";
-export {default as createMemoryHistory} from "./createMemoryHistory";
-export { createLocation, locationsAreEqual } from "./LocationUtils";
-export { parsePath, createPath } from "./PathUtils";
-export * from './types';
+export {HashHistory} from "./HashHistory";
+export {BrowserHistory} from "./BrowserHistory";
+export {MemoryHistory} from "./MemoryHistory";
+export * from './Location';
+export * from './History';

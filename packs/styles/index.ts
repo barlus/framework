@@ -5,8 +5,9 @@ export * from "./csx/index";
 export * from "./tips/index";
 export * from './styling';
 
-export namespace css {
+export interface Settings {}
 
+export namespace css {
     export function when(cond: boolean, value: object, other = {}): object {
         if (cond) {
             return value
@@ -56,5 +57,5 @@ export namespace css {
         borderBox: 'border-box' = 'border-box';
     }
     export const value = new Value();
-    export const theme = {}
+    export const theme:Settings = {} as Settings
 }

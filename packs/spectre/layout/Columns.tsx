@@ -1,12 +1,12 @@
 import * as React from "@barlus/nerv";
 import { Theme } from './theme';
-import { classes as classnames } from '../utils/classes';
+import { classes } from '../utils/classes';
 
 
-export class Columns extends React.PureComponent<RowProps, {}> {
+export class Columns extends React.PureComponent<ColumnsProps, {}> {
     render(){
         const { children, className, gapless, oneline, ...otherProps } = this.props;
-        const classNames = classnames(
+        const classNames = classes(
             Theme.Columns,
             {
                 [Theme.gapless]: gapless,
@@ -14,7 +14,6 @@ export class Columns extends React.PureComponent<RowProps, {}> {
             },
             className
         );
-
         return (
             <div className={classNames} {...otherProps}>
                 {children}
@@ -23,7 +22,7 @@ export class Columns extends React.PureComponent<RowProps, {}> {
     }
 }
 
-interface RowProps {
+interface ColumnsProps {
     children?: any,
     className?: string,
     gapless?: boolean,

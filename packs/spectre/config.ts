@@ -1,5 +1,9 @@
 import { rem, color } from '@barlus/styles';
 
+declare module '@barlus/styles' {
+    interface Settings extends Config {}
+}
+
 export class Config {
     // Core variables
     version = "0.5.1";

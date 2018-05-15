@@ -25,6 +25,7 @@ export const enum Theme {
     focus = 'focus',
     hover = 'hover',
 }
+
 // Buttons
 stylesheet('theme/buttons.css')('*',{
     ...css.nest(`&.${Theme.Button}`,{
@@ -40,7 +41,7 @@ stylesheet('theme/buttons.css')('*',{
         fontSize /*       */: rem(config.fontSize),
         height /*         */: rem(config.controlSize),
         lineHeight /*     */: rem(config.lineHeight),
-        outline /*        */: css.value.none,
+        outline /*        */: css.theme.borderWidth,
         padding /*        */: css.values([
             rem(config.controlPaddingY),
             rem(config.controlPaddingX)

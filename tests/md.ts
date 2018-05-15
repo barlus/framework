@@ -1,5 +1,6 @@
-import parse from '@vendor/client/comps/md';
-import {suite, test, expect} from '@barlus/tester';
+
+import { suite, test } from '@barlus/tester/decorators';
+
 
 const EXAMPLE = `## Snarkdown
 
@@ -51,17 +52,12 @@ function codeBlocks() {
 1. Ordered
 2. Lists
 4. Numbers are ignored`;
-console.info(parse(EXAMPLE));
-//
-// @suite
-// class BasicTest {
-//     @test
-//     testBasicSum() {
-//         try{
-//             console.info(JSON.stringify(parse(EXAMPLE)))
-//         }catch(ex){
-//             console.info(ex);
-//         }
-//
-//     }
-// }
+
+
+@suite
+class BasicTest {
+    @test
+    testBasicSum() {
+
+    }
+}

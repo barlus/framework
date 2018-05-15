@@ -56,8 +56,8 @@ export class DocText extends React.Component<React.PropsOf<typeof DocText>> {
     }
     format(md) {
         console.info(md);
-        return md.replace(/!\[(.*?)\]\((.*?)\)/ig, '<img src=\'$2\' alt=\'$1\'</img>') //images
-            .replace(/\[(.*?)\]\((.*?)\)/ig, '<a href=\'$2\'>$1</a>') // links
+        return md.replace(/!\[(.*?)\]\((.*?)\)/igm, '<img src=\'$2\' alt=\'$1\'</img>') //images
+            .replace(/\[(.*?)\]\((.*?)\)/igm, '<a href=\'$2\'>$1</a>') // links
             .replace(/\*\*(.*?)\*\*/igm, '<strong>$1</strong>') // bold
             .replace(/__(.*?)__/igm, "<strong>$1</strong>") //bold
             .replace(/\*(.*?)\*/igm, '<em>$1</em>') // italics

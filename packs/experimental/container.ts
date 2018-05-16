@@ -16,8 +16,8 @@ export class AsyncContainer<T> implements AsyncIterable<T>{
     some(callbackfn: (value: T) => Promise<boolean>, thisArg?: any): Promise<boolean> {
         return AsyncContainer.some(this[Symbol.asyncIterator](), callbackfn, thisArg);
     }
-    forEach(callbackfn: (value: T) => Promise<void | false>, thisArg?: any, brakeOnFalse: boolean = true): Promise<void> {
-        return AsyncContainer.forEach(this[Symbol.asyncIterator](), callbackfn, thisArg, brakeOnFalse);
+    forEach<R>(callbackfn: (value: T) => Promise<void> | Promise<R>, thisArg?: any, brakeOnReturn?: R): Promise<void> {
+        return AsyncContainer.forEach<T, R>(this[Symbol.asyncIterator](), callbackfn, thisArg, brakeOnReturn);
     }
     reduce<U>(callbackfn: (previousValue: U, currentValue: T) => Promise<U>, initialValue: U, thisArg?: any): Promise<U> {
         return AsyncContainer.reduce(this[Symbol.asyncIterator](), callbackfn, initialValue, thisArg);
@@ -54,7 +54,7 @@ export class AsyncContainer<T> implements AsyncIterable<T>{
                     return false;
                 }
             }
-        })
+        }, null, false)
         return result;
     }
     static async some<T>(iterator: AsyncIterator<T> | Iterator<T>, callbackfn: (value: T) => Promise<boolean>, thisArg?: any): Promise<boolean> {
@@ -71,18 +71,18 @@ export class AsyncContainer<T> implements AsyncIterable<T>{
                     return false;
                 }
             }
-        })
+        }, null, false)
         return result;
     }
-    static async forEach<T>(iterator: AsyncIterator<T> | Iterator<T>, callbackfn: (value: T) => Promise<void | false>, thisArg?: any, brakeOnFalse: boolean = true): Promise<void> {
+    static async forEach<T, R>(iterator: AsyncIterator<T> | Iterator<T>, callbackfn: (value: T) => Promise<void> | Promise<R>, thisArg?: any, brakeOnReturn?: R): Promise<void> {
         let result = await iterator.next();
         while (!result.done) {
             if (thisArg) {
-                if (false === await callbackfn.call(thisArg, result.value) && brakeOnFalse) {
+                if (brakeOnReturn === await callbackfn.call(thisArg, result.value) && brakeOnReturn !== undefined) {
                     break;
                 }
             } else {
-                if (false === await callbackfn(result.value) && brakeOnFalse) {
+                if (brakeOnReturn === await callbackfn(result.value) && brakeOnReturn !== undefined) {
                     break;
                 }
             }

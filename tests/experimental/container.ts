@@ -77,6 +77,24 @@ class AsyncContainerTest {
         })
         expect(result.length).toBe(9);
         expect(result).toEqual([9, 8, 7, 6, 5, 4, 3, 2, 1])
+
+        let count = 0;
+        await AsyncContainer.from(this.generator()).forEach(async v=>{
+            count++;
+            if(v < 5){
+                return false;
+            }
+        }, null, false);
+        expect(count).toBe(6);
+
+        count = 0;
+        await AsyncContainer.from(this.generator()).forEach(async v=>{
+            count++;
+            if(v < 5){
+                return false;
+            }
+        });
+        expect(count).toBe(9);
     }
     @test
     public async testSyncArray() {

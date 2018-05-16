@@ -73,7 +73,7 @@ export type VirtualNode =
   | VVoid
   | Portal
 
-export type VirtualChildren = Array<string | number | VirtualNode> | VirtualNode
+export type VirtualChildren = Array<string | number | VirtualNode> | VirtualNode | string | number
 
 export type Ref = (node?: Element | null) => void | null | string
 

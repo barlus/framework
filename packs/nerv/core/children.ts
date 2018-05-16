@@ -3,7 +3,7 @@ import { isNullOrUndef, VirtualChildren, EMPTY_CHILDREN, isInvalid } from '../sh
 
 export type IterateFn = (value: VirtualChildren | any, index: number, array: Array<VirtualChildren | any>) => any
 export const Children = {
-    map(children: VirtualChildren | any[], fn: IterateFn, ctx: any): any[] {
+    map(children: VirtualChildren | any[], fn: IterateFn, ctx?: any): any[] {
         if (isNullOrUndef(children)) {
             return children
         }

@@ -4,6 +4,7 @@
 import { cssRaw } from '../styling';
 
 export function normalize() {
+    console.info("NORMALIZE");
     return cssRaw(`
         button, hr, input {
             overflow: visible

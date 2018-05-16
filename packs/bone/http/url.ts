@@ -8,6 +8,11 @@ export class HttpQuery extends URLSearchParams {
         });
         return q;
     }
+    patch(object:{}){
+        for(let key in object){
+            this.set(key,'')
+        }
+    }
 }
 
 export class HttpUrl extends URL {
@@ -25,4 +30,5 @@ export class HttpUrl extends URL {
     get query(){
         return this.searchParams.query;
     }
+
 }

@@ -4,6 +4,37 @@ import { cssRule } from '@barlus/styles';
 
 export * from './buttons/Button';
 export * from './buttons/ButtonGroup';
+export * from './toasts/Toast';
+export * from './accordions/Accordion';
+export * from './accordions/AccordionBody';
+export * from './accordions/AccordionHeader';
+export * from './tables/Table';
+export * from './tables/TableBody';
+export * from './tables/TableCell';
+export * from './tables/TableHeader';
+export * from './tables/TableHeading';
+export * from './tables/TableRow';
+export * from './forms/Form';
+export * from './forms/FormGroup';
+export * from './forms/Label';
+export * from './forms/Input';
+export * from './forms/InputGroup';
+export * from './forms/InputGroupAddon';
+export * from './forms/InputGroupButton';
+export * from './forms/Hint';
+export * from './forms/TextArea';
+export * from './forms/Select';
+export * from './forms/Radio';
+export * from './forms/CheckBox';
+export * from './forms/Switch';
+export * from './media/Figure';
+export * from './media/FigureCaption';
+export * from './media/Image';
+export * from './media/Video';
+export * from './media/VideoContainer';
+export * from './avatars/Avatar';
+export * from './avatars/AvatarIcon';
+export * from './avatars/AvatarPresence';
 export * from './layout/Column';
 export * from './layout/Columns';
 export * from './layout/Container';
@@ -14,6 +45,12 @@ import './core/base';
 import './core/typography';
 import './core/table';
 import './buttons/theme';
+import './toasts/theme';
+import './accordions/theme';
+import './tables/theme';
+import './forms/theme';
+import './media/theme';
+import './avatars/theme';
 
 //
 cssRule('.form-group:not(:last-child)', {
@@ -763,7 +800,7 @@ cssRule('.avatar .avatar-presence', {
     "width": ".5em"
 });
 cssRule('.avatar .avatar-presence.online', {
-    "background": "#32b643"
+    "background": "#32b643",
 });
 cssRule('.avatar .avatar-presence.busy', {
     "background": "#e85600"

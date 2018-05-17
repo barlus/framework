@@ -11,7 +11,7 @@ export class Button extends React.PureComponent<ButtonProps, {}> {
             // Colors
             success, error, warning,
             // Sizes
-            block, small, large, action, circle,
+            block, small, large, action, circle,clear,
             // States
             active, loading,
             children,
@@ -29,6 +29,7 @@ export class Button extends React.PureComponent<ButtonProps, {}> {
                 [ Theme.large ]: large,
                 [ Theme.action ]: action || circle,
                 [ Theme.circle ]: circle,
+                [ Theme.clear ]: clear,
                 [ Theme.active ]: active,
                 [ Theme.loading ]: loading
             }, className)

@@ -26,6 +26,23 @@ class AsyncContainerTest {
         }).all();
         expect(result.length).toBe(9);
         expect(result).toEqual(["S9", "S8", "S7", "S6", "S5", "S4", "S3", "S2", "S1"])
+
+        let iterator = this.generator()[Symbol.asyncIterator]();
+        let mapped = AsyncContainer.map(iterator, async v=> -v);
+        let items = [];
+        for await (let i of mapped){
+            items.push(i);
+        }
+        expect(items.length).toBe(9);
+        expect(items).toEqual([-9, -8, -7, -6, -5, -4, -3, -2, -1]) 
+
+        //Try to do for again, like a generators iteratable iterator it should not rewind
+        for await (let i of mapped){
+            items.push(i);
+        }
+        //So the items should not change
+        expect(items.length).toBe(9);
+        expect(items).toEqual([-9, -8, -7, -6, -5, -4, -3, -2, -1]) 
     }
     @test
     public async testFilter() {

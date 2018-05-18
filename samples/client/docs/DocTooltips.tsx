@@ -1,40 +1,51 @@
 import * as React from "@barlus/nerv"
 import { Code } from "../comps/Code";
-import {DocNote, DocPage, DocSample, DocSection} from "../comps/DocPage";
+import {DocExample, DocNote, DocPage, DocSample, DocSection, DocText} from "../comps/DocPage";
+import { Tooltip,Button } from "@barlus/spectre";
 
 
 export class DocTooltips extends DocPage {
     static title = "Tooltips";
     render() {
         return <DocSection id={this.id} title={this.title}>
-            <DocNote>
-                Tooltips provide context information labels that appear on hover and focus.
-            </DocNote>
+            <DocText text={'Tooltips provide context information labels that appear on hover and focus.'}/>
             <DocSample columns={4} className='text-center'>
-                <button className="btn btn-primary tooltip" data-tooltip="Top Tooltip Text">top tooltip
-                </button>
-                <button className="btn btn-primary tooltip tooltip-right"
-                        data-tooltip="Right Tooltip Text">right
-                    tooltip
-                </button>
-                <button className="btn btn-primary tooltip tooltip-bottom"
-                        data-tooltip="Bottom Tooltip Text">bottom
-                    tooltip
-                </button>
-                <button className="btn btn-primary tooltip tooltip-left"
-                        data-tooltip="Left Tooltip Text">left tooltip
-                </button>
+                <Tooltip label="Top tooltip text">
+                    <Button>Top tooltip</Button>
+                </Tooltip>
+                <Tooltip left label="Left tooltip text">
+                    <Button>Left tooltip</Button>
+                </Tooltip>
+                <Tooltip right label="Right tooltip text">
+                    <Button>Right tooltip</Button>
+                </Tooltip>
+                <Tooltip bottom label="Bottom tooltip text">
+                    <Button>Bottom tooltip</Button>
+                </Tooltip>
+
             </DocSample>
-            <DocNote>
-                Tooltips component is built entirely in CSS.<br/><br/>
-                Add the <code>tooltip</code> class and the <code>data-tooltip</code> attribute, which
-                contains the tooltip content, to non self closing elements. And add
-                the <code>tooltip-right</code>, <code>tooltip-bottom</code>
-                or <code>tooltip-left</code> class to define the position of a tooltip. By default, the
+            <DocText text={`
+                Tooltips component is built entirely in CSS.
+                Wrap non self closing elements with the ~Tooltip~ .And add
+                the ~right~, ~bottom~
+                or ~tooltip-left~ attributes to define the position of a tooltip. By default, the
                 tooltip
                 appears above the element.
-            </DocNote>
-            <Code className="HTML">{E1}</Code>
+            `}/>
+            <DocExample content={`
+                <Tooltip label="Top tooltip text">
+                    <Button>Top tooltip</Button>
+                </Tooltip>
+                <Tooltip left label="Left tooltip text">
+                    <Button>Left tooltip</Button>
+                </Tooltip>
+                <Tooltip right label="Right tooltip text">
+                    <Button>Right tooltip</Button>
+                </Tooltip>
+                <Tooltip bottom label="Bottom tooltip text">
+                    <Button>Bottom tooltip</Button>
+                </Tooltip>
+            `}/>
         </DocSection>
     }
 }

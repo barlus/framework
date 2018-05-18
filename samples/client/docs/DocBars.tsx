@@ -1,81 +1,78 @@
 import * as React from "@barlus/nerv"
 import { Code } from "../comps/Code";
-import {DocNote, DocPage, DocSample, DocSection, DocTitle} from "../comps/DocPage";
+import {DocExample, DocNote, DocPage, DocSample, DocSection, DocText, DocTitle} from "../comps/DocPage";
+import {Bar, BarItem, Slider, SliderButton, Tooltip} from "@barlus/spectre";
 
 
 export class DocBars extends DocPage{
     static title = "Bars";
     render() {
         return  <DocSection id={this.id} title={this.title}>
-            <DocNote>
+            <DocText text={`
                 Bars represent the progress of a task or the value within the known range. Bars are custom
-                components
-                for displaying HTML5 <code>progress</code>, <code>meter</code> and <code>input range</code>
+                components for displaying HTML5 ~progress~, ~meter~ and ~input range~
                 elements.
-            </DocNote>
+            `}/>
+
             <DocSample columns={12/8}>
-                <div className="bar bar-sm">
-                    <div className="bar-item tooltip" data-tooltip="25%" role="progressbar"
-                         style={{ width: '25%' }} aria-valuenow={25} aria-valuemin={0} aria-valuemax={100}/>
-                </div>
+               <Bar progress={25} small/>
             </DocSample>
+
             <DocSample columns={12/8}>
-                <div className="bar">
-                    <div className="bar-item tooltip" data-tooltip="50%" role="progressbar"
-                         style={{ width: '50%' }}/>
-                </div>
+                <Bar progress={75} />
             </DocSample>
+
             <DocSample columns={12/8}>
-                <div className="bar">
-                    <div className="bar-item tooltip" data-tooltip="25%" role="progressbar"
-                         style={{ width: '25%' }}>25%
-                    </div>
-                    <div className="bar-item tooltip" data-tooltip="15%" role="progressbar"
-                         style={{ width: '15%', background: '#817fe3' }}>15%
-                    </div>
-                    <div className="bar-item tooltip" data-tooltip="10%" role="progressbar"
-                         style={{ width: '10%', background: '#aaa9eb' }}>10%
-                    </div>
-                    <div className="bar-item tooltip" data-tooltip="15%" role="progressbar"
-                         style={{ width: '15%' }}>15%
-                    </div>
-                </div>
+                <Bar >
+                    <Tooltip label="25%"><BarItem progress={25}>25%</BarItem></Tooltip>
+                    <Tooltip label="15%"><BarItem progress={15} style={{ background: '#817fe3' }}>15%</BarItem></Tooltip>
+                    <Tooltip label="10%"><BarItem progress={10} style={{ background: '#aaa9eb' }}>10%</BarItem></Tooltip>
+                    <Tooltip label="10%"><BarItem progress={15}>15%</BarItem></Tooltip>
+                </Bar>
             </DocSample>
-            <DocNote>
-                Add a container element with the <code>bar</code> class. And add child elements with
-                the <code>bar-item</code>
-                class. The width percentage value is needed for every <code>bar-item</code>.<br/><br/>
-                There is the <code>bar-sm</code> class for thinner Bars. Also, you could use
-                <a href="#tooltips">Tooltips</a> for any <code>bar-item</code>.
-            </DocNote>
-            <Code className="HTML">{E1}</Code>
+            <DocText text={`
+                Use the container ~Bar~ component, and add child ~BarItem~ component.
+                There is the ~small~ attribute for thinner Bars. Also, you could use
+                ~Tooltips~ for any ~BarItem~.
+            `}/>
+            <DocExample content={`
+                <Bar progress={75} />
+                <Bar >
+                    <Tooltip label="25%"><BarItem progress={25}>25%</BarItem></Tooltip>
+                    <Tooltip label="15%"><BarItem progress={15} style={{ background: '#817fe3' }}>15%</BarItem></Tooltip>
+                    <Tooltip label="10%"><BarItem progress={10} style={{ background: '#aaa9eb' }}>10%</BarItem></Tooltip>
+                    <Tooltip label="10%"><BarItem progress={15}>15%</BarItem></Tooltip>
+                </Bar>
+            `}/>
             <DocTitle>Slider bars</DocTitle>
             <DocSample columns={12/8}>
-                <div className="bar bar-slider">
-                    <div className="bar-item" role="progressbar" style={{ width: '50%' }}>
-                        <button className="bar-slider-btn btn tooltip" data-tooltip="50%" role="slider"/>
-                    </div>
-                </div>
+                <Slider progress={95}/>
+                <Slider>
+                    <BarItem progress={29}>
+                        <Tooltip label="29%"><SliderButton/></Tooltip>
+                    </BarItem>
+                    <BarItem progress={65}>
+                        <Tooltip label="65%"><SliderButton/></Tooltip>
+                    </BarItem>
+                </Slider>
             </DocSample>
-            <DocSample columns={12/8}>
-                <div className="bar bar-slider">
-                    <div className="bar-item" role="progressbar" style={{ width: '15%' }}>
-                        <button className="bar-slider-btn btn tooltip" data-tooltip="25%" role="slider"/>
-                    </div>
-                    <div className="bar-item" role="progressbar" style={{ width: '65%' }}>
-                        <button className="bar-slider-btn btn tooltip" data-tooltip="65%" role="slider"/>
-                    </div>
-                </div>
-            </DocSample>
-            <DocNote>
-                You can add the <code>bar-slider</code> class to the Bars container. And add child elements
-                with the
-                <code>bar-item</code> class and <code>bar-slider-btn</code> inside bar-item. You need to set
-                the
-                <code>bar-item</code> width manually to have the slider point.<br/><br/>
-                If there are two <code>bar-item</code> divs in one bar-slider, you will have a range slider.
-            </DocNote>
-            <Code className="HTML">{E2}</Code>
+            <DocText text={`
+                You can use the ~Slider~ . And add child ~BarItem~ components and ~SliderButton~ inside ~BarItem~.
+                If there are two ~BarItem~s in one ~Slider~, you will have a range slider.
+
+            `}/>
+
+            <DocExample content={`
+                <Slider progress={95}/>
+                <Slider>
+                    <BarItem progress={29}>
+                        <Tooltip label="29%"><SliderButton/></Tooltip>
+                    </BarItem>
+                    <BarItem progress={65}>
+                        <Tooltip label="65%"><SliderButton/></Tooltip>
+                    </BarItem>
+                </Slider>
+            `}/>
         </DocSection>
     }
 }

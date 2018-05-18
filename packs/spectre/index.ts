@@ -38,6 +38,24 @@ export * from './avatars/AvatarPresence';
 export * from './layout/Column';
 export * from './layout/Columns';
 export * from './layout/Container';
+export * from './badges/Badge';
+export * from './navbar/Navbar';
+export * from './navbar/NavbarBrand';
+export * from './navbar/NavbarSection';
+export * from './bars/Bar';
+export * from './bars/BarItem';
+export * from './bars/Slider';
+export * from './bars/SliderButton';
+export * from './tooltips/Tooltip';
+export * from './breadcrumbs/Breadcrumb';
+export * from './breadcrumbs/BreadcrumbItem';
+export * from './cards/Card';
+export * from './cards/CardBody';
+export * from './cards/CardFooter';
+export * from './cards/CardHeader';
+export * from './cards/CardImage';
+export * from './cards/CardSubTitle';
+export * from './cards/CardTitle';
 
 // Themes
 import './core/normalize';
@@ -51,6 +69,13 @@ import './tables/theme';
 import './forms/theme';
 import './media/theme';
 import './avatars/theme';
+import './badges/theme';
+import './navbar/theme';
+import './bars/theme';
+import './tooltips/theme';
+import './breadcrumbs/theme';
+import './cards/theme';
+
 
 //
 cssRule('.form-group:not(:last-child)', {

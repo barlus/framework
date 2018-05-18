@@ -1,54 +1,50 @@
 import * as React from "@barlus/nerv"
-import { Code } from "../comps/Code";
-import {DocNote, DocPage, DocSample, DocSection} from "../comps/DocPage";
-
+import {DocExample, DocPage, DocSample, DocSection, DocText} from "../comps/DocPage";
+import {Breadcrumb, BreadcrumbItem, Button, Tooltip} from "@barlus/spectre";
 
 export class DocBreadcrumbs extends DocPage {
     static title = "Breadcrumbs";
     render() {
         return  <DocSection id={this.id} title={this.title}>
-            <DocNote>Breadcrumbs are used as navigational hierarchies to indicate current location.</DocNote>
+            <DocText text='Breadcrumbs are used as navigational hierarchies to indicate current location.'/>
             <DocSample>
-                <ul className="breadcrumb">
-                    <li className="breadcrumb-item">
-                        <a href="#breadcrumbs" className="tooltip" data-tooltip="Home">Home</a>
-                    </li>
-                    <li className="breadcrumb-item">
-                        <a href="#breadcrumbs" className="tooltip" data-tooltip="Settings">Settings</a>
-                    </li>
-                </ul>
-                <ul className="breadcrumb">
-                    <li className="breadcrumb-item">
-                        <a href="#breadcrumbs" className="tooltip" data-tooltip="Home">Home</a>
-                    </li>
-                    <li className="breadcrumb-item">
-                        <a href="#breadcrumbs" className="tooltip" data-tooltip="Settings">Settings</a>
-                    </li>
-                    <li className="breadcrumb-item">
-                        <a href="#breadcrumbs" className="tooltip" data-tooltip="Change avatar">Change
-                            avatar</a>
-                    </li>
-                </ul>
-                <ul className="breadcrumb">
-                    <li className="breadcrumb-item">
-                        <a href="#breadcrumbs" className="tooltip" data-tooltip="Home">Home</a>
-                    </li>
-                    <li className="breadcrumb-item">
-                        <a href="#breadcrumbs" className="tooltip" data-tooltip="Settings">Settings</a>
-                    </li>
-                    <li className="breadcrumb-item">Search result:
-                        <a href="#breadcrumbs" className="tooltip"
-                           data-tooltip="Search result: Spectre">Spectre</a>
-                    </li>
-                </ul>
+                <Breadcrumb>
+                    <BreadcrumbItem>
+                        <Tooltip label='Home'><a href="#breadcrumbs" className="tooltip" data-tooltip="Home">Home</a></Tooltip>
+                    </BreadcrumbItem>
+                    <BreadcrumbItem>
+                        <Tooltip label='Settings'><a href="#breadcrumbs" className="tooltip" data-tooltip="Settings">Settings</a></Tooltip>
+                    </BreadcrumbItem>
+                </Breadcrumb>
+                <Breadcrumb>
+                    <BreadcrumbItem>
+                        <Tooltip label='Home'><a href="#breadcrumbs" >Home</a></Tooltip>
+                    </BreadcrumbItem>
+                    <BreadcrumbItem>
+                        <Tooltip label='Settings'><a href="#breadcrumbs" >Settings</a></Tooltip>
+                    </BreadcrumbItem>
+                    <BreadcrumbItem>
+                        <Tooltip label='Settings'><a href="#breadcrumbs" >Change</a></Tooltip>
+                    </BreadcrumbItem>
+                </Breadcrumb>
             </DocSample>
-            <DocNote>
-                Add a container element with the <code>breadcrumb</code> class.
-                And add child elements with the <code>breadcrumb-item</code> class.</DocNote>
-            <Code className="HTML">{E1}</Code>
+            <DocText text={`
+                Add a ~Breadcrumb~ container component with the.
+                And add ~BreadcrumbItem~ child component
+            `}/>
+            <DocExample content={`
+                <Breadcrumb>
+                    <BreadcrumbItem>
+                        <Tooltip label='Home'><a href="#breadcrumbs" >Home</a></Tooltip>
+                    </BreadcrumbItem>
+                    <BreadcrumbItem>
+                        <Tooltip label='Settings'><a href="#breadcrumbs" >Settings</a></Tooltip>
+                    </BreadcrumbItem>
+                    <BreadcrumbItem>
+                        <Tooltip label='Settings'><a href="#breadcrumbs" >Change</a></Tooltip>
+                    </BreadcrumbItem>
+                </Breadcrumb>
+            `}/>
         </DocSection>
     }
 }
-
-const E1 = ``;
-const E2 = ``;

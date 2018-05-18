@@ -100,8 +100,11 @@ export class AsyncContainer<T> implements AsyncIterable<T>{
         })
         return aggregate;
     }
-    static map<T, U>(iterator: AsyncIterator<T> | Iterator<T>, callbackfn: (value: T) => Promise<U>, thisArg?: any): AsyncIterator<U> {
+    static map<T, U>(iterator: AsyncIterator<T> | Iterator<T>, callbackfn: (value: T) => Promise<U>, thisArg?: any): AsyncIterableIterator<U> {
         return {
+            [Symbol.asyncIterator](): AsyncIterableIterator<U> {
+                return this;
+            },
             async next(value?: any): Promise<IteratorResult<U>> {
                 let result = await iterator.next(value);
                 if (result.done) {
@@ -123,8 +126,11 @@ export class AsyncContainer<T> implements AsyncIterable<T>{
             }
         }
     }
-    static filter<T>(iterator: AsyncIterator<T> | Iterator<T>, callbackfn: (value: T) => Promise<boolean>, thisArg?: any): AsyncIterator<T> {
+    static filter<T>(iterator: AsyncIterator<T> | Iterator<T>, callbackfn: (value: T) => Promise<boolean>, thisArg?: any): AsyncIterableIterator<T> {
         return {
+            [Symbol.asyncIterator](): AsyncIterableIterator<T> {
+                return this;
+            },
             async next(value?: any): Promise<IteratorResult<T>> {
                 let result = await iterator.next(value);
                 while (!result.done) {

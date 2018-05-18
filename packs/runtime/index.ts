@@ -11,4 +11,5 @@ declare global {
     interface Class<T> {
         new(...args:any[]):T;
     }
+    type Mutable<T> = { -readonly [P in keyof T]: T[P] };
 }

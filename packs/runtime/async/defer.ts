@@ -1,8 +1,9 @@
-export class AsyncDefer<T> {
+import "../index"
+export class AsyncDefer<T, E = Error> {
     readonly promise: Promise<T>;
     readonly status: 'accepted' | 'rejected' | 'pending';
     accept?(data: T);
-    reject?(data: T);
+    reject?(reason?: E);
     get pending(): boolean {
         return this.status == 'pending';
     }
@@ -18,13 +19,13 @@ export class AsyncDefer<T> {
             this.accept = (value) => {
                 this.accept = null;
                 this.reject = null;
-                (this as any).status = 'accepted';
+                (this as Mutable<this>).status = 'accepted';
                 accept(value)
             };
             this.reject = (value) => {
                 this.accept = null;
                 this.reject = null;
-                (this as any).status = 'accepted';
+                (this as Mutable<this>).status = 'accepted';
                 reject(value)
             };
         });

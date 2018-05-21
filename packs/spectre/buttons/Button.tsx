@@ -47,6 +47,7 @@ export interface ButtonProps {
     block?: boolean,
     small?: boolean,
     large?: boolean,
+    clear?: boolean,
     action?: boolean,
     circle?: boolean,
     active?: boolean,

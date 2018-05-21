@@ -7,6 +7,7 @@ export class InputGroup extends React.PureComponent<InputGroupProps, {}> {
         const {
             className,
             // Styles.
+            inline,
             success,
             error,
             children,
@@ -15,6 +16,7 @@ export class InputGroup extends React.PureComponent<InputGroupProps, {}> {
         return (<div class={
                 classes(Theme.inputGroup,{
             [ Theme.hasSuccess ]: success,
+            [ Theme.inputInline ]: inline,
             [ Theme.hasError ]: error,
                 }, className)
             }{...otherProps}>
@@ -26,6 +28,7 @@ export class InputGroup extends React.PureComponent<InputGroupProps, {}> {
 
 export interface InputGroupProps {
     className?: string,
+    inline?: boolean,
     success?:boolean,
     error?:boolean,
 }

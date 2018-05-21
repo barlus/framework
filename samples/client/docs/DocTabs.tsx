@@ -1,140 +1,203 @@
 import * as React from "@barlus/nerv"
 import { Code } from "../comps/Code";
-import {DocNote, DocPage, DocSample, DocSection} from "../comps/DocPage";
+import {DocExample, DocNote, DocPage, DocSample, DocSection, DocText} from "../comps/DocPage";
+import {Badge, Input, InputGroup, InputGroupButton, Tab, TabItem} from "@barlus/spectre"
 
 export class DocTabs extends DocPage {
     static title = "Tabs";
     render() {
         return <DocSection id={this.id} title={this.title}>
-            <DocNote>
-                Tabs enable quick switch between different views.
-            </DocNote>
+            <DocText text='Tabs enable quick switch between different views.'/>
             <DocSample columns={2}>
-                <ul className="tab">
-                    <li className="tab-item active">
+                <Tab >
+                    <TabItem active>
                         <a href="#tabs">
                             Music
                         </a>
-                    </li>
-                    <li className="tab-item">
+                    </TabItem>
+                    <TabItem>
                         <a href="#tabs">
                             Playlists
                         </a>
-                    </li>
-                    <li className="tab-item">
+                    </TabItem>
+                    <TabItem>
                         <a href="#tabs">
                             Radio
                         </a>
-                    </li>
-                    <li className="tab-item">
+                    </TabItem>
+                    <TabItem>
                         <a href="#tabs">
                             Store
                         </a>
-                    </li>
-                </ul>
-                <ul className="tab tab-block">
-                    <li className="tab-item active">
+                    </TabItem>
+                </Tab>
+                <Tab block>
+                    <TabItem active>
                         <a href="#tabs">
                             Music
                         </a>
-                    </li>
-                    <li className="tab-item">
+                    </TabItem>
+                    <TabItem>
                         <a href="#tabs">
                             Playlists
                         </a>
-                    </li>
-                    <li className="tab-item">
+                    </TabItem>
+                    <TabItem>
                         <a href="#tabs">
                             Radio
                         </a>
-                    </li>
-                </ul>
+                    </TabItem>
+                </Tab>
             </DocSample>
-            <DocNote>
-                Add a container element with the <code>tab</code> class. And add child elements with
-                the <code>tab-item</code>
-                class. You can add the <code>tab-block</code> class for a full-width tab.
-                The <code>tab-item</code>
-                or its child {'<a>'} with the <code>active</code> class will be highlighted.
-            </DocNote>
-            <Code className="HTML">{E1}</Code>
+            <DocText text={`
+                Add a container element with the ~Tab~ components. And add child elements with
+                the ~TabItem~ component. You can add the ~block~  attribute for a full-width tab.
+                The ~TabItem~ or its child ~a~ with the ~active~ attribute will be highlighted.
+            `}/>
+            <DocExample content={`
+                <Tab block>
+                    <TabItem active>
+                        <a href="#tabs">
+                            Music
+                        </a>
+                    </TabItem>
+                    <TabItem>
+                        <a href="#tabs">
+                            Playlists
+                        </a>
+                    </TabItem>
+                    <TabItem>
+                        <a href="#tabs">
+                            Radio
+                        </a>
+                    </TabItem>
+                </Tab>
+            `}/>
             <DocSample columns={2}>
-                <ul className="tab">
-                    <li className="tab-item active">
-                        <a href="#tabs" className="badge" data-badge={999}>
-                            Music
-                        </a>
-                    </li>
-                    <li className="tab-item">
+                <Tab>
+                    <TabItem active>
+                        <Badge label={999}>
+                            <a href="#tabs">
+                                Music
+                            </a>
+                        </Badge>
+                    </TabItem>
+                    <TabItem >
                         <a href="#tabs">
                             Playlists
                         </a>
-                    </li>
-                    <li className="tab-item">
+                    </TabItem>
+                    <TabItem >
                         <a href="#tabs">
                             Radio
                         </a>
-                    </li>
-                </ul>
-                <ul className="tab tab-block">
-                    <li className="tab-item active">
-                        <a href="#tabs" className="badge" data-badge={9}>
-                            Music
-                        </a>
-                    </li>
-                    <li className="tab-item">
-                        <a href="#tabs" className="badge" data-badge={99}>
-                            Playlists
-                        </a>
-                    </li>
-                    <li className="tab-item">
+                    </TabItem>
+                </Tab>
+                <Tab block>
+                    <TabItem active>
+                        <Badge label={9}>
+                            <a href="#tabs">
+                                Music
+                            </a>
+                        </Badge>
+                    </TabItem>
+                    <TabItem active>
+                        <Badge label={999}>
+                            <a href="#tabs">
+                                Playlists
+                            </a>
+                        </Badge>
+                    </TabItem>
+                    <TabItem active>
                         <a href="#tabs">
                             Radio
                         </a>
-                    </li>
-                </ul>
+                    </TabItem>
+                </Tab>
             </DocSample>
-            <DocNote>
-                If you need <code>badges</code> on tabs, you can add badge class to the element within
-                <code>tab-item</code>.
-            </DocNote>
-            <Code className="HTML">{E2}</Code>
+            <DocText text={`
+                If you need badges on tabs, you can wrap element within
+                ~TabItem~ with ~badge~ component
+            `}/>
+            <DocExample content={`
+                <Tab block>
+                    <TabItem active>
+                        <Badge label={9}>
+                            <a href="#tabs">
+                                Music
+                            </a>
+                        </Badge>
+                    </TabItem>
+                    <TabItem active>
+                        <Badge label={999}>
+                            <a href="#tabs">
+                                Playlists
+                            </a>
+                        </Badge>
+                    </TabItem>
+                    <TabItem active>
+                        <a href="#tabs">
+                            Radio
+                        </a>
+                    </TabItem>
+                </Tab>
+            `}/>
             <DocSample>
-                <ul className="tab">
-                    <li className="tab-item active">
+                <Tab>
+                    <TabItem active>
                         <a href="#tabs">
                             Music
                             <span className="btn btn-clear"/>
                         </a>
-                    </li>
-                    <li className="tab-item">
+                    </TabItem>
+                    <TabItem>
                         <a href="#tabs">
                             Playlists
                         </a>
-                    </li>
-                    <li className="tab-item">
+                    </TabItem>
+                    <TabItem>
                         <a href="#tabs">
                             Radio
                         </a>
-                    </li>
-                    <li className="tab-item">
-                        <a href="#tabs">
-                            Store
-                        </a>
-                    </li>
-                    <li className="tab-item tab-action">
-                        <div className="input-group input-inline">
-                            <input className="form-input input-sm" type="text" placeholder="search"/>
-                            <button className="btn btn-primary btn-sm input-group-btn">Search</button>
-                        </div>
-                    </li>
-                </ul>
+                    </TabItem>
+                    <TabItem action>
+                        <InputGroup inline>
+                            <Input small placeholder="search"/>
+                            <InputGroupButton small primary>Search</InputGroupButton>
+                        </InputGroup>
+                    </TabItem>
+                </Tab>
             </DocSample>
-            <DocNote>
+            <DocText text={`
                 You could add a search box or buttons inside a tab.
-                Add the <code>tab-action</code> class to the <code>tab-item</code>.
-            </DocNote>
-            <Code className="HTML">{E3}</Code>
+                Add the ~action~ attribute to the ~TabItem~.
+            `}/>
+            <DocExample content={`
+                <Tab>
+                    <TabItem active>
+                        <a href="#tabs">
+                            Music
+                            <span className="btn btn-clear"/>
+                        </a>
+                    </TabItem>
+                    <TabItem>
+                        <a href="#tabs">
+                            Playlists
+                        </a>
+                    </TabItem>
+                    <TabItem>
+                        <a href="#tabs">
+                            Radio
+                        </a>
+                    </TabItem>
+                    <TabItem action>
+                        <InputGroup inline>
+                            <Input small placeholder="search"/>
+                            <InputGroupButton small primary>Search</InputGroupButton>
+                        </InputGroup>
+                    </TabItem>
+                </Tab>
+            `}/>
         </DocSection>
     }
 }

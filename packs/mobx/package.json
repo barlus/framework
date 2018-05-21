@@ -1,6 +1,6 @@
 {
   "name": "@barlus/mobx",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Barlus ui framework",
   "license": "MIT",
   "main": "./index",

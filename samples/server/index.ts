@@ -40,7 +40,7 @@ class ApiRouter extends RouteHandler {
 class ScssHandler implements Handler {
     async handle(cnx: Context, next: () => Promise<any>) {
         const path = cnx.request.url.pathname;
-        if (path.match(/^\/(.*)\.css$/)) {
+        if (path.match(/^\/(.*)\.tcss$/)) {
             cnx.response.headers.set('Content-Type', 'text/css; charset=utf8');
             cnx.response.setBody('.myClass { color:red }');
         } else {

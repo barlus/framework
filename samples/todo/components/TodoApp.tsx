@@ -6,24 +6,29 @@ import { TodoEntry } from './TodoEntry';
 import { TodoOverview } from './TodoOverview';
 import { TodoFooter } from './TodoFooter';
 import { ALL_TODOS, ACTIVE_TODOS, COMPLETED_TODOS } from '../constants';
+import {Theme} from "./styles/TodoApp";
+import { cssRule } from '@barlus/styles';
 
+
+cssRule('.form-autocomplete', {
+    "position": "relative"
+});
 
 declare const Router;
 
 interface TodoAppProps {
-    viewStore?: ViewStore,
-    todoStore?: TodoStore
+
 }
 
 @inject('todoStore','viewStore')
 @observer
 export class TodoApp extends React.Component<TodoAppProps> {
     render() {
-        const { todoStore, viewStore } = this.props;
+        const { todoStore, viewStore } = this.context.mobxStores;
         return (
-            <div>
-                <header className="header">
-                    <h1>todos</h1>
+            <div class={Theme.TodoApp}>
+                <header class={Theme.Header}>
+                    <h1 >todos</h1>
                     <TodoEntry />
                 </header>
                 <TodoOverview/>
@@ -32,7 +37,7 @@ export class TodoApp extends React.Component<TodoAppProps> {
         );
     }
     componentDidMount() {
-        const viewStore = this.props.viewStore;
+        const viewStore = this.context.mobxStores.viewStore;
         const router = Router({
             '/': function () {
                 viewStore.todoFilter = ALL_TODOS;

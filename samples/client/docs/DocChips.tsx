@@ -1,74 +1,55 @@
 import * as React from "@barlus/nerv"
 import { Code } from "../comps/Code";
-import {DocNote, DocPage, DocSample, DocSection} from "../comps/DocPage";
-
-
+import {DocExample, DocNote, DocPage, DocSample, DocSection, DocText} from "../comps/DocPage";
+import {Avatar, Button, Chip} from "@barlus/spectre";
 export class DocChips extends DocPage{
     static title = "Chips";
     render() {
         return  <DocSection id={this.id} title={this.title}>
-            <DocNote>Chips are complex entities in small blocks. </DocNote>
+            <DocText text='Chips are complex entities in small blocks.'/>
             <DocSample>
                 <div>
-                      <span className="chip">
-                      Crime
-                    </span>
-                    <span className="chip">
-                      Drama
-                    </span>
-                    <span className="chip">
-                      Biography
-                      <a href="#" className="btn btn-clear" aria-label="Close" role="button"/>
-                    </span>
-                    <span className="chip">
-                      Mystery
-                      <a href="#" className="btn btn-clear" aria-label="Close" role="button"/>
-                    </span>
+                    <Chip>Crime</Chip>
+                    <Chip>Drama</Chip>
+                    <Chip>
+                        Biography
+                        <Button clear></Button>
+                    </Chip>
+                    <Chip>
+                        Mystery
+                        <Button clear></Button>
+                    </Chip>
                 </div>
                 <div>
-                    <div className="chip">
-                        <figure className="avatar avatar-sm" data-initial="TS"
-                                style={{ backgroundColor: '#5755d9' }}/>
+                    <Chip>
+                        <Avatar sm initial='TS'/>
                         Tony Stark
-                    </div>
-                    <div className="chip">
-                        <img src="https://picturepan2.github.io/spectre/img/avatar-1.png"
-                             className="avatar avatar-sm" alt="Thor Odinson"/>
+                    </Chip>
+                    <Chip>
+                        <Avatar sm  src="https://picturepan2.github.io/spectre/img/avatar-1.png" initial='TS'/>
                         Thor Odinson
-                    </div>
-                    <div className="chip">
-                        <img src="https://picturepan2.github.io/spectre/img/avatar-4.png"
-                             className="avatar avatar-sm" alt="Steve Rogers"/>
+                    </Chip>
+                    <Chip>
+                        <Avatar sm  src="https://picturepan2.github.io/spectre/img/avatar-4.png" initial='SR'/>
                         Steve Rogers
-                    </div>
+                    </Chip>
                 </div>
             </DocSample>
-            <div className="columns">
-                <div className="column col-12">
-
-                </div>
-                <div className="column col-12">
-
-                </div>
-            </div>
-            <DocNote>
-                Add a container element with the <code>chip</code> class.
-                And add child text element, buttons or avatars with the <code>avatar</code> class.
-            </DocNote>
-            <Code className="HTML">{E1}</Code>
+            <DocText text={`
+                Add a container component ~Chip~.
+                And add child text element, buttons or avatars.
+            `}/>
+            <DocExample content={`
+                <Chip>Drama</Chip>
+                <Chip>
+                    Mystery
+                    <Button clear></Button>
+                </Chip>
+                <Chip>
+                    <Avatar sm  src="/img/avatar-4.png" initial='SR'/>
+                    Steve Rogers
+                </Chip>
+            `}/>
         </DocSection>
     }
 }
-
-const E1 = `<span class="chip">Crime</span>
-
-<span class="chip">
-  Biography
-  <a href="#" class="btn btn-clear" aria-label="Close" role="button"></a>
-</span>
-
-<div class="chip">
-  <img src="img/avatar-1.png" class="avatar avatar-sm">
-  Yan Zhu
-  <a href="#" class="btn btn-clear" aria-label="Close" role="button"></a>
-</div>`;

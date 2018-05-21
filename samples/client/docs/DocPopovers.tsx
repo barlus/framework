@@ -1,110 +1,124 @@
 import * as React from "@barlus/nerv"
 import { Code } from "../comps/Code";
-import {DocNote, DocPage, DocSample, DocSection} from "../comps/DocPage";
+import {DocExample, DocNote, DocPage, DocSample, DocSection, DocText} from "../comps/DocPage";
+import {
+    Button, Card, CardBody, CardFooter, CardHeader, CardSubTitle, CardTitle, Popover,
+    PopoverContainer
+} from "@barlus/spectre";
 
 export class DocPopovers extends DocPage {
     static title = "Popovers";
     render() {
         return <DocSection id={this.id} title={this.title}>
-            <DocNote>
-                Popovers are small overlay content containers. Popovers component is built entirely in
-                CSS.
-            </DocNote>
+            <DocText text='Popovers are small overlay content containers. Popovers component is built entirely in CSS.'/>
             <DocSample columns={4}>
-                <div className="popover">
-                    <a href="#popovers" className="btn btn-primary">
-                        top popover
-                    </a>
-                    <div className="popover-container">
-                        <div className="card">
-                            <div className="card-header">
-                                <div className="card-title h5">Apple</div>
-                                <div className="card-subtitle text-gray">Software and hardware</div>
-                            </div>
-                            <div className="card-body">
+                <Popover>
+                    <Button primary>top popover</Button>
+                    <PopoverContainer>
+                        <Card>
+                            <CardHeader>
+                                <CardTitle h5>Apple</CardTitle>
+                                <CardSubTitle className='text-gray'>Software and hardware</CardSubTitle>
+                            </CardHeader>
+                            <CardBody>
                                 To make a contribution to the world by making tools for the mind that
                                 advance
                                 humankind.
-                            </div>
-                            <div className="card-footer">
-                                <button className="btn btn-primary">Buy</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div className="popover popover-right">
-                    <a href="#popovers" className="btn btn-primary">
-                        right popover
-                    </a>
-                    <div className="popover-container">
-                        <div className="card">
-                            <div className="card-header">
-                                <div className="card-title h5">Apple</div>
-                                <div className="card-subtitle text-gray">Software and hardware</div>
-                            </div>
-                            <div className="card-body">
+                            </CardBody>
+                            <CardFooter>
+                                <Button primary>Buy</Button>
+                            </CardFooter>
+                        </Card>
+                    </PopoverContainer>
+                </Popover>
+                <Popover right>
+                    <Button primary>right popover</Button>
+                    <PopoverContainer>
+                        <Card>
+                            <CardHeader>
+                                <CardTitle h5>Apple</CardTitle>
+                                <CardSubTitle className='text-gray'>Software and hardware</CardSubTitle>
+                            </CardHeader>
+                            <CardBody>
                                 To make a contribution to the world by making tools for the mind that
                                 advance
                                 humankind.
-                            </div>
-                            <div className="card-footer">
-                                <button className="btn btn-primary">Buy</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div className="popover popover-bottom">
-                    <a href="#popovers" className="btn btn-primary">
-                        bottom popover
-                    </a>
-                    <div className="popover-container">
-                        <div className="card">
-                            <div className="card-header">
-                                <div className="card-title h5">Apple</div>
-                                <div className="card-subtitle text-gray">Software and hardware</div>
-                            </div>
-                            <div className="card-body">
+                            </CardBody>
+                            <CardFooter>
+                                <Button primary>Buy</Button>
+                            </CardFooter>
+                        </Card>
+                    </PopoverContainer>
+                </Popover>
+                <Popover bottom>
+                    <Button primary>bottom popover</Button>
+                    <PopoverContainer>
+                        <Card>
+                            <CardHeader>
+                                <CardTitle h5>Apple</CardTitle>
+                                <CardSubTitle className='text-gray'>Software and hardware</CardSubTitle>
+                            </CardHeader>
+                            <CardBody>
                                 To make a contribution to the world by making tools for the mind that
                                 advance
                                 humankind.
-                            </div>
-                            <div className="card-footer">
-                                <button className="btn btn-primary">Buy</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div className="popover popover-left">
-                    <a href="#popovers" className="btn btn-primary">
-                        left popover
-                    </a>
-                    <div className="popover-container">
-                        <div className="card">
-                            <div className="card-header">
-                                <div className="card-title h5">Apple</div>
-                                <div className="card-subtitle text-gray">Software and hardware</div>
-                            </div>
-                            <div className="card-body">
+                            </CardBody>
+                            <CardFooter>
+                                <Button primary>Buy</Button>
+                            </CardFooter>
+                        </Card>
+                    </PopoverContainer>
+                </Popover>
+                <Popover left>
+                    <Button primary>left popover</Button>
+                    <PopoverContainer>
+                        <Card>
+                            <CardHeader>
+                                <CardTitle h5>Apple</CardTitle>
+                                <CardSubTitle className='text-gray'>Software and hardware</CardSubTitle>
+                            </CardHeader>
+                            <CardBody>
                                 To make a contribution to the world by making tools for the mind that
                                 advance
                                 humankind.
-                            </div>
-                            <div className="card-footer">
-                                <button className="btn btn-primary">Buy</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                            </CardBody>
+                            <CardFooter>
+                                <Button primary>Buy</Button>
+                            </CardFooter>
+                        </Card>
+                    </PopoverContainer>
+                </Popover>
             </DocSample>
-            <DocNote>
-                Wrap an element by a container with the <code>popover</code> class. And add a container with
-                the <code>popover-container</code> next to the element. You can use <a href="#cards">Cards</a> component
-                inside the <code>popover-container</code>.<br/><br/>
-                Also, you can add the <code>popover-right</code>, <code>popover-bottom</code> or
-                <code>popover-left</code> class to define the position. By default, the popovers appear
-                above the element.
-            </DocNote>
-            <Code className="HTML">{E1}</Code>
+            <DocText text={`
+                Wrap an element by a container with the ~Popover~ component. And add a container with
+                the ~PopoverContainer~ next to the element. You can use ~Card~ component
+                inside the ~PpoverContainer~
+
+
+                Also, you can add the ~right~, ~bottom~ or ~left~ attributes to define the position.
+                By default, the popovers appear above the element.
+            `}/>
+            <DocExample content={`
+                <Popover>
+                    <Button primary>top popover</Button>
+                    <PopoverContainer>
+                        <Card>
+                            <CardHeader>
+                                <CardTitle h5>Apple</CardTitle>
+                                <CardSubTitle className='text-gray'>Software and hardware</CardSubTitle>
+                            </CardHeader>
+                            <CardBody>
+                                To make a contribution to the world by making tools for the mind that
+                                advance
+                                humankind.
+                            </CardBody>
+                            <CardFooter>
+                                <Button primary>Buy</Button>
+                            </CardFooter>
+                        </Card>
+                    </PopoverContainer>
+                </Popover>
+            `}/>
         </DocSection>
     }
 }

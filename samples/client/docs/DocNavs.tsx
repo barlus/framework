@@ -1,48 +1,70 @@
 import * as React from "@barlus/nerv"
 import { Code } from "../comps/Code";
-import {DocNote, DocPage, DocSample, DocSection} from "../comps/DocPage";
+import {DocExample, DocNote, DocPage, DocSample, DocSection, DocText} from "../comps/DocPage";
+import {Nav,NavItem} from "@barlus/spectre";
 
 export class DocNavs extends DocPage {
     static title = "Navs";
     render() {
         return <DocSection id={this.id} title={this.title}>
             <DocSample columns={2}>
-                <ul className="nav">
-                    <li className="nav-item">
+                <Nav>
+                    <NavItem>
                         <a href="#nav">Elements</a>
-                    </li>
-                    <li className="nav-item active">
+                    </NavItem>
+                    <NavItem active>
                         <a href="#nav">Layout</a>
-                        <ul className="nav">
-                            <li className="nav-item">
+                        <Nav>
+                            <NavItem>
                                 <a href="#nav">Flexbox grid</a>
-                            </li>
-                            <li className="nav-item">
+                            </NavItem>
+                            <NavItem>
                                 <a href="#nav">Responsive</a>
-                            </li>
-                            <li className="nav-item">
+                            </NavItem>
+                            <NavItem>
                                 <a href="#nav">Navbar</a>
-                            </li>
-                            <li className="nav-item">
-                                <a href="#nav">Empty states</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li className="nav-item">
+                            </NavItem>
+                        </Nav>
+                    </NavItem>
+                    <NavItem >
                         <a href="#nav">Components</a>
-                    </li>
-                    <li className="nav-item">
+                    </NavItem>
+                    <NavItem >
                         <a href="#nav">Utilities</a>
-                    </li>
-                </ul>
+                    </NavItem>
+                </Nav>
             </DocSample>
-            <DocNote>
-                Add a container element with the <code>nav</code> class. And add child elements with
-                the <code>nav-item</code>
-                class. The <code>nav-item</code> with the <code>active</code> class will be highlighted.
-            </DocNote>
-            <Code className="HTML">{E1}</Code>
-
+            <DocText text={`
+                Add a container component ~Nav~. And add child elements with
+                the ~NavItem~. The ~NavItem~ with the ~active~ attribute will be highlighted.
+            `}/>
+            <DocExample content={`
+                <Nav>
+                    <NavItem>
+                        <a href="#nav">Elements</a>
+                    </NavItem>
+                    <NavItem active>
+                        <a href="#nav">Layout</a>
+                        <Nav>
+                            <NavItem>
+                                <a href="#nav">Flexbox grid</a>
+                            </NavItem>
+                            <NavItem>
+                                <a href="#nav">Responsive</a>
+                            </NavItem>
+                            <NavItem>
+                                <a href="#nav">Navbar</a>
+                            </NavItem>
+                        </Nav>
+                    </NavItem>
+                    <NavItem >
+                        <a href="#nav">Components</a>
+                    </NavItem>
+                    <NavItem >
+                        <a href="#nav">Utilities</a>
+                    </NavItem>
+                </Nav>
+            `}/>
         </DocSection>
     }
 }

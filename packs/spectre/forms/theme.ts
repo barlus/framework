@@ -10,6 +10,7 @@ export const enum Theme {
 
     label = 'form-label',
     input = 'form-input',
+    inputInline = 'input-inline',
     select = 'form-select',
     radio = 'form-radio',
     checkbox = 'form-checkbox',

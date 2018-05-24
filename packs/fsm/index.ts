@@ -125,7 +125,7 @@ export abstract class RealState<EventType> extends AbstractState<EventType> {
         }
         return parent.childStates.indexOf(this);
     }
-    get name(): string{
+    get name(): string {
         let parent = this.parentState
         if (!parent) {
             return;
@@ -133,7 +133,7 @@ export abstract class RealState<EventType> extends AbstractState<EventType> {
         let it = internal.of(parent).childStates.entries();
         let result = it.next();
         while (!result.done) {
-            if(result.value[1] == this){
+            if (result.value[1] == this) {
                 return result.value[0]
             }
             result = it.next();
@@ -199,18 +199,18 @@ export abstract class CompositeState<EventType> extends RealState<EventType> {
         else if (isTargetState(target)) {
             return this.addTransitionDefault(target, observer);
         }
-/*        else if (target instanceof Promise) {
-            let transition = new Transition<EventType, TargetState<EventType>>(null, observer);
-            target.then(state => {
-                transition.targetState = state;
-            })
-            this.addTransitionDirect(transition);
-            return transition;
-        }
-        else if (typeof target === "string") {
-            return this.addTransition(this.child(target));
-        }
-*/
+        /*        else if (target instanceof Promise) {
+                    let transition = new Transition<EventType, TargetState<EventType>>(null, observer);
+                    target.then(state => {
+                        transition.targetState = state;
+                    })
+                    this.addTransitionDirect(transition);
+                    return transition;
+                }
+                else if (typeof target === "string") {
+                    return this.addTransition(this.child(target));
+                }
+        */
         else {
             console.error(target, arguments);
             throw new Error("Incorrect target");
@@ -648,7 +648,8 @@ class Interpreter<EventType>{
         for (let state of this.configuration) {
             if (isFinalState(state)) {
                 if (state.parentState === this.root) {
-                    this.cancel("Finished");
+                    await this.root.finished(state);
+                    await this.cancel("Finished");
                     break;
                 }
             }

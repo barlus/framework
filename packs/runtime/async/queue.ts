@@ -56,6 +56,12 @@ export class BlockingQueue<P, C = void> extends AsyncQueue<P, C> {
     public error(reason: Error): Promise<void> {
         return
     }
+    purge(){
+        const my = internal.of(this);
+        while(my.barriers.length && my.barriers[0].producer.accepted){
+            my.barriers.shift()
+        }
+    }
     //
     private barrier(late: boolean) {
         const my = internal.of(this);

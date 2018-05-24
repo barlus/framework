@@ -42,7 +42,7 @@ export class AsyncPendingMap<K, V, E = Error>{
             this.pending.get(key).accept(value);
             this.pending.delete(key);
         }
-        this.set(key, value);
+        this.data.set(key, value);
         this.stabilize();
         return this;
     }
@@ -123,7 +123,7 @@ export class AsyncPendingSet<K, E = Error>{
             this.pending.get(value).accept(undefined);
             this.pending.delete(value);
         }
-        this.add(value);
+        this.data.add(value);
         this.stabilize();
         return this;
     }

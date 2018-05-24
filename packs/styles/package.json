@@ -1,6 +1,6 @@
 {
   "name": "@barlus/styles",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "Barlus NodeJs Wrapper",
   "main": "./index",
   "types": "./index",

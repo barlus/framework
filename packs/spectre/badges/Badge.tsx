@@ -25,5 +25,5 @@ export class Badge extends React.PureComponent<BadgeProps, {}> {
 
 export interface BadgeProps {
     className?: string,
-    label:number
+    label?:number
 }

@@ -97,6 +97,7 @@ export * from './popovers/Popover';
 export * from './popovers/PopoverContainer';
 export * from './steps/Step';
 export * from './steps/StepItem';
+export * from './calendars/Calendar';
 
 // Themes
 import './core/normalize';
@@ -127,6 +128,7 @@ import './panels/theme';
 import './tabs/theme';
 import './popovers/theme';
 import './steps/theme';
+import './calendars/theme';
 
 
 //

@@ -2,12 +2,17 @@ import * as React from "@barlus/nerv"
 import { observer, store } from '@barlus/storex';
 import { RoutesStore } from '../stores';
 import { Code } from "./Code";
+import {
+    Accordion, AccordionBody, AccordionHeader, Container, Menu, MenuItem, OffCanvas, OffCanvasContent, OffCanvasOverlay,
+    OffCanvasSidebar,
+    OffCanvasToggle
+} from "@barlus/spectre";
 
 export class DocNavItem extends React.PureComponent<{ href: string, title: string }, {}> {
     render() {
-        return <li className="menu-item">
-            <a href={this.props.href}>{this.props.title}</a>
-        </li>
+        return <MenuItem>
+                <a href={this.props.href}>{this.props.title}</a>
+        </MenuItem>
     }
 }
 export class DocNavCategory extends React.PureComponent<{ active?: boolean, title: string }, {}> {
@@ -17,28 +22,38 @@ export class DocNavCategory extends React.PureComponent<{ active?: boolean, titl
         const children = this.props.children;
         const key = String(this.props.title).toLowerCase();
         const id = `docs-accordion-${key}`;
-        return <div className="accordion" key={key}>
-            <input type="checkbox" id={id} name="docs-accordion-checkbox" hidden defaultChecked={active}/>
-            <label className="accordion-header c-hand" htmlFor={id}>{title}</label>
-            <div className="accordion-body">
-                <ul className="menu menu-nav">
+        return <Accordion key={key}>
+            <AccordionHeader className='c-hand' id={id} name='docs-accordion-checkbox' defaultChecked={active}>
+                {title}
+            </AccordionHeader>
+            <AccordionBody>
+                <Menu className='menu-nav'>
                     {children}
-                </ul>
-            </div>
-        </div>
+                </Menu>
+            </AccordionBody>
+        </Accordion>
+        // return <div className="accordion" key={key}>
+        //     <input type="checkbox" id={id} name="docs-accordion-checkbox" hidden defaultChecked={active}/>
+        //     <label className="accordion-header c-hand" htmlFor={id}>{title}</label>
+        //     <div className="accordion-body">
+        //         <ul className="menu menu-nav">
+        //             {children}
+        //         </ul>
+        //     </div>
+        // </div>
     }
 }
 export class DocSection extends React.PureComponent<{ id: string, title: string }, {}> {
     render() {
         const { id, title, children } = this.props;
         const href = `#${id}`;
-        return <div id={id} className="container">
+        return <Container id={id}>
             <h3 className="s-title">
                 <a href={href} className="anchor" aria-hidden="true">#</a>
                 {title}
             </h3>
             {children}
-        </div>
+        </Container>
     }
 }
 
@@ -145,6 +160,7 @@ export class DocPage<P={}, S={}> extends React.PureComponent<P, S> {
         super(props, context);
     }
 }
+
 export class DocNavBar extends React.PureComponent<{ docs }, {}> {
     render() {
         const { docs } = this.props;
@@ -158,7 +174,7 @@ export class DocNavBar extends React.PureComponent<{ docs }, {}> {
                 {Object.keys(docs[ d ]).map(c => category(c, d))}
             </DocNavCategory>;
         });
-        return <div id="sidebar" className="docs-sidebar off-canvas-sidebar">
+        return <div>
             <div className="docs-brand">
                 <a href="#" className="docs-logo">
                     <img src="https://picturepan2.github.io/spectre/img/spectre-logo.svg"
@@ -176,13 +192,38 @@ export class DocNavBar extends React.PureComponent<{ docs }, {}> {
 }
 
 @observer
-export class DocApp extends React.PureComponent<{ docs }, {}> {
+export class DocApp extends React.PureComponent<{ docs }, {sidebarOpen:boolean}> {
 
     @store router: RoutesStore;
+
+
+    constructor(p,c){
+        super(p,c);
+        this.state={sidebarOpen:false};
+    }
+
+    componentDidMount(){
+        window.onpopstate =  () =>(this.closeSidebarOnRoutExit())
+    }
+
+    closeSidebarOnRoutExit(){
+        this.setState({sidebarOpen:false});
+        return Promise.resolve();
+    }
+
+    toggleSidebar = ()=>{
+        const {sidebarOpen} = this.state;
+        this.setState({sidebarOpen:!sidebarOpen})
+    }
+
+    onCanvasClose = ()=>{
+        this.setState({sidebarOpen:false})
+    }
 
     render() {
         const routeName = this.router.routerState.routeName;
         const { docs } = this.props;
+        const {sidebarOpen} = this.state;
         const components = [];
         Object.keys(docs).forEach(d => {
             Object.keys(docs[ d ]).forEach(c => {
@@ -193,21 +234,19 @@ export class DocApp extends React.PureComponent<{ docs }, {}> {
             })
         });
         return (
-            <div className="docs-container off-canvas off-canvas-sidebar-show">
+            <OffCanvas className='docs-container'  showOnLarge active={sidebarOpen} closeOnBgClick onBgClick={this.onCanvasClose}>
                 <div className="docs-navbar">
-                    <a className="off-canvas-toggle btn btn-link btn-action" href="#sidebar">
-                        <i className="icon icon-menu"/>
-                    </a>
+                    <OffCanvasToggle onClick={this.toggleSidebar} link action><i className="icon icon-menu"/></OffCanvasToggle>
                     <a href="https://github.com/picturepan2/spectre" target="_blank"
                        className="btn btn-primary">GitHub</a>
                 </div>
-                <DocNavBar docs={this.props.docs}/>
-                <a className="off-canvas-overlay" href="#close"/>
-                <div id="content" className="docs-content off-canvas-content">
-                    <a className="off-canvas-overlay" href="#close"/>
+                <OffCanvasSidebar className='docs-sidebar'>
+                    <DocNavBar docs={this.props.docs}/>
+                </OffCanvasSidebar>
+                <OffCanvasContent className='docs-content'>
                     {components}
-                </div>
-            </div>
+                </OffCanvasContent>
+            </OffCanvas>
         );
     }
 }

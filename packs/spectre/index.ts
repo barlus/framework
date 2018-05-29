@@ -98,6 +98,11 @@ export * from './popovers/PopoverContainer';
 export * from './steps/Step';
 export * from './steps/StepItem';
 export * from './calendars/Calendar';
+export * from './offCanvas/OffCanvas';
+export * from './offCanvas/OffCanvasContent';
+export * from './offCanvas/OffCanvasOverlay';
+export * from './offCanvas/OffCanvasSidebar';
+export * from './offCanvas/OffCanvasToggle';
 
 // Themes
 import './core/normalize';
@@ -129,6 +134,7 @@ import './tabs/theme';
 import './popovers/theme';
 import './steps/theme';
 import './calendars/theme';
+import './offCanvas/theme';
 
 
 //

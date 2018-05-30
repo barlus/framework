@@ -1,5 +1,6 @@
 import {suite, test, expect} from '@barlus/tester';
 
+
 @suite
 class BasicTest {
     @test("example test")

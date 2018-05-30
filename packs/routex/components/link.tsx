@@ -24,14 +24,14 @@ export interface LinkProps {
  * Example:
  *     const home = new RouterState('home');
  *     ...
- *     <Link routerStore={routerStore} toState={home}>
+ *     <link routerStore={routerStore} toState={home}>
  *         Home
- *     </Link>
+ *     </link>
  *
- * Link accepts `className` and `activeClassName` as optional
+ * link accepts `className` and `activeClassName` as optional
  * properties. `className` is always applied to the anchor tag.
  * `activeClassName` is applied in addition if the current `routerState`
- * matches the state specified by the `Link`. This feature is
+ * matches the state specified by the `link`. This feature is
  * useful for highlighting the active link in a navbar.
  *
  * @see RouterLink for simpler way to create anchor tags.

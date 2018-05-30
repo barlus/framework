@@ -1,31 +1,35 @@
-import { stylesheet } from '@barlus/styles';
-export const cssRule = stylesheet('base.css');
-cssRule('*,::after,::before', {
-    "boxSizing": "inherit"
+import { stylesheet, rem, css } from '@barlus/styles';
+import { config } from '../config';
+import { controlShadow } from '../mixins/shadow';
+
+export const rule = stylesheet('base.css');
+
+rule('*,::after,::before', {
+    boxSizing: css.value.inherit,
 });
-cssRule('html', {
-    "boxSizing": "border-box",
-    "fontSize": "20px",
-    "lineHeight": 1.5,
-    "-webkit-tap-highlight-color": "transparent"
+rule('html', {
+    boxSizing: css.value.borderBox,
+    fontSize: config.htmlFontSize,
+    lineHeight: config.htmlLineHeight,
+    "-webkit-tap-highlight-color": css.value.transparent
 });
-cssRule('body', {
-    "background": "#fff",
-    "color": "#50596c",
-    "fontFamily": "-apple-system,system-ui,BlinkMacSystemFont,\"Segoe UI\",Roboto,\"Helvetica Neue\",sans-serif",
-    "fontSize": ".8rem",
-    "overflowX": "hidden",
-    "textRendering": "optimizeLegibility"
+rule('body', {
+    background: config.bodyBg.rgba,
+    color: config.bodyFontColor.rgba,
+    fontFamily: config.baseFontFamily,
+    fontSize: rem(config.fontSize),
+    overflowX: css.value.hidden,
+    textRendering: "optimizeLegibility"
 });
-cssRule('a', {
-    "color": "#5755d9",
-    "outline": 0,
-    "textDecoration": "none"
-});
-cssRule('a:focus', {
-    "boxShadow": "0 0 0 .1rem rgba(87,85,217,.2)"
-});
-cssRule('a.active,a:active,a:focus,a:hover', {
-    "color": "#4240d4",
-    "textDecoration": "underline"
+rule('a', {
+    color: config.linkColor.rgba,
+    outline: 0,
+    textDecoration: css.value.none,
+    ...css.nest('&:focus',{
+        ...controlShadow()
+    }),
+    ...css.nest('&:focus, &:hover, &:active, &.active',{
+        color: config.linkColorDark.rgba,
+        textDecoration: "underline"
+    }),
 });

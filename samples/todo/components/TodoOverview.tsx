@@ -5,23 +5,25 @@ import { TodoStore } from '../stores/TodoStore';
 import { ViewStore } from '../stores/ViewStore';
 
 import { TodoItem } from './TodoItem';
+import { Theme } from './styles/TodoOverview';
 
 @inject('todoStore', 'viewStore')
 @observer
 export class TodoOverview extends React.Component<TodoOverviewProps> {
     render() {
-        const { todoStore, viewStore } = this.props;
+        const { todoStore, viewStore } = this.context.mobxStores;
         if (todoStore.todos.length === 0) {
             return '';
         }
-        return <section className="main">
+
+        return <section class={Theme.TodoOverview}>
             <input
-                className="toggle-all"
+                class={Theme.TodoOverviewToggleAll}
                 type="checkbox"
                 onChange={this.toggleAll}
                 checked={todoStore.activeTodoCount === 0}
             />
-            <ul className="todo-list">
+            <ul class={Theme.TodoOverviewList}>
                 {this.getVisibleTodos().map(todo =>
                     <TodoItem
                         key={todo.id}
@@ -33,8 +35,8 @@ export class TodoOverview extends React.Component<TodoOverviewProps> {
         </section>
     }
     getVisibleTodos() {
-        return this.props.todoStore.todos.filter(todo => {
-            switch (this.props.viewStore.todoFilter) {
+        return this.context.mobxStores.todoStore.todos.filter(todo => {
+            switch (this.context.mobxStores.viewStore.todoFilter) {
                 case ACTIVE_TODOS:
                     return !todo.completed;
                 case COMPLETED_TODOS:
@@ -47,7 +49,7 @@ export class TodoOverview extends React.Component<TodoOverviewProps> {
 
     toggleAll = (event) => {
         var checked = event.target.checked;
-        this.props.todoStore.toggleAll(checked);
+        this.context.mobxStores.todoStore.toggleAll(checked);
     };
 }
 

@@ -4,6 +4,8 @@ import { observable, computed } from '@barlus/mobx';
 import { TodoModel } from '../models/TodoModel';
 import { ViewStore } from '../stores/ViewStore';
 
+import {Theme} from './styles/TodoItem';
+
 const ESCAPE_KEY = 27;
 const ENTER_KEY = 13;
 
@@ -13,15 +15,17 @@ export class TodoItem extends React.Component<TodoItemProps> {
     @observable editText = "";
 
     render() {
-        const { viewStore, todo } = this.props;
+        const viewStore = this.context.mobxStores.viewStore;
+        const { todo } = this.props;
         return (
             <li className={[
-                todo.completed ? "completed" : "",
-                computed(() => todo === viewStore.todoBeingEdited ? "editing" : "")
+                todo.completed ? Theme.TodoItemCompleted : "",
+                computed(() => todo === viewStore.todoBeingEdited ? Theme.TodoItemEditing : ""),
+                Theme.TodoItem
             ].join(" ")}>
-                <div className="view">
+                <div class={Theme.TodoItemView}>
                     <input
-                        className="toggle"
+                        class={Theme.TodoItemToggle}
                         type="checkbox"
                         checked={todo.completed}
                         onChange={this.handleToggle}
@@ -29,11 +33,11 @@ export class TodoItem extends React.Component<TodoItemProps> {
                     <label onDoubleClick={this.handleEdit}>
                         {todo.title}
                     </label>
-                    <button className="destroy" onClick={this.handleDestroy}/>
+                    <button class={Theme.TodoItemDestroy} onClick={this.handleDestroy}/>
                 </div>
                 <input
                     ref="editField"
-                    className="edit"
+                    class={Theme.TodoEntry}
                     value={this.editText}
                     onBlur={this.handleSubmit}
                     onChange={this.handleChange}
@@ -51,24 +55,24 @@ export class TodoItem extends React.Component<TodoItemProps> {
         } else {
             this.handleDestroy();
         }
-        this.props.viewStore.todoBeingEdited = null;
+        this.context.mobxStores.viewStore.todoBeingEdited = null;
     };
 
     handleDestroy = () => {
         this.props.todo.destroy();
-        this.props.viewStore.todoBeingEdited = null;
+        this.context.mobxStores.viewStore.todoBeingEdited = null;
     };
 
     handleEdit = () => {
         const todo = this.props.todo;
-        this.props.viewStore.todoBeingEdited = todo;
+        this.context.mobxStores.viewStore.todoBeingEdited = todo;
         this.editText = todo.title;
     };
 
     handleKeyDown = (event) => {
         if (event.which === ESCAPE_KEY) {
             this.editText = this.props.todo.title;
-            this.props.viewStore.todoBeingEdited = null;
+            this.context.mobxStores.viewStore.todoBeingEdited = null;
         } else if (event.which === ENTER_KEY) {
             this.handleSubmit(event);
         }

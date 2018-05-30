@@ -34,7 +34,7 @@ export class HttpApplication extends HttpServer {
             try {
                 await this.handler(context, null);
             }catch (e){
-                response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR,"Internal Server Error");
+                response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR,"Internal Server error");
 
             }
             if(!response.headers){

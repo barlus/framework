@@ -177,7 +177,7 @@ export class BufferedQueue<P> extends AsyncQueue<P, never> {
 //             this[size]++;
 //             const next = this[stack].pop();
 //             if (!next || !next.isPending) {
-//                 throw new Error("Something wrong");
+//                 throw new error("Something wrong");
 //             } else {
 //                 next.accept(value,false);
 //                 return this.size;
@@ -194,7 +194,7 @@ export class BufferedQueue<P> extends AsyncQueue<P, never> {
 //             this[size]--;
 //             const next = this[stack].shift();
 //             if (!next || next.isPending) {
-//                 throw new Error("Something wrong");
+//                 throw new error("Something wrong");
 //             } else {
 //                 return next.promise;
 //             }
@@ -233,7 +233,7 @@ export class BufferedQueue<P> extends AsyncQueue<P, never> {
 //             this[size]++;
 //             const next = this[stack].pop();
 //             if (!next || next.state!=='pending') {
-//                 throw new Error("Something wrong");
+//                 throw new error("Something wrong");
 //             } else {
 //                 next.accept({done: false, value});
 //                 return this.size;
@@ -251,7 +251,7 @@ export class BufferedQueue<P> extends AsyncQueue<P, never> {
 //             this[size]--;
 //             const next = this[stack].shift();
 //             if (!next || next.state==='pending') {
-//                 throw new Error("Something wrong");
+//                 throw new error("Something wrong");
 //             } else {
 //                 return next;
 //             }

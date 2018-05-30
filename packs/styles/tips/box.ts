@@ -164,7 +164,7 @@ export const maxHeight = (value: BoxUnit) => {
 };
 
 /**
- * Block elements: Centering *self* using margins
+ * block elements: Centering *self* using margins
  */
 export const horizontallyCenterSelf = {
   marginLeft: 'auto',
@@ -172,7 +172,7 @@ export const horizontallyCenterSelf = {
 };
 
 /**
- * Block elements: Centering *child* elements using textAlign
+ * block elements: Centering *child* elements using textAlign
  */
 export const horizontallyCenterChildren = {
   textAlign: 'center' as 'center'

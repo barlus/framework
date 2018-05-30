@@ -1,71 +1,56 @@
 import * as React from "@barlus/nerv"
 import { Code } from "../comps/Code";
+import {DocExample, DocNote, DocPage, DocSample, DocSection, DocText} from "../comps/DocPage";
+import { Toast,Button } from "@barlus/spectre";
 
-const E1 = ``;
-const E2 = ``;
 
-export class DocToasts extends React.PureComponent<{}, {}> {
+export class DocToasts extends DocPage {
+    static title = "Toasts";
     render() {
-        return <div id="toasts" className="container">
-            <h3 className="s-title"><a href="#toasts" className="anchor" aria-hidden="true">#</a>Toasts</h3>
-            <div className="docs-note">
-                <p>Toasts are used to show alert or information to users.</p>
-            </div>
-            <div className="columns">
-                <div className="column col-9 col-sm-12">
-                    <div className="toast">
-                        <button className="btn btn-clear float-right"/>
-                        <h6>Toast Title</h6>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    </div>
-                </div>
-                <div className="column col-9 col-sm-12">
-                    <div className="toast toast-primary">
-                        <button className="btn btn-clear float-right"/>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    </div>
-                </div>
-            </div>
-            <div className="docs-note">
-                <p>Add a container element with the <code>toast</code> class. You can add any text within the
-                    container,
-                    and even icons. You may also add a close button with the <code>btn-clear</code> class if you
-                    need.
-                </p>
-            </div>
-            <div className="columns">
-                <div className="column col-sm-12">
-                    <div className="toast toast-success">
-                        <button className="btn btn-clear float-right"/>
-                        Toast success
-                    </div>
-                </div>
-                <div className="column col-sm-12">
-                    <div className="toast toast-warning">
-                        <button className="btn btn-clear float-right"/>
-                        Toast warning
-                    </div>
-                </div>
-                <div className="column col-sm-12">
-                    <div className="toast toast-error">
-                        <button className="btn btn-clear float-right"/>
-                        Toast error
-                    </div>
-                </div>
-            </div>
-            <div className="docs-note">
-                <p>And you can add the <code>toast-primary</code>, <code>toast-success</code>,
-                    <code>toast-warning</code> or <code>toast-error</code> class for additional toast colors.
-                </p>
-            </div>
-            <pre className="code" data-lang="HTML"><code>&lt;<span className="tag">div</span> <span
-                className="atn">class</span>=<span className="atv">"toast"</span>&gt;{"\n"}{"  "}Lorem ipsum dolor sit amet, consectetur adipiscing elit.{"\n"}&lt;
-                <span className="tag">/div</span>&gt;{"\n"}{"\n"}&lt;<span className="tag">div</span> <span
-                    className="atn">class</span>=<span
-                    className="atv">"toast toast-primary"</span>&gt;{"\n"}{"  "}&lt;<span
-                    className="tag">button</span> <span className="atn">class</span>=<span className="atv">"btn btn-clear float-right"</span>&gt;&lt;
-                <span className="tag">/button</span>&gt;{"\n"}{"  "}Lorem ipsum dolor sit amet, consectetur adipiscing elit.{"\n"}&lt;
-                <span className="tag">/div</span>&gt;{"\n"}</code></pre>
-        </div>
+        return <DocSection id={this.id} title={this.title}>
+            <DocText text={`
+                Toasts are used to show alert or information to users.
+            `}/>
+            <DocSample columns={12/9}>
+                <Toast>
+                    <Button clear className="float-right"/>
+                    <h6>Toast Title</h6>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                </Toast>
+            </DocSample>
+            <DocText text={`
+               Add a container element with the ~toast~ class. You can add any text within the
+                container,
+                and even icons. You may also add a close button with the ~btn-clear~ class if you
+                need.
+            `}/>
+            <DocSample columns={3}>
+                <Toast success>
+                    <Button clear className="float-right"/>
+                    Toast success
+                </Toast>
+                <Toast warning>
+                    <Button clear className="float-right"/>
+                    Toast warning
+                </Toast>
+                <Toast error>
+                    <Button clear className="float-right"/>
+                    Toast error
+                </Toast>
+            </DocSample>
+            <DocText text={`
+                  And you can add the ~toast-primary~, ~toast-success~,
+                ~toast-warning~ or ~toast-error~class for additional toast colors.
+            `}/>
+            <DocExample content={`
+                <Toast>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                </Toast>
+                <Toast primary>
+                    <Button clear className="float-right"/>
+                    Toast success
+                </Toast>
+            `}/>
+        </DocSection>
     }
 }

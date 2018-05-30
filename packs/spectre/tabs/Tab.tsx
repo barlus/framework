@@ -1,0 +1,23 @@
+import * as React from "@barlus/nerv";
+import { Theme } from './theme';
+import { classes } from '../utils/classes';
+
+export class Tab extends React.PureComponent<TabProps, {}> {
+    render() {
+        const {
+            className,
+            // Styles.
+            block,
+            children,
+            ...otherProps
+        } = this.props;
+        return (<ul {...otherProps} class={classes(Theme.Tab,{[Theme.tabBlock]:block},className)}>
+            {children}
+        </ul>)
+    }
+}
+
+export interface TabProps {
+    className?: string,
+    block?:boolean
+}

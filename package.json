@@ -1,6 +1,6 @@
 {
   "name": "@barlus/framework",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "Barlus Project",
   "author": "Mamble LLC",
   "repository": "https://github.com/barlus/framework.git",
@@ -23,20 +23,20 @@
     "typescript": "^2.9.0-dev.20180506"
   },
   "resolutions": {
-    "@barlus/bone": "0.1.5",
-    "@barlus/experimental": "0.1.5",
-    "@barlus/fsm": "0.1.5",
-    "@barlus/history": "0.1.5",
-    "@barlus/mobx": "0.1.5",
-    "@barlus/nerv": "0.1.5",
-    "@barlus/routex": "0.1.5",
-    "@barlus/runtime": "0.1.5",
-    "@barlus/spectre": "0.1.5",
-    "@barlus/storex": "0.1.5",
-    "@barlus/styles": "0.1.5",
-    "@barlus/tester": "0.1.5",
-    "@vendor/client": "0.1.5",
-    "@vendor/server": "0.1.5",
-    "@vendor/todo": "0.1.5"
+    "@barlus/bone": "0.1.6",
+    "@barlus/experimental": "0.1.6",
+    "@barlus/fsm": "0.1.6",
+    "@barlus/history": "0.1.6",
+    "@barlus/mobx": "0.1.6",
+    "@barlus/nerv": "0.1.6",
+    "@barlus/routex": "0.1.6",
+    "@barlus/runtime": "0.1.6",
+    "@barlus/spectre": "0.1.6",
+    "@barlus/storex": "0.1.6",
+    "@barlus/styles": "0.1.6",
+    "@barlus/tester": "0.1.6",
+    "@vendor/client": "0.1.6",
+    "@vendor/server": "0.1.6",
+    "@vendor/todo": "0.1.6"
   }
 }

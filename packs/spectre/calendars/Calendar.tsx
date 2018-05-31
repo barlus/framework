@@ -3,7 +3,6 @@ import { Theme } from './theme';
 import { classes } from '../utils/classes';
 import {Badge, Button, Navbar, NavbarSection, Tooltip} from "../index";
 
-
 export class Calendar extends React.PureComponent<CalendarProps, CalendarState> {
     static defaultProps = {
         activeDate:new Date(),
@@ -28,6 +27,7 @@ export class Calendar extends React.PureComponent<CalendarProps, CalendarState> 
 
 
     componentWillReceiveProps(nextProps:CalendarProps){
+
         if(nextProps.activeDate && nextProps.activeDate.getTime() != this.props.activeDate.getTime()){
             this.setState({
                 activeDate:nextProps.activeDate
@@ -335,6 +335,7 @@ export interface CalendarProps {
     selected?:Date|{start:Date,end:Date}
     tooltips?:Map<Date,string>,
     calendarEvents?:Map<Date,any[]>//todo change any to vnode
+
 }
 export interface CalendarState {
     activeDate?:Date

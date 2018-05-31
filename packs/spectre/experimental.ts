@@ -468,7 +468,7 @@ cssRule('.off-canvas', {
     ],
     "-ms-flex-flow": "nowrap",
     "flexFlow": "nowrap",
-    "height": "100%",
+    "height": "100vh",
     "position": "relative",
     "width": "100%"
 });
@@ -496,7 +496,9 @@ cssRule('.off-canvas .off-canvas-content', {
     "-ms-flex": "1 1 auto",
     "flex": "1 1 auto",
     "height": "100%",
-    "padding": ".4rem .4rem .4rem 4rem"
+    "padding": ".4rem .4rem .4rem 4rem",
+    "transition": "transform .25s ease"
+
 });
 cssRule('.off-canvas .off-canvas-overlay', {
     "background": "rgba(69,77,93,.1)",
@@ -510,6 +512,10 @@ cssRule('.off-canvas .off-canvas-overlay', {
     "right": 0,
     "top": 0,
     "width": "100%"
+});
+
+cssRule('.off-canvas.active .off-canvas-content', {
+    "transform": "translateX(12em)",
 });
 cssRule('.off-canvas.active .off-canvas-sidebar', {
     "transform": "translateX(0)"

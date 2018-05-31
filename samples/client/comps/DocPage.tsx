@@ -234,7 +234,7 @@ export class DocApp extends React.PureComponent<{ docs }, {sidebarOpen:boolean}>
             })
         });
         return (
-            <OffCanvas className='docs-container'  showOnLarge active={sidebarOpen} closeOnBgClick onBgClick={this.onCanvasClose}>
+            <OffCanvas className='docs-container'  active={sidebarOpen} closeOnBgClick onBgClick={this.onCanvasClose}>
                 <div className="docs-navbar">
                     <OffCanvasToggle onClick={this.toggleSidebar} link action><i className="icon icon-menu"/></OffCanvasToggle>
                     <a href="https://github.com/picturepan2/spectre" target="_blank"

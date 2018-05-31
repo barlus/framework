@@ -40,7 +40,7 @@ export class OffCanvas extends React.PureComponent<OffCanvasProps, {active:boole
         } = this.props;
         return (<div {...otherProps} class={classes(Theme.OffCanvas,{[Theme.sidebarShow]:showOnLarge,[Theme.active]:this.state.active},className)}>
             {children}
-            <OffCanvasOverlay onClick={this.onClose}/>}
+            <OffCanvasOverlay onClick={this.onClose}/>
         </div>)
     }
 }

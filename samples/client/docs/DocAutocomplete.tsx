@@ -1,97 +1,221 @@
 import * as React from "@barlus/nerv"
 import { Code } from "../comps/Code";
-import {DocNote, DocPage, DocSample, DocSection} from "../comps/DocPage";
+import {DocExample, DocNote, DocPage, DocSample, DocSection} from "../comps/DocPage";
+import {
+    Autocomplete, Avatar, Chip, MenuItem, Tile, TileContent, TileIcon
+} from "@barlus/spectre";
 
 
-export class DocAutocomplete extends DocPage {
+export class DocAutocomplete extends DocPage<any,any>{
+    constructor(p,c){
+        super(p,c);
+        this.state={
+            multipleValue:"",
+            selected : [],
+            options:[],
+        }
+    }
+
+    static  suggestions = [
+        { label: 'Afghanistan' },
+        { label: 'Aland Islands' },
+        { label: 'Albania' },
+        { label: 'Algeria' },
+        { label: 'American Samoa' },
+        { label: 'Andorra' },
+        { label: 'Angola' },
+        { label: 'Anguilla' },
+        { label: 'Antarctica' },
+        { label: 'Antigua and Barbuda' },
+        { label: 'Argentina' },
+        { label: 'Armenia' },
+        { label: 'Aruba' },
+        { label: 'Australia' },
+        { label: 'Austria' },
+        { label: 'Azerbaijan' },
+        { label: 'Bahamas' },
+        { label: 'Bahrain' },
+        { label: 'Bangladesh' },
+        { label: 'Barbados' },
+        { label: 'Belarus' },
+        { label: 'Belgium' },
+        { label: 'Belize' },
+        { label: 'Benin' },
+        { label: 'Bermuda' },
+        { label: 'Bhutan' },
+        { label: 'Bolivia, Plurinational State of' },
+        { label: 'Bonaire, Sint Eustatius and Saba' },
+        { label: 'Bosnia and Herzegovina' },
+        { label: 'Botswana' },
+        { label: 'Bouvet Island' },
+        { label: 'Brazil' },
+        { label: 'British Indian Ocean Territory' },
+        { label: 'Brunei Darussalam' },
+    ];
+
+    componentDidMount(){
+        this.updateOptions();
+    }
+
+    updateOptions(){
+        fetch("https://jsonplaceholder.typicode.com/users")
+            .then(response=>response.json())
+            .then(data=>{
+                this.setState({options:data})
+            })
+            .catch(error=>console.log(error))
+    }
+
+    handleAddition = (item)=>{
+        let {selected} = this.state;
+        selected = [...selected];
+        selected.push(item);
+        this.setState({selected:selected,multipleValue:"",searchableValue:""})
+    };
+
+    onMultipleChoiceChange = (e)=>{
+        this.setState({multipleValue:e.target.value});
+        console.log(e.target.value , "value can be used to run some server-side filtering")
+        this.updateOptions()
+    };
+
+    handleDelete = (item)=>{
+        let {selected} = this.state;
+        selected = [...selected];
+        let index = selected.indexOf(item);
+        selected.splice(index,1);
+        this.setState({ selected })
+    };
+
     static title = "Autocomplete";
+
     render() {
         return <DocSection id={this.id} title={this.title}>
             <DocNote>
                 Autocomplete form component provides suggestions while you type. It is often used for tags
                 and contacts input.
             </DocNote>
-            <DocSample columns={12/9}>
-                <div className="form-group">
-                    <div className="form-autocomplete">
-                        <div className="form-autocomplete-input form-input">
-                      <span className="chip">
-                        Bruce Banner
-                      </span>
-                            <div className="chip">
-                                <img src="https://picturepan2.github.io/spectre/img/avatar-1.png"
-                                     className="avatar avatar-sm" alt="Avatar"/>
-                                Thor Odinson
-                            </div>
-                            <div className="chip">
-                                <img src="https://picturepan2.github.io/spectre/img/avatar-4.png"
-                                     className="avatar avatar-sm" alt="Avatar"/>
-                                Steve Rogers
-                            </div>
-                            <div className="chip">
-                                <figure className="avatar avatar-sm" data-initial="TS"
-                                        style={{ backgroundColor: '#5755d9' }}/>
-                                Tony Stark
-                            </div>
-                            <span className="chip active">
-                        Natasha Romanoff
-                      </span>
-                            <input className="form-input" type="text" placeholder/>
-                        </div>
-                    </div>
-                </div>
-                <div className="form-group">
-                    <div className="form-autocomplete">
-                        <div className="form-autocomplete-input form-input is-focused">
-                      <span className="chip">
-                        Bruce Banner
-                        <a href="#" className="btn btn-clear" aria-label="Close" role="button"/>
-                      </span>
-                            <span className="chip">
-                        <img src="https://picturepan2.github.io/spectre/img/avatar-1.png" className="avatar avatar-sm"
-                             alt="Thor Odinson"/>
-                        Thor Odinson
-                        <a href="#" className="btn btn-clear" aria-label="Close" role="button"/>
-                      </span>
-                            <div className="has-icon-left">
-                                <input className="form-input" type="text" placeholder defaultValue="S"/>
-                                <i className="form-icon loading"/>
-                            </div>
-                        </div>
-                        <ul className="menu">
-                            <li className="menu-item">
-                                <a href="#autocomplete">
-                                    <div className="tile tile-centered">
-                                        <div className="tile-icon">
-                                            <img
-                                                src="https://picturepan2.github.io/spectre/img/avatar-4.png"
-                                                className="avatar avatar-sm" alt="Steve Rogers"/>
-                                        </div>
-                                        <div className="tile-content">
-                                            <mark>S</mark>
-                                            teve Roger
-                                            <mark>s</mark>
-                                        </div>
-                                    </div>
-                                </a>
-                            </li>
-                            <li className="menu-item">
-                                <a href="#autocomplete">
-                                    <div className="tile tile-centered">
-                                        <div className="tile-icon">
-                                            <figure className="avatar avatar-sm" data-initial="TS"
-                                                    style={{ backgroundColor: '#5755d9' }}/>
-                                        </div>
-                                        <div className="tile-content">
-                                            Tony <mark>S</mark>tark
-                                        </div>
-                                    </div>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
+            <DocSample columns={12/10}>
+                Simple autocomplete component
+                <Autocomplete
+                    placeholder='Search a country (start with a)'
+                    renderItem={(item,active)=><MenuItem className={ (active?"bg-gray":"")}><Tile centered><TileContent>{item.label}</TileContent></Tile></MenuItem>}
+                    filter={ (item, query) => item.label.toLowerCase().includes(query.toLowerCase())}
+                    getItemValue={item=>item.label}
+                    value = {this.state.searchableValue}
+                    maxOptionsCount = {3}
+                    onChange={e => this.setState({ searchableValue: e.target.value })}
+                    onSelect={value => this.setState({searchableValue: value.label })}
+                    options={DocAutocomplete.suggestions}/>
             </DocSample>
+            <DocExample lang="javascript" content={`
+                export class Demo extends React.Component{
+
+                    static  suggestions = [
+                        { label: 'Afghanistan' },
+                        { label: 'Aland Islands' }
+                    ]
+                    constructor(p,c){
+                        super(p,c);
+                        this.state={
+                            searchableValue:"",
+                        }
+                    }
+
+                    render() {
+                        return (<Autocomplete
+                            placeholder='Search a country (start with a)'
+                            renderItem={(item,active)=><MenuItem className={ (active?"bg-gray":"")}><Tile centered><TileContent>{item.label}</TileContent></Tile></MenuItem>}
+                            filter={ (item, query) => item.label.toLowerCase().includes(query.toLowerCase())}
+                            getItemValue={item=>item.label}
+                            value = {this.state.searchableValue}
+                            maxOptionsCount = {3}
+                            onChange={e => this.setState({ searchableValue: e.target.value })}
+                            onSelect={value => this.setState({searchableValue: value.label })}
+                            options={DocAutocomplete.suggestions}/>)
+                   }
+                }
+            `}/>
+            <DocSample columns={12/10}>
+                Async data flow with multiple choice
+                <Autocomplete
+                    multiple={true}
+                    renderSelectedItem={(item)=><Chip><Avatar sm initial={item.id}/>{item.name}</Chip>}
+                    placeholder='Select multiple users'
+                    value={this.state.multipleValue}
+                    renderItem={(item,active)=><MenuItem className={ (active?"bg-gray":"")}><Tile centered><TileIcon><Avatar sm initial={item.id}/></TileIcon><TileContent>{item.name}</TileContent></Tile></MenuItem>}
+                    filter={ (item, query) => item.name.toLowerCase().includes(query.toLowerCase())}
+                    getItemValue={item=>item.name}
+                    onChange={this.onMultipleChoiceChange}
+                    maxOptionsCount = {3}
+                    onDelete={this.handleDelete}
+                    onSelect={this.handleAddition}
+                    options={this.state.options}
+                    selected={this.state.selected}/>
+            </DocSample>
+            <DocExample lang="javascript" content={`
+                export class Demo extends React.Component{
+                    constructor(p,c){
+                        super(p,c);
+                        this.state={
+                            selected : [],
+                            options:[],
+                            multipleValue:"",
+                        }
+                    }
+
+                    componentDidMount(){
+                        this.updateOptions();
+                    }
+
+
+                    updateOptions(){
+                        fetch("https://jsonplaceholder.typicode.com/users")
+                            .then(response=>response.json())
+                            .then(data=>{
+                                this.setState({options:data})
+                            })
+                            .catch(error=>console.log(error))
+                    }
+
+                    handleAddition = (item)=>{
+                        let {selected} = this.state;
+                        selected = [...selected];
+                        selected.push(item);
+                        this.setState({selected:selected,multipleValue:"",searchableValue:""})
+                    };
+
+                    onMultipleChoiceChange = (e)=>{
+                        this.setState({multipleValue:e.target.value});
+                        console.log(e.target.value , "value can be used to run some server-side filtering")
+                        this.updateOptions()
+                    };
+
+                    handleDelete = (item)=>{
+                        let {selected} = this.state;
+                        selected = [...selected];
+                        let index = selected.indexOf(item);
+                        selected.splice(index,1);
+                        this.setState({ selected })
+                    };
+                    render() {
+                        return <Autocomplete
+                            multiple={true}
+                            renderSelectedItem={(item)=><Chip><Avatar sm initial={item.id}/>{item.name}</Chip>}
+                            placeholder='Select multiple users'
+                            value={this.state.multipleValue}
+                            renderItem={(item,active)=><MenuItem className={ (active?"bg-gray":"")}><Tile centered><TileIcon><Avatar sm initial={item.id}/></TileIcon><TileContent>{item.name}</TileContent></Tile></MenuItem>}
+                            filter={ (item, query) => item.name.toLowerCase().includes(query.toLowerCase())}
+                            getItemValue={item=>item.name}
+                            onChange={this.onMultipleChoiceChange}
+                            maxOptionsCount = {3}
+                            onDelete={this.handleDelete}
+                            onSelect={this.handleAddition}
+                            options={this.state.options}
+                            selected={this.state.selected}/>
+                   }
+                }
+            `}/>
             <DocNote>
                 Add a container element with the <code>form-autocomplete</code> class. There are 2 parts of
                 it, one is <code>form-autocomplete-input</code>, another is <code>menu</code> component. You
@@ -100,69 +224,7 @@ export class DocAutocomplete extends DocPage {
                 Spectre.css does NOT include JavaScript code, you will need to implement your JS to interact
                 with the autocomplete. The autocomplete HTML structure is exampled below.
             </DocNote>
-            <DocSample columns={2}>
-                <div className="form-group">
-                    <div className="form-autocomplete autocomplete-oneline">
-                        <div className="form-autocomplete-input form-input">
-                            <span className="chip">
-                                Bruce Banner
-                            </span>
-                            <div className="chip">
-                                <img src="https://picturepan2.github.io/spectre/img/avatar-1.png"
-                                    className="avatar avatar-sm" alt="Avatar"/>
-                                Thor Odinson
-                            </div>
-                            <div className="chip">
-                                <img src="https://picturepan2.github.io/spectre/img/avatar-4.png"
-                                    className="avatar avatar-sm" alt="Avatar"/>
-                                Steve Rogers
-                            </div>
-                            <div className="chip">
-                                <figure className="avatar avatar-sm" data-initial="TS"
-                                style={{backgroundColor: '#5755d9'}}/>
-                                Tony Stark
-                            </div>
-                            <span className="chip active">
-                                Natasha Romanoff
-                            </span>
-                            <input className="form-input" type="text" placeholder/>
-                        </div>
-                    </div>
-                </div>
-            </DocSample>
-            <Code className="HTML">{E1}</Code>
+
         </DocSection>
     }
 }
-const E1 = `<div class="form-autocomplete">
-  <!-- autocomplete input container -->
-  <div class="form-autocomplete-input form-input">
-
-    <!-- autocomplete chips -->
-    <div class="chip">
-      <img src="img/avatar-1.png" class="avatar avatar-sm" alt="Thor Odinson">
-      Thor Odinson
-      <a href="#" class="btn btn-clear" aria-label="Close" role="button"></a>
-    </div>
-
-    <!-- autocomplete real input box -->
-    <input class="form-input" type="text" placeholder="typing here">
-  </div>
-
-  <!-- autocomplete suggestion list -->
-  <ul class="menu">
-    <!-- menu list chips -->
-    <li class="menu-item">
-      <a href="#">
-        <div class="tile tile-centered">
-          <div class="tile-icon">
-            <img src="img/avatar-4.png" class="avatar avatar-sm" alt="Steve Rogers">
-          </div>
-          <div class="tile-content">
-            Steve Rogers
-          </div>
-        </div>
-      </a>
-    </li>
-  </ul>
-</div>`;

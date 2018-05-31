@@ -31,7 +31,7 @@ export const enum Theme {
 // Buttons
 stylesheet('theme/buttons.css')('*',{
     ...css.nest(`&.${Theme.Button}`,{
-        appearance /*     */: css.value.none,
+        appearance /*     */: 'none',
         background /*     */: config.bgColorLight.rgba,
         borderWidth /*    */: rem(config.borderWidth),
         borderStyle /*    */: css.value.solid,

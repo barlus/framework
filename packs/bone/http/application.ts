@@ -32,14 +32,7 @@ export class HttpApplication extends HttpServer {
             const response = new HttpResponse();
             const context = new Context(request, response);
             try {
-                await Promise.race([
-                    this.handler(context, null),
-                    new Promise(
-                        (a,r)=>setTimeout(
-                            ()=>r(new Error('TIMEOUT')), 20000
-                        )
-                    )
-                ]);
+                await this.handler(context, null);
             }catch (e){
                 response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR,"Internal Server error");
 

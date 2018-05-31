@@ -1,0 +1,13 @@
+{
+  "name": "@barlus/experimental",
+  "version": "0.1.6",
+  "description": "Barlus Experimental Utilities",
+  "main": "./index",
+  "types": "./index",
+  "dependencies": {
+    "@barlus/runtime": "^0.1.2"
+  },
+  "license": "MIT",
+  "repository": "https://github.com/barlus/framework.git",
+  "author": "Mamble LLC"
+}

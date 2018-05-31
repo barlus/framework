@@ -28,7 +28,6 @@ export namespace css {
         export const block = display('block');
         export const inlineBlock = display('inline-block');
     }
-
     export const selectors = {
         class(className) {
             return `.${className}`

@@ -1191,7 +1191,7 @@ cssRule('.menu .menu-badge', {
     "float": "right",
     "padding": ".2rem 0"
 });
-cssRule('.menu .menu-badge .btn', {
+cssRule('.menu .menu-badge .Button', {
     "marginTop": "-.1rem"
 });
 cssRule('.modal', {

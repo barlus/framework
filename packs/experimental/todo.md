@@ -1,0 +1,10 @@
+- [ ] AsyncContainer utilities over async iterators and iteratables
+    - [x] every(callbackfn: (value: T) =&gt; Promise&lt;boolean&gt;, thisArg?: any): Promise&lt;boolean&gt;
+    - [x] some(callbackfn: (value: T) =&gt; Promise&lt;boolean&gt;, thisArg?: any): Promise&lt;boolean&gt;
+    - [x] forEach&lt;R&gt;(callbackfn: (value: T) =&gt; Promise&lt;void&gt; | Promise&lt;R&gt;, thisArg?: any, brakeOnReturn?: R): Promise&lt;void&gt;
+    - [x] reduce&lt;U&gt;(callbackfn: (previousValue: U, currentValue: T) =&gt; Promise&lt;U&gt;, initialValue: U, thisArg?: any): Promise&lt;U&gt;
+    - [x] map&lt;U&gt;(callbackfn: (value: T) =&gt; Promise&lt;U&gt;, thisArg?: any): AsyncContainer&lt;U&gt;
+    - [x] parallel&lt;U&gt;(concurrency: number, callbackfn: (value: T) =&gt; Promise&lt;U&gt;, thisArg?: any): AsyncContainer&lt;U&gt;
+    - [x] filter(callbackfn?: (value: T) =&gt; Promise&lt;boolean&gt;, thisArg?: any): AsyncContainer&lt;T&gt;
+    - [x] all(): Promise&lt;T[]&gt;
+- [x] async read map/set <?php >

@@ -98,6 +98,11 @@ class StateMachineTest {
             finishedReason = reason;
         })
 
+        this.machine.start();
+        await this.machine.stop(true);
+        
+        expect(finishedReason).toBe("Interrupt");
+
         this.external.enqueue({ name: "turn.on" });
         this.external.enqueue({ name: "time" });
         this.external.enqueue({ name: "time" });
@@ -116,6 +121,7 @@ class StateMachineTest {
         this.external.enqueue({ name: "time" });
         this.external.enqueue({ name: "time" });
 
+        paths = [];
         await this.machine.start();
 
         expect(finishedReason).toBe("Finished");

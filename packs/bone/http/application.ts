@@ -51,7 +51,10 @@ export class HttpApplication extends HttpServer {
             if (response.body) {
                 await AsyncStream.write(response.body, res);
             } else {
-                console.info("NO BODY?")
+                if(response.status != HttpStatus.NO_CONTENT)
+                {
+                    console.info("NO BODY?")
+                }
                 res.end();
             }
         }

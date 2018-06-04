@@ -1,17 +1,19 @@
 import * as React from "@barlus/nerv"
-import { DocExample, DocPage, DocSection, DocText, DocTitle } from "../../comps/DocPage";
-import { Button, Column, Columns, Modal, ModalBody, ModalFooter, ModalHeader } from "@barlus/spectre";
+import { Code } from "../comps/Code";
+import {DocExample, DocNote, DocPage, DocSection, DocText, DocTitle} from "../comps/DocPage";
+import {Button, Column, Columns, Modal, ModalBody, ModalFooter, ModalHeader} from "@barlus/spectre";
 
-export class DocModals extends DocPage {
+export class DocModals extends DocPage<any,any> {
     static title = "Modals";
-    static ready = true;
+
+
     render() {
         return <DocSection id={this.id} title={this.title}>
             <DocText text='Modals are flexible dialog prompts.'/>
             <Columns>
                 <Column>
-                    <Button primary>Open Modal</Button>
-                    <Modal>
+                    <Button primary onClick={()=>this.setState({open:true})}>Open Modal</Button>
+                    <Modal open={this.state.open || false} onBackgroundClick={()=>this.setState({open:false})} >
                         <ModalHeader>
                             Modal header
                         </ModalHeader>
@@ -48,7 +50,7 @@ export class DocModals extends DocPage {
                         </ModalBody>
                         <ModalFooter>
                             <Button primary>Share</Button>
-                            <Button link>Close</Button>
+                            <Button link onClick={()=>this.setState({open:false})}>Close</Button>
                         </ModalFooter>
                     </Modal>
                 </Column>

@@ -19,9 +19,9 @@ export class TextArea extends React.PureComponent<TextAreaProps, {}> {
         const inputProps = { id, ...otherProps };
         return <FormGroup {...formGroupProps}>
             <textarea {...inputProps} class={
-                classes(Theme.input, {
-                    [ Theme.success ]: success,
-                    [ Theme.error ]: error,
+                classes(Theme.formInput, {
+                    [ Theme.isSuccess ]: success,
+                    [ Theme.isError ]: error,
                 }, className)
             }>
                 {children}

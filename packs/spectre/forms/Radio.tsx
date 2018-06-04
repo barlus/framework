@@ -21,15 +21,15 @@ export class Radio extends React.Component<RadioProps, {}> {
         } = this.props;
 
         return <Label className={
-            classes(Theme.radio, {
+            classes(Theme.formRadio, {
                 [ Theme.inputSm ]: small,
                 [ Theme.inputLg ]: large,
-                [ Theme.success ]: success,
-                [ Theme.error ]: error,
+                [ Theme.isSuccess ]: success,
+                [ Theme.isError ]: error,
             }, className)
             }>
                 <input {...otherProps} type="radio"/>
-                <i class={classes(Theme.icon)} />
+                <i class={classes(Theme.formIcon)} />
             {label}
         </Label>
 

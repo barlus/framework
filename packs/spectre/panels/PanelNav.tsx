@@ -10,7 +10,7 @@ export class PanelNav extends React.PureComponent<PanelNavProps, {}> {
             children,
             ...otherProps
         } = this.props;
-        return (<nav {...otherProps} class={classes(Theme.nav,className)}>
+        return (<nav {...otherProps} class={classes(Theme.panelNav,className)}>
             {children}
         </nav>)
     }

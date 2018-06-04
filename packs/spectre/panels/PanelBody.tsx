@@ -10,7 +10,7 @@ export class PanelBody extends React.PureComponent<PanelBodyProps, {}> {
             children,
             ...otherProps
         } = this.props;
-        return (<div {...otherProps} class={classes(Theme.body,className)}>
+        return (<div {...otherProps} class={classes(Theme.panelBody,className)}>
             {children}
         </div>)
     }

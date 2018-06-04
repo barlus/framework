@@ -10,7 +10,7 @@ export class CardHeader extends React.PureComponent<CardHeaderProps, {}> {
             children,
             ...otherProps
         } = this.props;
-        return (<div {...otherProps} class={classes(Theme.CardHeader, className)}>
+        return (<div {...otherProps} class={classes(Theme.cardHeader, className)}>
             {children}
         </div>)
     }

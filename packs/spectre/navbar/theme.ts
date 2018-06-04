@@ -1,13 +1,36 @@
-import { stylesheet, rem, css } from '@barlus/styles';
-import { config } from '../config';
-import { buttonVariant } from '../mixins/button';
-import { controlShadow } from '../mixins/shadow';
-import { controlTransition } from '../mixins/transition';
+import { $, list, nest, rem, stylesheet } from "@barlus/styles"
 
+export default Theme;
 export const enum Theme {
-    Navbar  = 'navbar',
-    //
-    brand   = 'navbar-brand',
-    section = 'navbar-section',
-    center  = 'navbar-center'
+    navbar='navbar',
+    navbarBrand='navbar-brand',
+    navbarCenter='navbar-center',
+    navbarSection='navbar-section',
 }
+
+stylesheet('navbar.ts')('',{
+    ...nest([`.${Theme.navbar}`],{
+        alignItems:'stretch',
+        display:'flex',
+        flexWrap:'wrap',
+        justifyContent:'space-between',
+        ...nest([`.${Theme.navbarSection}`],{
+            alignItems:'center',
+            display:'flex',
+            flex:'1 0 0',
+            ...nest([`&:not(:first-child):last-child`],{
+                justifyContent:'flex-end',
+            }),
+        }),
+        ...nest([`.${Theme.navbarCenter}`],{
+            alignItems:'center',
+            display:'flex',
+            flex:'0 0 auto',
+        }),
+        ...nest([`.${Theme.navbarBrand}`],{
+            fontSize:rem($.fontSizeLg),
+            fontWeight:500,
+            textDecoration:'none',
+        }),
+    }),
+});

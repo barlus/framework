@@ -15,7 +15,7 @@ export class FormGroup extends React.PureComponent<FormGroupProps, {}> {
             children,
             ...otherProps
         } = this.props;
-        return <div {...otherProps} class={classes(Theme.FormGroup,{
+        return <div {...otherProps} class={classes(Theme.formGroup,{
                 [ Theme.hasSuccess ]: success,
                 [ Theme.hasError ]: error,
             }, className)}>

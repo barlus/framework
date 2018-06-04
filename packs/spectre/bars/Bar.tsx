@@ -15,8 +15,8 @@ export class Bar extends React.PureComponent<BarProps, {}> {
             ...otherProps
         } = this.props;
         return <div {...otherProps} class={
-            classes(Theme.Bar, {
-                [ Theme.small ]: small,
+            classes(Theme.bar, {
+                [ Theme.barSm ]: small,
             }, className)}>
             {progress === undefined || children.length !=0 ? (children) : (<BarItem progress={progress} />)}
         </div>

@@ -1,6 +1,5 @@
 import * as React from "@barlus/nerv";
 
-
 export class TableHeader extends React.PureComponent<TableHeaderProps, {}> {
     render() {
         const {

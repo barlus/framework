@@ -1,13 +1,29 @@
-import { stylesheet, rem, css } from '@barlus/styles';
-import { config } from '../config';
-import { buttonVariant } from '../mixins/button';
-import { controlShadow } from '../mixins/shadow';
-import { controlTransition } from '../mixins/transition';
+import { $, list, nest, rem, stylesheet } from "@barlus/styles"
 
+export default Theme;
 export const enum Theme {
-    Empty = "empty",
-    emptyIcon = "empty-icon",
-    emptyTitle = "empty-title",
-    emptySubtitle = "empty-subtitle",
-    emptyAction = "empty-action"
+    empty='empty',
+    emptyAction='empty-action',
+    emptyIcon='empty-icon',
+    emptySubtitle='empty-subtitle',
+    emptyTitle='empty-title',
 }
+
+stylesheet('empty.ts')('',{
+    ...nest([`.${Theme.empty}`],{
+        background:$.bgColor.rgba,
+        borderRadius:rem($.borderRadius),
+        color:$.grayColorDark.rgba,
+        textAlign:'center',
+        padding:list(rem($.unit16),rem($.unit8)),
+        ...nest([`.${Theme.emptyIcon}`],{
+            marginBottom:rem($.layoutSpacingLg),
+        }),
+        ...nest([`.${Theme.emptyTitle}`,`.${Theme.emptySubtitle}`],{
+            margin:list(rem($.layoutSpacing),'auto'),
+        }),
+        ...nest([`.${Theme.emptyAction}`],{
+            marginTop:rem($.layoutSpacingLg),
+        }),
+    }),
+});

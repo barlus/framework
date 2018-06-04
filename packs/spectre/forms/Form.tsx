@@ -13,7 +13,7 @@ export class Form extends React.PureComponent<FormProps, {}> {
         } = this.props;
         return <form {...otherProps} class={
             classes({
-                [ Theme.horizontal ]: horizontal,
+                [ Theme.formHorizontal ]: horizontal,
             }, className)
         }>{children}</form>
     }

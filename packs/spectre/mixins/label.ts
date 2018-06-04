@@ -1,5 +1,5 @@
 import { config } from '../config';
-import { rem, css } from '@barlus/styles';
+import { rem } from '@barlus/styles';
 
 // Label base style
 export const labelBase = (borderRadius = config.borderRadius) => ({

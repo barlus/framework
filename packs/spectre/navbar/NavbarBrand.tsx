@@ -11,7 +11,7 @@ export class NavbarBrand extends React.PureComponent<NavbarBrandProps, {}> {
             ...otherProps
         } = this.props;
 
-        return <a href={href || '#'} {...otherProps} class={classes(Theme.brand, className)}>
+        return <a href={href || '#'} {...otherProps} class={classes(Theme.navbarBrand, className)}>
             {children}
         </a>
     }

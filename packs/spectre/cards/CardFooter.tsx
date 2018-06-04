@@ -10,7 +10,7 @@ export class CardFooter extends React.PureComponent<CardFooterProps, {}> {
             children,
             ...otherProps
         } = this.props;
-        return (<div {...otherProps} class={classes(Theme.CardFooter, className)}>
+        return (<div {...otherProps} class={classes(Theme.cardFooter, className)}>
             {children}
         </div>)
     }

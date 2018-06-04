@@ -1,34 +1,34 @@
-import { stylesheet, rem, css } from '@barlus/styles';
+import { stylesheet, rem, nest} from '@barlus/styles';
 import { config } from '../config';
 import { controlShadow } from '../mixins/shadow';
 
 export const rule = stylesheet('base.css');
 
 rule('*,::after,::before', {
-    boxSizing: css.value.inherit,
+    boxSizing: 'inherit',
 });
 rule('html', {
-    boxSizing: css.value.borderBox,
+    boxSizing: 'border-box',
     fontSize: config.htmlFontSize,
     lineHeight: config.htmlLineHeight,
-    "-webkit-tap-highlight-color": css.value.transparent
+    "-webkit-tap-highlight-color": 'transparent'
 });
 rule('body', {
     background: config.bodyBg.rgba,
     color: config.bodyFontColor.rgba,
     fontFamily: config.baseFontFamily,
     fontSize: rem(config.fontSize),
-    overflowX: css.value.hidden,
+    overflowX: 'hidden',
     textRendering: "optimizeLegibility"
 });
 rule('a', {
     color: config.linkColor.rgba,
     outline: 0,
-    textDecoration: css.value.none,
-    ...css.nest('&:focus',{
+    textDecoration: 'none',
+    ...nest('&:focus',{
         ...controlShadow()
     }),
-    ...css.nest('&:focus, &:hover, &:active, &.active',{
+    ...nest('&:focus, &:hover, &:active, &.active',{
         color: config.linkColorDark.rgba,
         textDecoration: "underline"
     }),

@@ -14,8 +14,8 @@ export class Image extends React.PureComponent<ImageProps, {}> {
         return <img {...otherProps} class={
             classes({
                 [ Theme.imgResponsive ]: responsive,
-                [ Theme.imgContain ]: contain,
-                [ Theme.imgCover ]: cover,
+                [ Theme.imgFitContain ]: contain,
+                [ Theme.imgFitCover ]: cover,
             }, className)
         }>{children}/></img>
     }

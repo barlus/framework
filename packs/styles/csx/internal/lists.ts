@@ -10,5 +10,5 @@ const delimited = (delimiter: string) => {
   }
 };
 
-export const params = delimited(' ') as (...parameters: (undefined | number | string | StringType<string>)[]) => string;
-export const list = delimited(',') as (...items: (undefined | number | string | StringType<string>)[]) => string;
+export const list = delimited(' ') as (...parameters: (undefined | number | string | StringType<string>)[]) => string;
+export const join = delimited(',') as (...items: (undefined | number | string | StringType<string>)[]) => string;

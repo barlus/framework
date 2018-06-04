@@ -15,10 +15,10 @@ export class Table extends React.PureComponent<TableProps, {}> {
         } = this.props;
 
         return <table {...otherProps} class={
-            classes(Theme.Table, {
-                [ Theme.striped ]: striped,
-                [ Theme.scroll ]: scroll,
-                [ Theme.hover ]: hover,
+            classes(Theme.table, {
+                [ Theme.tableStriped ]: striped,
+                [ Theme.tableScroll ]: scroll,
+                [ Theme.tableHover ]: hover,
             }, className)
         }>{children}</table>
     }

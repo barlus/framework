@@ -10,7 +10,7 @@ export class Nav extends React.PureComponent<NavProps, {}> {
             children,
             ...otherProps
         } = this.props;
-        return (<ul {...otherProps} class={classes(Theme.Nav,className)}>
+        return (<ul {...otherProps} class={classes(Theme.nav,className)}>
             {children}
         </ul>)
     }

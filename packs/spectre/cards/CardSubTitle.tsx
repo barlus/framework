@@ -10,7 +10,7 @@ export class CardSubTitle extends React.PureComponent<CardSubTitleProps, {}> {
             children,
             ...otherProps
         } = this.props;
-        return (<div {...otherProps} class={classes(Theme.CardSubtitle, className)}>
+        return (<div {...otherProps} class={classes(Theme.cardSubtitle, className)}>
             {children}
         </div>)
     }

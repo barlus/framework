@@ -1,4 +1,3 @@
-import "@barlus/spectre"
+import "@barlus/spectre/styles"
 import "@barlus/spectre/icons"
-import "@barlus/spectre/experimental"
 import "./styles/docs"

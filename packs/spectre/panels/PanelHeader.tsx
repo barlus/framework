@@ -10,7 +10,7 @@ export class PanelHeader extends React.PureComponent<PanelHeaderProps, {}> {
             children,
             ...otherProps
         } = this.props;
-        return (<div {...otherProps} class={classes(Theme.header,className)}>
+        return (<div {...otherProps} class={classes(Theme.panelHeader,className)}>
             {children}
         </div>)
     }

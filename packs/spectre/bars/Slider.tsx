@@ -16,7 +16,7 @@ export class Slider extends React.PureComponent<SliderProps, {}> {
             progress,
             ...otherProps
         } = this.props;
-        return <Bar {...otherProps} className={classes(Theme.Slider, className)}>
+        return <Bar {...otherProps} className={classes(Theme.barSlider, className)}>
             {progress === undefined || children.length !=0 ? (children) : (<BarItem progress={progress} ><SliderButton/></BarItem>)}
         </Bar>
     }

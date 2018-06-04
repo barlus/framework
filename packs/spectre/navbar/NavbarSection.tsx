@@ -12,8 +12,8 @@ export class NavbarSection extends React.PureComponent<NavbarSectionProps, {}> {
         } = this.props;
 
         return <section {...otherProps} class={classes({
-            [Theme.section]:!center,
-            [Theme.center]:center
+            [Theme.navbarSection]:!center,
+            [Theme.navbarCenter]:center
         }, className)}>
             {children}
         </section>

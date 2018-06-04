@@ -8,15 +8,14 @@ export class MenuDivider extends React.PureComponent<MenuDividerProps, {}> {
             className,
             // Styles.
             content,
-
             children,
             ...otherProps
         } = this.props;
-        return (<li {...otherProps} data-content={content} class={classes(Theme.divider ,className)}/>)
+        return <li {...otherProps} data-content={content} class={classes(Theme.divider, className)}/>
     }
 }
 
 export interface MenuDividerProps {
     className?: string,
-    content?:string
+    content?: string
 }

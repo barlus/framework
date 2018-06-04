@@ -7,12 +7,16 @@ export class Tooltip extends React.PureComponent<TooltipProps, {}> {
         const {
             className,
             // Styles.
-            label,left,right,bottom,
+            label, left, right, bottom,
             children,
             ...otherProps
         } = this.props;
-        const c =  classes(Theme.Tooltip,{[Theme.left]:left,[Theme.right]:right,[Theme.bottom]:bottom});
-        const badged = React.Children.map(children,(child)=>{
+        const c = classes(Theme.tooltip, {
+            [ Theme.tooltipLeft ]: left,
+            [ Theme.tooltipRight ]: right,
+            [ Theme.tooltipBottom ]: bottom
+        });
+        const badged = React.Children.map(children, (child) => {
             const className = classes(c, child.props.className);
             const props = {
                 className,
@@ -26,8 +30,8 @@ export class Tooltip extends React.PureComponent<TooltipProps, {}> {
 
 export interface TooltipProps {
     className?: string,
-    label:string
-    left?:boolean
-    right?:boolean
-    bottom?:boolean
+    label: string
+    left?: boolean
+    right?: boolean
+    bottom?: boolean
 }

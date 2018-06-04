@@ -12,7 +12,7 @@ export class SliderButton extends React.PureComponent<SliderButtonProp, {}> {
             ...otherProps
         } = this.props;
         return (<Button role='slider' className={
-                classes(Theme.sliderButton, className)
+                classes(Theme.barSliderBtn, className)
             }{...otherProps}>
                 {children}
             </Button>

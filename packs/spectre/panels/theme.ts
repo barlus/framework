@@ -1,16 +1,33 @@
-import { stylesheet, rem, css } from '@barlus/styles';
-import { config } from '../config';
-import { buttonVariant } from '../mixins/button';
-import { controlShadow } from '../mixins/shadow';
-import { controlTransition } from '../mixins/transition';
+import { $, list, nest, rem, stylesheet } from "@barlus/styles"
 
+export default Theme;
 export const enum Theme {
-    Panel = "panel",
-    header = "panel-header",
-    title = "panel-title",
-    subtitle = "panel-subtitle",
-    nav = "panel-nav",
-    body = "panel-body",
-    footer = "panel-footer",
-
+    panel='panel',
+    panelBody='panel-body',
+    panelFooter='panel-footer',
+    panelHeader='panel-header',
+    panelNav='panel-nav',
+    panelTitle='panel-subtitle',
+    panelSubtitle='panel-subtitle',
 }
+
+stylesheet('panels.css')('',{
+    ...nest([`.${Theme.panel}`],{
+        border:list(rem($.borderWidth),'solid',$.borderColor.rgba),
+        borderRadius:rem($.borderRadius),
+        display:'flex',
+        flexDirection:'column',
+        ...nest([`.${Theme.panelHeader}`,`.${Theme.panelFooter}`],{
+            flex:'0 0 auto',
+            padding:rem($.layoutSpacingLg),
+        }),
+        ...nest([`.${Theme.panelNav}`],{
+            flex:'0 0 auto',
+        }),
+        ...nest([`.${Theme.panelBody}`],{
+            flex:'1 1 auto',
+            overflowY:'auto',
+            padding:list(0,rem($.layoutSpacingLg)),
+        }),
+    }),
+});

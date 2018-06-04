@@ -12,7 +12,7 @@ export class InputGroupButton extends React.PureComponent<InputGroupButtonProp, 
             ...otherProps
         } = this.props;
         return (<Button  className={
-                classes(Theme.inputGroupButton, className)
+                classes(Theme.inputGroupBtn, className)
             }{...otherProps}>
             {children}
         </Button>

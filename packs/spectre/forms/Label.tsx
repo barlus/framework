@@ -16,7 +16,7 @@ export class Label extends React.PureComponent<LabelProps, {}> {
             ...otherProps
         } = this.props;
         return (<label className={
-                classes(Theme.label, {
+                classes(Theme.formLabel, {
                     [ Theme.labelSm ]: small,
                     [ Theme.labelLg ]: large,
                 }, className)

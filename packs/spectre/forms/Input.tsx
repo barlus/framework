@@ -23,18 +23,18 @@ export class Input extends React.PureComponent<InputProps, {}> {
         const inputProps = { id, ...otherProps };
 
         let inputComp = <input {...inputProps} class={
-            classes(Theme.input, {
-                [ Theme.success ]: success,
-                [ Theme.error ]: error,
+            classes(Theme.formInput, {
+                [ Theme.isSuccess ]: success,
+                [ Theme.isError ]: error,
                 [ Theme.inputSm ]: small,
                 [ Theme.inputLg ]: large,
             }, className)
         }/>;
         const icon = (iconLeft || iconRight);
         inputComp =  (iconRight || iconLeft) ? (
-            <div className={iconRight ? Theme.iconRight : Theme.iconLeft}>
+            <div className={iconRight ? Theme.hasIconRight : Theme.hasIconLeft}>
                 {inputComp}
-                {React.cloneElement(icon,{"className":classes(icon.props.class,Theme.icon)})}
+                {React.cloneElement(icon,{"className":classes(icon.props.class,Theme.formIcon)})}
             </div>
         ) : inputComp;
         return (label ? <FormGroup {...formGroupProps}>

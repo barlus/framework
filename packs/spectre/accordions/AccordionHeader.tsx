@@ -18,12 +18,14 @@ export class AccordionHeader extends React.PureComponent<AccordionHeaderProps, {
         } = this.props;
         return [
             <input type={type} id={id} name={name} hidden defaultChecked={defaultChecked} />,
-            <label  class={classes(Theme.AccordionHeader,className)} htmlFor={id} {...otherProps}>
+            <label  class={classes(Theme.accordionHeader,className)} htmlFor={id} {...otherProps}>
                 {children}
             </label>,
         ]
     }
+
 }
+
 export interface AccordionHeaderProps {
     id:string,
     type?:"checkbox"|"radio"

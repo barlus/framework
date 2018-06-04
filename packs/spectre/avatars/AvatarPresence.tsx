@@ -13,7 +13,7 @@ export class AvatarPresence extends React.PureComponent<AvatarPresenceProps, {}>
             ...otherProps
         } = this.props;
         return <i {...otherProps} class={
-            classes(Theme.presence,{
+            classes(Theme.avatarPresence,{
                 [ Theme.busy ]: busy,
                 [ Theme.away ]: away,
                 [ Theme.online ]: online,

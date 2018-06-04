@@ -10,7 +10,7 @@ export class Panel extends React.PureComponent<PanelProps, {}> {
             children,
             ...otherProps
         } = this.props;
-        return (<div {...otherProps} class={classes(Theme.Panel,className)}>
+        return (<div {...otherProps} class={classes(Theme.panel,className)}>
             {children}
         </div>)
     }

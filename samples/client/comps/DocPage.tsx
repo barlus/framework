@@ -8,10 +8,11 @@ import {
     OffCanvasToggle
 } from "@barlus/spectre";
 
-export class DocNavItem extends React.PureComponent<{ href: string, title: string }, {}> {
+export class DocNavItem extends React.PureComponent<{ href: string, title: string, ready: boolean }, {}> {
     render() {
-        return <MenuItem>
-                <a href={this.props.href}>{this.props.title}</a>
+        const style = this.props.ready ? undefined : { backgroundColor: '#fbffca' };
+        return <MenuItem style={style}>
+            <a href={this.props.href}>{this.props.title}</a>
         </MenuItem>
     }
 }
@@ -59,14 +60,14 @@ export class DocSection extends React.PureComponent<{ id: string, title: string 
 
 export class DocText extends React.Component<React.PropsOf<typeof DocText>> {
     static defaultProps = {
-        trim:true as boolean,
-        text:'' as string,
+        trim: true as boolean,
+        text: '' as string,
         className: '' as string,
     };
     render() {
-        let {text, trim, ...props} = this.props;
+        let { text, trim, ...props } = this.props;
         return <div class="docs-note">
-            <p dangerouslySetInnerHTML={{__html: this.format(text.trim())}}/>
+            <p dangerouslySetInnerHTML={{ __html: this.format(text.trim()) }}/>
         </div>
     }
     format(md) {
@@ -124,7 +125,7 @@ export class DocExample extends React.PureComponent<{ lang?: string, content: st
     };
     outdent(str) {
         let arr = str.split(/\n/);
-        while(arr[0].trim()==''){
+        while (arr[ 0 ].trim() == '') {
             arr.shift()
         }
         str = arr.join('\n');
@@ -167,7 +168,8 @@ export class DocNavBar extends React.PureComponent<{ docs }, {}> {
         const category = (c, d) => {
             const href = `/#/${docs[ d ][ c ].id || docs[ d ][ c ].name}`;
             const title = docs[ d ][ c ].title || docs[ d ][ c ].name;
-            return <DocNavItem href={href} title={title}/>
+            const ready = docs[ d ][ c ].ready || false;
+            return <DocNavItem href={href} title={title} ready={ready}/>
         };
         const items = Object.keys(docs).map((d) => {
             return <DocNavCategory title={d} key={d} active>
@@ -192,38 +194,37 @@ export class DocNavBar extends React.PureComponent<{ docs }, {}> {
 }
 
 @observer
-export class DocApp extends React.PureComponent<{ docs }, {sidebarOpen:boolean}> {
+export class DocApp extends React.PureComponent<{ docs }, { sidebarOpen: boolean }> {
 
     @store router: RoutesStore;
 
-
-    constructor(p,c){
-        super(p,c);
-        this.state={sidebarOpen:false};
+    constructor(p, c) {
+        super(p, c);
+        this.state = { sidebarOpen: false };
     }
 
-    componentDidMount(){
-        window.onpopstate =  () =>(this.closeSidebarOnRoutExit())
+    componentDidMount() {
+        window.onpopstate = () => (this.closeSidebarOnRoutExit())
     }
 
-    closeSidebarOnRoutExit(){
-        this.setState({sidebarOpen:false});
+    closeSidebarOnRoutExit() {
+        this.setState({ sidebarOpen: false });
         return Promise.resolve();
     }
 
-    toggleSidebar = ()=>{
-        const {sidebarOpen} = this.state;
-        this.setState({sidebarOpen:!sidebarOpen})
-    }
+    toggleSidebar = () => {
+        const { sidebarOpen } = this.state;
+        this.setState({ sidebarOpen: !sidebarOpen })
+    };
 
-    onCanvasClose = ()=>{
-        this.setState({sidebarOpen:false})
-    }
+    onCanvasClose = () => {
+        this.setState({ sidebarOpen: false })
+    };
 
     render() {
         const routeName = this.router.routerState.routeName;
         const { docs } = this.props;
-        const {sidebarOpen} = this.state;
+        const { sidebarOpen } = this.state;
         const components = [];
         Object.keys(docs).forEach(d => {
             Object.keys(docs[ d ]).forEach(c => {
@@ -236,8 +237,11 @@ export class DocApp extends React.PureComponent<{ docs }, {sidebarOpen:boolean}>
         return (
             <OffCanvas className='docs-container' active={sidebarOpen} closeOnBgClick onBgClick={this.onCanvasClose}>
                 <div className="docs-navbar">
-                    <OffCanvasToggle onClick={this.toggleSidebar} link action><i className="icon icon-menu"/></OffCanvasToggle>
-                    <a href="https://github.com/picturepan2/spectre" target="_blank" className="btn btn-primary">GitHub</a>
+                    <OffCanvasToggle onClick={this.toggleSidebar} link action>
+                        <i className="icon icon-menu"/>
+                    </OffCanvasToggle>
+                    <a href="https://github.com/picturepan2/spectre" target="_blank"
+                       className="btn btn-primary">GitHub</a>
                 </div>
                 <OffCanvasSidebar className='docs-sidebar'>
                     <DocNavBar docs={this.props.docs}/>

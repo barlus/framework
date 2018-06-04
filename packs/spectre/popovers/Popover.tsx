@@ -7,23 +7,21 @@ export class Popover extends React.PureComponent<PopoverProps, {}> {
         const {
             className,
             // Styles.
-            left,right,bottom,
+            left, right, bottom,
             children,
             ...otherProps
         } = this.props;
-        return (<div {...otherProps} class={classes(Theme.Popover,{
-            [Theme.left]:left,
-            [Theme.right]:right,
-            [Theme.bottom]:bottom
-        },className)}>
-            {children}
-        </div>)
+        return <div {...otherProps} class={classes(Theme.popover, {
+            [ Theme.popoverLeft ]: left,
+            [ Theme.popoverRight ]: right,
+            [ Theme.popoverBottom ]: bottom
+        }, className)}>{children}</div>
     }
 }
 
 export interface PopoverProps {
     className?: string,
-    left?:boolean
-    right?:boolean
-    bottom?:boolean
+    left?: boolean
+    right?: boolean
+    bottom?: boolean
 }

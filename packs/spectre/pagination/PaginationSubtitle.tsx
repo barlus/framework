@@ -10,7 +10,7 @@ export class PaginationSubtitle extends React.PureComponent<PaginationSubtitlePr
             children,
             ...otherProps
         } = this.props;
-        return (<div {...otherProps} class={classes(Theme.paginationSubTitle,className)}>
+        return (<div {...otherProps} class={classes(Theme.pageItemSubtitle,className)}>
             {children}
         </div>)
     }

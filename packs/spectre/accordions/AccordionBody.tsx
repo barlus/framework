@@ -9,7 +9,7 @@ export class AccordionBody extends React.PureComponent<AccordionBodyProps, {}> {
             children,
             ...otherProps
         } = this.props;
-        return <div class={classes(Theme.AccordionBody,className)} {...otherProps}>
+        return <div class={classes(Theme.accordionBody,className)} {...otherProps}>
             {children}
         </div>
     }

@@ -20,15 +20,15 @@ export class Switch extends React.Component<SwitchProps, {}> {
         } = this.props;
 
         return <Label className={
-            classes(Theme.switch, {
+            classes(Theme.formSwitch, {
                 [ Theme.inputSm ]: small,
                 [ Theme.inputLg ]: large,
-                [ Theme.success ]: success,
-                [ Theme.error ]: error,
+                [ Theme.isSuccess ]: success,
+                [ Theme.isError ]: error,
             }, className)
             }>
                 <input {...otherProps} type="checkbox" />
-                <i class={classes(Theme.icon)} />
+                <i class={classes(Theme.formIcon)} />
                 {label}
         </Label>
 

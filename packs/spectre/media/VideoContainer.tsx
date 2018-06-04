@@ -16,8 +16,8 @@ export class VideoContainer extends React.PureComponent<VideoContainerProps, {}>
                 [ Theme.videoResponsive ]: responsive,
                 [ Theme.videoResponsive11 ]: responsive == '1:1',
                 [ Theme.videoResponsive43 ]: responsive == '4:3',
-                [ Theme.imgContain ]: contain,
-                [ Theme.imgCover ]: cover,
+                [ Theme.imgFitContain ]: contain,
+                [ Theme.imgFitCover ]: cover,
             }, className)
         }>{children}/></div>
     }

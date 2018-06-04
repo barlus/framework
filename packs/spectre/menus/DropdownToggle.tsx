@@ -11,7 +11,7 @@ export class DropdownToggle extends React.PureComponent<DropdownToggleProps, {}>
             ...otherProps
         } = this.props;
         const wrapped = React.Children.map(children,(child)=>{
-            const clazz = classes(Theme.DropdownToggle, child.props.className,className);
+            const clazz = classes(Theme.dropdownToggle, child.props.className,className);
             const props = {...{className:clazz},...{ ...otherProps}};
             return React.cloneElement(child, props)
         });

@@ -1,4 +1,4 @@
-import { stylesheet,css,media} from '@barlus/styles';
+import { stylesheet,nest,media} from '@barlus/styles';
 
 export const enum Theme {
     TodoFooter = 'footer',
@@ -13,7 +13,7 @@ stylesheet(`styles/${Theme.TodoFooter}.tcss`)(`.${Theme.TodoFooter}`,{
     height: 20,
     textAlign: 'center',
     borderTop: '1px solid #e6e6e6',
-    ...css.nest('&:before',{
+    ...nest('&:before',{
         content: "''",
         position: 'absolute',
         right: 0,
@@ -27,39 +27,39 @@ stylesheet(`styles/${Theme.TodoFooter}.tcss`)(`.${Theme.TodoFooter}`,{
         0 16px 0 -6px #f6f6f6,
         0 17px 2px -6px rgba(0, 0, 0, 0.2)`
     }),
-    ...css.nest(`& .${Theme.TodoCount}`,{
+    ...nest(`& .${Theme.TodoCount}`,{
         float: 'left',
         textAlign: 'left',
-        ...css.nest('strong',{
+        ...nest('strong',{
             fontWeight: 300
         })
     }),
-    ...css.nest(`& .${Theme.TodoFilters}`,{
+    ...nest(`& .${Theme.TodoFilters}`,{
         margin: 0,
         padding: 0,
         listStyle: 'none',
         position: 'absolute',
         right: 0,
         left: 0,
-        ...css.nest('& li',{
+        ...nest('& li',{
             display: 'inline',
-            ...css.nest('& a',{
+            ...nest('& a',{
                 color: 'inherit',
                 margin: 3,
                 padding: '3px 7px',
                 textDecoration: 'none',
                 border: '1px solid transparent',
                 borderRadius: 3,
-                ...css.nest('&:hover',{
+                ...nest('&:hover',{
                     borderColor: 'rgba(175, 47, 47, 0.1)'
                 }),
-                ...css.nest('&.selected',{
+                ...nest('&.selected',{
                     borderColor: 'rgba(175, 47, 47, 0.2)'
                 })
             })
         })
     }),
-    ...css.nest([
+    ...nest([
         `& .${Theme.TodoFooterClearCompleted}`,
         `& .${Theme.TodoFooterClearCompleted}:active`
     ],{
@@ -69,17 +69,17 @@ stylesheet(`styles/${Theme.TodoFooter}.tcss`)(`.${Theme.TodoFooter}`,{
         textDecoration:'none',
         cursor:'pointer'
     }),
-    ...css.nest(`& .${Theme.TodoFooterClearCompleted}:hover`,{
+    ...nest(`& .${Theme.TodoFooterClearCompleted}:hover`,{
         textDecoration:'none',
     }),
 });
 
 
 media({maxWidth:430},{
-    ...css.nest(`.${Theme.TodoFooter}`,{
+    ...nest(`.${Theme.TodoFooter}`,{
         height:50
     }),
-    ...css.nest(`.${Theme.TodoFilters}`,{
+    ...nest(`.${Theme.TodoFilters}`,{
         bottom:10
     })
 });

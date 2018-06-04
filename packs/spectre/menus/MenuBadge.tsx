@@ -11,7 +11,7 @@ export class MenuBadge extends React.PureComponent<MenuBadgeProps, {}> {
             children,
             ...otherProps
         } = this.props;
-        return (<div {...otherProps} class={classes(Theme.MenuBadge ,className)}>
+        return (<div {...otherProps} class={classes(Theme.menuBadge ,className)}>
             {children}
         </div>)
     }

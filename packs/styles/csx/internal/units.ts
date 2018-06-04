@@ -30,6 +30,10 @@ export const rad = formatUnit<CSSAngle>('rad');
  * Returns the number with a suffix of rem
  */
 export const rem = formatUnit<CSSLength>('rem');
+/**
+ * Returns the number with a suffix of rem
+ */
+export const s = formatUnit<CSSLength>('s');
 
 /**
  * Returns the number with a suffix of vh

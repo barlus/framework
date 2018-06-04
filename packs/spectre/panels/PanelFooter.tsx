@@ -10,7 +10,7 @@ export class PanelFooter extends React.PureComponent<PanelFooterProps, {}> {
             children,
             ...otherProps
         } = this.props;
-        return (<div {...otherProps} class={classes(Theme.footer,className)}>
+        return (<div {...otherProps} class={classes(Theme.panelFooter,className)}>
             {children}
         </div>)
     }

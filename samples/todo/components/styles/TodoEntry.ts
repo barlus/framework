@@ -1,10 +1,10 @@
-import { stylesheet,cssRule,css } from '@barlus/styles';
+import { stylesheet, nest } from '@barlus/styles';
 
 export const enum Theme {
     TodoEntry = 'todoentry'
 }
 
-stylesheet(`styles/${Theme.TodoEntry}.tcss`)(`.${Theme.TodoEntry}`,{
+stylesheet(`styles/${Theme.TodoEntry}.tcss`)(`.${Theme.TodoEntry}`, {
     padding: '16px 16px 16px 60px',
     border: 'none',
     background: 'rgba(0, 0, 0, 0.003)',
@@ -21,8 +21,7 @@ stylesheet(`styles/${Theme.TodoEntry}.tcss`)(`.${Theme.TodoEntry}`,{
     boxSizing: 'border-box',
     '-webkit-font-smoothing': 'antialiased',
     '-moz-osx-font-smoothing': 'grayscale',
-
-    ...css.nest(
+    ...nest(
         [
             `&::-webkit-input-placeholder`,
             `&::-moz-placeholder`,

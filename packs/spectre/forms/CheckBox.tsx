@@ -21,15 +21,15 @@ export class CheckBox extends React.Component<CheckBoxProps, {}> {
         } = this.props;
 
         return <Label className={
-            classes(Theme.checkbox, {
+            classes(Theme.formCheckbox, {
                 [ Theme.inputLg ]: large,
                 [ Theme.inputSm ]: small,
-                [ Theme.success ]: success,
-                [ Theme.error ]: error,
+                [ Theme.isSuccess ]: success,
+                [ Theme.isError ]: error,
             }, className)
         }>
             <input {...otherProps} type="checkbox" />
-            <i class={classes(Theme.icon)} />
+            <i class={classes(Theme.formIcon)} />
             {label}
         </Label>
 

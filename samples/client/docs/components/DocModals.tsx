@@ -1,10 +1,11 @@
 import * as React from "@barlus/nerv"
-import { Code } from "../comps/Code";
-import {DocExample, DocNote, DocPage, DocSection, DocText, DocTitle} from "../comps/DocPage";
+
+import {DocExample,  DocPage, DocSection, DocText, DocTitle} from "../../comps/DocPage";
 import {Button, Column, Columns, Modal, ModalBody, ModalFooter, ModalHeader} from "@barlus/spectre";
 
 export class DocModals extends DocPage<any,any> {
     static title = "Modals";
+    static ready = true;
 
 
     render() {

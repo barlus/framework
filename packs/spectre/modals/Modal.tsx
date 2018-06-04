@@ -47,7 +47,7 @@ export class Modal extends React.PureComponent<ModalProps, {close:boolean}> {
         } = this.props;
 
         return ( open && <Portal>
-            <div {...  otherProps} class={classes(Theme.Modal,Theme.active,{[Theme.small]:small,[Theme.large]:large},className)}>
+            <div {...  otherProps} class={classes(Theme.modal,Theme.active,{[Theme.modalSm]:small,[Theme.modalLg]:large},className)}>
                 <a class={Theme.modalOverlay} onclick={this.handleOnBackgroundClick}/>
                 <div class={Theme.modalContainer}>
                     {children}

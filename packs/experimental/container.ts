@@ -19,8 +19,8 @@ export class AsyncContainer<T> implements AsyncIterable<T>{
     some(callbackfn: (value: T) => Promise<boolean>, thisArg?: any): Promise<boolean> {
         return AsyncContainer.some(this[Symbol.asyncIterator](), callbackfn, thisArg);
     }
-    forEach<R>(callbackfn: (value: T) => Promise<void> | Promise<R>, thisArg?: any, brakeOnReturn?: R): Promise<void> {
-        return AsyncContainer.forEach<T, R>(this[Symbol.asyncIterator](), callbackfn, thisArg, brakeOnReturn);
+    forEach(callbackfn?: (value: T, breaker: () => void) => Promise<void>, thisArg?: any): Promise<void> {
+        return AsyncContainer.forEach<T>(this[Symbol.asyncIterator](), callbackfn, thisArg);
     }
     reduce<U>(callbackfn: (previousValue: U, currentValue: T) => Promise<U>, initialValue: U, thisArg?: any): Promise<U> {
         return AsyncContainer.reduce(this[Symbol.asyncIterator](), callbackfn, initialValue, thisArg);
@@ -52,29 +52,37 @@ export class AsyncContainer<T> implements AsyncIterable<T>{
 
     static async every<T>(iterator: AsyncIterator<T> | Iterator<T>, callbackfn: (value: T) => Promise<boolean>, thisArg?: any): Promise<boolean> {
         let result = true;
-        await this.forEach(iterator, async v => {
+        await this.forEach(iterator, async (v, breaker) => {
             if (false === await callbackfn.call(thisArg, v)) {
                 result = false;
-                return false;
+                breaker();
             }
-        }, null, false)
+        });
         return result;
     }
     static async some<T>(iterator: AsyncIterator<T> | Iterator<T>, callbackfn: (value: T) => Promise<boolean>, thisArg?: any): Promise<boolean> {
         let result = false;
-        await this.forEach(iterator, async v => {
+        await this.forEach(iterator, async (v, breaker) => {
             if (true === await callbackfn.call(thisArg, v)) {
                 result = true;
-                return false;
+                breaker();
             }
-        }, null, false)
+        })
         return result;
     }
-    static async forEach<T, R>(iterator: AsyncIterator<T> | Iterator<T>, callbackfn: (value: T) => Promise<void> | Promise<R>, thisArg?: any, brakeOnReturn?: R): Promise<void> {
+
+    static async forEach<T>(iterator: AsyncIterator<T> | Iterator<T>, callbackfn?: (value: T, breaker: () => void) => Promise<void>, thisArg?: any): Promise<void> {
         let result = await iterator.next();
+        let breaked = false;
+        let breaker = () => {
+            breaked = true;
+        }
         while (!result.done) {
-            if (brakeOnReturn === await callbackfn.call(thisArg, result.value) && brakeOnReturn !== undefined) {
-                break;
+            if (callbackfn) {
+                await callbackfn.call(thisArg, result.value, breaker)
+                if (breaked) {
+                    break;
+                }
             }
             result = await iterator.next();
         }
@@ -135,49 +143,74 @@ export class AsyncContainer<T> implements AsyncIterable<T>{
         await this.forEach(iterator, async v => { result.push(v) });
         return result;
     }
-    static parallel<T, U>(iterator: AsyncIterator<T>, concurrency: number, callbackfn: (value: T) => Promise<U>, thisArg?: any): AsyncIterableIterator<U> {
+
+    static parallel<T, U>(iterator: AsyncIterator<T> | Iterator<T>, concurrency: number, callbackfn: (value: T) => Promise<U>, thisArg?: any): AsyncIterableIterator<U> {
         let race = new AsyncRace<IteratorResult<U>>();
-        let count = 0;
-        let done = false;
-        function refill() {
-            if (count >= concurrency || done) {
-                return;
+        let sequential = new AsyncSequentialIterator(iterator);
+
+        async function call(promise: Promise<IteratorResult<T>>): Promise<IteratorResult<U>> {
+            let result = await promise;
+            if (result.done) {
+                return {
+                    done: true,
+                    value: undefined
+                }
             }
-            count++
-            let promise = iterator.next();
-            promise.then(result => {
-                if (!result.done) {
-                    race.push(callbackfn.call(thisArg, result.value).then(value => {
-                        return {
-                            done: false,
-                            value
-                        }
-                    }))
-                    refill();
-                }
-                else {
-                    done = true
-                }
-            }).catch(reason => {
-                race.push(Promise.reject(reason));
-            })
+            return {
+                done: false,
+                value: await callbackfn.call(thisArg, result.value)
+            }
         }
+
         return {
             [Symbol.asyncIterator](): AsyncIterableIterator<U> {
                 return this;
             },
             next(value?: any): Promise<IteratorResult<U>> {
-                refill();
-                if (done && race.length == 0) {
-                    return Promise.resolve({
-                        done: true,
-                        value: undefined
-                    })
+                while (race.length < concurrency) {
+                    race.push(call(sequential.next()))
                 }
-                return race.pop().then((r) => {
-                    count--
-                    return r
-                })
+                return race.pop();
+            },
+        }
+    }
+
+    static priority<T>(iterators: { it: AsyncIterator<T> | Iterator<T>, nice: number }[]): AsyncIterableIterator<T> {
+        async function next(it: AsyncIterator<T> | Iterator<T>) {
+            return {
+                it,
+                result: await it.next()
+            }
+        }
+        let prioritizer = new Prioritizer<AsyncIterator<T> | Iterator<T>>();
+        let cache = new Map<AsyncIterator<T> | Iterator<T>, Promise<{ it: AsyncIterator<T> | Iterator<T>, result: IteratorResult<T> }>>()
+        for (let value of iterators) {
+            prioritizer.set(value.it, value.nice);
+            cache.set(value.it, next(value.it))
+        }
+        return {
+            [Symbol.asyncIterator](): AsyncIterableIterator<T> {
+                return this;
+            },
+            async next(value?: any): Promise<IteratorResult<T>> {
+                while (true) {
+                    let candidates = prioritizer.order().map(value => cache.get(value));
+                    if (candidates.length == 0) {
+                        return {
+                            done: true,
+                            value: undefined
+                        }
+                    }
+                    let winner = await Promise.race(candidates);
+                    if (winner.result.done) {
+                        prioritizer.delete(winner.it);
+                        cache.delete(winner.it);
+                    } else {
+                        prioritizer.record(winner.it)
+                        cache.set(winner.it, next(winner.it))
+                        return winner.result;
+                    }
+                }
             },
         }
     }
@@ -190,59 +223,91 @@ export class AsyncContainer<T> implements AsyncIterable<T>{
     }
 }
 
-class AsyncRace<T>{
+export class AsyncSequentialIterator<T> implements AsyncIterator<T>{
+    next(value?: any): Promise<IteratorResult<T>> {
+        this.previous = this.previous.then((result) => {
+            if (result.done) {
+                return {
+                    done: true,
+                    value: undefined
+                }
+            }
+            return this.iterator.next(value);
+        })
+        return this.previous
+    }
+    constructor(private iterator: AsyncIterator<T> | Iterator<T>) { }
+    private previous = Promise.resolve({ done: false, value: undefined })
+}
+
+export class AsyncRace<T>{
     push(...promises: Promise<T>[]) {
         for (let p of promises) {
-            this.count++;
-            p.then(value => {
+            this.pending++;
+            let hook = () => {
                 if (this.defers.length) {
                     let defer = this.defers.shift();
-                    defer.accept(value);
+                    defer.accept(p)
+                } else {
+                    this.promises.push(p)
                 }
-                else {
-                    this.buffer.push({
-                        value,
-                        accepted: true
-                    });
-                }
-                this.count--
-            }, reason => {
-                if (this.defers.length) {
-                    let defer = this.defers.shift();
-                    defer.reject(reason);
-                }
-                else {
-                    this.buffer.push({
-                        reason,
-                        accepted: false
-                    });
-                    
-                }
-                this.count--
-            })
+                this.pending--;
+            }
+            p.then(hook, hook)
         }
     }
     pop(): Promise<T> {
-        if (this.buffer.length) {
-            let result = this.buffer.shift();
-            if (result.accepted === true) {
-                return Promise.resolve(result.value);
-            }
-            if (result.accepted === false) {
-                return Promise.reject(result.reason)
-            }
+        if (this.promises.length) {
+            return this.promises.shift();
         }
         let defer = new AsyncDefer<T>();
         this.defers.push(defer);
         return defer.promise;
     }
     get length() {
-        return this.count + this.buffer.length;
+        return this.pending
     }
-    constructor() {
-
-    }
-    private count = 0;
+    private pending = 0;
     private defers: AsyncDefer<T>[] = []
-    private buffer: ({ value: T, accepted: true } | { reason: any, accepted: false })[] = []
+    private promises: Promise<T>[] = [];
+}
+
+class Prioritizer<T> {
+    private normalize() {
+        let concourents = [...this.concourents]
+        let total = concourents.reduce((p, [key, nice]) => p + nice, 0);
+        this.normalized = concourents.map(([key, nice]) => {
+            let normal = nice ? (total) ? (total - nice) / total : 2 : 2;
+            return [key, normal] as [T, number]
+        });
+    }
+    set(key: T, nice: number) {
+        this.concourents.set(key, nice)
+        this.normalize();
+        this.statistics.set(key, { value: 0 })
+    }
+    delete(key: T) {
+        this.concourents.delete(key);
+        this.normalize();
+        this.statistics.delete(key);
+        this.records = [...this.statistics.values()].reduce((p, c) => (p + c.value), 0)
+    }
+    order(): T[] {
+        let scores: [T, number][] = [];
+        for (let [key, normal] of this.normalized) {
+            let score = (this.records) ? this.statistics.get(key).value / this.records - normal : -normal;
+            scores.push([key, score]);
+        }
+        return scores.sort((a, b) => {
+            return a[1] - b[1]
+        }).map(p => p[0]);
+    }
+    record(key: T) {
+        this.statistics.get(key).value++;
+        this.records++;
+    }
+    private records = 0;
+    private statistics = new Map<T, { value: number }>();
+    private concourents = new Map<T, number>();
+    private normalized: [T, number][] = [];
 }

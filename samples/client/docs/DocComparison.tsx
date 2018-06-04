@@ -1,53 +1,44 @@
 import * as React from "@barlus/nerv"
 import { Code } from "../comps/Code";
+import {DocNote, DocPage, DocSample, DocSection} from "../comps/DocPage";
 
-const E1 = ``;
-const E2 = ``;
 
-export class DocComparison extends React.PureComponent<{}, {}> {
+export class DocComparison extends DocPage{
+    static title = 'Comparison';
     render() {
-        return <div id="comparison" className="container">
-            <h3 className="s-title"><a href="#comparison" className="anchor" aria-hidden="true">#</a>Comparison
-                Sliders</h3>
-            <div className="docs-note">
-                <p>Comparison Sliders are sliders for comparing two images. It is built in pure CSS.</p>
-            </div>
-            <div className="columns">
-                <div className="column col-12">
-                    <div className="comparison-slider">
-                        <figure className="comparison-before">
-                            <img src="https://picturepan2.github.io/spectre/img/macos-sierra-2.jpg"
-                                 className="rounded" alt="macOS Sierra Wallpaper"/>
-                            <div className="comparison-label">Before</div>
-                        </figure>
-                        <figure className="comparison-after">
-                            <img src="https://picturepan2.github.io/spectre/img/macos-sierra-2.jpg"
-                                 className="filter-grayscale rounded" alt="macOS Sierra Wallpaper"/>
-                            <div className="comparison-label">After</div>
-                            <textarea className="comparison-resizer" readOnly defaultValue={""}/>
-                        </figure>
-                    </div>
+        return  <DocSection id={this.id} title={this.title}>
+            <DocNote>
+                Comparison Sliders are sliders for comparing two images. It is built in pure CSS.
+            </DocNote>
+            <DocSample>
+                <div className="comparison-slider">
+                    <figure className="comparison-before">
+                        <img src="https://picturepan2.github.io/spectre/img/macos-sierra-2.jpg"
+                             className="rounded" alt="macOS Sierra Wallpaper"/>
+                        <div className="comparison-label">Before</div>
+                    </figure>
+                    <figure className="comparison-after">
+                        <img src="https://picturepan2.github.io/spectre/img/macos-sierra-2.jpg"
+                             className="filter-grayscale rounded" alt="macOS Sierra Wallpaper"/>
+                        <div className="comparison-label">After</div>
+                        <textarea className="comparison-resizer" readOnly defaultValue={""}/>
+                    </figure>
                 </div>
-            </div>
-            <pre className="code" data-lang="HTML"><code>&lt;<span className="tag">div</span> <span
-                className="atn">class</span>=<span
-                className="atv">"comparison-slider"</span>&gt;{"\n"}{"  "}&lt;<span
-                className="tag">figure</span> <span className="atn">class</span>=<span
-                className="atv">"comparison-before"</span>&gt;{"\n"}{"    "}<span className="com">&lt;!-- image (before) --&gt;</span>{"\n"}{"    "}&lt;
-                <span className="tag">div</span> <span className="atn">class</span>=<span
-                    className="atv">"comparison-label"</span>&gt;Before&lt;<span
-                    className="tag">/div</span>&gt;{"\n"}{"  "}&lt;<span
-                    className="tag">/figure</span>&gt;{"\n"}{"\n"}{"  "}&lt;<span className="tag">figure</span> <span
-                    className="atn">class</span>=<span
-                    className="atv">"comparison-after"</span>&gt;{"\n"}{"    "}<span className="com">&lt;!-- image (after) --&gt;</span>{"\n"}{"    "}&lt;
-                <span className="tag">div</span> <span className="atn">class</span>=<span
-                    className="atv">"comparison-label"</span>&gt;After&lt;<span
-                    className="tag">/div</span>&gt;{"\n"}{"    "}&lt;<span className="tag">textarea</span> <span
-                    className="atn">class</span>=<span className="atv">"comparison-resizer"</span> <span
-                    className="atn">readonly</span>&gt;&lt;<span
-                    className="tag">/textarea</span>&gt;{"\n"}{"  "}&lt;<span
-                    className="tag">/figure</span>&gt;{"\n"}&lt;<span
-                    className="tag">/div</span>&gt;{"\n"}</code></pre>
-        </div>
+            </DocSample>
+            <Code className="HTML">{E1}</Code>
+        </DocSection>
     }
 }
+
+const E1 = `<div class="comparison-slider">
+  <figure class="comparison-before">
+    <!-- image (before) -->
+    <div class="comparison-label">Before</div>
+  </figure>
+
+  <figure class="comparison-after">
+    <!-- image (after) -->
+    <div class="comparison-label">After</div>
+    <textarea class="comparison-resizer" readonly></textarea>
+  </figure>
+</div>`;

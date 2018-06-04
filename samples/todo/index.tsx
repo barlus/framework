@@ -1,4 +1,7 @@
 import "@barlus/runtime"
+
+import "./components/styles/TodoApp";
+
 import * as React from '@barlus/nerv';
 import { Provider } from '@barlus/storex';
 import { TodoStore } from './stores/TodoStore';

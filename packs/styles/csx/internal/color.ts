@@ -324,7 +324,9 @@ export class ColorHelper implements StringType<CSSColor> {
             new ColorHelper(HSL, modDegrees(v[H] + degrees), v[S], v[L], this._values[A], this._hasAlpha)
         );
     }
-
+    get rgba(){
+        return this.toRGBA().toString()
+    }
     // TODO
     //complement($color)
     //scale-color($color, [$red], [$green], [$blue], [$saturation], [$lightness], [$alpha])

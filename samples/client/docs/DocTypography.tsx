@@ -1,22 +1,31 @@
 import * as React from "@barlus/nerv"
-import { DocExample, DocNote, DocPage, DocSample, DocSection, DocTitle } from '../comps/DocPage';
+import { DocExample, DocText, DocPage, DocSample, DocSection, DocTitle } from '../comps/DocPage';
 
 export class DocTypography extends DocPage {
     static title = "Typography";
     render() {
         return <DocSection id={this.id} title={this.title}>
-            <DocNote>Typography sets default styles for headings, paragraphs, semantic text, blockquote and lists
-                elements.</DocNote>
+            <DocText text={`
+                Typography sets default styles for headings, paragraphs,
+                semantic text, ~blockquote~ and lists elements.
+            `}/>
             <DocTitle>Headings</DocTitle>
             <DocSample>
+                <h1>H1 Heading <small class="label">40px</small></h1>
+                    <h2>H2 Heading <small class="label">32px</small></h2>
+                    <h3>H3 Heading <small class="label">28px</small></h3>
+                    <span class="h4">H4 Heading <small class="label">24px</small></span>
+                    <span class="h5">H5 Heading <small class="label">20px</small></span>
+                <span class="h6">H6 Heading <small class="label">16px</small></span>
+            </DocSample>
+            <DocExample content={`
                 <h1>H1 Heading <small class="label">40px</small></h1>
                 <h2>H2 Heading <small class="label">32px</small></h2>
                 <h3>H3 Heading <small class="label">28px</small></h3>
                 <span class="h4">H4 Heading <small class="label">24px</small></span>
                 <span class="h5">H5 Heading <small class="label">20px</small></span>
                 <span class="h6">H6 Heading <small class="label">16px</small></span>
-            </DocSample>
-            <DocExample content={EX1}/>
+            `}/>
             <DocTitle>Paragraphs</DocTitle>
             <DocSample>
                 <p>
@@ -31,7 +40,19 @@ export class DocTypography extends DocPage {
                     but rub face on everything hopped up on goofballs.
                 </p>
             </DocSample>
-            <DocExample content={EX2}/>
+            <DocExample content={`
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur <a href="#typography">
+                    adipiscing elit. Praesent risus leo, dictum in vehicula sit amet</a>,
+                    feugiat tempus tellus. Duis quis sodales risus. Etiam
+                    euismod ornare consequat.
+                </p>
+                <p>
+                    Climb leg rub face on everything give attitude nap all
+                    day for under the bed. Chase mice attack feet
+                    but rub face on everything hopped up on goofballs.
+                </p>
+            `}/>
             <DocTitle>Semantic text elements</DocTitle>
             <DocSample columns={2}>
                 <div><abbr title="Internationalization">I18N</abbr><code className="ml-2">&lt;abbr&gt;</code></div>
@@ -51,11 +72,7 @@ export class DocTypography extends DocPage {
                     <mark>Highlighted</mark>
                     <code className="ml-2">&lt;mark&gt;</code></div>
                 <div>
-                    <ruby>漢
-                        <rt>kan</rt>
-                        字
-                        <rt>ji</rt>
-                    </ruby>
+                    <ruby>漢<rt>kan</rt>字<rt>ji</rt></ruby>
                     <code className="ml-2">&lt;ruby&gt;</code></div>
                 <div><s>Strikethrough</s><code className="ml-2">&lt;s&gt;</code></div>
                 <div><samp>Sample</samp><code className="ml-2">&lt;samp&gt;</code></div>
@@ -68,12 +85,50 @@ export class DocTypography extends DocPage {
                 <div><var>x</var> = <var>y</var> + 2<code className="ml-2">&lt;var&gt;</code></div>
             </DocSample>
             <DocTitle>Fonts</DocTitle>
-            <DocNote>
-                Spectre sets the most common and best <code>font-family</code> for each
-                OS with fallback support in old systems. There are also fonts targeted
+            <DocText text={`
+                Spectre sets the most common and best ~font-family~ for each
+                OS with fallback support in old [systems](http://example.com). There are also fonts targeted
                 East Asian typography.
-            </DocNote>
-            <DocExample content={EX5}/>
+            `}/>
+            <DocExample lang={'CSS'} content={`
+               html {
+                    /* Western typography targeted */
+                    font-family:
+                        -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto,
+                        "Helvetica Neue", sans-serif;
+                    /* Monospace typography targeted */
+                    font-family: "SF Mono", "Segoe UI Mono", "Roboto Mono", Menlo,
+                        Courier, monospace;
+                    /* Chinese (lang="zh-Hans" and lang="zh-Hant") targeted */
+                    font-family: -apple-system, system-ui, BlinkMacSystemFont,
+                        "Segoe UI", Roboto, "PingFang SC", "Hiragino Sans GB",
+                        "Microsoft YaHei", "Helvetica Neue", sans-serif;
+                    /* Japanese (lang="ja") targeted */
+                    font-family: -apple-system, system-ui, BlinkMacSystemFont,
+                        "Segoe UI", Roboto, "Hiragino Sans",
+                        "Hiragino Kaku Gothic Pro", "Yu Gothic", YuGothic, Meiryo,
+                        "Helvetica Neue", sans-serif;
+                    /* Korean (lang="ko") targeted */
+                    font-family: -apple-system, system-ui, BlinkMacSystemFont,
+                        "Segoe UI", Roboto, "Malgun Gothic", "Helvetica Neue", sans-serif;
+                }
+            `}/>
+            <DocExample lang={'JS'} content={`
+                // Comment Here
+                function render(){
+                    return <ul className="list">
+                        <li>list item 1</li>
+                        <li>list item 2
+                            <ul>
+                                <li>list item 2.1</li>
+                                <li>list item 2.2</li>
+                                <li>list item 2.3</li>
+                            </ul>
+                        </li>
+                        <li>list item 3</li>
+                    </ul>;
+                }
+            `}/>
             <DocSample>
                 <blockquote>
                     <p>
@@ -83,7 +138,16 @@ export class DocTypography extends DocPage {
                     <cite>- Bill Gates</cite>
                 </blockquote>
             </DocSample>
-            <DocExample content={EX6}/>
+            <DocExample content={`
+                <blockquote>
+                    <p>
+                        The advance of technology is based on making it fit
+                        in so that you don't really even notice it,
+                        so it's part of everyday life.
+                    </p>
+                    <cite> - Bill Gates</cite>
+                </blockquote>
+            `}/>
             <DocTitle>Lists</DocTitle>
             <DocSample columns={3}>
                 <ul className="list">
@@ -117,83 +181,25 @@ export class DocTypography extends DocPage {
                     <dd>description list description 3</dd>
                 </dl>
             </DocSample>
-            <DocExample content={EX7}/>
+            <DocExample content={`
+                <!-- unordered list -->
+                <ul>
+                  <li>list item 1</li>
+                  <li>list item 2
+                    <ul>
+                      <li>list item 2.1</li>
+                      <li>list item 2.2</li>
+                      <li>list item 2.3</li>
+                    </ul>
+                  </li>
+                  <li>list item 3</li>
+                </ul>
+                <!-- description list -->
+                <dl>
+                  <dt>description list term</dt>
+                  <dd>description list description</dd>
+                </dl>
+            `}/>
         </DocSection>
     }
 }
-
-const EX1 = [ `
-<h1>H1 Heading <small class="label">40px</small></h1>
-<h2>H2 Heading <small class="label">32px</small></h2>
-<h3>H3 Heading <small class="label">28px</small></h3>
-<span class="h4">H4 Heading <small class="label">24px</small></span>
-<span class="h5">H5 Heading <small class="label">20px</small></span>
-<span class="h6">H6 Heading <small class="label">16px</small></span>
-` ];
-const EX2 = [ `
-<p>
-    Lorem ipsum dolor sit amet, consectetur <a href="#typography">
-    adipiscing elit. Praesent risus leo, dictum in vehicula sit amet</a>,
-    feugiat tempus tellus. Duis quis sodales risus. Etiam
-    euismod ornare consequat.
-</p>
-<p>
-    Climb leg rub face on everything give attitude nap all
-    day for under the bed. Chase mice attack feet
-    but rub face on everything hopped up on goofballs.
-</p>
-` ];
-const EX5 = [ `
-<style>
-    html {
-        /* Western typography targeted */
-        font-family: 
-            -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, 
-            "Helvetica Neue", sans-serif;
-        /* Monospace typography targeted */
-        font-family: "SF Mono", "Segoe UI Mono", "Roboto Mono", Menlo, 
-            Courier, monospace;
-        /* Chinese (lang="zh-Hans" and lang="zh-Hant") targeted */
-        font-family: -apple-system, system-ui, BlinkMacSystemFont, 
-            "Segoe UI", Roboto, "PingFang SC", "Hiragino Sans GB", 
-            "Microsoft YaHei", "Helvetica Neue", sans-serif;
-        /* Japanese (lang="ja") targeted */
-        font-family: -apple-system, system-ui, BlinkMacSystemFont,
-            "Segoe UI", Roboto, "Hiragino Sans", 
-            "Hiragino Kaku Gothic Pro", "Yu Gothic", YuGothic, Meiryo,
-            "Helvetica Neue", sans-serif;
-        /* Korean (lang="ko") targeted */
-        font-family: -apple-system, system-ui, BlinkMacSystemFont, 
-            "Segoe UI", Roboto, "Malgun Gothic", "Helvetica Neue", sans-serif;
-    }
-</style>
-` ];
-const EX6 = [ `
-<blockquote>
-    <p>
-        The advance of technology is based on making it fit 
-        in so that you don't really even notice it, 
-        so it's part of everyday life. 
-    </p>
-    <cite> - Bill Gates</cite>
-</blockquote>
-` ];
-const EX7 = [ `
-<!-- unordered list -->
-<ul>
-  <li>list item 1</li>
-  <li>list item 2
-    <ul>
-      <li>list item 2.1</li>
-      <li>list item 2.2</li>
-      <li>list item 2.3</li>
-    </ul>
-  </li>
-  <li>list item 3</li>
-</ul>
-<!-- description list -->
-<dl>
-  <dt>description list term</dt>
-  <dd>description list description</dd>
-</dl>
-` ];

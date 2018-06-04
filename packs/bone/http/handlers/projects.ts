@@ -35,6 +35,9 @@ interface ProjectsOptions extends ServiceOptions {
     base?: string;
 }
 export class ProjectRoute extends RouteHandler {
+    static get service(){
+        return Service.service;
+    }
     protected options: ProjectsOptions;
     constructor(options: ProjectsOptions={}) {
         options = Object.assign({
@@ -65,7 +68,6 @@ export class FilesRoute extends Resource {
 
     @route.get('/(.*)')
     async files(filename) {
-        console.info(filename);
         try {
             let path = this.normalizePath('/' + filename);
             //let content = this.tryGetOutput(path);

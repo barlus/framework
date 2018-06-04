@@ -100,7 +100,14 @@ cssRule('.docs-content .s-subtitle+.docs-note,.docs-content .s-title+.docs-note'
     "marginTop": ".4rem"
 });
 cssRule('.docs-content .docs-note', {
-    "margin": "1.5rem 0"
+    "margin": "1.5rem 0",
+    border: `0.1rem dotted #bdbd47`,
+    padding: `0.5rem`,
+    backgroundColor: `#ffffed`,
+    ["p" as '*']:{
+        margin:0
+    }
+
 });
 cssRule('.docs-content .docs-ad', {
     "background": "#f8f9fa",

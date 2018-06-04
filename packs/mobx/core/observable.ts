@@ -174,7 +174,7 @@ export function reportObserved(observable: IObservable): boolean {
 //     // it's expensive so better not run it in produciton. but temporarily helpful for testing
 //     const min = getObservers(observable).reduce((a, b) => Math.min(a, b.dependenciesState), 2)
 //     if (min >= observable.lowestObserverState) return // <- the only assumption about `lowestObserverState`
-//     throw new Error(
+//     throw new error(
 //         "lowestObserverState is wrong for " +
 //             msg +
 //             " because " +

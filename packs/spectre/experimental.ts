@@ -460,6 +460,7 @@ cssRule('.meter:-moz-meter-sub-optimum::-moz-meter-bar', {
 cssRule('.meter:-moz-meter-sub-sub-optimum::-moz-meter-bar', {
     "background": "#e85600"
 });
+
 cssRule('.off-canvas', {
     "display": [
         "flex",
@@ -510,13 +511,14 @@ cssRule('.off-canvas .off-canvas-overlay', {
     "top": 0,
     "width": "100%"
 });
-cssRule('.off-canvas .off-canvas-sidebar.active,.off-canvas .off-canvas-sidebar:target', {
+cssRule('.off-canvas.active .off-canvas-sidebar', {
     "transform": "translateX(0)"
 });
-cssRule('.off-canvas .off-canvas-sidebar.active~.off-canvas-overlay,.off-canvas .off-canvas-sidebar:target~.off-canvas-overlay', {
+cssRule('.off-canvas.active .off-canvas-overlay', {
     "display": "block",
     "zIndex": 100
 });
+
 cssRule('.parallax', {
     "display": "block",
     "height": "auto",

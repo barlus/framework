@@ -5,12 +5,14 @@ import { ViewStore } from '../stores/ViewStore';
 import { pluralize } from '../utils';
 import { ALL_TODOS, ACTIVE_TODOS, COMPLETED_TODOS } from '../constants';
 
+import {Theme} from './styles/TodoFooter';
+
 @inject('todoStore','viewStore')
 @observer
 export class TodoFooter extends React.Component<TodoFooterProps> {
 
     render() {
-        const todoStore = this.props.todoStore;
+        const todoStore = this.context.mobxStores.todoStore;
         if (!todoStore.activeTodoCount && !todoStore.completedCount) {
             return '';
         }
@@ -18,11 +20,11 @@ export class TodoFooter extends React.Component<TodoFooterProps> {
         const activeTodoWord = pluralize(todoStore.activeTodoCount, 'item');
 
         return (
-            <footer className="footer">
-				<span className="todo-count">
+            <footer class={Theme.TodoFooter}>
+				<span class={Theme.TodoCount}>
 					<strong>{todoStore.activeTodoCount}</strong> {activeTodoWord} left
 				</span>
-                <ul className="filters">
+                <ul class={Theme.TodoFilters}>
                     {this.renderFilterLink(ALL_TODOS, "", "All")}
                     {this.renderFilterLink(ACTIVE_TODOS, "active", "Active")}
                     {this.renderFilterLink(COMPLETED_TODOS, "completed", "Completed")}
@@ -30,7 +32,7 @@ export class TodoFooter extends React.Component<TodoFooterProps> {
                 {todoStore.completedCount === 0
                     ? ''
                     : <button
-                        className="clear-completed"
+                        class={Theme.TodoFooterClearCompleted}
                         onClick={this.clearCompleted}>
                         Clear completed
                     </button>
@@ -42,7 +44,7 @@ export class TodoFooter extends React.Component<TodoFooterProps> {
     renderFilterLink(filterName, url, caption) {
         return (<li>
             <a href={"#/" + url}
-               className={filterName === this.props.viewStore.todoFilter ? "selected" : ""}>
+               className={filterName === this.context.mobxStores.viewStore.todoFilter ? "selected" : ""}>
                 {caption}
             </a>
             {' '}
@@ -50,7 +52,7 @@ export class TodoFooter extends React.Component<TodoFooterProps> {
     }
 
     clearCompleted = () => {
-        this.props.todoStore.clearCompleted();
+        this.context.mobxStores.todoStore.clearCompleted();
     };
 }
 

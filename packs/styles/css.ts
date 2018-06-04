@@ -1,3 +1,7 @@
+
+
+
+
 /**
  * Value of a CSS Property.  Could be a single value or a list of fallbacks
  * NOTE: array is for fallbacks
@@ -383,6 +387,7 @@ export interface FontFace {
     fontStyle?: 'normal' | 'italic' | 'oblique' | CSSGlobalValues;
 }
 export interface CSSProperties {
+    '*'?:CSSProperties;
     /**
      * Typestyle configuration options
      **/

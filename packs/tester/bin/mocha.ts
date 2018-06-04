@@ -13,9 +13,10 @@ class MochaRunner extends TestRunner {
     };
 
     public constructor(options: TOptions = getCliOptions()) {
+        const ideaReporter = new IdeaReporter();
         const reporterFilename = Path.basename(options.reporter).toLowerCase();
         if (reporterFilename === "mochaintellijreporter.js") {
-            super(new IdeaReporter());
+            super(ideaReporter);
         }
         this.options = options;
     }

@@ -12,7 +12,7 @@ export const enum Theme {
     labelWarning='label-warning',
 }
 
-stylesheet('/Users/Sergey/Work/EXP/spectre/scss/_labels.ts')('',{
+stylesheet('labels.ts')('',{
     ...nest([`.${Theme.label}`],{
         ...labelBase(),
         ...labelVariant($.bodyFontColor.lighten(0.05),$.bgColorDark),

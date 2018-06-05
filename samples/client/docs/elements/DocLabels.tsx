@@ -10,6 +10,7 @@ export class DocLabels extends DocPage {
             <DocNote>Labels are formatted text tags for highlighted, informative information.</DocNote>
             <DocSample>
                 <div>
+
                     <span className="label">default label</span>
                     {' '}
                     <span className="label label-primary">primary label</span>

@@ -51,10 +51,10 @@ export class Config {
     baseFontFamily = '-apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto';
     monoFontFamily = '"SF Mono", "Segoe UI Mono", "Roboto Mono", Menlo, Courier, monospace';
     fallbackFontFamily = '"Helvetica Neue", sans-serif';
-    cjkZhFontFamily = '$baseFontFamily, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", $fallbackFontFamily';
-    cjkJpFontFamily = '$baseFontFamily, "Hiragino Sans", "Hiragino Kaku Gothic Pro", "Yu Gothic", YuGothic, Meiryo, $fallbackFontFamily';
-    cjkKoFontFamily = '$baseFontFamily, "Malgun Gothic", $fallbackFontFamily';
-    bodyFontFamily = '$baseFontFamily, $fallbackFontFamily';
+    cjkZhFontFamily = `${this.baseFontFamily}, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", ${this.fallbackFontFamily}`;
+    cjkJpFontFamily = `${this.baseFontFamily}, "Hiragino Sans", "Hiragino Kaku Gothic Pro", "Yu Gothic", YuGothic, Meiryo, $fallbackFontFamily`;
+    cjkKoFontFamily = `${this.baseFontFamily}, "Malgun Gothic", $fallbackFontFamily`;
+    bodyFontFamily = `${this.baseFontFamily}, ${this.fallbackFontFamily}`;
 
     // Unit sizes
     unitO  /*   */ = 0.05; // rem

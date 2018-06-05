@@ -62,6 +62,13 @@ export class BlockingQueue<P, C = void> extends AsyncQueue<P, C> {
             my.barriers.shift()
         }
     }
+    get position() {
+        let barriers = internal.of(this).barriers;
+        if (barriers.length && barriers[0].consumer.accepted) {
+            return -barriers.length
+        }
+        return barriers.length
+    }
     //
     private barrier(late: boolean) {
         const my = internal.of(this);

@@ -2,7 +2,7 @@ import "../index"
 export class AsyncDefer<T, E = Error> {
     readonly promise: Promise<T>;
     readonly status: 'accepted' | 'rejected' | 'pending';
-    accept?(data: T);
+    accept?(data?: T | PromiseLike<T>);
     reject?(reason?: E);
     get pending(): boolean {
         return this.status == 'pending';
@@ -25,7 +25,7 @@ export class AsyncDefer<T, E = Error> {
             this.reject = (value) => {
                 this.accept = null;
                 this.reject = null;
-                (this as Mutable<this>).status = 'accepted';
+                (this as Mutable<this>).status = 'rejected';
                 reject(value)
             };
         });

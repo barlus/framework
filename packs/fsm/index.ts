@@ -649,7 +649,7 @@ class Interpreter<EventType>{
             if (isFinalState(state)) {
                 if (state.parentState === this.root) {
                     await this.root.finished(state);
-                    await this.cancel("Finished");
+                    this.cancel("Finished");
                     break;
                 }
             }
@@ -929,13 +929,22 @@ class Interpreter<EventType>{
         await this.runningChanged(true);
         await this.run();
     }
-    async stop(): Promise<void> {
-        return this.cancel("Stopped")
+    async stop(interrupt: boolean): Promise<void> {
+        if (interrupt) {
+            return this.cancel("Interrupt")
+        }
+        else {
+            return this.cancel("Stopped")
+        }
     }
     private async cancel(reason: StopReason): Promise<void> {
         this.running = false;
         if (reason === "Interrupt") {
             this.interrupt.unlock();
+            console.info(this);
+            this.internalEventQueue.length = 0;
+            this.configuration.clear();
+            console.info(this);
         }
         await this.stopper.wait();
         this.rootState = null;
@@ -983,8 +992,8 @@ export class StateMachine<EventType> extends State<EventType> {
     async start() {
         return this.interpreter.start(this);
     }
-    async stop(): Promise<void> {
-        return this.interpreter.stop();
+    async stop(interrupt:boolean = false): Promise<void> {
+        return this.interpreter.stop(interrupt);
     }
 
     constructor(externalGenerator: AsyncIterator<EventType> | AsyncIterable<EventType>, options?: StateObserver<EventType>, interpreter?: Interpreter<EventType>) {

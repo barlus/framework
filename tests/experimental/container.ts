@@ -112,20 +112,17 @@ class AsyncContainerTest {
         expect(result).toEqual([9, 8, 7, 6, 5, 4, 3, 2, 1])
 
         let count = 0;
-        await AsyncContainer.from(this.generator()).forEach(async v => {
+        await AsyncContainer.from(this.generator()).forEach(async (v, breaker) => {
             count++;
             if (v < 5) {
-                return false;
+                breaker();
             }
-        }, null, false);
+        }, null);
         expect(count).toBe(6);
 
         count = 0;
         await AsyncContainer.from(this.generator()).forEach(async v => {
             count++;
-            if (v < 5) {
-                return false;
-            }
         });
         expect(count).toBe(9);
     }

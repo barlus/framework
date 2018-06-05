@@ -941,10 +941,8 @@ class Interpreter<EventType>{
         this.running = false;
         if (reason === "Interrupt") {
             this.interrupt.unlock();
-            console.info(this);
             this.internalEventQueue.length = 0;
             this.configuration.clear();
-            console.info(this);
         }
         await this.stopper.wait();
         this.rootState = null;

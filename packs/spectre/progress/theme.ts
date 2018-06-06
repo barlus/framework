@@ -1,40 +1,35 @@
-import { cssRule } from '@barlus/styles';
+import {$,linearGradient,list,nest,percent,s,stylesheet,rem} from "@barlus/styles"
+import {appearance} from "../mixins/appearance";
 
-cssRule('.progress', {
+export default Theme;
+export const enum Theme {
+    progress='progress',
+}
 
-    "-webkit-appearance": "none",
-    "-moz-appearance": "none",
-    "appearance": "none",
-    "background": "#f0f1f4",
-    "border": 0,
-    "borderRadius": ".1rem",
-    "color": "#5755d9",
-    "height": ".2rem",
-    "position": "relative",
-    "width": "100%"
+stylesheet('/Users/Sergey/Work/EXP/spectre/scss/_progress.ts')('',{
+    ...nest([`.${Theme.progress}`],{
+        ...appearance('none'),
+        background:$.bgColorDark.rgba,
+        border:0,
+        borderRadius:rem($.borderRadius),
+        color:$.primaryColor.rgba,
+        height:rem($.unit1),
+        position:'relative',
+        width:percent(100),
+        ...nest([`&::-webkit-progress-bar`],{
+            background:'transparent',
+            borderRadius:rem($.borderRadius),
+        }),
+        ...nest([`&::-webkit-progress-value`],{
+            background:$.primaryColor.rgba,
+            borderRadius:rem($.borderRadius),
+        }),
+        ...nest([`&:indeterminate`],{
+            animation:list('progress-indeterminate',s(1.5),'linear','infinite'),
+            background:`${$.bgColorDark.rgba} linear-gradient(to right,${$.primaryColor} 30%,${$.bgColorDark} 30%) top left/150% 150% no-repeat`,
+            ...nest([`&::-moz-progress-bar`],{
+                background:'transparent',
+            }),
+        }),
+    }),
 });
-cssRule('.progress::-webkit-progress-bar', {
-    $unique:true,
-    "background": "0 0",
-    "borderRadius": ".1rem"
-});
-cssRule('.progress::-webkit-progress-value', {
-    $unique:true,
-    "background": "#5755d9",
-    "borderRadius": ".1rem"
-});
-cssRule('.progress::-moz-progress-bar', {
-    $unique:true,
-    "background": "#5755d9",
-    "borderRadius": ".1rem"
-});
-cssRule('.progress:indeterminate', {
-    $unique:true,
-    "animation": "progress-indeterminate 1.5s linear infinite",
-    "background": "#f0f1f4 linear-gradient(to right,#5755d9 30%,#f0f1f4 30%) top left/150% 150% no-repeat"
-});
-cssRule('.progress:indeterminate::-moz-progress-bar', {
-    $unique:true,
-    "background": "0 0"
-});
-

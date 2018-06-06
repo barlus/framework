@@ -9,24 +9,19 @@ export const marginVariant = (id = 1, size = config.unit1) => ({
     ...nest(`.mb-${id}`, {
         marginBottom: rem(size),
     }),
-
     ...nest(`.ml-${id}`, {
         marginLeft: rem(size),
     }),
-
     ...nest(`.mr-${id}`, {
         marginRight: rem(size),
     }),
-
     ...nest(`.mt-${id}`, {
         marginTop: rem(size),
     }),
-
     ...nest(`.mx-${id}`, {
         marginLeft: size,
         marginRight: rem(size),
     }),
-
     ...nest(`.my-${id}`, {
         marginBottom: rem(size),
         marginTop: rem(size),

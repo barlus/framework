@@ -1,4 +1,4 @@
-import { cssRule } from '../../styles/index';
+import { cssRule } from '@barlus/styles';
 cssRule('.parallax', {
     "display": "block",
     "height": "auto",

@@ -1,6 +1,6 @@
 import * as React from "@barlus/nerv"
 import { Code } from "../../comps/Code";
-import { DocNote, DocPage, DocSection, DocTitle } from "../../comps/DocPage";
+import { DocNote, DocPage, DocSample, DocSection, DocTitle } from "../../comps/DocPage";
 
 export class DocColors extends DocPage {
     static title = "Colors";
@@ -12,38 +12,38 @@ export class DocColors extends DocPage {
             <DocTitle>
                 Text colors
             </DocTitle>
-            <DocNote>
-                <span className="text-primary">primary color</span><br/><br/>
-                <span className="text-secondary">secondary color</span><br/><br/>
-                <span className="text-gray">gray color</span><br/><br/>
-                <span className="text-light bg-dark p-1 rounded">light color</span><br/><br/>
-                <span className="text-success">success color</span><br/><br/>
-                <span className="text-warning">warning color</span><br/><br/>
-                <span className="text-error">error color</span><br/><br/>
-            </DocNote>
+            <DocSample columns={2}>
+                <span className="text-primary">primary color</span>
+                <span className="text-secondary">secondary color</span>
+                <span className="text-gray">gray color</span>
+                <span className="text-light bg-dark p-1 rounded">light color</span>
+                <span className="text-success">success color</span>
+                <span className="text-warning">warning color</span>
+                <span className="text-error">error color</span>
+            </DocSample>
             <Code className="HTML">{E1}</Code>
-            <DocNote>
-                <a className="text-primary p-1" href="#colors">primary link</a><br/><br/>
-                <a className="text-secondary p-1" href="#colors">secondary link</a><br/><br/>
-                <a className="text-gray p-1" href="#colors">gray link</a><br/><br/>
-                <a className="text-light bg-dark p-1 rounded" href="#colors">light link</a><br/><br/>
-                <a className="text-success p-1" href="#colors">success link</a><br/><br/>
-                <a className="text-warning p-1" href="#colors">warning link</a><br/><br/>
-                <a className="text-error p-1" href="#colors">error link</a><br/><br/>
-            </DocNote>
+            <DocSample columns={2}>
+                <a className="text-primary p-1" href="#colors">primary link</a>
+                <a className="text-secondary p-1" href="#colors">secondary link</a>
+                <a className="text-gray p-1" href="#colors">gray link</a>
+                <a className="text-light bg-dark p-1 rounded" href="#colors">light link</a>
+                <a className="text-success p-1" href="#colors">success link</a>
+                <a className="text-warning p-1" href="#colors">warning link</a>
+                <a className="text-error p-1" href="#colors">error link</a>
+            </DocSample>
             <Code className="HTML">{E2}</Code>
             <DocTitle>
                 Background colors
             </DocTitle>
-            <DocNote>
-                <span className="bg-primary p-1 rounded">primary bg</span><br/><br/>
-                <span className="bg-secondary text-primary p-1 rounded">secondary bg</span><br/><br/>
-                <span className="bg-dark p-1 rounded">dark bg</span><br/><br/>
-                <span className="bg-gray p-1 rounded">gray bg</span><br/><br/>
-                <span className="bg-success p-1 rounded">success bg</span><br/><br/>
-                <span className="bg-warning p-1 rounded">warning bg</span><br/><br/>
-                <span className="bg-error p-1 rounded">error bg</span><br/><br/>
-            </DocNote>
+            <DocSample columns={2}>
+                <span className="bg-primary p-1 rounded">primary bg</span>
+                <span className="bg-secondary text-primary p-1 rounded">secondary bg</span>
+                <span className="bg-dark p-1 rounded">dark bg</span>
+                <span className="bg-gray p-1 rounded">gray bg</span>
+                <span className="bg-success p-1 rounded">success bg</span>
+                <span className="bg-warning p-1 rounded">warning bg</span>
+                <span className="bg-error p-1 rounded">error bg</span>
+            </DocSample>
             <Code className="HTML">{E3}</Code>
         </DocSection>
     }

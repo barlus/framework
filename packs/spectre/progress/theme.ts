@@ -1,4 +1,4 @@
-import { cssRule } from '../../styles/index';
+import { cssRule } from '@barlus/styles';
 
 cssRule('.progress', {
 
@@ -38,13 +38,3 @@ cssRule('.progress:indeterminate::-moz-progress-bar', {
     "background": "0 0"
 });
 
-cssRule('@keyframes progress-indeterminate', {
-    "$nest": {
-        "0%": {
-            "backgroundPosition": "200% 0"
-        },
-        "100%": {
-            "backgroundPosition": "-200% 0"
-        }
-    }
-});

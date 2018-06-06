@@ -41,7 +41,7 @@ stylesheet('modals.css')('',{
                 top:0,
             }),
             ...nest([`.${Theme.modalContainer}`],{
-                animation:list('slide-down',s(.2),'ease',1),
+                animation:`slide-down .2s ease 1`,
                 maxWidth:$.controlWidthMd,
                 width:percent(100),
                 zIndex:$.zIndex0,

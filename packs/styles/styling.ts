@@ -112,9 +112,15 @@ export function stylesheet(sourceName: string) {
         autoGenerateTag: true,
         sourceName: sourceName
     });
+    function animation(name:string,frames:KeyFrames) {
+        stylesheet.cssRule(`@keyframes ${name}`,{
+            ...({$nest:frames} as any)
+        })
+    }
     const rule = stylesheet.cssRule.bind(stylesheet);
-    return Object.assign(rule, { stylesheet }) as TypeStyle['cssRule'] & {
+    return Object.assign(rule, { stylesheet, animation }) as TypeStyle['cssRule'] & {
         stylesheet: TypeStyle
+        animation: typeof animation;
     }
 }
 // PRIVATE -------------------------------------------------------------------------------------------------------------

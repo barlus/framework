@@ -6,7 +6,7 @@ import { classes } from '../utils/classes';
 export class Container extends React.PureComponent<{}, {}> {
     render() {
         const { children, className, ...otherProps } = this.props;
-        const classNames = classes(Theme.Container, className);
+        const classNames = classes(Theme.container, className);
         return (
             <div className={classNames} {...otherProps}>
                 {children}

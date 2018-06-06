@@ -35,7 +35,7 @@ export class Column extends React.PureComponent<ColumnProps, {}> {
     render(){
         const { children, className, ...otherProps } = this.props;
         return <div className={classes(
-            Theme.Column,
+            Theme.column,
             Column.getColumnClasses(otherProps),
             className
         )}>{children}</div>

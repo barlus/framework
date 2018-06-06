@@ -1,4 +1,5 @@
 import * as React from "@barlus/nerv"
+import { Button } from '@barlus/spectre';
 import { Code } from "../../comps/Code";
 import { DocNote, DocPage, DocSample, DocSection } from "../../comps/DocPage";
 
@@ -39,7 +40,7 @@ export class DocDivider extends DocPage {
                             </label>
                         </div>
                         <div className="form-group">
-                            <button className="btn btn-primary">Sign in</button>
+                            <Button primary>Sign in</Button>
                         </div>
                     </form>
                 </div>
@@ -52,8 +53,8 @@ export class DocDivider extends DocPage {
                                    placeholder="Email"/>
                         </div>
                         <div className="form-group">
-                            <button className="btn btn-primary btn-block">Sign up</button>
-                            <button className="btn btn-link btn-block">Learn more</button>
+                            <Button primary block>Sign up</Button>
+                            <Button link block>Learn more</Button>
                         </div>
                     </form>
                 </div>

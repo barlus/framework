@@ -1,0 +1,38 @@
+import {$,div,linearGradient,list,nest,percent,s,stylesheet} from "@barlus/restyle"
+
+export default Theme;
+export const enum Theme {
+    progress='progress',
+}
+
+stylesheet('/Users/Sergey/Work/EXP/spectre/scss/_progress.ts')('',{
+    ...nest([`.${Theme.progress}`],{
+        appearance:'none',
+        background:$.bgColorDark,
+        border:0,
+        borderRadius:$.borderRadius,
+        color:$.primaryColor,
+        height:$.unit1,
+        position:'relative',
+        width:percent(100),
+        ...nest([`&::-webkit-progress-bar`],{
+            background:'transparent',
+            borderRadius:$.borderRadius,
+        }),
+        ...nest([`&::-webkit-progress-value`],{
+            background:$.primaryColor,
+            borderRadius:$.borderRadius,
+        }),
+        ...nest([`&::-moz-progress-bar`],{
+            background:$.primaryColor,
+            borderRadius:$.borderRadius,
+        }),
+        ...nest([`&:indeterminate`],{
+            animation:list('progress-indeterminate',s(1.5),'linear','infinite'),
+            background:list($.bgColorDark,linearGradient(list('to','right'),list($.primaryColor,percent(30)),list($.bgColorDark,percent(30))),'top',div('left',percent(150)),percent(150),'no-repeat'),
+            ...nest([`&::-moz-progress-bar`],{
+                background:'transparent',
+            }),
+        }),
+    }),
+Animation});

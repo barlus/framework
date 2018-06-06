@@ -2,6 +2,7 @@ import { $, color, Settings } from '@barlus/styles';
 
 declare module '@barlus/styles' {
     interface Settings extends Config {
+
     }
 }
 
@@ -97,7 +98,7 @@ export class Config {
     controlPaddingYSm /*   */ = (this.controlSizeSm - this.lineHeight) / 2 - this.borderWidth; // rem
     controlPaddingYLg /*   */ = (this.controlSizeLg - this.lineHeight) / 2 - this.borderWidth; // rem
     controlIconSize /*     */ = 0.80; // rem
-
+    gridSpacing/*          */ = $.layoutSpacing * $.htmlFontSize;
     controlWidthXs = 180;   // px
     controlWidthSm = 320;   // px
     controlWidthMd = 640;   // px

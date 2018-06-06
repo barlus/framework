@@ -1,0 +1,63 @@
+import {$,list,nest,percent,px,stylesheet} from "@barlus/restyle"
+
+export default Theme;
+export const enum Theme {
+    iconLg='icon-lg',
+    timeline='timeline',
+    timelineContent='timeline-content',
+    timelineIcon='timeline-icon',
+    timelineItem='timeline-item',
+    timelineLeft='timeline-left',
+}
+
+stylesheet('/Users/Sergey/Work/EXP/spectre/scss/_timelines.ts')('',{
+    ...nest([`.${Theme.timeline}`],{
+        ...nest([`.${Theme.timelineItem}`],{
+            display:'flex',
+            marginBottom:$.unit6,
+            position:'relative',
+            ...nest([`&::before`],{
+                background:$.borderColor,
+                content:"",
+                height:percent(100),
+                left:px(11),
+                position:'absolute',
+                top:$.unit6,
+                width:px(2),
+            }),
+            ...nest([`.${Theme.timelineLeft}`],{
+                flex:list(0,0,'auto'),
+            }),
+            ...nest([`.${Theme.timelineContent}`],{
+                flex:list(1,1,'auto'),
+                padding:list(px(2),0,px(2),$.layoutSpacingLg),
+            }),
+            ...nest([`.${Theme.timelineIcon}`],{
+                borderRadius:percent(50),
+                color:$.lightColor,
+                display:'block',
+                height:$.unit6,
+                textAlign:'center',
+                width:$.unit6,
+                ...nest([`&::before`],{
+                    border:list($.borderWidthLg,'solid',$.primaryColor),
+                    borderRadius:percent(50),
+                    content:"",
+                    display:'block',
+                    height:$.unit2,
+                    left:$.unit2,
+                    position:'absolute',
+                    top:$.unit2,
+                    width:$.unit2,
+                }),
+                ...nest([`&.${Theme.iconLg}`],{
+                    background:$.primaryColor,
+                    lineHeight:$.lineHeight,
+                    ...nest([`&::before`],{
+                        content:'none',
+                    }),
+                }),
+            }),
+        }),
+    }),
+});

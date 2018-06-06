@@ -25,7 +25,7 @@ stylesheet('menus.ts')('',{
         display:'inline-block',
         position:'relative',
         ...nest([`.${Theme.menu}`],{
-            animation:list('slide-down',s(.15),'ease',1),
+            animation:`slide-down .15s ease 1`,
             display:'none',
             left:0,
             maxHeight:viewHeight(50),

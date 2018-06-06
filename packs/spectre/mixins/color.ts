@@ -2,22 +2,22 @@ import { config } from '../config';
 import { nest,when } from '@barlus/styles';
 
 // Background color utility mixin
-const bgColorVariant = (name: string = ".bg-primary", color = config.primaryColor) => ({
+export const bgColorVariant = (name: string = ".bg-primary", color = config.primaryColor) => ({
     ...nest(`${name}`, {
-        background: color,
-        ...when(color.lightness() < 60, {
-            color: config.lightColor.toRGBA(),
+        background: color.rgba,
+        ...when(color.lightness() < 0.6, {
+            color: config.lightColor.rgba,
         })
     })
 });
 // Text color utility mixin
-const textColorVariant = (name: string = ".text-primary", color = config.primaryColor) => ({
+export const textColorVariant = (name: string = ".text-primary", color = config.primaryColor) => ({
     ...nest(`${name}`, {
-        color: `${color.toRGBA()}`,
+        color: color.rgba,
     }),
-    ...nest(`${name}`, {
+    ...nest(`a${name}`, {
         ...nest(`&:focus, &:hover`, {
-            color: `${color.darken(0.05).toRGBA()}`,
+            color: color.darken(0.05).rgba,
         })
     }),
 });

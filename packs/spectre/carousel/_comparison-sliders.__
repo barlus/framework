@@ -1,0 +1,97 @@
+import {$,join,list,nest,percent,px,rgba,s,scaleY,stylesheet,translate,translateY,vh} from "@barlus/restyle"
+
+export default Theme;
+export const enum Theme {
+    comparisonAfter='comparison-after',
+    comparisonBefore='comparison-before',
+    comparisonLabel='comparison-label',
+    comparisonResizer='comparison-resizer',
+    comparisonSlider='comparison-slider',
+}
+
+stylesheet('/Users/Sergey/Work/EXP/spectre/scss/_comparison-sliders.ts')('',{
+    ...nest([`.${Theme.comparisonSlider}`],{
+        height:vh(50),
+        overflow:'hidden',
+        position:'relative',
+        width:percent(100),
+        WebkitOverflowScrolling:'touch',
+        ...nest([`.${Theme.comparisonBefore}`,`.${Theme.comparisonAfter}`],{
+            height:percent(100),
+            left:0,
+            margin:0,
+            overflow:'hidden',
+            position:'absolute',
+            top:0,
+            ...nest([`img`],{
+                height:percent(100),
+                objectFit:'cover',
+                objectPosition:list('left','center'),
+                position:'absolute',
+                width:percent(100),
+            }),
+        }),
+        ...nest([`.${Theme.comparisonBefore}`],{
+            width:percent(100),
+            zIndex:1,
+            ...nest([`.${Theme.comparisonLabel}`],{
+                right:$.unit4,
+            }),
+        }),
+        ...nest([`.${Theme.comparisonAfter}`],{
+            maxWidth:percent(100),
+            minWidth:0,
+            zIndex:2,
+            ...nest([`&::before`],{
+                background:'transparent',
+                content:"",
+                cursor:'default',
+                height:percent(100),
+                left:0,
+                position:'absolute',
+                right:$.unit4,
+                top:0,
+                zIndex:$.zIndex0,
+            }),
+            ...nest([`&::after`],{
+                background:'currentColor',
+                borderRadius:percent(50),
+                boxShadow:join(list(0,px(-5)),list(0,px(5))),
+                color:$.lightColor,
+                content:"",
+                height:px(3),
+                position:'absolute',
+                right:$.unit2,
+                top:percent(50),
+                transform:translate(percent(50),percent(-50)),
+                width:px(3),
+            }),
+            ...nest([`.${Theme.comparisonLabel}`],{
+                left:$.unit4,
+            }),
+        }),
+        ...nest([`.${Theme.comparisonResizer}`],{
+            animation:list('first-run',s(1.5),1,'ease-in-out'),
+            cursor:'ew-resize',
+            height:$.unit4,
+            left:0,
+            maxWidth:percent(100),
+            minWidth:$.unit4,
+            opacity:0,
+            outline:'none',
+            position:'relative',
+            resize:'horizontal',
+            top:percent(50),
+            transform:list(translateY(percent(-50)),scaleY(30)),
+            width:0,
+        }),
+        ...nest([`.${Theme.comparisonLabel}`],{
+            background:rgba($.darkColor,.5),
+            bottom:$.unit4,
+            color:$.lightColor,
+            padding:list($.unit1,$.unit2),
+            position:'absolute',
+            userSelect:'none',
+        }),
+    }),
+Animation});

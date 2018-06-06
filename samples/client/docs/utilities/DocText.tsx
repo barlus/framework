@@ -1,6 +1,6 @@
 import * as React from "@barlus/nerv"
 import { Code } from "../../comps/Code";
-import {DocNote, DocPage, DocSection} from "../../comps/DocPage";
+import { DocNote, DocPage, DocSample, DocSection } from "../../comps/DocPage";
 
 
 export class DocText extends DocPage {
@@ -10,6 +10,22 @@ export class DocText extends DocPage {
             <DocNote>
                 Text utilities are used for text alignment, styles and overflow things.
             </DocNote>
+            <DocSample>
+                <div class="text-left">left-aligned text</div>
+                <div class="text-center">center-aligned tex</div>
+                <div class="text-right">right-aligned text</div>
+                <div class="text-justify">justified text</div>
+                <div class="text-lowercase">Lowercased text</div>
+                <div class="text-uppercase">Uppercased text</div>
+                <div class="text-capitalize"> Capitalized text</div>
+                <div class="text-normal">Normal weight text</div>
+                <div class="text-bold">Bold text</div>
+                <div class="text-italic">Italicized text</div>
+                <div class="text-large">Larger text (120%)</div>
+                <div class="text-ellipsis">Overflow behavior: display an ellipsis to represent clipped text</div>
+                <div class="text-clip">Overflow behavior: truncate the text</div>
+                <div class="text-break">Text may be broken at arbitrary points</div>
+            </DocSample>
             <Code className="HTML">{E1}</Code>
         </DocSection>
     }

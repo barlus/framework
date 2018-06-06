@@ -1,9 +1,4 @@
-import { stylesheet, rem } from '@barlus/styles';
-import { cssRule } from '../../styles/index';
-import { config } from '../config';
-import { buttonVariant } from '../mixins/button';
-import { controlShadow } from '../mixins/shadow';
-import { controlTransition } from '../mixins/transition';
+import { cssRule } from '@barlus/styles';
 
 export const enum Theme {
     OffCanvas = "off-canvas",
@@ -14,7 +9,6 @@ export const enum Theme {
     content = "off-canvas-content",
     active = "active",
 }
-
 
 cssRule('.off-canvas', {
     "display": [

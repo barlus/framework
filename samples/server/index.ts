@@ -54,7 +54,7 @@ class MyApplication extends HttpApplication {
     static async start() {
         if (!this.instance) {
             const app = new MyApplication();
-            const { address, port } = await app.listen(10001, '0.0.0.0');
+            const { address, port } = await app.listen(10002, '0.0.0.0');
             console.info("Application started");
             console.info(` -> http://${address}:${port}`);
             this.instance = app;

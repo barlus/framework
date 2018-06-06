@@ -1,4 +1,4 @@
-import { cssRule } from '../../styles/index';
+import { cssRule } from '@barlus/styles';
 cssRule('.comparison-slider', {
     "height": "50vh",
     "overflow": "hidden",
@@ -85,23 +85,4 @@ cssRule('.comparison-slider .comparison-label', {
     "-moz-user-select": "none",
     "-ms-user-select": "none",
     "userSelect": "none"
-});
-cssRule('@keyframes first-run', {
-    "$nest": {
-        "0%": {
-            "width": 0
-        },
-        "25%": {
-            "width": "2.4rem"
-        },
-        "50%": {
-            "width": ".8rem"
-        },
-        "75%": {
-            "width": "1.2rem"
-        },
-        "100%": {
-            "width": 0
-        }
-    }
 });

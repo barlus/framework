@@ -1,4 +1,4 @@
-import { cssRule } from '../../styles/index';
+import { cssRule } from '@barlus/styles';
 
 cssRule('.carousel', {
     "background": "#f8f9fa",
@@ -89,26 +89,4 @@ cssRule('.carousel .carousel-nav .nav-item::before', {
     "position": "absolute",
     "top": ".5rem",
     "width": "100%"
-});
-cssRule('@keyframes carousel-slidein', {
-    "$nest": {
-        "0%": {
-            "transform": "translateX(100%)"
-        },
-        "100%": {
-            "transform": "translateX(0)"
-        }
-    }
-});
-cssRule('@keyframes carousel-slideout', {
-    "$nest": {
-        "0%": {
-            "opacity": 1,
-            "transform": "translateX(0)"
-        },
-        "100%": {
-            "opacity": 1,
-            "transform": "translateX(-50%)"
-        }
-    }
 });

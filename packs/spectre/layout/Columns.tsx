@@ -7,10 +7,10 @@ export class Columns extends React.PureComponent<ColumnsProps, {}> {
     render(){
         const { children, className, gapless, oneline, ...otherProps } = this.props;
         const classNames = classes(
-            Theme.Columns,
+            Theme.columns,
             {
-                [Theme.gapless]: gapless,
-                [Theme.oneline]: oneline
+                [Theme.colGapless]: gapless,
+                [Theme.colOneline]: oneline
             },
             className
         );

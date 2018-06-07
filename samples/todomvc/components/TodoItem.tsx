@@ -11,7 +11,6 @@ export default class TodoItem extends React.Component {
     handleDoubleClick = () => {
         this.setState({ editing: true })
     };
-
     handleSave = (id, text) => {
         if (text.length === 0) {
             this.props.deleteTodo(id)
@@ -23,7 +22,6 @@ export default class TodoItem extends React.Component {
 
     render() {
         const { todo, completeTodo, deleteTodo } = this.props;
-
         let element;
         if (this.state.editing) {
             element = (
@@ -47,9 +45,8 @@ export default class TodoItem extends React.Component {
                 </div>
             )
         }
-
         return (
-            <li className={classes({
+            <li className={classes('todoitem',{
                 completed: todo.completed,
                 editing: this.state.editing
             })}>

@@ -68,8 +68,19 @@ class MyApplication extends HttpApplication {
         this.use(new ProjectRoute({
             jsx: 'React.createElement',
             root: process.cwd(),
-            project:'@vendor/client' , //@vendor/todo
-            ignore: [ 'typescript', '@barlus/bui', '@barlus/nerv','@barlus/storex','@barlus/routex','@barlus/mobx', '@vendor/todo','@vendor/todomvc' ]
+            //project:'@vendor/client' , //@vendor/todo
+            project: '@vendor/todomvc', //@vendor/todo
+            ignore: [
+                'typescript',
+                '@barlus/bui',
+                '@barlus/nerv',
+                '@barlus/storex',
+                '@barlus/routex',
+                '@barlus/mobx',
+                '@vendor/todo',
+                '@vendor/client',
+                //'@vendor/todomvc'
+            ]
         }))
     }
 }

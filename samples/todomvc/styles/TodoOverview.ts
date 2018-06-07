@@ -1,7 +1,7 @@
 import { stylesheet,nest,media } from '@barlus/styles';
 
 export const enum Theme {
-    TodoOverview = 'todooverview',
+    TodoOverview = 'main',
     TodoOverviewToggleAll = 'toggle-all',
     TodoOverviewList = 'todo-list'
 }
@@ -10,7 +10,7 @@ stylesheet(`styles/${Theme.TodoOverview}.tcss`)(`.${Theme.TodoOverview}`,{
     position: 'relative',
     zIndex: 2,
     borderTop: '1px solid #e6e6e6',
-    ...nest(`&>.${Theme.TodoOverviewToggleAll}`,{
+    ...nest(`& .${Theme.TodoOverviewToggleAll}`,{
         textAlign: 'center',
         border: 'none', /* Mobile Safari */
         opacity: 0,

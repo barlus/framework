@@ -1,9 +1,5 @@
-import { stylesheet,cssRule,nest } from '@barlus/styles';
+import { stylesheet, cssRule, nest } from '@barlus/styles';
 
-import './TodoEntry';
-import './TodoOverview';
-import './TodoItem';
-import './TodoFooter';
 
 export const enum Theme {
     TodoApp = 'todoapp',
@@ -48,8 +44,6 @@ cssRule('button',{
     '-webkit-font-smoothing' : 'antialiased',
     '-moz-osx-font-smoothing': 'grayscale',
 });
-
-
 cssRule('body', {
     font: "14px 'Helvetica Neue', Helvetica, Arial, sans-serif",
     lineHeight: '1.4em',
@@ -62,7 +56,6 @@ cssRule('body', {
     '-moz-osx-font-smoothing': 'grayscale',
     fontWeight: 300,
 });
-
 cssRule(':focus', {
     outline: 0
 });

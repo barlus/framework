@@ -1,4 +1,5 @@
 import * as React from '@barlus/react'
+import { Theme } from '../styles/TodoEntry';
 import { classes } from '../utils/classes'
 
 export default class TodoTextInput extends React.Component {
@@ -32,7 +33,7 @@ export default class TodoTextInput extends React.Component {
       <input className={
         classes({
           edit: this.props.editing,
-          'new-todo': this.props.newTodo
+          [Theme.TodoEntry]: this.props.newTodo
         })}
         type="text"
         placeholder={this.props.placeholder}

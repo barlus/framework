@@ -11,7 +11,7 @@ export class Dropdown extends React.PureComponent<DropdownProps, {}> {
             right,active,
             ...otherProps
         } = this.props;
-        return (<div {...otherProps} class={classes(Theme.dropdown,{[Theme.dropdownRight]:right,[Theme.active]:active},className)}>
+        return (<div {...otherProps} className={classes(Theme.dropdown,{[Theme.dropdownRight]:right,[Theme.active]:active},className)}>
             {children}
         </div>)
     }

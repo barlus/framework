@@ -13,9 +13,9 @@ export class DocAccordions extends DocPage {
             `}/>
             <DocSample columns={2}>
                 <DocSample>
-                    <Accordion>
-                        <AccordionHeader type="radio" id="accordion-1" name="radio-accordion" className="c-hand">
-                            <i className="icon icon-arrow-right mr-1"/>Elements
+                    <Accordion type="radio" id="accordion-1" name="radio-accordion" >
+                        <AccordionHeader className="c-hand">
+                            <i className="icon icon-arrow-right mr-1"/> Elements
                         </AccordionHeader>
                         <AccordionBody>
                             <ul className="menu menu-nav">
@@ -28,8 +28,8 @@ export class DocAccordions extends DocPage {
                             </ul>
                         </AccordionBody>
                     </Accordion>
-                    <Accordion>
-                        <AccordionHeader type="radio" id="accordion-2" name="radio-accordion" className="c-hand">
+                    <Accordion type="radio" id="accordion-2" name="radio-accordion">
+                        <AccordionHeader  className="c-hand">
                             <i className="icon icon-arrow-right mr-1"/>Layout
                         </AccordionHeader>
                         <AccordionBody>
@@ -43,9 +43,8 @@ export class DocAccordions extends DocPage {
                             </ul>
                         </AccordionBody>
                     </Accordion>
-
-                    <Accordion>
-                        <AccordionHeader type="radio" id="accordion-3" name="radio-accordion" defaultChecked={true}
+                    <Accordion type="radio" id="accordion-3" name="radio-accordion" >
+                        <AccordionHeader defaultChecked={true}
                                          className="c-hand">
                             <i className="icon icon-arrow-right mr-1"/>Components
                         </AccordionHeader>
@@ -62,8 +61,8 @@ export class DocAccordions extends DocPage {
                     </Accordion>
                 </DocSample>
                 <DocSample>
-                    <Accordion>
-                        <AccordionHeader id="accordion-4" className="c-hand" defaultChecked={true}>
+                    <Accordion id="accordion-4" type="checkbox" name="checkbox-accordion" defaultChecked={true} >
+                        <AccordionHeader className="c-hand">
                             <i className="icon icon-arrow-right mr-1"/>Elements
                         </AccordionHeader>
                         <AccordionBody>
@@ -77,8 +76,8 @@ export class DocAccordions extends DocPage {
                             </ul>
                         </AccordionBody>
                     </Accordion>
-                    <Accordion>
-                        <AccordionHeader id="accordion-5">
+                    <Accordion id="accordion-5" type="checkbox" name="checkbox-accordion">
+                        <AccordionHeader className="c-hand">
                             <i className="icon icon-arrow-right mr-1"/>Layout
                         </AccordionHeader>
                         <AccordionBody>
@@ -92,8 +91,8 @@ export class DocAccordions extends DocPage {
                             </ul>
                         </AccordionBody>
                     </Accordion>
-                    <Accordion>
-                        <AccordionHeader id="accordion-6" className="c-hand">
+                    <Accordion id="accordion-6" type="checkbox" name="checkbox-accordion">
+                        <AccordionHeader className="c-hand">
                             <i className="icon icon-arrow-right mr-1"/>Components
                         </AccordionHeader>
                         <AccordionBody>

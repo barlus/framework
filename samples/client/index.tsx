@@ -1,8 +1,8 @@
 import "@barlus/runtime"
 import * as React from "@barlus/nerv"
-import * as Dev from "@barlus/nerv/devtools"
-import { Provider } from '@barlus/storex';
-import { RoutesStore } from './stores';
+//import * as Dev from "@barlus/nerv/devtools"
+// import { Provider } from '@barlus/storex';
+// import { RoutesStore } from './stores';
 import { DocApp } from './comps/DocPage';
 
 import { DocTypography } from './docs/elements/DocTypography';
@@ -124,11 +124,9 @@ const DOCS = {
         DocTimelines,
     }
 };
-const routerStore = new RoutesStore(DOCS);
-Dev.initDevTools();
+//const routerStore = new RoutesStore(DOCS);
+//Dev.initDevTools();
 React.render(
-    <Provider router={routerStore}>
-        <DocApp docs={DOCS}/>
-    </Provider>,
-    document.body
+    <DocApp docs={DOCS}/>,
+    document.getElementById('root')
 );

@@ -11,7 +11,7 @@ export class Menu extends React.PureComponent<MenuProps, {}> {
             children,
             ...otherProps
         } = this.props;
-        return (<ul {...otherProps} class={classes(Theme.menu ,className)}>
+        return (<ul {...otherProps} className={classes(Theme.menu ,className)}>
             {children}
         </ul>)
     }

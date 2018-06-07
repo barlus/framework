@@ -10,7 +10,7 @@ export class ModalHeader extends React.PureComponent<ModalHeaderProps, {}> {
             children,
             ...otherProps
         } = this.props;
-        return (<div {...otherProps} class={classes(Theme.modalHeader,className)}>
+        return (<div {...otherProps} className={classes(Theme.modalHeader,className)}>
             {children}
         </div>)
     }

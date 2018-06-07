@@ -104,7 +104,6 @@ export class TypeStyle {
      * After that it is kept sync using `requestAnimationFrame` and we haven't noticed any bad flashes.
      **/
     public forceRenderStyles = (): void => {
-        console.info(this._sourceName);
         const target = this._getTag();
         if (!target) {
             return;

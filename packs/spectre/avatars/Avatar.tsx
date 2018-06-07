@@ -9,7 +9,7 @@ export class Avatar extends React.PureComponent<AvatarProps, {}> {
             className,
             src,icon,initial,
             // Styles.
-            responsive, contain, cover,
+            //responsive, contain, cover,
             // Sizinigs
             xl,lg,sm,xs,
             children,

@@ -22,7 +22,7 @@ export class Input extends React.PureComponent<InputProps, {}> {
         const formGroupProps = { label, id };
         const inputProps = { id, ...otherProps };
 
-        let inputComp = <input {...inputProps} class={
+        let inputComp = <input {...inputProps} className={
             classes(Theme.formInput, {
                 [ Theme.isSuccess ]: success,
                 [ Theme.isError ]: error,
@@ -44,6 +44,7 @@ export class Input extends React.PureComponent<InputProps, {}> {
 }
 
 export interface InputProps {
+    placeholder?:string,
     className?: string,
     success?:boolean
     error?:boolean

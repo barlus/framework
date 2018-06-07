@@ -47,7 +47,7 @@
 //                 }),
 //             }),
 //             ...nest([`.${Theme.itemPrev}`,`.${Theme.itemNext}`],{
-//                 background:rgba($.grayColorLight,.25),
+//                 background:$.grayColorLight.fade(.25).rgba,
 //                 borderColor:rgba($.grayColorLight,.5),
 //                 color:$.grayColorLight,
 //                 opacity:0,

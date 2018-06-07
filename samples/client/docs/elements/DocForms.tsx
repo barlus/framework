@@ -106,7 +106,7 @@ export class DocForms extends DocPage {
                             <Label htmlFor="input-example--21">Name</Label>
                         </Column>
                         <Column sm={12} lg={9} xl={9}>
-                            <Input id='input-example--20' autocomplete='name' placeholder="Name"/>
+                            <Input id='input-example--20' autoComplete='name' placeholder="Name"/>
                         </Column>
                     </FormGroup>
                     <FormGroup>
@@ -114,7 +114,7 @@ export class DocForms extends DocPage {
                             <Label htmlFor="input-example--5">Email</Label>
                         </Column>
                         <Column sm={12} lg={9} xl={9}>
-                            <Input id='input-example--5' autocomplete='email' placeholder="Email" type="email"/>
+                            <Input id='input-example--5' autoComplete='email' placeholder="Email" type="email"/>
                         </Column>
                     </FormGroup>
                     <FormGroup>
@@ -212,20 +212,20 @@ export class DocForms extends DocPage {
                 You can add icons to ~Input~ component by adding ~iconLeft/iconRight~ attributes
             `}/>
             <DocSample columns={3}>
-                <Input iconLeft={<i class="icon icon-arrow-right"/>} placeholder="Name"/>
-                <Input large iconLeft={<i class="icon icon-arrow-right"/>} placeholder="Name"/>
-                <Input large iconLeft={<i class="icon loading"/>} placeholder="Name"/>
-                <Input iconRight={<i class="icon icon-check"/>} placeholder="Name"/>
-                <Input large iconRight={<i class="icon icon-check"/>} placeholder="Name"/>
-                <Input large iconRight={<i class="icon loading"/>} placeholder="Name"/>
+                <Input iconLeft={<i className="icon icon-arrow-right"/>} placeholder="Name"/>
+                <Input large iconLeft={<i className="icon icon-arrow-right"/>} placeholder="Name"/>
+                <Input large iconLeft={<i className="icon loading"/>} placeholder="Name"/>
+                <Input iconRight={<i className="icon icon-check"/>} placeholder="Name"/>
+                <Input large iconRight={<i className="icon icon-check"/>} placeholder="Name"/>
+                <Input large iconRight={<i className="icon loading"/>} placeholder="Name"/>
             </DocSample>
             <DocExample content={`
-                <Input iconLeft={<i class="icon icon-arrow-right"/>} placeholder="Name"/>
-                <Input large iconLeft={<i class="icon icon-arrow-right"/>} placeholder="Name"/>
-                <Input large iconLeft={<i class="icon loading"/>} placeholder="Name"/>
-                <Input iconRight={<i class="icon icon-check"/>} placeholder="Name"/>
-                <Input large iconRight={<i class="icon icon-check"/>} placeholder="Name"/>
-                <Input large iconRight={<i class="icon loading"/>} placeholder="Name"/>
+                <Input iconLeft={<i className="icon icon-arrow-right"/>} placeholder="Name"/>
+                <Input large iconLeft={<i className="icon icon-arrow-right"/>} placeholder="Name"/>
+                <Input large iconLeft={<i className="icon loading"/>} placeholder="Name"/>
+                <Input iconRight={<i className="icon icon-check"/>} placeholder="Name"/>
+                <Input large iconRight={<i className="icon icon-check"/>} placeholder="Name"/>
+                <Input large iconRight={<i className="icon loading"/>} placeholder="Name"/>
             `}/>
             <DocTitle>Input types</DocTitle>
             <DocSample>
@@ -269,7 +269,7 @@ export class DocForms extends DocPage {
                             <Label htmlFor="input-example--35">Password</Label>
                         </Column>
                         <Column all={9}>
-                            <Input id='input-example--35' autocomplete='none' type="password" placeholder="Password"
+                            <Input id='input-example--35' autoComplete='none' type="password" placeholder="Password"
                                    defaultValue="123456"/>
                         </Column>
                     </FormGroup>
@@ -353,7 +353,7 @@ export class DocForms extends DocPage {
 
                 <InputGroup>
                     <Switch/>
-                    <Input id='input-example--18' autocomplete='none' placeholder="Name"/>
+                    <Input id='input-example--18' autoComplete='none' placeholder="Name"/>
                 </InputGroup>
                 <InputGroup>
                     <Switch large/>
@@ -447,12 +447,12 @@ export class DocForms extends DocPage {
             </DocSample>
             <DocExample content={`
                 <FormGroup success>
-                    <Input label='Name' id="validation-1"  placeholder="Name" />
+                    <Input label='Name' id="validation-11"  placeholder="Name" />
                     <Hint>The name is valid.</Hint>
                 </FormGroup>
                 <FormGroup >
-                    <Label  htmlFor='validation-2'>Password</Label>
-                    <Input error id="validation-2"  placeholder="Password" />
+                    <Label  htmlFor='validation-222'>Password</Label>
+                    <Input error id="validation-222"  placeholder="Password" />
                     <Hint>Passwords must have at least 8 characters.</Hint>
                 </FormGroup>
                 <FormGroup >
@@ -476,7 +476,7 @@ export class DocForms extends DocPage {
             <DocSample columns={2}>
                 <Form>
                     <FormGroup>
-                        <Input disabled label='Name' id="validation-1" placeholder="Name"/>
+                        <Input disabled label='Name' id="validation-31" placeholder="Name"/>
                     </FormGroup>
                     <FormGroup>
                         <Radio disabled name="gender12" label='Male'/>
@@ -506,7 +506,7 @@ export class DocForms extends DocPage {
             <DocExample content={`
                 <Form>
                     <FormGroup >
-                        <Input disabled label='Name' id="validation-1"  placeholder="Name" />
+                        <Input disabled label='Name' id="validation-41"  placeholder="Name" />
                     </FormGroup>
                     <FormGroup >
                         <Radio disabled name="gender12" label='Male'/>

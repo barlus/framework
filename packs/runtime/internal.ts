@@ -1,7 +1,7 @@
+import {getOwnMetadata} from './Reflect';
 
 const target: unique symbol = Symbol('target');
 const source: unique symbol = Symbol('internal');
-
 
 const internalObject = {
     of<C extends {'#'}>(target:C):C['#']{
@@ -10,7 +10,7 @@ const internalObject = {
 };
 
 function internalDecor<C extends {'#'}>(proto:C,key:'#'='#'){
-    const Type = Reflect.getOwnMetadata('design:type',proto,key);
+    const Type = getOwnMetadata('design:type',proto,key);
     Object.defineProperty(proto,source,{
         configurable:true,
         get(){

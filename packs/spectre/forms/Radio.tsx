@@ -29,7 +29,7 @@ export class Radio extends React.Component<RadioProps, {}> {
             }, className)
             }>
                 <input {...otherProps} type="radio"/>
-                <i class={classes(Theme.formIcon)} />
+                <i className={classes(Theme.formIcon)} />
             {label}
         </Label>
 

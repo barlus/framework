@@ -10,7 +10,7 @@ export class ModalBody extends React.PureComponent<ModalBodyProps, {}> {
             children,
             ...otherProps
         } = this.props;
-        return (<div {...otherProps} class={classes(Theme.modalBody,className)}>
+        return (<div {...otherProps} className={classes(Theme.modalBody,className)}>
             {children}
         </div>)
     }

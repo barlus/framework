@@ -11,7 +11,7 @@ export class Form extends React.PureComponent<FormProps, {}> {
             children,
             ...otherProps
         } = this.props;
-        return <form {...otherProps} class={
+        return <form {...otherProps} className={
             classes({
                 [ Theme.formHorizontal ]: horizontal,
             }, className)

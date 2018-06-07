@@ -17,7 +17,7 @@ export class Button extends React.PureComponent<ButtonProps, {}> {
             children,
             ...otherProps
         } = this.props;
-        return <button {...otherProps} class={
+        return <button {...otherProps} className={
             classes(Theme.Button, {
                 [ Theme.primary ]: primary,
                 [ Theme.link ]: link,

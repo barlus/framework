@@ -20,7 +20,7 @@
     "versions": "node --harmony -r @barlus/bone/register ./tool/version.ts"
   },
   "devDependencies": {
-    "typescript": "^2.9.0-dev.20180506"
+    "typescript": "next"
   },
   "resolutions": {
     "@barlus/bone": "0.1.8",

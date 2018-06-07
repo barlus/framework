@@ -11,7 +11,7 @@ export class MenuDivider extends React.PureComponent<MenuDividerProps, {}> {
             children,
             ...otherProps
         } = this.props;
-        return <li {...otherProps} data-content={content} class={classes(Theme.divider, className)}/>
+        return <li {...otherProps} data-content={content} className={classes(Theme.divider, className)}/>
     }
 }
 

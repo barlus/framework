@@ -10,7 +10,7 @@ export class ModalFooter extends React.PureComponent<ModalFooterProps, {}> {
             children,
             ...otherProps
         } = this.props;
-        return (<div {...otherProps} class={classes(Theme.modalFooter,className)}>
+        return (<div {...otherProps} className={classes(Theme.modalFooter,className)}>
             {children}
         </div>)
     }

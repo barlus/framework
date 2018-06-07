@@ -28,7 +28,7 @@ export class Switch extends React.Component<SwitchProps, {}> {
             }, className)
             }>
                 <input {...otherProps} type="checkbox" />
-                <i class={classes(Theme.formIcon)} />
+                <i className={classes(Theme.formIcon)} />
                 {label}
         </Label>
 

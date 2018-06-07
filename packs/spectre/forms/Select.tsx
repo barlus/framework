@@ -20,7 +20,7 @@ export class Select extends React.PureComponent<SelectProps, {}> {
         } = this.props;
         const formGroupProps = { label, id };
         const inputProps = { id, ...otherProps };
-        const selectComp = (<select {...inputProps} class={
+        const selectComp = (<select {...inputProps} className={
             classes(Theme.formSelect, {
                 [ Theme.isSuccess ]: success,
                 [ Theme.isError ]: error,

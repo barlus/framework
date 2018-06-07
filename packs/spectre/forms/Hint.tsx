@@ -9,7 +9,7 @@ export class Hint extends React.PureComponent<HintProp, {}> {
             children,
             ...otherProps
         } = this.props;
-        return (<p class={
+        return (<p className={
                 classes(Theme.formInputHint, className)
             }{...otherProps}>
                 {children}

@@ -29,7 +29,7 @@ export class CheckBox extends React.Component<CheckBoxProps, {}> {
             }, className)
         }>
             <input {...otherProps} type="checkbox" />
-            <i class={classes(Theme.formIcon)} />
+            <i className={classes(Theme.formIcon)} />
             {label}
         </Label>
 

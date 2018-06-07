@@ -13,7 +13,7 @@ export class InputGroup extends React.PureComponent<InputGroupProps, {}> {
             children,
             ...otherProps
         } = this.props;
-        return (<div class={
+        return (<div className={
                 classes(Theme.inputGroup,{
             [ Theme.hasSuccess ]: success,
             [ Theme.inputInline ]: inline,

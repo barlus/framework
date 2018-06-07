@@ -1,4 +1,5 @@
 import * as React from "@barlus/nerv"
+import { HashHistory } from "@barlus/history"
 import { observer, store } from '@barlus/storex';
 import { RoutesStore } from '../stores';
 import { Code } from "./Code";
@@ -7,7 +8,7 @@ import {
     OffCanvasSidebar,
     OffCanvasToggle
 } from "@barlus/spectre";
-
+const history = new HashHistory();
 export class DocNavItem extends React.PureComponent<{ href: string, title: string, ready: boolean }, {}> {
     render() {
         const style = this.props.ready ? undefined : { backgroundColor: '#fbffca' };
@@ -23,8 +24,8 @@ export class DocNavCategory extends React.PureComponent<{ active?: boolean, titl
         const children = this.props.children;
         const key = String(this.props.title).toLowerCase();
         const id = `docs-accordion-${key}`;
-        return <Accordion key={key}>
-            <AccordionHeader className='c-hand' id={id} name='docs-accordion-checkbox' defaultChecked={active}>
+        return <Accordion id={id} defaultChecked={active} type="checkbox" name='docs-accordion-checkbox' key={key}>
+            <AccordionHeader className='c-hand'>
                 {title}
             </AccordionHeader>
             <AccordionBody>
@@ -57,7 +58,6 @@ export class DocSection extends React.PureComponent<{ id: string, title: string 
         </Container>
     }
 }
-
 export class DocText extends React.Component<React.PropsOf<typeof DocText>> {
     static defaultProps = {
         trim: true as boolean,
@@ -66,7 +66,7 @@ export class DocText extends React.Component<React.PropsOf<typeof DocText>> {
     };
     render() {
         let { text, trim, ...props } = this.props;
-        return <div class="docs-note">
+        return <div className="docs-note">
             <p dangerouslySetInnerHTML={{ __html: this.format(text.trim()) }}/>
         </div>
     }
@@ -169,7 +169,7 @@ export class DocNavBar extends React.PureComponent<{ docs }, {}> {
             const href = `/#/${docs[ d ][ c ].id || docs[ d ][ c ].name}`;
             const title = docs[ d ][ c ].title || docs[ d ][ c ].name;
             const ready = docs[ d ][ c ].ready || false;
-            return <DocNavItem href={href} title={title} ready={ready}/>
+            return <DocNavItem key={`${d}-${c}`} href={href} title={title} ready={ready}/>
         };
         const items = Object.keys(docs).map((d) => {
             return <DocNavCategory title={d} key={d} active>
@@ -193,17 +193,24 @@ export class DocNavBar extends React.PureComponent<{ docs }, {}> {
     }
 }
 
-@observer
-export class DocApp extends React.PureComponent<{ docs }, { sidebarOpen: boolean }> {
+//@observer
+export class DocApp extends React.PureComponent<{ docs }, { sidebarOpen: boolean,path:string }> {
 
-    @store router: RoutesStore;
+    //@store router: RoutesStore;
+    history:HashHistory;
 
     constructor(p, c) {
         super(p, c);
-        this.state = { sidebarOpen: false };
+        this.history = new HashHistory();
+        console.info(this.history.location);
+        this.state = { sidebarOpen: false, path:this.history.location.pathname.substr(1) };
+
     }
 
     componentDidMount() {
+        this.history.listen(location => this.setState({
+            path:location.pathname.substr(1)
+        }));
         window.onpopstate = () => (this.closeSidebarOnRoutExit())
     }
 
@@ -222,15 +229,15 @@ export class DocApp extends React.PureComponent<{ docs }, { sidebarOpen: boolean
     };
 
     render() {
-        const routeName = this.router.routerState.routeName;
+        //const routeName = 'doc-accordions';//this.router.routerState.routeName;
         const { docs } = this.props;
-        const { sidebarOpen } = this.state;
+        const { sidebarOpen,path } = this.state;
         const components = [];
         Object.keys(docs).forEach(d => {
             Object.keys(docs[ d ]).forEach(c => {
                 const Component = docs[ d ][ c ];
-                if (Component.id == routeName || Component.name == routeName) {
-                    components.push(<Component/>)
+                if (Component.id == path || Component.name == path) {
+                    components.push(<Component key={`${d}-${c}`}/>)
                 }
             })
         });

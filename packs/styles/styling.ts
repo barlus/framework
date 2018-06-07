@@ -110,6 +110,7 @@ export function theme<T extends { defaultTheme, name }, K extends keyof T['defau
 export function stylesheet(sourceName: string) {
     const stylesheet = new TypeStyle({
         autoGenerateTag: true,
+
         sourceName: sourceName
     });
     function animation(name:string,frames:KeyFrames) {

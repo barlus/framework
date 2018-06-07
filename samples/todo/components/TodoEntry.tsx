@@ -4,9 +4,7 @@ import {Theme} from './styles/TodoEntry';
 
 const ENTER_KEY = 13;
 
-interface TodoEntryProps {
-
-}
+interface TodoEntryProps {}
 
 @inject('todoStore')
 @observer

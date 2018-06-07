@@ -10,8 +10,8 @@ export class Code extends React.Component<React.PropsOf<typeof Code>> {
         element: null as any,
     };
     private el:HTMLElement;
-    constructor(props) {
-        super(props);
+    constructor(props,context) {
+        super(props,context);
         this.setEl = this.setEl.bind(this)
     }
     componentDidMount() {

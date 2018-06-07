@@ -26,7 +26,7 @@ export const enum Theme {
 }
 
 // Buttons
-stylesheet('theme/buttons.css')('*', {
+stylesheet('buttons.css')('*', {
     ...nest(`&.${Theme.Button}`, {
         appearance /*     */: 'none',
         background /*     */: $.bgColorLight.rgba,

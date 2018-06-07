@@ -11,7 +11,7 @@ export class InputGroupButton extends React.PureComponent<InputGroupButtonProp, 
             children,
             ...otherProps
         } = this.props;
-        return (<Button  className={
+        return (<Button className={
                 classes(Theme.inputGroupBtn, className)
             }{...otherProps}>
             {children}

@@ -7,14 +7,16 @@ export class DocModals extends DocPage<any,any> {
     static title = "Modals";
     static ready = true;
 
-
+    state = {
+        open:false
+    };
     render() {
         return <DocSection id={this.id} title={this.title}>
             <DocText text='Modals are flexible dialog prompts.'/>
             <Columns>
                 <Column>
                     <Button primary onClick={()=>this.setState({open:true})}>Open Modal</Button>
-                    <Modal open={this.state.open || false} onBackgroundClick={()=>this.setState({open:false})} >
+                    <Modal open={this.state.open} onBackgroundClick={()=>this.setState({open:false})} >
                         <ModalHeader>
                             Modal header
                         </ModalHeader>

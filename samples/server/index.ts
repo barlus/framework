@@ -68,8 +68,8 @@ class MyApplication extends HttpApplication {
         this.use(new ProjectRoute({
             jsx: 'React.createElement',
             root: process.cwd(),
-            project: '@vendor/client',//@vendor/todo
-            ignore: [ 'typescript', '@barlus/bui', /*'@vendor/client'*/ ]
+            project:'@vendor/client' , //@vendor/todo
+            ignore: [ 'typescript', '@barlus/bui','@vendor/todo','@vendor/todomvc' ]
         }))
     }
 }

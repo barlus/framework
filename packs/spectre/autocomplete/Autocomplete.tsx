@@ -209,7 +209,7 @@ export class Autocomplete extends React.PureComponent<AutocompleteProps, Autocom
             <div
                 className={classes(Theme.formAutocompleteInput, FormTheme.formInput, { [ Theme.isFocused ]: this.state.open })}>
                 {multiple && this.renderSelected()}
-                <Input ref={"input"} value={value} placeholder={placeholder} onChange={this.handleOnChange}
+                <Input ref={(("input") as any)} value={value} placeholder={placeholder} onChange={this.handleOnChange}
                        onKeyDown={this.handleKeyDown} onFocus={this.handleFocus} onBlur={this.handleBlur}/>
             </div>
             {this.state.open && this.renderMenu()}

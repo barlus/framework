@@ -1,4 +1,4 @@
-import * as React from "@barlus/nerv"
+import * as React from "@barlus/react"
 
 import {DocExample,  DocPage, DocSection, DocText, DocTitle} from "../../comps/DocPage";
 import {Button, Column, Columns, Modal, ModalBody, ModalFooter, ModalHeader} from "@barlus/spectre";

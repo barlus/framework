@@ -1,7 +1,7 @@
-import * as React from "@barlus/nerv"
+import * as React from "@barlus/react"
 import { HashHistory } from "@barlus/history"
-import { observer, store } from '@barlus/storex';
-import { RoutesStore } from '../stores';
+
+
 import { Code } from "./Code";
 import {
     Accordion, AccordionBody, AccordionHeader, Container, Menu, MenuItem, OffCanvas, OffCanvasContent, OffCanvasOverlay,

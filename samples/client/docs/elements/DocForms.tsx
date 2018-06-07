@@ -1,4 +1,4 @@
-import * as React from "@barlus/nerv"
+import * as React from "@barlus/react"
 import { DocPage, DocText, DocExample, DocSection, DocTitle, DocSample } from '../../comps/DocPage';
 import {
     CheckBox, Column, Form, FormGroup, Input, Radio, Select, Switch,

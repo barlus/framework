@@ -1,4 +1,4 @@
-import * as React from "@barlus/nerv"
+import * as React from "@barlus/react"
 import { DocExample, DocNote, DocPage, DocSample, DocSection, DocText } from "../../comps/DocPage";
 import {
     Avatar, Button, Input, InputGroup, InputGroupButton, Panel, PanelBody, PanelFooter, PanelHeader, PanelNav,

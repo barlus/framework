@@ -1,4 +1,4 @@
-import * as React from "@barlus/nerv"
+import * as React from "@barlus/react"
 import { Container, OffCanvas, OffCanvasContent, OffCanvasSidebar, OffCanvasToggle } from "@barlus/spectre";
 import { DocExample, DocPage, DocSample, DocSection, DocText } from "../../comps/DocPage";
 

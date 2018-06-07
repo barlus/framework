@@ -1,4 +1,4 @@
-import * as React from "@barlus/nerv";
+import * as React from "@barlus/react";
 import { Theme } from './theme';
 import { Theme as FormTheme } from '../forms/theme';
 

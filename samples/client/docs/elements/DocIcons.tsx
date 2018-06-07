@@ -1,4 +1,4 @@
-import * as React from "@barlus/nerv"
+import * as React from "@barlus/react"
 import { DocPage, DocSection, DocNote, DocSample, DocTitle, DocExample } from '../../comps/DocPage';
 
 export class DocIcons extends DocPage {

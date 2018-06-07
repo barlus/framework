@@ -1,4 +1,4 @@
-import * as React from "@barlus/nerv";
+import * as React from "@barlus/react";
 import {classes} from "../utils/classes";
 import {Theme} from "./theme";
 

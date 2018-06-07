@@ -1,4 +1,4 @@
-import * as React from "@barlus/nerv"
+import * as React from "@barlus/react"
 
 import { DocExample, DocText, DocPage, DocSample, DocSection } from '../../comps/DocPage';
 import { Table, TableBody, TableCell, TableHeader, TableHeading, TableRow } from "@barlus/spectre";

@@ -1,4 +1,4 @@
-import * as React from "@barlus/nerv";
+import * as React from "@barlus/react";
 
 
 export class TableCell extends React.PureComponent<TableCellProps, {}> {

@@ -1,4 +1,4 @@
-import * as React from '@barlus/nerv';
+import * as React from '@barlus/react';
 
 declare const hljs;
 

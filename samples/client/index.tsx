@@ -1,6 +1,6 @@
 import "@barlus/runtime"
-import * as React from "@barlus/nerv"
-//import * as Dev from "@barlus/nerv/devtools"
+import * as React from "@barlus/react"
+//import * as Dev from "@barlus/react/devtools"
 // import { Provider } from '@barlus/storex';
 // import { RoutesStore } from './stores';
 import { DocApp } from './comps/DocPage';

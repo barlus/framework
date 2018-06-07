@@ -1,4 +1,4 @@
-import * as React from "@barlus/nerv";
+import * as React from "@barlus/react";
 import { AccordionHeader } from './AccordionHeader';
 import { Theme } from './theme';
 import { classes } from '../utils/classes';

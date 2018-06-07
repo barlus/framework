@@ -1,7 +1,7 @@
-import * as React from "@barlus/nerv"
+import * as React from "@barlus/react"
 
 
-//import * as Dev from "@barlus/nerv/devtools"
+//import * as Dev from "@barlus/react/devtools"
 //declare const React,ReactDOM;
 
 class Child extends React.PureComponent<{},{}> {

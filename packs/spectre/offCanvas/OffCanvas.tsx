@@ -39,8 +39,8 @@ export class OffCanvas extends React.PureComponent<OffCanvasProps, { active: boo
             ...otherProps
         } = this.props;
         return (
-            <div {...otherProps} className={classes(Theme.OffCanvas, {
-                [ Theme.sidebarShow ]: showOnLarge,
+            <div {...otherProps} className={classes(Theme.offCanvas, {
+                [ Theme.offCanvasSidebarShow ]: showOnLarge,
                 [ Theme.active ]: this.state.active
             }, className)}>
                 {children}

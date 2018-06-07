@@ -17,7 +17,7 @@ export class Image extends React.PureComponent<ImageProps, {}> {
                 [ Theme.imgFitContain ]: contain,
                 [ Theme.imgFitCover ]: cover,
             }, className)
-        }>{children}/></img>
+        }/>
     }
 }
 

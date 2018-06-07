@@ -10,14 +10,14 @@ export const enum Theme {
 const filterCheckedNav = () => {
     let selector = [];
     for(let i = 0; i<=8; i++){
-
        selector.push(`.filter-tag#tag-${i}:checked~.filter-nav .chip[for=tag-${i}]`)
     }
     return  nest(selector,{
         background:$.primaryColor.rgba,
         color:$.lightColor.rgba
     });
-}
+};
+
 const filterCheckedBody = () => {
     let selector = [];
     for(let i = 1; i<=8; i++){
@@ -26,7 +26,8 @@ const filterCheckedBody = () => {
     return  nest(selector,{
         display: 'none'
     });
-}
+};
+
 stylesheet('filters.ts')('',{
     ...nest([`.${Theme.filter}`],{
         ...nest([`.${Theme.filterNav}`],{

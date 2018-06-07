@@ -1,8 +1,7 @@
 import * as React from "@barlus/nerv";
 import { Theme } from './theme';
 import { classes } from '../utils/classes';
-import {BarItem} from "./BarItem";
-
+import { BarItem } from "./BarItem";
 
 export class Bar extends React.PureComponent<BarProps, {}> {
     render() {
@@ -14,18 +13,21 @@ export class Bar extends React.PureComponent<BarProps, {}> {
             progress,
             ...otherProps
         } = this.props;
+        const childrenCount = React.Children.count(children);
         return <div {...otherProps} class={
             classes(Theme.bar, {
                 [ Theme.barSm ]: small,
             }, className)}>
-            {progress === undefined || children.length !=0 ? (children) : (<BarItem progress={progress} />)}
+            {(progress === undefined || childrenCount != 0)
+                ? (children)
+                : (<BarItem progress={progress}/>)}
         </div>
     }
 }
 
 export interface BarProps {
-    children?:any
+    children?: any
     className?: string,
-    progress? :number,
+    progress?: number,
     small?: boolean,
 }

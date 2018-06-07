@@ -1,5 +1,5 @@
 import {$,em,list,nest,rem,stylesheet} from "@barlus/styles"
-import { labelBase, labelVariant } from '../mixins/label';
+import { taglBase, taglVariant } from '../mixins/tag';
 
 export default Theme;
 export const enum Theme {
@@ -61,12 +61,12 @@ stylesheet('typography.ts')('',{
         textDecoration:'none',
     }),
     ...nest([`kbd`],{
-        ...labelBase(),
-        ...labelVariant($.lightColor,$.darkColor),
+        ...taglBase(),
+        ...taglVariant($.lightColor,$.darkColor),
         fontSize:rem($.fontSizeSm),
     }),
     ...nest([`mark`],{
-        ...labelVariant($.bodyFontColor,$.highlightColor),
+        ...taglVariant($.bodyFontColor,$.highlightColor),
         borderRadius:rem($.borderRadius),
         padding:rem(.05),
     }),

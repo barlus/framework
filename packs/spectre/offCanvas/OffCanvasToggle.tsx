@@ -12,7 +12,7 @@ export class OffCanvasToggle extends React.PureComponent<OffCanvasToggleProp, {}
             ...otherProps
         } = this.props;
         return (<Button  className={
-                classes(Theme.toggle, className)
+                classes(Theme.offCanvasToggle, className)
             }{...otherProps}>
                 {children}
             </Button>

@@ -10,7 +10,7 @@ export class OffCanvasSidebar extends React.PureComponent<OffCanvasSidebarProps,
             children,
             ...otherProps
         } = this.props;
-        return (<div {...otherProps} class={classes(Theme.sidebar,className)}>
+        return (<div {...otherProps} class={classes(Theme.offCanvasSidebar,className)}>
             {children}
         </div>)
     }

@@ -10,7 +10,7 @@ export class OffCanvasOverlay extends React.PureComponent<OffCanvasOverlayProps,
             children,
             ...otherProps
         } = this.props;
-        return (<div {...otherProps} class={classes(Theme.overlay,className)}>
+        return (<div {...otherProps} class={classes(Theme.offCanvasOverlay,className)}>
             {children}
         </div>)
     }

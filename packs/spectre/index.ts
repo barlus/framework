@@ -23,6 +23,7 @@ export * from './forms/Select';
 export * from './forms/Radio';
 export * from './forms/CheckBox';
 export * from './forms/Switch';
+export * from './tags/Tag';
 export * from './media/Figure';
 export * from './media/FigureCaption';
 export * from './media/Image';

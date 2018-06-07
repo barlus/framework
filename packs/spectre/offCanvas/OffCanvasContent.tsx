@@ -11,7 +11,7 @@ export class OffCanvasContent extends React.PureComponent<OffCanvasContentProps,
             active,
             ...otherProps
         } = this.props;
-        return (<div {...otherProps} class={classes(Theme.content,className)}>
+        return (<div {...otherProps} class={classes(Theme.offCanvasContent,className)}>
             {children}
         </div>)
     }

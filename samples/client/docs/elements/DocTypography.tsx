@@ -1,4 +1,5 @@
 import * as React from "@barlus/nerv"
+import {Tag} from "@barlus/spectre"
 import { DocExample, DocText, DocPage, DocSample, DocSection, DocTitle } from '../../comps/DocPage';
 
 export class DocTypography extends DocPage {
@@ -12,20 +13,20 @@ export class DocTypography extends DocPage {
             `}/>
             <DocTitle>Headings</DocTitle>
             <DocSample>
-                <h1>H1 Heading <small class="label">40px</small></h1>
-                <h2>H2 Heading <small class="label">32px</small></h2>
-                <h3>H3 Heading <small class="label">28px</small></h3>
-                <span class="h4">H4 Heading <small class="label">24px</small></span>
-                <span class="h5">H5 Heading <small class="label">20px</small></span>
-                <span class="h6">H6 Heading <small class="label">16px</small></span>
+                <h1>H1 Heading <Tag small>40px</Tag></h1>
+                <h2>H2 Heading <Tag small>32px</Tag></h2>
+                <h3>H3 Heading <Tag small>28px</Tag></h3>
+                <span class="h4">H4 Heading <Tag small>24px</Tag></span>
+                <span class="h5">H5 Heading <Tag small>20px</Tag></span>
+                <span class="h6">H6 Heading <Tag small>16px</Tag></span>
             </DocSample>
             <DocExample content={`
-                <h1>H1 Heading <small class="label">40px</small></h1>
-                <h2>H2 Heading <small class="label">32px</small></h2>
-                <h3>H3 Heading <small class="label">28px</small></h3>
-                <span class="h4">H4 Heading <small class="label">24px</small></span>
-                <span class="h5">H5 Heading <small class="label">20px</small></span>
-                <span class="h6">H6 Heading <small class="label">16px</small></span>
+                <h1>H1 Heading <Tag small>40px</small></h1>
+                <h2>H2 Heading <Tag small>32px</small></h2>
+                <h3>H3 Heading <Tag small>28px</small></h3>
+                <span class="h4">H4 Heading <Tag small>24px</Tagsmall></span>
+                <span class="h5">H5 Heading <Tag small>20px</Tagsmall></span>
+                <span class="h6">H6 Heading <Tag small>16px</Tagsmall></span>
             `}/>
             <DocTitle>Paragraphs</DocTitle>
             <DocSample>

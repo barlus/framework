@@ -9,7 +9,7 @@ import { DocTypography } from './docs/elements/DocTypography';
 import { DocTables } from './docs/elements/DocTables';
 import { DocButtons } from './docs/elements/DocButtons';
 import { DocForms } from './docs/elements/DocForms';
-import { DocLabels } from './docs/elements/DocLabels';
+import { DocTags } from './docs/elements/DocTags';
 import { DocMedia } from './docs/elements/DocMedia';
 import { DocIcons } from './docs/elements/DocIcons';
 
@@ -70,7 +70,7 @@ const DOCS = {
         DocButtons,
         DocForms,
         DocIcons,
-        DocLabels,
+        DocTags,
         DocMedia
     },
     LAYOUT: {

@@ -1,92 +1,105 @@
-import { cssRule } from '@barlus/styles';
+import {$,list,nest,percent,rem,s,stylesheet,translateX,translateY} from "@barlus/styles"
 
-cssRule('.carousel', {
-    "background": "#f8f9fa",
-    "display": "block",
-    "overflow": "hidden",
-    "-webkit-overflow-scrolling": "touch",
-    "position": "relative",
-    "width": "100%",
-    "zIndex": 1
-});
-cssRule('.carousel .carousel-container', {
-    "height": "100%",
-    "left": 0,
-    "position": "relative"
-});
-cssRule('.carousel .carousel-container::before', {
-    "content": "\"\"",
-    "display": "block",
-    "paddingBottom": "56.25%"
-});
-cssRule('.carousel .carousel-container .carousel-item', {
-    "animation": "carousel-slideout 1s ease-in-out 1",
-    "height": "100%",
-    "left": 0,
-    "margin": 0,
-    "opacity": 0,
-    "position": "absolute",
-    "top": 0,
-    "width": "100%"
-});
-cssRule('.carousel .carousel-container .carousel-item:hover .item-next,.carousel .carousel-container .carousel-item:hover .item-prev', {
-    "opacity": 1
-});
-cssRule('.carousel .carousel-container .item-next,.carousel .carousel-container .item-prev', {
-    "background": "rgba(231,233,237,.25)",
-    "borderColor": "rgba(231,233,237,.5)",
-    "color": "#e7e9ed",
-    "opacity": 0,
-    "position": "absolute",
-    "top": "50%",
-    "transform": "translateY(-50%)",
-    "transition": "all .4s ease",
-    "zIndex": 100
-});
-cssRule('.carousel .carousel-container .item-prev', {
-    "left": "1rem"
-});
-cssRule('.carousel .carousel-container .item-next', {
-    "right": "1rem"
-});
-cssRule('.carousel .carousel-locator:nth-of-type(1):checked~.carousel-container .carousel-item:nth-of-type(1),.carousel .carousel-locator:nth-of-type(2):checked~.carousel-container .carousel-item:nth-of-type(2),.carousel .carousel-locator:nth-of-type(3):checked~.carousel-container .carousel-item:nth-of-type(3),.carousel .carousel-locator:nth-of-type(4):checked~.carousel-container .carousel-item:nth-of-type(4)', {
-    "animation": "carousel-slidein .75s ease-in-out 1",
-    "opacity": 1,
-    "zIndex": 100
-});
-cssRule('.carousel .carousel-locator:nth-of-type(1):checked~.carousel-nav .nav-item:nth-of-type(1),.carousel .carousel-locator:nth-of-type(2):checked~.carousel-nav .nav-item:nth-of-type(2),.carousel .carousel-locator:nth-of-type(3):checked~.carousel-nav .nav-item:nth-of-type(3),.carousel .carousel-locator:nth-of-type(4):checked~.carousel-nav .nav-item:nth-of-type(4)', {
-    "color": "#e7e9ed"
-});
-cssRule('.carousel .carousel-nav', {
-    "bottom": ".4rem",
-    "display": [
-        "flex",
-        "-ms-flexbox"
-    ],
-    "-ms-flex-pack": "center",
-    "justifyContent": "center",
-    "left": "50%",
-    "position": "absolute",
-    "transform": "translateX(-50%)",
-    "width": "10rem",
-    "zIndex": 100
-});
-cssRule('.carousel .carousel-nav .nav-item', {
-    "color": "rgba(231,233,237,.5)",
-    "display": "block",
-    "-ms-flex": "1 0 auto",
-    "flex": "1 0 auto",
-    "height": "1.6rem",
-    "margin": ".2rem",
-    "maxWidth": "2.5rem",
-    "position": "relative"
-});
-cssRule('.carousel .carousel-nav .nav-item::before', {
-    "background": "currentColor",
-    "content": "\"\"",
-    "display": "block",
-    "height": ".1rem",
-    "position": "absolute",
-    "top": ".5rem",
-    "width": "100%"
+export default Theme;
+export const enum Theme {
+    carousel='carousel',
+    carouselContainer='carousel-container',
+    carouselItem='carousel-item',
+    carouselLocator='carousel-locator',
+    carouselNav='carousel-nav',
+    itemNext='item-next',
+    itemPrev='item-prev',
+    navItem='nav-item',
+}
+
+stylesheet('carousels.ts')('',{
+    ...nest([`.${Theme.carousel}`],{
+        background:$.bgColor.rgba,
+        display:'block',
+        overflow:'hidden',
+        position:'relative',
+        width:percent(100),
+        '-webkit-overflow-scrolling':'touch',
+        zIndex:$.zIndex0,
+        ...nest([`.${Theme.carouselContainer}`],{
+            height:percent(100),
+            left:0,
+            position:'relative',
+            ...nest([`&::before`],{
+                content:"\"\"",
+                display:'block',
+                paddingBottom:percent(56.25),
+            }),
+            ...nest([`.${Theme.carouselItem}`],{
+                animation:`carousel-slideout 1s ease-in-out 1`,
+                height:percent(100),
+                left:0,
+                margin:0,
+                opacity:0,
+                position:'absolute',
+                top:0,
+                width:percent(100),
+                ...nest([`&:hover`],{
+                    ...nest([`.${Theme.itemPrev}`,`.${Theme.itemNext}`],{
+                        opacity:1,
+                    }),
+                }),
+            }),
+            ...nest([`.${Theme.itemPrev}`,`.${Theme.itemNext}`],{
+                background:$.grayColorLight.fade(.25).rgba,
+                borderColor:$.grayColorLight.fade(.5).rgba,
+                color:$.grayColorLight.rgba,
+                opacity:0,
+                position:'absolute',
+                top:percent(50),
+                transition:list('all',s(.4),'ease'),
+                transform:translateY(percent(-50)),
+                zIndex:$.zIndex1,
+            }),
+            ...nest([`.${Theme.itemPrev}`],{
+                left:rem(1),
+            }),
+            ...nest([`.${Theme.itemNext}`],{
+                right:rem(1),
+            }),
+        }),
+        ...nest([`.${Theme.carouselLocator}`],{
+            ...nest([`&:nth-of-type(1):checked ~ .${Theme.carouselContainer} .carousel-item:nth-of-type(1)`,`&:nth-of-type(2):checked ~ .${Theme.carouselContainer} .carousel-item:nth-of-type(2)`,`&:nth-of-type(3):checked ~ .${Theme.carouselContainer} .carousel-item:nth-of-type(3)`,`&:nth-of-type(4):checked ~ .${Theme.carouselContainer} .carousel-item:nth-of-type(4)`],{
+                animation:`carousel-slidein 0.75s ease-in-out 1`,
+                opacity:1,
+                zIndex:$.zIndex1,
+            }),
+            ...nest([`&:nth-of-type(1):checked ~ .${Theme.carouselNav} .nav-item:nth-of-type(1)`,`&:nth-of-type(2):checked ~ .${Theme.carouselNav} .nav-item:nth-of-type(2)`,`&:nth-of-type(3):checked ~ .${Theme.carouselNav} .nav-item:nth-of-type(3)`,`&:nth-of-type(4):checked ~ .${Theme.carouselNav} .nav-item:nth-of-type(4)`],{
+                color:$.grayColorLight.rgba,
+            }),
+        }),
+        ...nest([`.${Theme.carouselNav}`],{
+            bottom:rem($.layoutSpacing),
+            display:'flex',
+            justifyContent:'center',
+            left:percent(50),
+            position:'absolute',
+            transform:translateX(percent(-50)),
+            width:rem(10),
+            zIndex:$.zIndex1,
+            ...nest([`.${Theme.navItem}`],{
+                color:$.grayColorLight.fade(.5).rgba,
+                display:'block',
+                flex:'1 0 auto',
+                height:rem($.unit8),
+                margin:rem($.unit1),
+                maxWidth:rem(2.5),
+                position:'relative',
+                ...nest([`&::before`],{
+                    background:'currentColor',
+                    content:"\"\"",
+                    display:'block',
+                    height:rem($.unitH),
+                    position:'absolute',
+                    top:rem(.5),
+                    width:percent(100),
+                }),
+            }),
+        }),
+    }),
 });

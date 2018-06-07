@@ -5,7 +5,7 @@ import './mixins';
 import './core/normalize';
 import "./layout/theme";
 import './typography/theme';
-import './label/theme';
+import './tags/theme';
 import './buttons/theme';
 import './toasts/theme';
 import './accordions/theme';

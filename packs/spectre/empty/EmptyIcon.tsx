@@ -10,7 +10,7 @@ export class EmptyIcon extends React.PureComponent<EmptyIconProps, {}> {
             children,
             ...otherProps
         } = this.props;
-        return (<div {...otherProps} class={classes(Theme.emptyIcon, className)}>
+        return (<div {...otherProps} className={classes(Theme.emptyIcon, className)}>
             {children}
         </div>)
     }

@@ -14,7 +14,7 @@ export class Table extends React.PureComponent<TableProps, {}> {
             ...otherProps
         } = this.props;
 
-        return <table {...otherProps} class={
+        return <table {...otherProps} className={
             classes(Theme.table, {
                 [ Theme.tableStriped ]: striped,
                 [ Theme.tableScroll ]: scroll,

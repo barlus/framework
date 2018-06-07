@@ -29,15 +29,15 @@ export class DocComparison extends DocPage {
     }
 }
 
-const E1 = `<div class="comparison-slider">
-  <figure class="comparison-before">
+const E1 = `<div className="comparison-slider">
+  <figure className="comparison-before">
     <!-- image (before) -->
-    <div class="comparison-label">Before</div>
+    <div className="comparison-label">Before</div>
   </figure>
 
-  <figure class="comparison-after">
+  <figure className="comparison-after">
     <!-- image (after) -->
-    <div class="comparison-label">After</div>
-    <textarea class="comparison-resizer" readonly></textarea>
+    <div className="comparison-label">After</div>
+    <textarea className="comparison-resizer" readonly></textarea>
   </figure>
 </div>`;

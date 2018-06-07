@@ -156,12 +156,12 @@ export class DocAccordions extends DocPage {
     }
 }
 const E2 = `<!-- details and summary Accordions example -->
-<details class="accordion" open>
-  <summary class="accordion-header">
-    <i class="icon icon-arrow-right mr-1"></i>
+<details className="accordion" open>
+  <summary className="accordion-header">
+    <i className="icon icon-arrow-right mr-1"></i>
     Title
   </summary>
-  <div class="accordion-body">
+  <div className="accordion-body">
     <!-- Accordions content -->
   </div>
 </details>`;

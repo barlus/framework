@@ -10,7 +10,7 @@ export class TileTitle extends React.PureComponent<TileTitleProps, {}> {
             children,
             ...otherProps
         } = this.props;
-        return (<p {...otherProps} class={classes(Theme.tileTitle, className)}>
+        return (<p {...otherProps} className={classes(Theme.tileTitle, className)}>
             {children}
         </p>)
     }

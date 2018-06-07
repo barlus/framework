@@ -10,7 +10,7 @@ export class TileIcon extends React.PureComponent<TileIconProps, {}> {
             children,
             ...otherProps
         } = this.props;
-        return (<div {...otherProps} class={classes(Theme.tileIcon, className)}>
+        return (<div {...otherProps} className={classes(Theme.tileIcon, className)}>
             {children}
         </div>)
     }

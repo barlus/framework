@@ -11,7 +11,7 @@ export class PaginationItem extends React.PureComponent<PaginationItemProps, {}>
             children,
             ...otherProps
         } = this.props;
-        return (<li {...otherProps} class={classes(Theme.pageItem,{
+        return (<li {...otherProps} className={classes(Theme.pageItem,{
             [Theme.pagePrev]:prev,
             [Theme.pageNext]:next,
             [Theme.disabled]:disabled,

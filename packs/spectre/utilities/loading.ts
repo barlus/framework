@@ -9,7 +9,7 @@ export const enum Theme {
 
 stylesheet('loading.ts')('',{
     ...nest([`.${Theme.loading}`],{
-        color:'transparent',
+        color:'transparent!important',
         minHeight:rem($.unit4),
         pointerEvents:'none',
         position:'relative',

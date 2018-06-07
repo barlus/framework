@@ -13,8 +13,8 @@ export class AvatarIcon extends React.PureComponent<AvatarIconProps, {}> {
             children,
             ...otherProps
         } = this.props;
-        return <img {...otherProps} class={
-            classes(Theme.icon,{
+        return <img {...otherProps} className={
+            classes(Theme.avatarIcon,{
             }, className)
         }/>
 

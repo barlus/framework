@@ -10,7 +10,7 @@ export class PopoverContainer extends React.PureComponent<PopoverContainerProps,
             children,
             ...otherProps
         } = this.props;
-        return (<div {...otherProps} class={classes(Theme.popoverContainer,className)}>
+        return (<div {...otherProps} className={classes(Theme.popoverContainer,className)}>
             {children}
         </div>)
     }

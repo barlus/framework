@@ -21,5 +21,5 @@ export class DocProgress extends DocPage {
     }
 }
 
-const E1 = `<progress class="progress" value="25" max="100"></progress>
-<progress class="progress" max="100"></progress>`;
+const E1 = `<progress className="progress" value="25" max="100"></progress>
+<progress className="progress" max="100"></progress>`;

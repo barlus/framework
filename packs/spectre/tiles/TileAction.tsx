@@ -10,7 +10,7 @@ export class TileAction extends React.PureComponent<TileActionProps, {}> {
             children,
             ...otherProps
         } = this.props;
-        return (<div {...otherProps} class={classes(Theme.tileAction, className)}>
+        return (<div {...otherProps} className={classes(Theme.tileAction, className)}>
             {children}
         </div>)
     }

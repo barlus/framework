@@ -10,7 +10,7 @@ export class Pagination extends React.PureComponent<PaginationProps, {}> {
             children,
             ...otherProps
         } = this.props;
-        return (<ul {...otherProps} class={classes(Theme.pagination,className)}>
+        return (<ul {...otherProps} className={classes(Theme.pagination,className)}>
             {children}
         </ul>)
     }

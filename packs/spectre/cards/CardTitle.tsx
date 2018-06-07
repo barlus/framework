@@ -11,7 +11,7 @@ export class CardTitle extends React.PureComponent<CardTitleProps, {}> {
             children,
             ...otherProps
         } = this.props;
-        return (<div {...otherProps} class={classes(Theme.cardTitle,{
+        return (<div {...otherProps} className={classes(Theme.cardTitle,{
             [Theme.h1]:h1,
             [Theme.h2]:h2,
             [Theme.h3]:h3,

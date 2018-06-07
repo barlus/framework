@@ -134,22 +134,22 @@ export class DocFilters extends DocPage {
     }
 }
 
-const E1 = `<div class="filter">
-  <input type="radio" id="tag-0" class="filter-tag" name="filter-radio" hidden checked>
-  <input type="radio" id="tag-1" class="filter-tag" name="filter-radio" hidden>
-  <input type="radio" id="tag-2" class="filter-tag" name="filter-radio" hidden>
+const E1 = `<div className="filter">
+  <input type="radio" id="tag-0" className="filter-tag" name="filter-radio" hidden checked>
+  <input type="radio" id="tag-1" className="filter-tag" name="filter-radio" hidden>
+  <input type="radio" id="tag-2" className="filter-tag" name="filter-radio" hidden>
 
-  <div class="filter-nav">
-    <label class="chip" for="tag-0">All</label>
-    <label class="chip" for="tag-1">Action</label>
-    <label class="chip" for="tag-2">Roleplaying</label>
+  <div className="filter-nav">
+    <label className="chip" for="tag-0">All</label>
+    <label className="chip" for="tag-1">Action</label>
+    <label className="chip" for="tag-2">Roleplaying</label>
   </div>
 
-  <div class="filter-body">
-    <div class="filter-item card" data-tag="tag-1">
+  <div className="filter-body">
+    <div className="filter-item card" data-tag="tag-1">
       <!-- Filter item content -->
     </div>
-    <div class="filter-item card" data-tag="tag-2">
+    <div className="filter-item card" data-tag="tag-2">
       <!-- Filter item content -->
     </div>
     <!-- Filter items -->

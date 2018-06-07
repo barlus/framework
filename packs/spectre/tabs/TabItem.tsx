@@ -13,7 +13,7 @@ export class TabItem extends React.PureComponent<TabItemProps, {}> {
 
             ...otherProps
         } = this.props;
-        return (<li {...otherProps} class={classes(Theme.tabItem,{[Theme.active]:active,[Theme.tabAction]:action},className)}>
+        return (<li {...otherProps} className={classes(Theme.tabItem,{[Theme.active]:active,[Theme.tabAction]:action},className)}>
             {children}
         </li>)
     }

@@ -64,17 +64,17 @@ export class DocDivider extends DocPage {
     }
 }
 const E1 = `<!-- divider element -->
-<div class="divider"></div>
+<div className="divider"></div>
 <!-- divider element with text -->
-<div class="divider text-center" data-content="OR"></div>
+<div className="divider text-center" data-content="OR"></div>
 
 <!-- vertical divider element with text -->
-<div class="columns">
-  <div class="column">
+<div className="columns">
+  <div className="column">
     <!-- column content -->
   </div>
-  <div class="divider-vert" data-content="OR"></div>
-  <div class="column">
+  <div className="divider-vert" data-content="OR"></div>
+  <div className="column">
     <!-- column content -->
   </div>
 </div>`;

@@ -49,24 +49,24 @@ export class DocColors extends DocPage {
     }
 }
 
-const E1 = `<span class="text-primary">primary color</span>
-<span class="text-secondary">secondary color</span>
-<span class="text-gray">gray color</span>
-<span class="text-light">light color</span>
-<span class="text-success">success color</span>
-<span class="text-warning">warning color</span>
-<span class="text-error">error color</span>`;
-const E2 = `<a class="text-primary" href="#">primary color</a>
-<a class="text-secondary" href="#">secondary color</a>
-<a class="text-gray" href="#">gray color</a>
-<a class="text-light" href="#">light color</a>
-<a class="text-success" href="#">success color</a>
-<a class="text-warning" href="#">warning color</a>
-<a class="text-error" href="#">error color</a>`;
-const E3 = `<div class="bg-primary">primary bg</div>
-<div class="bg-secondary">secondary bg</div>
-<div class="bg-dark">dark bg</div>
-<div class="bg-gray">gray bg</div>
-<div class="bg-success">success bg</div>
-<div class="bg-warning">warning bg</div>
-<div class="bg-error">error bg</div>`;
+const E1 = `<span className="text-primary">primary color</span>
+<span className="text-secondary">secondary color</span>
+<span className="text-gray">gray color</span>
+<span className="text-light">light color</span>
+<span className="text-success">success color</span>
+<span className="text-warning">warning color</span>
+<span className="text-error">error color</span>`;
+const E2 = `<a className="text-primary" href="#">primary color</a>
+<a className="text-secondary" href="#">secondary color</a>
+<a className="text-gray" href="#">gray color</a>
+<a className="text-light" href="#">light color</a>
+<a className="text-success" href="#">success color</a>
+<a className="text-warning" href="#">warning color</a>
+<a className="text-error" href="#">error color</a>`;
+const E3 = `<div className="bg-primary">primary bg</div>
+<div className="bg-secondary">secondary bg</div>
+<div className="bg-dark">dark bg</div>
+<div className="bg-gray">gray bg</div>
+<div className="bg-success">success bg</div>
+<div className="bg-warning">warning bg</div>
+<div className="bg-error">error bg</div>`;

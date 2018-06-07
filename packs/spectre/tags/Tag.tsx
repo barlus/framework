@@ -18,7 +18,7 @@ export class Tag extends React.PureComponent<TagProps, {}> {
         } = this.props;
         const Element = small ? 'small' : 'span';
 
-        return (<Element {...otherProps} class={classes(Theme.tag,{
+        return (<Element {...otherProps} className={classes(Theme.tag,{
             [Theme.tagError]:error,
             [Theme.tagPrimary]:primary,
             [Theme.tagRounded]:rounded,

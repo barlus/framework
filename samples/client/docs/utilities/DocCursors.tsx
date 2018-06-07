@@ -24,14 +24,14 @@ export class DocCursors extends DocPage {
 }
 
 const E1 = `<!-- cursor: hand; -->
-<div class="c-hand"></div>
+<div className="c-hand"></div>
 <!-- cursor: move; -->
-<div class="c-move"></div>
+<div className="c-move"></div>
 <!-- cursor: zoom-in; -->
-<div class="c-zoom-in"></div>
+<div className="c-zoom-in"></div>
 <!-- cursor: zoom-out; -->
-<div class="c-zoom-out"></div>
+<div className="c-zoom-out"></div>
 <!-- cursor: not-allowed; -->
-<div class="c-not-allowed"></div>
+<div className="c-not-allowed"></div>
 <!-- cursor: auto; -->
-<div class="c-auto"></div>`;
+<div className="c-auto"></div>`;

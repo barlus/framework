@@ -11,7 +11,7 @@ export class DocResponsive extends DocPage {
                 utilities.
             </DocNote>
             <DocSample>
-                <div class="columns">
+                <div className="columns">
                     <div className="column col-10 col-lg-8 col-md-6 col-sm-4">
                         <div className="bg-gray docs-block">col-10 <br/> col-lg-8 <br/> col-md-6 <br/> col-sm-4
                         </div>
@@ -320,16 +320,16 @@ export class DocResponsive extends DocPage {
         </DocSection>
     }
 }
-const E1 = `<div class="container">
-  <div class="columns">
-    <div class="column col-xs-6">col-xs-6</div>
-    <div class="column col-xs-3">col-xs-3</div>
-    <div class="column col-xs-3">col-xs-3</div>
+const E1 = `<div className="container">
+  <div className="columns">
+    <div className="column col-xs-6">col-xs-6</div>
+    <div className="column col-xs-3">col-xs-3</div>
+    <div className="column col-xs-3">col-xs-3</div>
   </div>
 </div>`;
 const E2 = `<!-- 100% width container with max-width set to grid-lg (960px) -->
-<div class="container grid-lg">
-  <div class="columns">
+<div className="container grid-lg">
+  <div className="columns">
     ...
   </div>
 </div>`;

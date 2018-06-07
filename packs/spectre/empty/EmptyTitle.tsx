@@ -10,7 +10,7 @@ export class EmptyTitle extends React.PureComponent<EmptyTitleProps, {}> {
             children,
             ...otherProps
         } = this.props;
-        return (<p {...otherProps} class={classes(Theme.emptyTitle, className)}>
+        return (<p {...otherProps} className={classes(Theme.emptyTitle, className)}>
             {children}
         </p>)
     }

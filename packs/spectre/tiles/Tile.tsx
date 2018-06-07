@@ -11,7 +11,7 @@ export class Tile extends React.PureComponent<TileProps, {}> {
             children,
             ...otherProps
         } = this.props;
-        return <div {...otherProps} class={classes(Theme.tile, { [ Theme.tileCentered ]: centered }, className)}>
+        return <div {...otherProps} className={classes(Theme.tile, { [ Theme.tileCentered ]: centered }, className)}>
             {children}
         </div>
     }

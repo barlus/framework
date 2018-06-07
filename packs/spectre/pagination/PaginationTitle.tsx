@@ -10,7 +10,7 @@ export class PaginationTitle extends React.PureComponent<PaginationTitleProps, {
             children,
             ...otherProps
         } = this.props;
-        return (<div {...otherProps} class={classes(Theme.pageItemTitle,className)}>
+        return (<div {...otherProps} className={classes(Theme.pageItemTitle,className)}>
             {children}
         </div>)
     }

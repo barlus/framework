@@ -125,17 +125,17 @@ export class DocPopovers extends DocPage {
     }
 }
 
-const E1 = `<div class="popover popover-right">
-  <button class="btn btn-primary">right popover</button>
-  <div class="popover-container">
-    <div class="card">
-      <div class="card-header">
+const E1 = `<div className="popover popover-right">
+  <button className="btn btn-primary">right popover</button>
+  <div className="popover-container">
+    <div className="card">
+      <div className="card-header">
         ...
       </div>
-      <div class="card-body">
+      <div className="card-body">
         ...
       </div>
-      <div class="card-footer">
+      <div className="card-footer">
         ...
       </div>
     </div>

@@ -48,6 +48,7 @@ export class DocAutocomplete extends DocPage<any, any> {
             multipleValue: "",
             selected: [],
             options: [],
+            searchableValue:"FA"
         }
     }
 
@@ -95,7 +96,7 @@ export class DocAutocomplete extends DocPage<any, any> {
                 Simple autocomplete component
                 <Autocomplete
                     placeholder='Search a country (start with a)'
-                    renderItem={(item, active) => <MenuItem className={(active ? "bg-gray" : "")}><Tile
+                    renderItem={(item,index, active) => <MenuItem key={index} className={(active ? "bg-gray" : "")}><Tile
                         centered><TileContent>{item.label}</TileContent></Tile></MenuItem>}
                     filter={(item, query) => item.label.toLowerCase().includes(query.toLowerCase())}
                     getItemValue={item => item.label}
@@ -137,10 +138,10 @@ export class DocAutocomplete extends DocPage<any, any> {
                 Async data flow with multiple choice
                 <Autocomplete
                     multiple={true}
-                    renderSelectedItem={(item) => <Chip><Avatar sm initial={item.id}/>{item.name}</Chip>}
+                    renderSelectedItem={(item,index) => <Chip key={index}><Avatar sm initial={item.id}/>{item.name}</Chip>}
                     placeholder='Select multiple users'
                     value={this.state.multipleValue}
-                    renderItem={(item, active) => <MenuItem className={(active ? "bg-gray" : "")}><Tile
+                    renderItem={(item,index, active) => <MenuItem className={(active ? "bg-gray" : "")}><Tile
                         centered><TileIcon><Avatar sm
                                                    initial={item.id}/></TileIcon><TileContent>{item.name}</TileContent></Tile></MenuItem>}
                     filter={(item, query) => item.name.toLowerCase().includes(query.toLowerCase())}

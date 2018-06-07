@@ -10,7 +10,7 @@ export class Step extends React.PureComponent<StepProps, {}> {
             children,
             ...otherProps
         } = this.props;
-        return (<ul {...otherProps} class={classes(Theme.step,className)}>
+        return (<ul {...otherProps} className={classes(Theme.step,className)}>
             {children}
         </ul>)
     }

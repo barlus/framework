@@ -13,7 +13,7 @@ export class ButtonGroup extends React.PureComponent<GroupProps, {}> {
         link: false as boolean,
     };
     render() {
-        const { block, children, ...otherProps } = this.props;
+        const { block, children,link, ...otherProps } = this.props;
         return (
             <div {...otherProps} className={
                 classes(Theme.ButtonGroup, {

@@ -16,17 +16,17 @@ export class DocTypography extends DocPage {
                 <h1>H1 Heading <Tag small>40px</Tag></h1>
                 <h2>H2 Heading <Tag small>32px</Tag></h2>
                 <h3>H3 Heading <Tag small>28px</Tag></h3>
-                <span class="h4">H4 Heading <Tag small>24px</Tag></span>
-                <span class="h5">H5 Heading <Tag small>20px</Tag></span>
-                <span class="h6">H6 Heading <Tag small>16px</Tag></span>
+                <span className="h4">H4 Heading <Tag small>24px</Tag></span>
+                <span className="h5">H5 Heading <Tag small>20px</Tag></span>
+                <span className="h6">H6 Heading <Tag small>16px</Tag></span>
             </DocSample>
             <DocExample content={`
                 <h1>H1 Heading <Tag small>40px</small></h1>
                 <h2>H2 Heading <Tag small>32px</small></h2>
                 <h3>H3 Heading <Tag small>28px</small></h3>
-                <span class="h4">H4 Heading <Tag small>24px</Tagsmall></span>
-                <span class="h5">H5 Heading <Tag small>20px</Tagsmall></span>
-                <span class="h6">H6 Heading <Tag small>16px</Tagsmall></span>
+                <span className="h4">H4 Heading <Tag small>24px</Tagsmall></span>
+                <span className="h5">H5 Heading <Tag small>20px</Tagsmall></span>
+                <span className="h6">H6 Heading <Tag small>16px</Tagsmall></span>
             `}/>
             <DocTitle>Paragraphs</DocTitle>
             <DocSample>

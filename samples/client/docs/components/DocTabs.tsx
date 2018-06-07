@@ -203,37 +203,37 @@ export class DocTabs extends DocPage {
     }
 }
 
-const E1 = `<ul class="tab tab-block">
-  <li class="tab-item active">
+const E1 = `<ul className="tab tab-block">
+  <li className="tab-item active">
     <a href="#">Music</a>
   </li>
-  <li class="tab-item">
-    <a href="#" class="active">Playlists</a>
+  <li className="tab-item">
+    <a href="#" className="active">Playlists</a>
   </li>
-  <li class="tab-item">
+  <li className="tab-item">
     <a href="#">Radio</a>
   </li>
-  <li class="tab-item">
+  <li className="tab-item">
     <a href="#">Connect</a>
   </li>
 </ul>`;
-const E2 = `<ul class="tab tab-block">
-  <li class="tab-item active">
-    <a href="#" class="badge" data-badge="9">
+const E2 = `<ul className="tab tab-block">
+  <li className="tab-item active">
+    <a href="#" className="badge" data-badge="9">
       Music
     </a>
   </li>
 </ul>`;
-const E3 = `<ul class="tab">
-  <li class="tab-item active">
+const E3 = `<ul className="tab">
+  <li className="tab-item active">
     <a href="#">
       Music
     </a>
   </li>
-  <li class="tab-item tab-action">
-    <div class="input-group input-inline">
-      <input class="form-input input-sm" type="text" placeholder="search">
-      <button class="btn btn-primary btn-sm input-group-btn">Search</button>
+  <li className="tab-item tab-action">
+    <div className="input-group input-inline">
+      <input className="form-input input-sm" type="text" placeholder="search">
+      <button className="btn btn-primary btn-sm input-group-btn">Search</button>
     </div>
   </li>
 </ul>`;

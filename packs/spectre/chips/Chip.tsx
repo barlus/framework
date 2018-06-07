@@ -10,7 +10,7 @@ export class Chip extends React.PureComponent<ChipProps, {}> {
             children,
             ...otherProps
         } = this.props;
-        return (<span class={classes(Theme.chip, className)} {...otherProps}>
+        return (<span className={classes(Theme.chip, className)} {...otherProps}>
             {children}
         </span>)
     }

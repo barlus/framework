@@ -35,7 +35,8 @@ export class DocButtons extends DocPage {
                 <p>Add the <code>btn-success</code> or <code>btn-error</code> class for success (green)
                     or error (red) button color. If you need more button colors, please
                     use <a href="#variables-buttons">button mixins</a> to create your own button
-                    color variants. </p>
+                    color variants.
+                </p>
             </DocNote>
             <DocExample content={E2}/>
             <DocTitle>Button sizes</DocTitle>
@@ -95,7 +96,7 @@ export class DocButtons extends DocPage {
                 <div>
                     <Button disabled tabIndex={-1}>default disabled</Button>
                     {' '}
-                    <Button primary tabIndex={-1}>primary disabled</Button>
+                    <Button primary disabled tabIndex={-1}>primary disabled</Button>
                     {' '}
                     <Button link disabled tabIndex={-1}>link disabled</Button>
                 </div>
@@ -108,7 +109,7 @@ export class DocButtons extends DocPage {
                 <div>
                     <Button loading>default button</Button>
                     {' '}
-                    <Button primary loading>primary button</Button>
+                    <Button loading primary >primary button</Button>
                     {' '}
                     <Button link loading>link button</Button>
                 </div>

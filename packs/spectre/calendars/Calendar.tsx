@@ -71,7 +71,6 @@ export class Calendar extends React.PureComponent<CalendarProps, CalendarState> 
         const firstDayIndex = new Date(this.state.activeDate.getFullYear(), this.state.activeDate.getMonth(), 1).getDay();
         const daysInPreviousMonth = Calendar.daysInMonth(this.state.activeDate.getMonth()-1,this.state.activeDate.getFullYear());
         neededDays = !firstDayIndex ? 6 : (firstDayIndex-1);
-        console.log(daysInPreviousMonth);
         for(let i = daysInPreviousMonth;days.length < neededDays;i--){
             days.push(i);
         }
@@ -257,11 +256,13 @@ export class Calendar extends React.PureComponent<CalendarProps, CalendarState> 
             onMonthChange,
             onSelect,
             selected,
+            activeDate,
+            calendarEvents,
             tooltips,
             // Styles.
             ...otherProps
         } = this.props;
-        return <div {...otherProps} class={classes(Theme.calendar, className,large && Theme.calendarLg)}>
+        return <div {...otherProps} className={classes(Theme.calendar, className,large && Theme.calendarLg)}>
             <Navbar className={Theme.calendarNav}>
                 <NavbarSection>
                     <Button action link large onClick={this.onPreviousClick}><i className="icon icon-arrow-left"/></Button>
@@ -275,10 +276,10 @@ export class Calendar extends React.PureComponent<CalendarProps, CalendarState> 
             </Navbar>
             <div className={Theme.container}>
                 <div className={Theme.calendarHeader}>
-                    {Calendar.weekdayNames.map((day)=>(<div className={Theme.calendarDate}>{day}</div>))}
+                    {Calendar.weekdayNames.map((day,index)=>(<div key={index} className={Theme.calendarDate}>{day}</div>))}
                 </div>
                 <div className={Theme.calendarBody}>
-                    {this.previousMonthDays.map((day)=>(<div className={classes(Theme.calendarDate,Theme.prevMonth,Theme.disabled,range && this.rangeClasses(Calendar.previousMonthDate(this.state.activeDate),day))}>
+                    {this.previousMonthDays.map((day,index)=>(<div key={index} className={classes(Theme.calendarDate,Theme.prevMonth,Theme.disabled,range && this.rangeClasses(Calendar.previousMonthDate(this.state.activeDate),day))}>
                         <Button className={classes(Theme.dateItem,{
                             [Theme.dateToday]:this.isToday(Calendar.previousMonthDate(this.state.activeDate),day),
                             [Theme.active]:this.isSelectedDay(Calendar.previousMonthDate(this.state.activeDate),day)
@@ -286,11 +287,11 @@ export class Calendar extends React.PureComponent<CalendarProps, CalendarState> 
                             {day.toString()}
                         </Button>
                     </div>))}
-                    {this.activeMonthDays.map((day)=>{
+                    {this.activeMonthDays.map((day,index)=>{
                         let tooltipLabel = tooltips &&  this.hasTooltip(this.state.activeDate,day);
                         let events = large &&  this.hasEvent(this.state.activeDate,day);
                         let t = {'data-tooltip' : tooltipLabel};
-                        let item = <div {...t} className={classes(Theme.calendarDate,Theme.currentMonth,range && this.rangeClasses(this.state.activeDate,day),tooltipLabel && "tooltip")}>
+                        let item = <div {...t} key={index} className={classes(Theme.calendarDate,Theme.currentMonth,range && this.rangeClasses(this.state.activeDate,day),tooltipLabel && "tooltip")}>
                             <Button onClick={()=>{this.onDayClick(day)}} data-badge="" className={classes(Theme.dateItem,tooltipLabel && "badge",{
                                 [Theme.dateToday]:this.isToday(this.state.activeDate,day),
                                 [Theme.active]:this.isSelectedDay(this.state.activeDate,day),
@@ -300,8 +301,8 @@ export class Calendar extends React.PureComponent<CalendarProps, CalendarState> 
                             </Button>
                                 {events && <div className={Theme.calendarEvents}>
                                     {
-                                        events.map((event)=>(
-                                            <div className={Theme.calendarEvent}>
+                                        events.map((event,index)=>(
+                                            <div key={index} className={Theme.calendarEvent}>
                                                 {event}
                                             </div>
                                         ))
@@ -310,7 +311,7 @@ export class Calendar extends React.PureComponent<CalendarProps, CalendarState> 
                         </div>
                         return item;
                     })}
-                    {this.nextMonthDays.map((day)=>(<div className={classes(Theme.calendarDate,Theme.nextMonth,Theme.disabled,range && this.rangeClasses(Calendar.nextMonthDate(this.state.activeDate),day))}>
+                    {this.nextMonthDays.map((day,index)=>(<div key={index} className={classes(Theme.calendarDate,Theme.nextMonth,Theme.disabled,range && this.rangeClasses(Calendar.nextMonthDate(this.state.activeDate),day))}>
                         <Button className={classes(Theme.dateItem,{
                             [Theme.dateToday]:this.isToday(Calendar.nextMonthDate(this.state.activeDate),day),
                             [Theme.active]:this.isSelectedDay(Calendar.nextMonthDate(this.state.activeDate),day)

@@ -11,7 +11,7 @@ export class StepItem extends React.PureComponent<StepItemProps, {}> {
             active,
             ...otherProps
         } = this.props;
-        return (<li {...otherProps} class={classes(Theme.stepItem,{[Theme.active]:active},className)}>
+        return (<li {...otherProps} className={classes(Theme.stepItem,{[Theme.active]:active},className)}>
             {children}
         </li>)
     }

@@ -78,28 +78,28 @@ export class DocBars extends DocPage {
     }
 }
 
-const E1 = `<div class="bar bar-sm">
-  <div class="bar-item" role="progressbar" style="width:25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+const E1 = `<div className="bar bar-sm">
+  <div className="bar-item" role="progressbar" style="width:25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
 </div>
 
 <!-- multi-bars -->
-<div class="bar">
-  <div class="bar-item tooltip" data-tooltip="25%" style="width:25%;">25%</div>
-  <div class="bar-item" style="width:15%;background:#818bd5;">15%</div>
+<div className="bar">
+  <div className="bar-item tooltip" data-tooltip="25%" style="width:25%;">25%</div>
+  <div className="bar-item" style="width:15%;background:#818bd5;">15%</div>
 </div>`;
 const E2 = `<!-- slider -->
-<div class="bar bar-slider">
-  <div class="bar-item" role="progressbar" style="width:25%;">
-    <button class="bar-slider-btn btn" role="slider"></button>
+<div className="bar bar-slider">
+  <div className="bar-item" role="progressbar" style="width:25%;">
+    <button className="bar-slider-btn btn" role="slider"></button>
   </div>
 </div>
 
 <!-- range slider -->
-<div class="bar bar-slider">
-  <div class="bar-item" role="progressbar" style="width:15%;">
-    <button class="bar-slider-btn btn" role="slider"></button>
+<div className="bar bar-slider">
+  <div className="bar-item" role="progressbar" style="width:15%;">
+    <button className="bar-slider-btn btn" role="slider"></button>
   </div>
-  <div class="bar-item" role="progressbar" style="width:65%;">
-    <button class="bar-slider-btn btn" role="slider"></button>
+  <div className="bar-item" role="progressbar" style="width:65%;">
+    <button className="bar-slider-btn btn" role="slider"></button>
   </div>
 </div>`;

@@ -13,7 +13,7 @@ export class BarItem extends React.PureComponent<BarItemProps, {}> {
             ...otherProps
         } = this.props;
         const styles = { ...style, width: `${progress}%` };
-        return <div {...otherProps}   role="progressbar"  style={styles} class={classes(Theme.barItem, className)}>{children}</div>
+        return <div {...otherProps}   role="progressbar"  style={styles} className={classes(Theme.barItem, className)}>{children}</div>
     }
 }
 

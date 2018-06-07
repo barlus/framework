@@ -10,7 +10,7 @@ export class TileSubtitle extends React.PureComponent<TileSubtitleProps, {}> {
             children,
             ...otherProps
         } = this.props;
-        return (<p {...otherProps} class={classes(Theme.tileSubtitle, className)}>
+        return (<p {...otherProps} className={classes(Theme.tileSubtitle, className)}>
             {children}
         </p>)
     }

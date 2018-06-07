@@ -11,7 +11,7 @@ export class TableRow extends React.PureComponent<TableRowProps, {}> {
             active,
             ...otherProps
         } = this.props;
-        return <tr  {...otherProps} class={classes(className, {[ Theme.active ]: active})}>
+        return <tr  {...otherProps} className={classes(className, {[ Theme.active ]: active})}>
             {children}
         </tr >
     }

@@ -32,7 +32,6 @@ export const enum Theme {
     away = 'away',
     busy = 'busy',
     online = 'online',
-    icon = 'icon',
 }
 
 stylesheet('avatars.css')('', {

@@ -13,8 +13,7 @@ export class DocSliders extends DocPage{
                 no <code>data-tooltip</code> is set, the <code>value</code> will be used instead.
             </DocNote>
             <DocSample columns={2}>
-                <input className="slider tooltip" type="range" min={0} max={100} defaultValue={50}
-                       onInput="this.setAttribute('value', this.value);"/>
+                <input className="slider tooltip" type="range" min={0} max={100} defaultValue={50}/>
                 <input className="slider" type="range" min={0} max={100} defaultValue={50} disabled/>
             </DocSample>
             <Code className="HTML">{E1}</Code>
@@ -23,6 +22,6 @@ export class DocSliders extends DocPage{
 }
 
 const E1 = `<!-- Sliders -->
-<input class="slider" type="range" min="0" max="100" value="50">
+<input className="slider" type="range" min="0" max="100" value="50">
 <!-- Sliders with tooltips -->
-<input class="slider tooltip" type="range" min="0" max="100" value="50" oninput="this.setAttribute('value', this.value);">`;
+<input className="slider tooltip" type="range" min="0" max="100" value="50" oninput="this.setAttribute('value', this.value);">`;

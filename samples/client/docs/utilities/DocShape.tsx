@@ -25,6 +25,6 @@ export class DocShape extends DocPage{
 
 
 const E1 = `<!-- rounded element -->
-<div class="rounded"></div>
+<div className="rounded"></div>
 <!-- circle element -->
-<div class="circle"></div>`;
+<div className="circle"></div>`;

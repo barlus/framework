@@ -8,7 +8,7 @@ export class TableHeading extends React.PureComponent<TableHeadingProps, {}> {
             children,
             ...otherProps
         } = this.props;
-        return <th  {...otherProps} class={className}>
+        return <th  {...otherProps} className={className}>
         {children}
         </th >
     }

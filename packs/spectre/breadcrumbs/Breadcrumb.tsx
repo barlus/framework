@@ -10,7 +10,7 @@ export class Breadcrumb extends React.PureComponent<BreadcrumbProps, {}> {
             children,
             ...otherProps
         } = this.props;
-        return (<ul {...otherProps} class={classes(Theme.breadcrumb, className)}>
+        return (<ul {...otherProps} className={classes(Theme.breadcrumb, className)}>
             {children}
         </ul>)
     }

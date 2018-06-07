@@ -11,7 +11,7 @@ export class Popover extends React.PureComponent<PopoverProps, {}> {
             children,
             ...otherProps
         } = this.props;
-        return <div {...otherProps} class={classes(Theme.popover, {
+        return <div {...otherProps} className={classes(Theme.popover, {
             [ Theme.popoverLeft ]: left,
             [ Theme.popoverRight ]: right,
             [ Theme.popoverBottom ]: bottom

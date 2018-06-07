@@ -14,7 +14,7 @@ export class Bar extends React.PureComponent<BarProps, {}> {
             ...otherProps
         } = this.props;
         const childrenCount = React.Children.count(children);
-        return <div {...otherProps} class={
+        return <div {...otherProps} className={
             classes(Theme.bar, {
                 [ Theme.barSm ]: small,
             }, className)}>

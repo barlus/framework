@@ -10,10 +10,10 @@ export class Autocomplete extends React.PureComponent<AutocompleteProps, Autocom
     static defaultProps = {
         getItemValue: (item) => item,
         renderMenu: (items) => <Menu>{items}</Menu>,
-        renderItem: (item, highlighted) => <MenuItem className={
+        renderItem: (item,index, highlighted) => <MenuItem key={index} className={
             classes(highlighted ? "bg-primary" : "")
         }>{item}</MenuItem>,
-        renderSelectedItem: (item) => <Chip>{item}</Chip>,
+        renderSelectedItem: (item,index) => <Chip key={index}>{item}</Chip>,
         filter: (item, query) => item.toLowerCase().includes(query.toLowerCase()),
         sort: () => {
         },
@@ -74,7 +74,7 @@ export class Autocomplete extends React.PureComponent<AutocompleteProps, Autocom
     }
 
     renderSelected() {
-        return this.props.selected.map((item) => this.props.renderSelectedItem(item))
+        return this.props.selected.map((item,index) => this.props.renderSelectedItem(item,index))
     }
 
     renderMenu() {
@@ -84,7 +84,7 @@ export class Autocomplete extends React.PureComponent<AutocompleteProps, Autocom
         }
         const renderedItems = items.map((item, index) => {
             const highlighted = this.state.highlighted == index;
-            return React.cloneElement(this.props.renderItem(item, highlighted), {
+            return React.cloneElement(this.props.renderItem(item,index, highlighted), {
                 key: index,
                 onMouseDown: this.handleSelectItem(item),
                 onMouseEnter: this.handleMouseEnter(index),
@@ -121,6 +121,7 @@ export class Autocomplete extends React.PureComponent<AutocompleteProps, Autocom
     };
 
     handleKeyDown = (event) => {
+        console.log('handleKeyDown');
         const { onKeyDown, value } = this.props;
         const { highlighted } = this.state;
         onKeyDown && onKeyDown(event);
@@ -168,7 +169,7 @@ export class Autocomplete extends React.PureComponent<AutocompleteProps, Autocom
             highlighted: -1,
         });
         this.props.onSelect(item);
-
+        //this.inputDom.value = this.props.getItemValue(item);
         setTimeout(() => {
             this.inputDom.focus();
             this.inputDom._blur = true
@@ -194,6 +195,7 @@ export class Autocomplete extends React.PureComponent<AutocompleteProps, Autocom
             multiple,
             maxOptionsCount,
             placeholder,
+            getItemValue,
             filter,
             sort,
             selected,
@@ -202,11 +204,12 @@ export class Autocomplete extends React.PureComponent<AutocompleteProps, Autocom
             value,
             ...otherProps
         } = this.props;
-        return <div class={classes(Theme.formAutocomplete, className)} {...otherProps}>
+        console.log("Value",value);
+        return <div className={classes(Theme.formAutocomplete, className)} {...otherProps}>
             <div
-                class={classes(Theme.formAutocompleteInput, FormTheme.formInput, { [ Theme.isFocused ]: this.state.open })}>
+                className={classes(Theme.formAutocompleteInput, FormTheme.formInput, { [ Theme.isFocused ]: this.state.open })}>
                 {multiple && this.renderSelected()}
-                <Input ref={("input") as any} value={value} placeholder={placeholder} onChange={this.handleOnChange}
+                <Input ref={"input"} value={value} placeholder={placeholder} onChange={this.handleOnChange}
                        onKeyDown={this.handleKeyDown} onFocus={this.handleFocus} onBlur={this.handleBlur}/>
             </div>
             {this.state.open && this.renderMenu()}

@@ -67,7 +67,7 @@ export class DocMedia extends DocPage {
             `}/>
             <DocSample>
                 <VideoContainer responsive="4:3">
-                    <iframe src="https://www.youtube.com/embed/5jlI4uzZGjU" allowfullscreen=""></iframe>
+                    <iframe src="https://www.youtube.com/embed/5jlI4uzZGjU" allowFullScreen=""></iframe>
                 </VideoContainer>
             </DocSample>
 
@@ -76,7 +76,7 @@ export class DocMedia extends DocPage {
             `}/>
             <DocExample content={`
                <VideoContainer responsive="4:3">
-                    <iframe src="https://www.youtube.com/embed/5jlI4uzZGjU" allowfullscreen=""></iframe>
+                    <iframe src="https://www.youtube.com/embed/5jlI4uzZGjU" allowFullScreen=""></iframe>
                 </VideoContainer>
                 <Video responsive src="...">...</Videoresponsive>
             `}/>

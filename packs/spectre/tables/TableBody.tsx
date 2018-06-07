@@ -8,7 +8,7 @@ export class TableBody extends React.PureComponent<TableBodyProps, {}> {
             children,
             ...otherProps
         } = this.props;
-        return <tbody {...otherProps} class={className}>
+        return <tbody {...otherProps} className={className}>
         {children}
         </tbody>
     }

@@ -5,7 +5,7 @@ export class DocIcons extends DocPage {
     static title = "Icons";
     render() {
         return <DocSection id={this.id} title={this.title}>
-            <small class="label">experimental</small>
+            <small className="label">experimental</small>
             <DocNote>
                 {'Icons are single-element, responsive and pure CSS icons. You can include '}
                 <code>spectre-icons.css</code>
@@ -17,19 +17,19 @@ export class DocIcons extends DocPage {
             </DocNote>
             <DocTitle>Navigation icons</DocTitle>
             <DocSample columns={6}>
-                <i class="icon icon-arrow-up"/>
-                <i class="icon icon-arrow-right"/>
-                <i class="icon icon-arrow-down"/>
-                <i class="icon icon-arrow-left"/>
-                <i class="icon icon-upward"/>
-                <i class="icon icon-forward"/>
-                <i class="icon icon-downward"/>
-                <i class="icon icon-back"/>
-                <i class="icon icon-caret"/>
-                <i class="icon icon-menu"/>
-                <i class="icon icon-apps"/>
-                <i class="icon icon-more-horiz"/>
-                <i class="icon icon-more-vert"/>
+                <i className="icon icon-arrow-up"/>
+                <i className="icon icon-arrow-right"/>
+                <i className="icon icon-arrow-down"/>
+                <i className="icon icon-arrow-left"/>
+                <i className="icon icon-upward"/>
+                <i className="icon icon-forward"/>
+                <i className="icon icon-downward"/>
+                <i className="icon icon-back"/>
+                <i className="icon icon-caret"/>
+                <i className="icon icon-menu"/>
+                <i className="icon icon-apps"/>
+                <i className="icon icon-more-horiz"/>
+                <i className="icon icon-more-vert"/>
             </DocSample>
             <DocExample content={E1}/>
             <DocTitle>Action icons</DocTitle>
@@ -88,9 +88,9 @@ export class DocIcons extends DocPage {
 }
 
 const E1 = [ `
-<i class="icon icon-arrow-up"/>
-<i class="icon icon-arrow-right"/>
+<i className="icon icon-arrow-up"/>
+<i className="icon icon-arrow-right"/>
 ` ];
 const E2 = [ `
-<i class="icon icon-2x icon-mail"/>
+<i className="icon icon-2x icon-mail"/>
 ` ];

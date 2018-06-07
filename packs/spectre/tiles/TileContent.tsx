@@ -10,7 +10,7 @@ export class TileContent extends React.PureComponent<TileContentProps, {}> {
             children,
             ...otherProps
         } = this.props;
-        return (<div {...otherProps} class={classes(Theme.tileContent, className)}>
+        return (<div {...otherProps} className={classes(Theme.tileContent, className)}>
             {children}
         </div>)
     }

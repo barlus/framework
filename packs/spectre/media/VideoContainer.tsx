@@ -11,7 +11,7 @@ export class VideoContainer extends React.PureComponent<VideoContainerProps, {}>
             children,
             ...otherProps
         } = this.props;
-        return <div {...otherProps} class={
+        return <div {...otherProps} className={
             classes({
                 [ Theme.videoResponsive ]: responsive,
                 [ Theme.videoResponsive11 ]: responsive == '1:1',

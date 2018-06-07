@@ -10,7 +10,7 @@ export class EmptyAction extends React.PureComponent<EmptyActionProps, {}> {
             children,
             ...otherProps
         } = this.props;
-        return (<div {...otherProps} class={classes(Theme.emptyAction, className)}>
+        return (<div {...otherProps} className={classes(Theme.emptyAction, className)}>
             {children}
         </div>)
     }

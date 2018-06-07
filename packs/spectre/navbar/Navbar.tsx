@@ -10,7 +10,7 @@ export class Navbar extends React.PureComponent<NavbarProps, {}> {
             ...otherProps
         } = this.props;
 
-        return <header {...otherProps} class={classes(Theme.navbar, className)}>
+        return <header {...otherProps} className={classes(Theme.navbar, className)}>
             {children}
         </header>
     }

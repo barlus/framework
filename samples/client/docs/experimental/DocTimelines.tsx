@@ -84,23 +84,23 @@ export class DocTimelines extends DocPage {
     }
 }
 
-const E1 = `<div class="timeline">
-  <div class="timeline-item" id="timeline-example-1">
-    <div class="timeline-left">
-      <a class="timeline-icon" href="#timeline-example-1"></a>
+const E1 = `<div className="timeline">
+  <div className="timeline-item" id="timeline-example-1">
+    <div className="timeline-left">
+      <a className="timeline-icon" href="#timeline-example-1"></a>
     </div>
-    <div class="timeline-content">
+    <div className="timeline-content">
       <!-- tiles structure -->
     </div>
   </div>
 
-  <div class="timeline-item" id="timeline-example-2">
-    <div class="timeline-left">
-      <a class="timeline-icon icon-lg" href="#timeline-example-2">
-        <i class="icon icon-check"></i>
+  <div className="timeline-item" id="timeline-example-2">
+    <div className="timeline-left">
+      <a className="timeline-icon icon-lg" href="#timeline-example-2">
+        <i className="icon icon-check"></i>
       </a>
     </div>
-    <div class="timeline-content">
+    <div className="timeline-content">
       <!-- tiles structure -->
     </div>
   </div>

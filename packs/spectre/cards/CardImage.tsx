@@ -11,7 +11,7 @@ export class CardImage extends React.PureComponent<CardImageProps, {}> {
             children,
             ...otherProps
         } = this.props;
-        return (<div class={classes(Theme.cardImage)}>
+        return (<div className={classes(Theme.cardImage)}>
                 <Image responsive {...otherProps} className={classes(className)}/>
         </div>)
     }

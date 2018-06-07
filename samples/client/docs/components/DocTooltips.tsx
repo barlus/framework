@@ -47,5 +47,5 @@ export class DocTooltips extends DocPage {
         </DocSection>
     }
 }
-const E1 = `<button class="btn tooltip" data-tooltip="Lorem ipsum dolor sit amet">top tooltip</button>
-<button class="btn tooltip tooltip-right" data-tooltip="Lorem ipsum dolor sit amet">right tooltip</button>`;
+const E1 = `<button className="btn tooltip" data-tooltip="Lorem ipsum dolor sit amet">top tooltip</button>
+<button className="btn tooltip tooltip-right" data-tooltip="Lorem ipsum dolor sit amet">right tooltip</button>`;

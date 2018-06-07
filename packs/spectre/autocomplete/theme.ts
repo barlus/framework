@@ -35,7 +35,7 @@ stylesheet('autocomplete.ts')('',{
                 borderColor:'transparent',
                 boxShadow:'none',
                 display:'inline-block',
-                flex:list(1,0,'auto'),
+                flex:'1 0 auto',
                 height:rem($.unit6),
                 lineHeight:rem($.unit4),
                 margin:rem($.unitH),

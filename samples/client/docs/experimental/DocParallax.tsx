@@ -32,17 +32,17 @@ export class DocParallax extends DocPage {
 }
 
 
-const E1 = `<div class="parallax">
-  <div class="parallax-top-left" tabindex="1"></div>
-  <div class="parallax-top-right" tabindex="2"></div>
-  <div class="parallax-bottom-left" tabindex="3"></div>
-  <div class="parallax-bottom-right" tabindex="4"></div>
-  <div class="parallax-content">
-    <div class="parallax-front">
+const E1 = `<div className="parallax">
+  <div className="parallax-top-left" tabindex="1"></div>
+  <div className="parallax-top-right" tabindex="2"></div>
+  <div className="parallax-bottom-left" tabindex="3"></div>
+  <div className="parallax-bottom-right" tabindex="4"></div>
+  <div className="parallax-content">
+    <div className="parallax-front">
       <h2>tvOS parallax demo</h2>
     </div>
-    <div class="parallax-back">
-      <img src="img/osx-el-capitan.jpg" class="img-responsive rounded" ...>
+    <div className="parallax-back">
+      <img src="img/osx-el-capitan.jpg" className="img-responsive rounded" ...>
     </div>
   </div>
 </div>`;

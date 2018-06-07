@@ -11,7 +11,7 @@ export class NavItem extends React.PureComponent<NavItemProps, {}> {
             active,
             ...otherProps
         } = this.props;
-        return (<li {...otherProps} class={classes(Theme.navItem,{[Theme.active]:active},className)}>
+        return (<li {...otherProps} className={classes(Theme.navItem,{[Theme.active]:active},className)}>
             {children}
         </li>)
     }

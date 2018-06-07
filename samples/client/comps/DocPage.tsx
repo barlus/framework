@@ -51,7 +51,6 @@ export class DocSection extends React.PureComponent<{ id: string, title: string 
         const href = `#${id}`;
         return <Container id={id}>
             <h3 className="s-title">
-                <a href={href} className="anchor" aria-hidden="true">#</a>
                 {title}
             </h3>
             {children}
@@ -93,7 +92,7 @@ export class DocText extends React.Component<React.PropsOf<typeof DocText>> {
 export class DocNote extends React.PureComponent<{}, {}> {
     render() {
         return <div className="docs-note">
-            <p>{this.props.children}</p>
+            {this.props.children}
         </div>
     }
 }

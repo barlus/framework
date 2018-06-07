@@ -12,7 +12,7 @@ export class Toast extends React.PureComponent<ToastProps, {}> {
             children,
             ...otherProps
         } = this.props;
-        return <div {...otherProps} class={
+        return <div {...otherProps} className={
             classes(Theme.toast, {
             [ Theme.toastSuccess ]: success,
             [ Theme.toastPrimary ]: primary,

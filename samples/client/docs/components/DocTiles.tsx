@@ -118,33 +118,33 @@ export class DocTiles extends DocPage {
     }
 }
 
-const E1 = `<div class="tile">
-  <div class="tile-icon">
-    <div class="example-tile-icon">
-      <i class="icon icon-file centered"></i>
+const E1 = `<div className="tile">
+  <div className="tile-icon">
+    <div className="example-tile-icon">
+      <i className="icon icon-file centered"></i>
     </div>
   </div>
-  <div class="tile-content">
-    <p class="tile-title">The Avengers</p>
-    <p class="tile-subtitle text-gray">Earth's Mightiest Heroes joined forces to take on threats that were too big for any one hero to tackle...</p>
+  <div className="tile-content">
+    <p className="tile-title">The Avengers</p>
+    <p className="tile-subtitle text-gray">Earth's Mightiest Heroes joined forces to take on threats that were too big for any one hero to tackle...</p>
   </div>
-  <div class="tile-action">
-    <button class="btn btn-primary">Join</button>
+  <div className="tile-action">
+    <button className="btn btn-primary">Join</button>
   </div>
 </div>`;
-const E2 = `<div class="tile tile-centered">
-  <div class="tile-icon">
-    <div class="example-tile-icon">
-      <i class="icon icon-file centered"></i>
+const E2 = `<div className="tile tile-centered">
+  <div className="tile-icon">
+    <div className="example-tile-icon">
+      <i className="icon icon-file centered"></i>
     </div>
   </div>
-  <div class="tile-content">
-    <div class="tile-title">spectre-docs.pdf</div>
-    <div class="tile-subtitle text-gray">14MB · Public · 1 Jan, 2017</div>
+  <div className="tile-content">
+    <div className="tile-title">spectre-docs.pdf</div>
+    <div className="tile-subtitle text-gray">14MB · Public · 1 Jan, 2017</div>
   </div>
-  <div class="tile-action">
-    <button class="btn btn-link">
-      <i class="icon icon-more-vert"></i>
+  <div className="tile-action">
+    <button className="btn btn-link">
+      <i className="icon icon-more-vert"></i>
     </button>
   </div>
 </div>`;

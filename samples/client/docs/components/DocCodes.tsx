@@ -23,11 +23,11 @@ export class DocCodes extends DocPage {
 }
 
 const E1 = `<!-- code snippets -->
-<button class="btn">
+<button className="btn">
   Submit
 </button>`;
-const E2 = `<pre class="code" data-lang="HTML"><code><span class="com">&lt;!-- code snippets --&gt;</span>
-&lt;<span class="tag">button</span> <span class="atn">class</span>=<span class="atv">&quot;btn&quot;</span>&gt;
+const E2 = `<pre className="code" data-lang="HTML"><code><span className="com">&lt;!-- code snippets --&gt;</span>
+&lt;<span className="tag">button</span> <span className="atn">class</span>=<span className="atv">&quot;btn&quot;</span>&gt;
   Submit
-&lt;<span class="tag">/button</span>&gt;
+&lt;<span className="tag">/button</span>&gt;
 </code></pre>`;

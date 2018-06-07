@@ -26,5 +26,5 @@ export class DocLoading extends DocPage {
 }
 
 const E1 = `<!-- loading element -->
-<div class="loading"></div>
-<div class="loading loading-lg"></div>`;
+<div className="loading"></div>
+<div className="loading loading-lg"></div>`;

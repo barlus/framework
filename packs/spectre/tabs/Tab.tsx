@@ -11,7 +11,7 @@ export class Tab extends React.PureComponent<TabProps, {}> {
             children,
             ...otherProps
         } = this.props;
-        return (<ul {...otherProps} class={classes(Theme.tab,{[Theme.tabBlock]:block},className)}>
+        return (<ul {...otherProps} className={classes(Theme.tab,{[Theme.tabBlock]:block},className)}>
             {children}
         </ul>)
     }

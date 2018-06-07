@@ -72,12 +72,12 @@ export class DocGrid extends React.PureComponent<{}, {}> {
                 </div>
             </Columns>
             <DocNote>
-                <p>Add the <code>columns</code> class to a container with the <code>container</code> class. And
+                    Add the <code>columns</code> class to a container with the <code>container</code> class. And
                     add any element you want with the <code>column</code> class inside the container. These
                     columns will take up the space equally. You can specific the width of each column by adding
-                    class <code>col-[1-12]</code>.</p>
-                <p>And you can add the <code>col-gapless</code> class to the <code>columns</code> to have
-                    gapless columns.</p>
+                    class <code>col-[1-12]</code>.<br/>
+                    And you can add the <code>col-gapless</code> class to the <code>columns</code> to have
+                    gapless columns.
             </DocNote>
             <Columns gapless>
                 <Column>

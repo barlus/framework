@@ -8,7 +8,7 @@ export class TableCell extends React.PureComponent<TableCellProps, {}> {
             children,
             ...otherProps
         } = this.props;
-        return <td  {...otherProps} class={className}>
+        return <td  {...otherProps} className={className}>
         {children}
         </td >
     }

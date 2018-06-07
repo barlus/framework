@@ -10,7 +10,7 @@ export class PanelSubtitle extends React.PureComponent<PanelSubtitleProps, {}> {
             children,
             ...otherProps
         } = this.props;
-        return (<div {...otherProps} class={classes(Theme.panelSubtitle,className)}>
+        return (<div {...otherProps} className={classes(Theme.panelSubtitle,className)}>
             {children}
         </div>)
     }

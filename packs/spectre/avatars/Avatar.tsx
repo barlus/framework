@@ -15,7 +15,7 @@ export class Avatar extends React.PureComponent<AvatarProps, {}> {
             children,
             ...otherProps
         } = this.props;
-        return <figure {...otherProps}  data-initial={initial} class={
+        return <figure {...otherProps}  data-initial={initial} className={
             classes(Theme.avatar,{
                 [ Theme.avatarXl ]: xl,
                 [ Theme.avatarLg ]: lg,

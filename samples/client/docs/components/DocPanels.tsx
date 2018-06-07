@@ -182,17 +182,17 @@ export class DocPanels extends DocPage {
     }
 }
 
-const E1 = `<div class="panel">
-  <div class="panel-header">
-    <div class="panel-title">Comments</div>
+const E1 = `<div className="panel">
+  <div className="panel-header">
+    <div className="panel-title">Comments</div>
   </div>
-  <div class="panel-nav">
+  <div className="panel-nav">
     <!-- navigation components: tabs, breadcrumbs or pagination -->
   </div>
-  <div class="panel-body">
+  <div className="panel-body">
     <!-- contents -->
   </div>
-  <div class="panel-footer">
+  <div className="panel-footer">
     <!-- buttons or inputs -->
   </div>
 </div>`;

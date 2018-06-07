@@ -2650,7 +2650,6 @@ function getCurrentFiberStackAddendum$1() {
         // and it is guaranteed to be the work-in-progress version.
         return getStackAddendumByWorkInProgressFiber(fiber);
     }
-    return null;
 }
 
 function resetCurrentFiber() {
@@ -4225,9 +4224,7 @@ function findCurrentHostFiber(parent) {
         node.sibling.return = node.return;
         node = node.sibling;
     }
-    // Flow needs the return null here, but ESLint complains about it.
-    // eslint-disable-next-line no-unreachable
-    return null;
+
 }
 
 function findCurrentHostFiberWithNoPortals(parent) {
@@ -4258,9 +4255,7 @@ function findCurrentHostFiberWithNoPortals(parent) {
         node.sibling.return = node.return;
         node = node.sibling;
     }
-    // Flow needs the return null here, but ESLint complains about it.
-    // eslint-disable-next-line no-unreachable
-    return null;
+
 }
 
 function addEventBubbleListener(element, eventType, listener) {
@@ -8152,7 +8147,6 @@ function getPossibleStandardName(propName) {
         }
         return possibleStandardNames[ lowerCasedName ] || null;
     }
-    return null;
 }
 
 function diffHydratedProperties$1(domElement, tag, rawProps, parentNamespace, rootContainerElement) {
@@ -8871,7 +8865,6 @@ function getRootHostContext(rootContainerInstance) {
         let _ancestorInfo = updatedAncestorInfo(null, validatedTag, null);
         return { namespace: namespace, ancestorInfo: _ancestorInfo };
     }
-    return namespace;
 }
 
 function getChildHostContext(parentHostContext, type, rootContainerInstance) {
@@ -8881,8 +8874,7 @@ function getChildHostContext(parentHostContext, type, rootContainerInstance) {
         let _ancestorInfo2 = updatedAncestorInfo(parentHostContextDev.ancestorInfo, type, null);
         return { namespace: _namespace, ancestorInfo: _ancestorInfo2 };
     }
-    let parentNamespace = parentHostContext;
-    return getChildNamespace(parentNamespace, type);
+
 }
 
 function getPublicInstance(instance) {
@@ -16162,10 +16154,6 @@ function completeUnitOfWork(workInProgress) {
         }
     }
 
-    // Without this explicit null return Flow complains of invalid return type
-    // TODO Remove the above while(true) loop
-    // eslint-disable-next-line no-unreachable
-    return null;
 }
 
 function performUnitOfWork(workInProgress) {

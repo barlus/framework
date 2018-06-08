@@ -50,7 +50,7 @@ export function createConnect({
 } = {}) {
     return function connect(
         mapStateToProps,
-        mapDispatchToProps,
+        mapDispatchToProps?,
         mergeProps?,
         options = {} as any
     ) {

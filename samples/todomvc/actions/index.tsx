@@ -51,7 +51,7 @@ export const enum ActionTypes {
 export const Actions = {
   addTodo: (text: string) => createAction(ActionTypes.ADD_TODO, text),
   deleteTodo: (id: number) => createAction(ActionTypes.DELETE_TODO, id),
-  editTodo: (id: number, text: string, status: string) => createAction(ActionTypes.EDIT_TODO, { id, text, status }),
+  editTodo: (id: number, text: string, status?: string) => createAction(ActionTypes.EDIT_TODO, { id, text, status }),
   completeTodo: (id: number) => createAction(ActionTypes.COMPLETE_TODO, id),
   completeAllTodos: () => createAction(ActionTypes.COMPLETE_ALL_TODOS),
   clearCompleted: () => createAction(ActionTypes.CLEAR_COMPLETED),

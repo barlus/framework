@@ -51,7 +51,6 @@ export class OffCanvas extends React.PureComponent<OffCanvasProps, { active: boo
 }
 
 export interface OffCanvasProps {
-    [k:string]:any;//todo fix me
     className?: string,
     showOnLarge?: boolean,
     active?: boolean,

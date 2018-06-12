@@ -1,11 +1,13 @@
 import * as React      from '@barlus/react'
 import {connected}     from '@barlus/redux';
+
 import {Actions}       from '../actions/index';
+import {Todo}          from '../state/State';
 import {classes}       from '../utils/classes'
 import {TodoTextInput} from './TodoTextInput'
 
 @connected
-export class TodoItem extends React.PureComponent<{ todo? }> {
+export class TodoItem extends React.PureComponent<{ todo:Todo }> {
 
   @connected
   get actions(){
@@ -19,6 +21,7 @@ export class TodoItem extends React.PureComponent<{ todo? }> {
   handleDoubleClick = () => {
     this.setState({ editing: true })
   };
+
   handleSave = (id, text) => {
     if (text.length === 0) {
       this.actions.deleteTodo(id)
@@ -27,6 +30,7 @@ export class TodoItem extends React.PureComponent<{ todo? }> {
     }
     this.setState({ editing: false })
   };
+
   render() {
     const { todo } = this.props;
     const { completeTodo, deleteTodo } = this.actions;

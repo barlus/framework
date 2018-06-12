@@ -18,7 +18,7 @@ export class TodoList extends React.PureComponent<TodoListProps> {
   }
 
   render() {
-    const { filteredTodos } = this.props;
+    const { filteredTodos } = this.store;
     return <ul className="todo-list">
       {filteredTodos.map(todo =>
         <TodoItem key={todo.id} todo={todo} />

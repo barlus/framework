@@ -8,4 +8,4 @@ const rootReducer = combineReducers<State>({
   visibilityFilter
 });
 
-export default rootReducer
+export default rootReducer;

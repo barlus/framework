@@ -1,13 +1,13 @@
 import {createSelector}      from '@barlus/redux'
-import {Show}                from '../state/State';
+import {Show, Todo}          from '../state/State';
 import {State}               from '../state/State';
 import {getTodos}            from './getTodos';
 import {getVisibilityFilter} from './getVisibilityFilter';
 
 
-export const getVisibleTodos: (state: State) => any = createSelector(
+export const getVisibleTodos: (state: State) => Todo[] = createSelector(
   [ getVisibilityFilter, getTodos ],
-  (visibilityFilter, todos) => {
+  (visibilityFilter:Show, todos:Todo[]) => {
     switch (visibilityFilter) {
       case Show.ALL:
         return todos;

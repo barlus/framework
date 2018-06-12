@@ -159,7 +159,7 @@ export interface Context<T> {
 
 
 
-declare const Fragment: ComponentType;
+//declare const Fragment: ComponentType;
 declare const StrictMode: ComponentType;
 declare const version: string;
 

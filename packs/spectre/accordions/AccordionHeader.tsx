@@ -23,8 +23,7 @@ export class AccordionHeader extends React.PureComponent<AccordionHeaderProps, {
 }
 
 export interface AccordionHeaderProps {
-    [k:string]:any;//todo fix me
     id?:string;
-    className?: string,
-    defaultChecked?
+    className?: string;
+    defaultChecked?:boolean;
 }

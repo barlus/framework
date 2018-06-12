@@ -10,13 +10,12 @@ export class OffCanvasOverlay extends React.PureComponent<OffCanvasOverlayProps,
             children,
             ...otherProps
         } = this.props;
-        return (<div {...otherProps} className={classes(Theme.offCanvasOverlay,className)}>
+        return <div {...otherProps} className={classes(Theme.offCanvasOverlay,className)}>
             {children}
-        </div>)
+        </div>;
     }
 }
 
-export interface OffCanvasOverlayProps {
-    [k:string]:any;//todo fix me
+export interface OffCanvasOverlayProps extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>{
     className?: string,
 }

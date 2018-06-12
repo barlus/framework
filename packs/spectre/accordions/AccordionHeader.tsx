@@ -1,3 +1,4 @@
+
 import * as React from "@barlus/react";
 import { Theme } from './theme';
 import { classes } from '../utils/classes';
@@ -22,5 +23,8 @@ export class AccordionHeader extends React.PureComponent<AccordionHeaderProps, {
 }
 
 export interface AccordionHeaderProps {
+    [k:string]:any;//todo fix me
+    id?:string;
     className?: string,
+    defaultChecked?
 }

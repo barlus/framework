@@ -14,8 +14,7 @@ export class AvatarIcon extends React.PureComponent<AvatarIconProps, {}> {
             ...otherProps
         } = this.props;
         return <img {...otherProps} className={
-            classes(Theme.avatarIcon,{
-            }, className)
+            classes(Theme.avatarIcon,{}, className)
         }/>
 
     }
@@ -23,4 +22,5 @@ export class AvatarIcon extends React.PureComponent<AvatarIconProps, {}> {
 
 export interface AvatarIconProps {
     className?: string,
+    [k:string]:any;//todo fix me
 }

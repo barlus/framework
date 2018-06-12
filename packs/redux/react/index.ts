@@ -1,5 +1,8 @@
-import Provider, { createProvider } from './components/Provider'
-import connectAdvanced from './components/connectAdvanced'
-import connect from './connect/connect'
+export * from './components/Provider'
+export * from './components/connectAdvanced'
+export * from './components/connectAdvanced'
+export * from './connect/connect'
+export * from './connect/wrapActionCreators'
+export * from './types'
 
-export { Provider, createProvider, connectAdvanced, connect }
+

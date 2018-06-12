@@ -1,4 +1,5 @@
-import warning from '../utils/warning'
+import {warning} from '../utils/warning'
+
 
 function verify(selector, methodName, displayName) {
   if (!selector) {
@@ -13,8 +14,8 @@ function verify(selector, methodName, displayName) {
   }
 }
 
-export default function verifySubselectors(mapStateToProps, mapDispatchToProps, mergeProps, displayName) {
-  verify(mapStateToProps, 'mapStateToProps', displayName)
-  verify(mapDispatchToProps, 'mapDispatchToProps', displayName)
-  verify(mergeProps, 'mergeProps', displayName)
+export function verifySubselectors(mapStateToProps, mapDispatchToProps, mergeProps, displayName) {
+  verify(mapStateToProps, 'mapStateToProps', displayName);
+  verify(mapDispatchToProps, 'mapDispatchToProps', displayName);
+  verify(mergeProps, 'mergeProps', displayName);
 }

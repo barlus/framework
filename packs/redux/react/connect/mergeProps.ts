@@ -1,9 +1,9 @@
-import verifyPlainObject from '../utils/verifyPlainObject'
+import {verifyPlainObject} from '../utils/verifyPlainObject'
+
 
 export function defaultMergeProps(stateProps, dispatchProps, ownProps) {
   return { ...ownProps, ...stateProps, ...dispatchProps }
 }
-
 export function wrapMergePropsFunc(mergeProps) {
   return function initMergePropsProxy(
     dispatch, { displayName, pure, areMergedPropsEqual }
@@ -15,35 +15,34 @@ export function wrapMergePropsFunc(mergeProps) {
       const nextMergedProps = mergeProps(stateProps, dispatchProps, ownProps)
 
       if (hasRunOnce) {
-        if (!pure || !areMergedPropsEqual(nextMergedProps, mergedProps))
+        if (!pure || !areMergedPropsEqual(nextMergedProps, mergedProps)) {
           mergedProps = nextMergedProps
+        }
 
       } else {
         hasRunOnce = true
         mergedProps = nextMergedProps
 
-        if (process.env.NODE_ENV !== 'production')
+        if (process.env.NODE_ENV !== 'production') {
           verifyPlainObject(mergedProps, displayName, 'mergeProps')
+        }
       }
 
       return mergedProps
     }
   }
 }
-
 export function whenMergePropsIsFunction(mergeProps) {
   return (typeof mergeProps === 'function')
     ? wrapMergePropsFunc(mergeProps)
     : undefined
 }
-
 export function whenMergePropsIsOmitted(mergeProps) {
   return (!mergeProps)
     ? () => defaultMergeProps
     : undefined
 }
-
-export default [
+export const defaultMergePropsFactories = [
   whenMergePropsIsFunction,
   whenMergePropsIsOmitted
-]
+];

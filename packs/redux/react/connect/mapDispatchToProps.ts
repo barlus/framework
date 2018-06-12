@@ -19,8 +19,8 @@ export function whenMapDispatchToPropsIsObject(mapDispatchToProps) {
     : undefined
 }
 
-export default [
+export const defaultMapDispatchToPropsFactories = [
   whenMapDispatchToPropsIsFunction,
   whenMapDispatchToPropsIsMissing,
   whenMapDispatchToPropsIsObject
-]
+];

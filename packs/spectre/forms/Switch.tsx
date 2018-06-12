@@ -36,6 +36,7 @@ export class Switch extends React.Component<SwitchProps, {}> {
 }
 
 export interface SwitchProps {
+    [k:string]:any;//todo fix me
     className?: string,
     success?:boolean
     error?:boolean

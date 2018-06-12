@@ -11,8 +11,8 @@ export class Badge extends React.PureComponent<BadgeProps, {}> {
             children,
             ...otherProps
         } = this.props;
-        const badged = React.Children.map(children,(child)=>{
-            const className = classes(Theme.badge, child.props.className)
+        const badged = React.Children.map(children,(child:React.ReactElement<any>)=>{
+            const className = classes(Theme.badge, child.props.className);
             const props = {
                 className,
                 'data-badge': (label && label >= 0 )? label : ''

@@ -13,8 +13,8 @@ export class DocSliders extends DocPage{
                 no <code>data-tooltip</code> is set, the <code>value</code> will be used instead.
             </DocNote>
             <DocSample columns={2}>
-                <input className="slider tooltip" type="range" min={0} max={100} defaultValue={50}/>
-                <input className="slider" type="range" min={0} max={100} defaultValue={50} disabled/>
+                <input className="slider tooltip" type="range" min={0} max={100} defaultValue="50"/>
+                <input className="slider" type="range" min={0} max={100} defaultValue="50" disabled/>
             </DocSample>
             <Code className="HTML">{E1}</Code>
         </DocSection>

@@ -37,6 +37,7 @@ export class CheckBox extends React.Component<CheckBoxProps, {}> {
 }
 
 export interface CheckBoxProps {
+    [k:string]:any;//todo fix me
     className?: string,
     success?: boolean
     error?: boolean

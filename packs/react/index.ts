@@ -1,6 +1,6 @@
 import "./JSX";
 
-//export * from './core/index';
+export * from './types';
 export * from './React';
 export * from './ReactDOM';
 export * from './PropTypes';

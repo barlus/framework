@@ -36,6 +36,7 @@ export class Select extends React.PureComponent<SelectProps, {}> {
 }
 
 export interface SelectProps {
+    [k:string]:any;//todo fix me
     className?: string,
     success?:boolean
     error?:boolean

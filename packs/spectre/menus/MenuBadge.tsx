@@ -18,5 +18,6 @@ export class MenuBadge extends React.PureComponent<MenuBadgeProps, {}> {
 }
 
 export interface MenuBadgeProps {
+    [k:string]:any;//todo fix me
     className?: string,
 }

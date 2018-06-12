@@ -67,7 +67,7 @@ export class DocMedia extends DocPage {
             `}/>
             <DocSample>
                 <VideoContainer responsive="4:3">
-                    <iframe src="https://www.youtube.com/embed/5jlI4uzZGjU" allowFullScreen=""></iframe>
+                    <iframe src="https://www.youtube.com/embed/5jlI4uzZGjU" allowFullScreen={true}></iframe>
                 </VideoContainer>
             </DocSample>
 

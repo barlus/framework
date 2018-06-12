@@ -31,6 +31,7 @@ export class TextArea extends React.PureComponent<TextAreaProps, {}> {
 }
 
 export interface TextAreaProps {
+    [k:string]:any;//todo fix me
     className?: string,
     success?:boolean
     error?:boolean

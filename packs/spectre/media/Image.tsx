@@ -22,6 +22,7 @@ export class Image extends React.PureComponent<ImageProps, {}> {
 }
 
 export interface ImageProps {
+    [k:string]:any;//todo fix me
     className?: string,
     src:string
     responsive?:boolean

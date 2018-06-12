@@ -224,6 +224,7 @@ export interface AutocompleteState {
 
 export type AutocompleteProps = MultipleProps | SearchableProps;
 interface Common {
+    [k:string]:any;//todo fix me
     value: string,
     className?: string,
     options: any[],
@@ -234,9 +235,18 @@ interface Common {
     renderItem?: Function,
     filter?: (option, query) => boolean,
     sort?: (a, b) => number,
+    maxOptionsCount?:number;
+    selected?
+    renderSelectedItem?
+    onFocus?
+    onBlur?
+    onKeyDown?
+    onChange?
+    onDelete?
 }
 interface SearchableProps extends Common {
     multiple?: false,
+
 }
 
 interface MultipleProps extends Common {

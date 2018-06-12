@@ -44,6 +44,9 @@ export class Input extends React.PureComponent<InputProps, {}> {
 }
 
 export interface InputProps {
+    [k:string]:any;//todo fix me
+    onKeyDown?
+    onChange?
     placeholder?:string,
     className?: string,
     success?:boolean
@@ -54,4 +57,5 @@ export interface InputProps {
     large?: boolean,
     iconLeft?:any ,//todo change any to virtual node (VNode)
     iconRight?:any,//todo change any to virtual node (VNode)
+    value?:any;
 }

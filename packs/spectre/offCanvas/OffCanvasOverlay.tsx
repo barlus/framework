@@ -17,5 +17,6 @@ export class OffCanvasOverlay extends React.PureComponent<OffCanvasOverlayProps,
 }
 
 export interface OffCanvasOverlayProps {
+    [k:string]:any;//todo fix me
     className?: string,
 }

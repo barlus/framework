@@ -347,7 +347,7 @@ export function generate(type, options) {
 
   // In IE11, the Keyboard event does not allow setting the
   // keyCode property, even with Object.defineProperty,
-  // so we have to use UIEvent.
+  // so we have to use ReactUIEvent.
   const ua = window.navigator.userAgent.toLowerCase()
   const msie = Math.max(ua.indexOf('msie'), ua.indexOf('trident'))
 

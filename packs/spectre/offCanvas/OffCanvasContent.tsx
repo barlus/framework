@@ -18,5 +18,6 @@ export class OffCanvasContent extends React.PureComponent<OffCanvasContentProps,
 }
 
 export interface OffCanvasContentProps {
+    [k:string]:any;//todo fix me
     className?: string,
 }

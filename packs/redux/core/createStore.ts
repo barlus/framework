@@ -1,33 +1,57 @@
+import {Action,}       from './types';
+import {DeepPartial}   from './types';
+import {Reducer}       from './types';
+import {Store}         from './types';
+import {StoreEnhancer} from './types';
+import {ActionTypes}   from './utils/actionTypes'
+import {isPlainObject} from './utils/isPlainObject'
 
-import ActionTypes from './utils/actionTypes'
-import isPlainObject from './utils/isPlainObject'
+
+/**
+ * A store creator is a function that creates a Redux store. Like with
+ * dispatching function, we must distinguish the base store creator,
+ * `createStore(reducer, preloadedState)` exported from the Redux package, from
+ * store creators that are returned from the store enhancers.
+ *
+ * @template S The type of state to be held by the store.
+ * @template A The type of actions which may be dispatched.
+ * @template Ext Store extension that is mixed in to the Store type.
+ * @template StateExt State extension that is mixed into the state type.
+ */
+export interface StoreCreator {
+  <S, A extends Action, Ext, StateExt>(reducer: Reducer<S, A>, enhancer?: StoreEnhancer<Ext, StateExt>): Store<S & StateExt, A> & Ext;
+  <S, A extends Action, Ext, StateExt>(reducer: Reducer<S, A>, preloadedState: DeepPartial<S>, enhancer?: StoreEnhancer<Ext>): Store<S & StateExt> & Ext;
+}
 
 /**
  * Creates a Redux store that holds the state tree.
  * The only way to change the data in the store is to call `dispatch()` on it.
  *
  * There should only be a single store in your app. To specify how different
- * parts of the state tree respond to actions, you may combine several reducers
+ * parts of the state tree respond to actions, you may combine several
+ * reducers
  * into a single reducer function by using `combineReducers`.
  *
- * @param {Function} reducer A function that returns the next state tree, given
- * the current state tree and the action to handle.
+ * @template S State object type.
  *
- * @param {any} [preloadedState] The initial state. You may optionally specify it
- * to hydrate the state from the server in universal apps, or to restore a
- * previously serialized user session.
- * If you use `combineReducers` to produce the root reducer function, this must be
- * an object with the same shape as `combineReducers` keys.
+ * @param reducer A function that returns the next state tree, given the
+ *   current state tree and the action to handle.
  *
- * @param {Function} [enhancer] The store enhancer. You may optionally specify it
- * to enhance the store with third-party capabilities such as middleware,
- * time travel, persistence, etc. The only store enhancer that ships with Redux
- * is `applyMiddleware()`.
+ * @param [preloadedState] The initial state. You may optionally specify it to
+ *   hydrate the state from the server in universal apps, or to restore a
+ *   previously serialized user session. If you use `combineReducers` to
+ *   produce the root reducer function, this must be an object with the same
+ *   shape as `combineReducers` keys.
  *
- * @returns {Store} A Redux store that lets you read the state, dispatch actions
- * and subscribe to changes.
+ * @param [enhancer] The store enhancer. You may optionally specify it to
+ *   enhance the store with third-party capabilities such as middleware, time
+ *   travel, persistence, etc. The only store enhancer that ships with Redux
+ *   is `applyMiddleware()`.
+ *
+ * @returns A Redux store that lets you read the state, dispatch actions and
+ *   subscribe to changes.
  */
-export default function createStore(reducer, preloadedState?, enhancer?) {
+export const createStore: StoreCreator = (reducer, preloadedState?, enhancer?) => {
   if (typeof preloadedState === 'function' && typeof enhancer === 'undefined') {
     enhancer = preloadedState;
     preloadedState = undefined
@@ -66,8 +90,8 @@ export default function createStore(reducer, preloadedState?, enhancer?) {
     if (isDispatching) {
       throw new Error(
         'You may not call store.getState() while the reducer is executing. ' +
-          'The reducer has already received the state as an argument. ' +
-          'Pass it down from the top reducer instead of reading it from the store.'
+        'The reducer has already received the state as an argument. ' +
+        'Pass it down from the top reducer instead of reading it from the store.'
       )
     }
 
@@ -105,9 +129,9 @@ export default function createStore(reducer, preloadedState?, enhancer?) {
     if (isDispatching) {
       throw new Error(
         'You may not call store.subscribe() while the reducer is executing. ' +
-          'If you would like to be notified after the store has been updated, subscribe from a ' +
-          'component and invoke store.getState() in the callback to access the latest state. ' +
-          'See https://redux.js.org/api-reference/store#subscribe(listener) for more details.'
+        'If you would like to be notified after the store has been updated, subscribe from a ' +
+        'component and invoke store.getState() in the callback to access the latest state. ' +
+        'See https://redux.js.org/api-reference/store#subscribe(listener) for more details.'
       )
     }
 
@@ -124,7 +148,7 @@ export default function createStore(reducer, preloadedState?, enhancer?) {
       if (isDispatching) {
         throw new Error(
           'You may not unsubscribe from a store listener while the reducer is executing. ' +
-            'See https://redux.js.org/api-reference/store#subscribe(listener) for more details.'
+          'See https://redux.js.org/api-reference/store#subscribe(listener) for more details.'
         )
       }
 
@@ -165,14 +189,14 @@ export default function createStore(reducer, preloadedState?, enhancer?) {
     if (!isPlainObject(action)) {
       throw new Error(
         'Actions must be plain objects. ' +
-          'Use custom middleware for async actions.'
+        'Use custom middleware for async actions.'
       )
     }
 
     if (typeof action.type === 'undefined') {
       throw new Error(
         'Actions may not have an undefined "type" property. ' +
-          'Have you misspelled a constant?'
+        'Have you misspelled a constant?'
       )
     }
 
@@ -189,7 +213,7 @@ export default function createStore(reducer, preloadedState?, enhancer?) {
 
     const listeners = (currentListeners = nextListeners);
     for (let i = 0; i < listeners.length; i++) {
-      const listener = listeners[i];
+      const listener = listeners[ i ];
       listener()
     }
 
@@ -248,7 +272,7 @@ export default function createStore(reducer, preloadedState?, enhancer?) {
         return { unsubscribe }
       },
 
-      [Symbol.observable]() {
+      [ Symbol.observable ]() {
         return this
       }
     }
@@ -264,6 +288,6 @@ export default function createStore(reducer, preloadedState?, enhancer?) {
     subscribe,
     getState,
     replaceReducer,
-    [Symbol.observable]: observable
+    [ Symbol.observable ]: observable
   }
 }

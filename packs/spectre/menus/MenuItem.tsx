@@ -18,5 +18,6 @@ export class MenuItem extends React.PureComponent<MenuItemProps, {}> {
 }
 
 export interface MenuItemProps {
+    [k:string]:any;//todo fix me
     className?: string,
 }

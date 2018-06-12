@@ -6,7 +6,40 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  */
+
 'use strict';
+
+import {
+    Attributes,
+    CElement,
+    ClassAttributes,
+    ClassicComponent,
+    ClassicComponentClass,
+    ClassType,
+    ComponentClass,
+    ComponentLifecycle,
+    ComponentState,
+    DetailedReactHTMLElement,
+    DOMAttributes,
+    DOMElement,
+    HTMLAttributes,
+    InputHTMLAttributes,
+    ReactElement,
+    ReactHTML,
+    ReactInstance,
+    ReactNode,
+    ReactSVG,
+    ReactSVGElement,
+    SFC,
+    SFCElement,
+    SVGAttributes,
+    ReactChildren,
+    ReactHTMLElement,
+    SVGFactory,
+    SFCFactory,
+    DOMFactory,
+    HTMLFactory, CFactory, Factory, RefObject, RefForwardingComponent, ComponentType, Context
+} from './types';
 
 let ReactVersion = '16.4.0';
 
@@ -120,8 +153,6 @@ let emptyObject = {};
     Object.freeze(emptyObject);
 }
 
-
-
 /**
  * Forked from fbjs/warning:
  * https://github.com/facebook/fbjs/blob/e66ba20ad5be433eb54423f2b097d829324d9de6/packages/fbjs/src/__forks__/warning.js
@@ -157,7 +188,7 @@ function printWarning(format) {
     } catch (x) {
     }
 }
-function lowPriorityWarning(condition, format,...args) {
+function lowPriorityWarning(condition, format, ...args) {
     if (format === undefined) {
         throw new Error('`warning(condition, format, ...args)` requires a warning ' + 'message argument');
     }
@@ -188,7 +219,8 @@ function makeEmptyFunction(arg) {
  * primarily useful idiomatically for overridable function endpoints which
  * always need to be callable, since JS lacks a null-call idiom ala Cocoa.
  */
-function emptyFunction(){}
+function emptyFunction() {
+}
 namespace emptyFunction {
     export const thatReturns = makeEmptyFunction;
     export const thatReturnsFalse = makeEmptyFunction(false);
@@ -201,8 +233,6 @@ namespace emptyFunction {
         return arg;
     }
 }
-
-
 
 /**
  * Copyright (c) 2014-present, Facebook, Inc.
@@ -219,7 +249,7 @@ namespace emptyFunction {
  * same logic and follow the same code paths.
  */
 //let warning = emptyFunction;
-function warning(condition, format,...rest) {
+function warning(condition, format, ...rest) {
     function printWarning(format) {
         let _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0);
         let _key = 1;
@@ -257,8 +287,6 @@ function warning(condition, format,...rest) {
         printWarning.apply(undefined, [ format ].concat(args));
     }
 }
-
-
 
 let didWarnStateUpdateForUnmountedComponent = {};
 
@@ -346,11 +374,20 @@ let ReactNoopUpdateQueue = {
 /**
  * Base class helpers for the updating state of a component.
  */
-export class Component<P=any, S=any> {
-    props: any;
-    state: S;
+export interface Component<P = {}, S = {}, SS = any> extends ComponentLifecycle<P, S, SS> {
+}
+export class Component<P = {}, S = {}, SS = any> {
+    // React.Props<T> is now deprecated, which means that the `children`
+    // property is not available on `P` by default, even though you can
+    // always pass children as variadic arguments to `createElement`.
+    // In the future, if we can define its call signature conditionally
+    // on the existence of `children` in `P`, then we should remove this.
+    props: Readonly<{ children?: ReactNode }> & Readonly<P>;
+    state: Readonly<S>;
     context: any;
-    refs: any;
+    refs: {
+        [ key: string ]: ReactInstance
+    };
     updater: any;
     isReactComponent: any;
 
@@ -368,7 +405,7 @@ export class Component<P=any, S=any> {
      * @final
      * @protected
      */
-    forceUpdate(callback?) {
+    forceUpdate(callback?: () => void): void {
         this.updater.enqueueForceUpdate(this, callback, 'forceUpdate');
     }
 
@@ -397,7 +434,7 @@ export class Component<P=any, S=any> {
      * @final
      * @protected
      */
-    setState(partialState, callback?) {
+    setState<K extends keyof S>(partialState: ((prevState: Readonly<S>, props: P) => (Pick<S, K> | S | null)) | (Pick<S, K> | S | null), callback?: () => void): void {
         !(typeof partialState === 'object' || typeof partialState === 'function' || partialState == null)
             ? invariant(false, 'setState(...): takes an object of state variables to update or a function which returns an object of state variables.') : void 0;
         this.updater.enqueueSetState(this, partialState, callback, 'setState');
@@ -405,7 +442,10 @@ export class Component<P=any, S=any> {
     componentWillReceiveProps?(nextProps);
     componentDidUpdate?();
     componentWillUpdate?();
-    constructor(props, context, updater = ReactNoopUpdateQueue) {
+    render(): ReactNode {
+        throw 'unimplemented method render'
+    }
+    constructor(props: P, context?: any, updater = ReactNoopUpdateQueue) {
         this.props = props;
         this.context = context;
         this.refs = emptyObject;
@@ -463,6 +503,7 @@ export class PureComponent<P=any, S=any> extends Component<P, S> {
 // pureComponentPrototype.isPureReactComponent = true;
 
 // an immutable object with a single mutable value
+export function createRef<T>(): RefObject<T>;
 export function createRef() {
     let refObject = {
         current: null
@@ -627,10 +668,6 @@ let ReactElement = function (type, key, ref, self, source, owner, props) {
     return element;
 };
 
-/**
- * Create and return a new ReactElement of the given type.
- * See https://reactjs.org/docs/react-api.html#createelement
- */
 function createElement(type, config, children) {
     let propName = void 0;
 
@@ -788,8 +825,8 @@ function cloneElement(element, config?, children?) {
  * @return {boolean} True if `object` is a valid component.
  * @final
  */
-function isValidElement(object) {
-    return typeof object === 'object' && object !== null && object.$$typeof === REACT_ELEMENT_TYPE;
+export function isValidElement<P>(object: {} | null | undefined): object is ReactElement<P> {
+    return typeof object === 'object' && object !== null && (object as any).$$typeof === REACT_ELEMENT_TYPE;
 }
 
 let ReactDebugCurrentFrame: any = {};
@@ -1126,8 +1163,7 @@ function onlyChild(children) {
     !isValidElement(children) ? invariant(false, 'React.Children.only expected to receive a single React element child.') : void 0;
     return children;
 }
-
-function createContext(defaultValue, calculateChangedBits) {
+export function createContext<T>(defaultValue: T, calculateChangedBits?: (prev: T, next: T) => number): Context<T> {
     if (calculateChangedBits === undefined) {
         calculateChangedBits = null;
     } else {
@@ -1135,7 +1171,6 @@ function createContext(defaultValue, calculateChangedBits) {
             !(calculateChangedBits === null || typeof calculateChangedBits === 'function') ? warning(false, 'createContext: Expected the optional second argument to be a ' + 'function. Instead received: %s', calculateChangedBits) : void 0;
         }
     }
-
     let context: any = {
         $$typeof: REACT_CONTEXT_TYPE,
         _calculateChangedBits: calculateChangedBits,
@@ -1153,34 +1188,31 @@ function createContext(defaultValue, calculateChangedBits) {
         Provider: null,
         Consumer: null
     };
-
     context.Provider = {
         $$typeof: REACT_PROVIDER_TYPE,
         _context: context
     };
     context.Consumer = context;
-
     {
         context._currentRenderer = null;
         context._currentRenderer2 = null;
     }
-
     return context;
 }
 
-function forwardRef(render) {
+export function forwardRef<T, P = {}>(Component: RefForwardingComponent<T, P>): ComponentType<P & ClassAttributes<T>> {
     {
-        !(typeof render === 'function') ? warning(false, 'forwardRef requires a render function but was given %s.', render === null ? 'null' : typeof render) : void 0;
+        !(typeof Component === 'function') ? warning(false, 'forwardRef requires a render function but was given %s.', Component === null ? 'null' : typeof Component) : void 0;
 
-        if (render != null) {
-            !(render.defaultProps == null && render.propTypes == null) ? warning(false, 'forwardRef render functions do not support propTypes or defaultProps. ' + 'Did you accidentally pass a React component?') : void 0;
+        if (Component != null) {
+            !(Component.defaultProps == null && Component.propTypes == null) ? warning(false, 'forwardRef render functions do not support propTypes or defaultProps. ' + 'Did you accidentally pass a React component?') : void 0;
         }
     }
 
     return {
         $$typeof: REACT_FORWARD_REF_TYPE,
-        render: render
-    };
+        render: Component
+    } as any;
 }
 
 let describeComponentFrame = function (name, source, ownerName) {
@@ -1238,7 +1270,6 @@ function getComponentName(fiber) {
  */
 const ReactPropTypesSecret = 'SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED';
 const loggedTypeFailures = {};
-
 
 /**
  * Assert that the values match with the type specs.
@@ -1420,8 +1451,8 @@ function validateChildKeys(node, parentType) {
         }
     } else if (isValidElement(node)) {
         // This element was passed in a valid location.
-        if (node._store) {
-            node._store.validated = true;
+        if ((node as any)._store) {
+            (node as any)._store.validated = true;
         }
     } else if (node) {
         let iteratorFn = getIteratorFn(node);
@@ -1490,6 +1521,50 @@ function validateFragmentProps(fragment) {
     currentlyValidatingElement = null;
 }
 
+// DOM Elements
+// TODO: generalize this to everything in `keyof ReactHTML`, not just "input"
+function createElementWithValidation(
+    type: "input",
+    props?: InputHTMLAttributes<HTMLInputElement> & ClassAttributes<HTMLInputElement> | null,
+    ...children: ReactNode[]
+): DetailedReactHTMLElement<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>;
+function createElementWithValidation<P extends HTMLAttributes<T>, T extends HTMLElement>(
+    type: keyof ReactHTML,
+    props?: ClassAttributes<T> & P | null,
+    ...children: ReactNode[]
+): DetailedReactHTMLElement<P, T>;
+function createElementWithValidation<P extends SVGAttributes<T>, T extends SVGElement>(
+    type: keyof ReactSVG,
+    props?: ClassAttributes<T> & P | null,
+    ...children: ReactNode[]
+): ReactSVGElement;
+function createElementWithValidation<P extends DOMAttributes<T>, T extends Element>(
+    type: string,
+    props?: ClassAttributes<T> & P | null,
+    ...children: ReactNode[]
+): DOMElement<P, T>;
+
+// Custom components
+function createElementWithValidation<P>(
+    type: SFC<P>,
+    props?: Attributes & P | null,
+    ...children: ReactNode[]
+): SFCElement<P>;
+function createElementWithValidation<P>(
+    type: ClassType<P, ClassicComponent<P, ComponentState>, ClassicComponentClass<P>>,
+    props?: ClassAttributes<ClassicComponent<P, ComponentState>> & P | null,
+    ...children: ReactNode[]
+): CElement<P, ClassicComponent<P, ComponentState>>;
+function createElementWithValidation<P, T extends Component<P, ComponentState>, C extends ComponentClass<P>>(
+    type: ClassType<P, T, C>,
+    props?: ClassAttributes<T> & P | null,
+    ...children: ReactNode[]
+): CElement<P, T>;
+function createElementWithValidation<P>(
+    type: SFC<P> | ComponentClass<P> | string,
+    props?: Attributes & P | null,
+    ...children: ReactNode[]
+): ReactElement<P>;
 function createElementWithValidation(type, props?, children?) {
     let validType = isValidElementType(type);
 
@@ -1549,6 +1624,22 @@ function createElementWithValidation(type, props?, children?) {
 
     return element;
 }
+
+// DOM Elements
+function createFactoryWithValidation<T extends HTMLElement>(
+    type: keyof ReactHTML): HTMLFactory<T>;
+function createFactoryWithValidation(
+    type: keyof ReactSVG): SVGFactory;
+function createFactoryWithValidation<P extends DOMAttributes<T>, T extends Element>(
+    type: string): DOMFactory<P, T>;
+
+// Custom components
+function createFactoryWithValidation<P>(type: SFC<P>): SFCFactory<P>;
+function createFactoryWithValidation<P>(
+    type: ClassType<P, ClassicComponent<P, ComponentState>, ClassicComponentClass<P>>): CFactory<P, ClassicComponent<P, ComponentState>>;
+function createFactoryWithValidation<P, T extends Component<P, ComponentState>, C extends ComponentClass<P>>(
+    type: ClassType<P, T, C>): CFactory<P, T>;
+function createFactoryWithValidation<P>(type: ComponentClass<P>): Factory<P>;
 function createFactoryWithValidation(type) {
     let validatedFactory = createElementWithValidation.bind(null, type);
     validatedFactory.type = type;
@@ -1568,6 +1659,49 @@ function createFactoryWithValidation(type) {
 
     return validatedFactory;
 }
+
+// DOM Elements
+// ReactHTMLElement
+function cloneElementWithValidation<P extends HTMLAttributes<T>, T extends HTMLElement>(
+    element: DetailedReactHTMLElement<P, T>,
+    props?: P,
+    ...children: ReactNode[]
+): DetailedReactHTMLElement<P, T>;
+// ReactHTMLElement, less specific
+function cloneElementWithValidation<P extends HTMLAttributes<T>, T extends HTMLElement>(
+    element: ReactHTMLElement<T>,
+    props?: P,
+    ...children: ReactNode[]
+): ReactHTMLElement<T>;
+// SVGElement
+function cloneElementWithValidation<P extends SVGAttributes<T>, T extends SVGElement>(
+    element: ReactSVGElement,
+    props?: P,
+    ...children: ReactNode[]
+): ReactSVGElement;
+// DOM Element (has to be the last, because type checking stops at first overload that fits)
+function cloneElementWithValidation<P extends DOMAttributes<T>, T extends Element>(
+    element: DOMElement<P, T>,
+    props?: DOMAttributes<T> & P,
+    ...children: ReactNode[]
+): DOMElement<P, T>;
+
+// Custom components
+function cloneElementWithValidation<P>(
+    element: SFCElement<P>,
+    props?: Partial<P> & Attributes,
+    ...children: ReactNode[]
+): SFCElement<P>;
+function cloneElementWithValidation<P, T extends Component<P, ComponentState>>(
+    element: CElement<P, T>,
+    props?: Partial<P> & ClassAttributes<T>,
+    ...children: ReactNode[]
+): CElement<P, T>;
+function cloneElementWithValidation<P>(
+    element: ReactElement<P>,
+    props?: Partial<P> & Attributes,
+    ...children: ReactNode[]
+): ReactElement<P>;
 function cloneElementWithValidation(element, props?, children?) {
     let newElement = cloneElement.apply(this, arguments);
     for (let i = 2; i < arguments.length; i++) {
@@ -1577,7 +1711,7 @@ function cloneElementWithValidation(element, props?, children?) {
     return newElement;
 }
 
-export const Children = {
+export const Children: ReactChildren = {
     map: mapChildren,
     forEach: forEachChildren,
     count: countChildren,
@@ -1588,8 +1722,8 @@ export {
     createElementWithValidation as createElement,
     cloneElementWithValidation as cloneElement,
     createFactoryWithValidation as createFactory,
-    isValidElement
 }
+
 export const React = {
     Timeout: undefined,
     Children,

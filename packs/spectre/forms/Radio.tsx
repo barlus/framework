@@ -37,6 +37,7 @@ export class Radio extends React.Component<RadioProps, {}> {
 }
 
 export interface RadioProps {
+    [k:string]:any;//todo fix me
     className?: string,
     success?:boolean,
     error?:boolean,

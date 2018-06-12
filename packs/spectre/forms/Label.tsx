@@ -28,6 +28,7 @@ export class Label extends React.PureComponent<LabelProps, {}> {
 }
 
 export interface LabelProps {
+    [k:string]:any;
     className?: string,
     id?:string,
     small?: boolean,

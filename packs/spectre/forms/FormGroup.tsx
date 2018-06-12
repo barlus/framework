@@ -28,6 +28,7 @@ export class FormGroup extends React.PureComponent<FormGroupProps, {}> {
 }
 
 export interface FormGroupProps {
+    [k:string]:any;//todo fix me
     className?: string,
     horizontal?:boolean
     id?:string

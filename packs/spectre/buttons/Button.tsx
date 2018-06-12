@@ -38,6 +38,7 @@ export class Button extends React.PureComponent<ButtonProps, {}> {
 }
 
 export interface ButtonProps {
+    [k:string]:any;//todo fix me
     className?: string,
     primary?: boolean,
     link?: boolean,

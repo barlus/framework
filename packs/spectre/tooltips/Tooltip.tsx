@@ -16,7 +16,7 @@ export class Tooltip extends React.PureComponent<TooltipProps, {}> {
             [ Theme.tooltipRight ]: right,
             [ Theme.tooltipBottom ]: bottom
         });
-        const badged = React.Children.map(children, (child) => {
+        const badged = React.Children.map(children, (child:React.ReactElement<any>) => {
             const className = classes(c, child.props.className);
             const props = {
                 className,

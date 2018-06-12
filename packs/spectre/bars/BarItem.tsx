@@ -18,6 +18,7 @@ export class BarItem extends React.PureComponent<BarItemProps, {}> {
 }
 
 export interface BarItemProps {
+    [k:string]:any;//todo fix me
     className?: string,
     progress?:number,
 

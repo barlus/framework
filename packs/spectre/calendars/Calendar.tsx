@@ -326,6 +326,7 @@ export class Calendar extends React.PureComponent<CalendarProps, CalendarState> 
 }
 
 export interface CalendarProps {
+    [k:string]:any;//todo fix me
     className?: string,
     activeDate?:Date
     large?:boolean

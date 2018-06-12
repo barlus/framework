@@ -1,8 +1,9 @@
-import { combineReducers } from '@barlus/redux'
-import todos from './todos'
-import visibilityFilter from './visibilityFilter'
+import {combineReducers}  from '@barlus/redux';
+import {State}            from '../state/State';
+import {todos}            from './todos';
+import {visibilityFilter} from './visibilityFilter';
 
-const rootReducer = combineReducers({
+const rootReducer = combineReducers<State>({
   todos,
   visibilityFilter
 });

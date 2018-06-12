@@ -11,7 +11,7 @@ export class DocLoading extends DocPage {
                 Loading indicator is used for loading or updating. Also, you can add
                 the <code>loading</code> class to buttons for loading status.
             </DocNote>
-            <DocSample className="text-center">
+            <DocSample  className="text-center">
                 <div className="loading"/>
             </DocSample>
             <DocNote>

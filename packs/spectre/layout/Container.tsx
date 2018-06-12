@@ -3,7 +3,9 @@ import * as React from "@barlus/react";
 import { Theme } from './theme';
 import { classes } from '../utils/classes';
 
-export class Container extends React.PureComponent<{}, {}> {
+export class Container extends React.PureComponent<{
+    [ k: string ]: any;//todo fix me
+}, {}> {
     render() {
         const { children, className, ...otherProps } = this.props;
         const classNames = classes(Theme.container, className);

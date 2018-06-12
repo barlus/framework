@@ -101,7 +101,7 @@ export class DocTitle extends React.PureComponent<{}, {}> {
         return <h4 className="s-subtitle">{this.props.children}</h4>
     }
 }
-export class DocSample extends React.PureComponent<{ columns?: number, wrapChildren?: boolean }, {}> {
+export class DocSample extends React.PureComponent<{ columns?: number, wrapChildren?: boolean, className?:string }, {}> {
     static defaultProps = {
         columns: 1,
         wrapChildren: true,

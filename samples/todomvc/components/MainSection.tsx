@@ -1,30 +1,46 @@
-import * as React from '@barlus/react'
-import Footer from './Footer'
-import VisibleTodoList from '../containers/VisibleTodoList'
+import * as React              from '@barlus/react'
+import {connected}             from '@barlus/redux';
+import {Actions}               from '../actions/index';
+import {getCompletedTodoCount} from '../selectors/index';
+import {Footer}                from './Footer'
+import {TodoList}              from './TodoList'
 
-const MainSection = ({ todosCount, completedCount, actions }) => (
-    <section className="main">
-        {
-            !!todosCount &&
-            <span>
-          <input
-              className="toggle-all"
-              type="checkbox"
-              checked={completedCount === todosCount}
-          />
-          <label onClick={actions.completeAllTodos}/>
-        </span>
-        }
-        <VisibleTodoList/>
-        {
-            !!todosCount &&
-            <Footer
-                completedCount={completedCount}
-                activeCount={todosCount - completedCount}
-                onClearCompleted={actions.clearCompleted}
-            />
-        }
+
+@connected
+export class MainSection extends React.Component<{}> {
+
+  @connected
+  get actions() {
+    return connected.actions(Actions)
+  }
+
+  @connected
+  get store() {
+    return connected.state((state) => {
+      return {
+        todosCount: state.todos.length,
+        completedCount: getCompletedTodoCount(state)
+      }
+    })
+  }
+
+  render() {
+    const { todosCount, completedCount } = this.store;
+    return <section className="main">
+      {!!todosCount && <span>
+        <input
+          className="toggle-all"
+          type="checkbox"
+          checked={completedCount === todosCount}
+        />
+        <label onClick={this.actions.completeAllTodos}/>
+      </span>}
+      <TodoList/>
+      {!!todosCount && <Footer
+        completedCount={completedCount}
+        activeCount={todosCount - completedCount}
+        onClearCompleted={this.actions.clearCompleted}
+      />}
     </section>
-);
-
-export default MainSection;
+  }
+}

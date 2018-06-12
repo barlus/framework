@@ -1,4 +1,5 @@
 import * as React from "@barlus/react";
+import { ReactElement } from '../../react/types';
 import { AccordionHeader } from './AccordionHeader';
 import { Theme } from './theme';
 import { classes } from '../utils/classes';
@@ -21,7 +22,7 @@ export class Accordion extends React.PureComponent<AccordionProps, {}> {
             defaultChecked,
             ...otherProps
         } = this.props;
-        const childs = React.Children.map(children, child => {
+        const childs = React.Children.map(children, (child:React.ReactElement<any>) => {
             if (child.type === AccordionHeader) {
                 return React.cloneElement(child, {
                     id: id,
@@ -38,6 +39,7 @@ export class Accordion extends React.PureComponent<AccordionProps, {}> {
     }
 }
 export interface AccordionProps {
+    defaultChecked?:boolean;
     className?: string,
     header?: any,
     name?: any,

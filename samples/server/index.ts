@@ -78,7 +78,7 @@ class MyApplication extends HttpApplication {
                 '@barlus/routex',
                 '@barlus/mobx',
                 '@vendor/todo',
-                '@vendor/client',
+                //'@vendor/client',
                 //'@vendor/todomvc'
             ]
         }))

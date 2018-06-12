@@ -12,7 +12,7 @@ export function whenMapStateToPropsIsMissing(mapStateToProps) {
     : undefined
 }
 
-export default [
+export const defaultMapStateToPropsFactories = [
   whenMapStateToPropsIsFunction,
   whenMapStateToPropsIsMissing
-]
+];

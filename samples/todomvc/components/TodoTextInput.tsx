@@ -2,7 +2,7 @@ import * as React from '@barlus/react'
 import { Theme } from '../styles/TodoEntry';
 import { classes } from '../utils/classes'
 
-export default class TodoTextInput extends React.Component {
+export class TodoTextInput extends React.Component<{onSave?,newTodo?,editing?,placeholder?,text?}> {
 
   state = {
     text: this.props.text || ''
@@ -37,7 +37,7 @@ export default class TodoTextInput extends React.Component {
         })}
         type="text"
         placeholder={this.props.placeholder}
-        autoFocus="true"
+        autoFocus={true}
         value={this.state.text}
         onBlur={this.handleBlur}
         onChange={this.handleChange}

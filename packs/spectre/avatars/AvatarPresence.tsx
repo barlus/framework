@@ -24,6 +24,7 @@ export class AvatarPresence extends React.PureComponent<AvatarPresenceProps, {}>
 }
 
 export interface AvatarPresenceProps {
+    [k:string]:any;//todo fix me
     className?: string,
     online?: boolean
     busy?: boolean

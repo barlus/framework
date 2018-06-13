@@ -21,24 +21,5 @@
   },
   "devDependencies": {
     "typescript": "next"
-  },
-  "resolutions": {
-    "@barlus/bone": "0.1.10",
-    "@barlus/experimental": "0.1.10",
-    "@barlus/fsm": "0.1.10",
-    "@barlus/history": "0.1.10",
-    "@barlus/mobx": "0.1.10",
-    "@barlus/nerv": "0.1.10",
-    "@barlus/routex": "0.1.10",
-    "@barlus/runtime": "0.1.10",
-    "@barlus/spectre": "0.1.10",
-    "@barlus/storex": "0.1.10",
-    "@barlus/styles": "0.1.10",
-    "@barlus/tester": "0.1.10",
-    "@vendor/client": "0.1.10",
-    "@vendor/server": "0.1.10",
-    "@vendor/todomvc": "0.1.10",
-    "@barlus/react": "0.1.10",
-    "@barlus/redux": "0.1.10"
   }
 }

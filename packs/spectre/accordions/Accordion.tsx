@@ -1,5 +1,4 @@
 import * as React        from "@barlus/react";
-import {ReactElement}    from '../../react/types';
 import {AccordionHeader} from './AccordionHeader';
 import {Theme}           from './theme';
 import {classes}         from '../utils/classes';
@@ -12,6 +11,7 @@ export class Accordion extends React.PureComponent<AccordionProps> {
     name: undefined,
     type: 'checkbox',
   };
+
   render() {
     const {
       id,
@@ -39,11 +39,11 @@ export class Accordion extends React.PureComponent<AccordionProps> {
   }
 }
 
-export interface AccordionProps {
+export interface AccordionProps extends React.HTMLAttributes<HTMLDivElement> {
   defaultChecked?: boolean;
-  className?: string,
-  header?: any,
-  name?: any,
-  type?: 'checkbox' | 'radio',
-  id: any,
+  className?: string;
+  header?: any;
+  name?: any;
+  type?: 'checkbox' | 'radio';
+  id: any;
 }

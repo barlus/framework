@@ -18,6 +18,6 @@ export class Hint extends React.PureComponent<HintProp, {}> {
     }
 }
 
-export interface HintProp {
+export interface HintProp extends React.HTMLAttributes<HTMLParagraphElement>{
     className?: string,
 }

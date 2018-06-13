@@ -278,7 +278,7 @@ export class DocForms extends DocPage {
                             <Label htmlFor="input-example--36">Number</Label>
                         </Column>
                         <Column all={9}>
-                            <Input id='input-example--36' type="number" placeholder="Number" defaultValue={66}/>
+                            <Input id='input-example--36' type="number" placeholder="Number" defaultValue='66'/>
                         </Column>
                     </FormGroup>
                     <FormGroup>

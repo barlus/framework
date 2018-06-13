@@ -1,25 +1,25 @@
-import * as React from "@barlus/react";
-import { Theme } from './theme';
-import { classes } from '../utils/classes';
-import {Button,ButtonProps} from "../buttons/Button";
+import * as React    from "@barlus/react";
+import {Theme}       from './theme';
+import {classes}     from '../utils/classes';
+import {Button}      from "../buttons/Button";
+import {ButtonProps} from "../buttons/Button";
 
 export class InputGroupButton extends React.PureComponent<InputGroupButtonProp, {}> {
-    render() {
-        const {
-            className,
-            // Styles.
-            children,
-            ...otherProps
-        } = this.props;
-        return (<Button className={
-                classes(Theme.inputGroupBtn, className)
-            }{...otherProps}>
-            {children}
-        </Button>
-        )
-    }
+  render() {
+    const {
+      className,
+      // Styles.
+      children,
+      ...otherProps
+    } = this.props;
+    return (<Button className={
+        classes(Theme.inputGroupBtn, className)
+      }{...otherProps}>
+        {children}
+      </Button>
+    )
+  }
 }
 
-export interface InputGroupButtonProp extends ButtonProps{
-    className?: string,
+export interface InputGroupButtonProp extends ButtonProps {
 }

@@ -1,21 +1,21 @@
-import * as React from "@barlus/react";
-import { Theme } from './theme';
-import { classes } from '../utils/classes';
+import * as React         from "@barlus/react";
+import {Theme}            from './theme';
+import {classes}          from '../utils/classes';
+import {LiHTMLAttributes} from "../../react/types";
 
 export class MenuDivider extends React.PureComponent<MenuDividerProps, {}> {
-    render() {
-        const {
-            className,
-            // Styles.
-            content,
-            children,
-            ...otherProps
-        } = this.props;
-        return <li {...otherProps} data-content={content} className={classes(Theme.divider, className)}/>
-    }
+  render() {
+    const {
+      children,
+      className,
+      // Styles.
+      content,
+      ...otherProps
+    } = this.props;
+    return <li {...otherProps} data-content={content} className={classes(Theme.divider, className)}/>
+  }
 }
 
-export interface MenuDividerProps {
-    className?: string,
-    content?: string
+export interface MenuDividerProps extends React.LiHTMLAttributes<HTMLLIElement> {
+  content?: string
 }

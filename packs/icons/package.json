@@ -1,0 +1,13 @@
+{
+  "name": "@barlus/icons",
+  "version": "0.1.10",
+  "description": "Barlus NodeJs Wrapper",
+  "main": "./index",
+  "types": "./index",
+  "dependencies": {
+    "@barlus/runtime": "^0.1.1"
+  },
+  "license": "MIT",
+  "repository": "https://github.com/ecmal/elp.git",
+  "author": "Mamble LLC"
+}

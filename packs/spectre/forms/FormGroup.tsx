@@ -1,7 +1,7 @@
-import * as React from "@barlus/react";
-import { Theme } from './theme';
-import { classes } from '../utils/classes';
-import {Label} from "./Label";
+import * as React       from "@barlus/react";
+import { Theme }        from './theme';
+import { classes }      from '../utils/classes';
+import {Label}          from "./Label";
 
 export class FormGroup extends React.PureComponent<FormGroupProps, {}> {
     render() {
@@ -27,8 +27,7 @@ export class FormGroup extends React.PureComponent<FormGroupProps, {}> {
     }
 }
 
-export interface FormGroupProps {
-    [k:string]:any;//todo fix me
+export interface FormGroupProps extends React.HTMLAttributes<HTMLDivElement>{
     className?: string,
     horizontal?:boolean
     id?:string

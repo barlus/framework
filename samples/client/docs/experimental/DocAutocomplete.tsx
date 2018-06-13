@@ -103,7 +103,7 @@ export class DocAutocomplete extends DocPage<any, any> {
                     value={this.state.searchableValue}
                     maxOptionsCount={3}
                     onChange={e => this.setState({ searchableValue: e.target.value })}
-                    onSelect={value => this.setState({ searchableValue: value.label })}
+                    onSelectItem={value => this.setState({ searchableValue: value.label })}
                     options={DocAutocomplete.suggestions}/>
             </DocSample>
             <DocExample lang="javascript" content={`
@@ -149,7 +149,7 @@ export class DocAutocomplete extends DocPage<any, any> {
                     onChange={this.onMultipleChoiceChange}
                     maxOptionsCount={3}
                     onDelete={this.handleDelete}
-                    onSelect={this.handleAddition}
+                    onSelectItem={this.handleAddition}
                     options={this.state.options}
                     selected={this.state.selected}/>
             </DocSample>

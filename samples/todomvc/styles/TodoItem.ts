@@ -35,7 +35,7 @@ stylesheet(`styles/${Theme.TodoItem}.tcss`)(`.${Theme.TodoItem}`,{
         padding: 6,
         display: 'none',
         boxShadow: 'inset 0 -1px 5px 0 rgba(0, 0, 0, 0.2)'
-    }),
+    } as any),
     ...nest(`&.${Theme.TodoItemEditing}`,{
         borderBottom:'none',
         padding:0,

@@ -12,7 +12,7 @@ stylesheet('normalize.ts')('',{
         fontSize:$.htmlFontSize,
         lineHeight:$.htmlLineHeight,
         '-webkit-tap-highlight-color':'transparent',
-        '-webkit-text-size-adjust':percent(100),
+        '-webkit-text-size-adjust':percent(100) as string,
     }),
     ...nest([`body`],{
         background:$.bodyBg.rgba,

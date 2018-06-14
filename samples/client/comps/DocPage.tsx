@@ -202,7 +202,7 @@ export class DocApp extends React.PureComponent<{ docs }, { sidebarOpen: boolean
         super(p, c);
         this.history = new HashHistory();
         console.info(this.history.location);
-        this.state = { sidebarOpen: false, path:this.history.location.pathname.substr(1) };
+        this.state = { sidebarOpen: false, path:this.history.location.pathname.substr(1)||'doc-typography'};
 
     }
 

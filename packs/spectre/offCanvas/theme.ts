@@ -44,7 +44,7 @@ stylesheet('off-canvas.ts')('',{
             padding:list($.layoutSpacing,$.layoutSpacing,$.layoutSpacing,rem(4)),
         }),
         ...nest([`.${Theme.offCanvasOverlay}`],{
-            background:$.darkColor.fade(.1),
+            background:$.darkColor.fade(.1).toString(),
             borderColor:'transparent',
             borderRadius:0,
             bottom:0,

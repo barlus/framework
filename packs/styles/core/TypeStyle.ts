@@ -1,4 +1,4 @@
-import { CSSProperties, FontFace, KeyFrames, NestedCSSProperties } from '../css';
+import { CSSProperties, FontFace, KeyFrames, NestedCSSProperties } from '../types';
 import { extend, StylesTarget, TypeStyleOptions } from '../styling';
 import { FreeStyle, Styles } from './FreeStyle';
 

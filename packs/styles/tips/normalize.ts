@@ -1,11 +1,11 @@
 /**
  * Adds normalize.css to the registerd outputs
  */
-import { cssRaw } from '../styling';
+import {cssRaw} from '../styling';
 
 export function normalize() {
-    console.info("NORMALIZE");
-    return cssRaw(`
+  console.info("NORMALIZE");
+  return cssRaw(`
         button, hr, input {
             overflow: visible
         }

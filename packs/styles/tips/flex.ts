@@ -4,7 +4,7 @@
  * -webkit- is needed for mobile safari (iPhone / iPad)
  * -ms- is needed for IE
  */
-import * as types from '../css';
+import * as types from '../types';
 import { extend } from '../styling';
 
 /**

@@ -1,7 +1,7 @@
 /**
  * @module provide display helpers
  */
-import * as types from '../css';
+import * as types from '../types';
 
 export const block: types.CSSProperties = {
   display: 'block'

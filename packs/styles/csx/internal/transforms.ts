@@ -1,5 +1,7 @@
-import { CSSTransformFunction, CSSLength, CSSPercentage } from '../../css';
-import { cssFunction as f } from '../utils/index';
+import {CSSLength}            from '../types';
+import {CSSPercentage}        from '../types';
+import {CSSTransformFunction} from '../types';
+import {cssFunction as f}     from '../utils/index';
 
 /**
  * The CSS transform property lets you modify the coordinate space of the CSS visual formatting model. Using it, elements can be translated, rotated, scaled, and skewed.
@@ -7,17 +9,17 @@ import { cssFunction as f } from '../utils/index';
  * @see https://developer.mozilla.org/en-US/docs/Web/CSS/transform
  */
 export function transform(...transforms: CSSTransformFunction[]): CSSTransformFunction {
-    return transforms.length ? transforms.join(' ') : 'none';
+  return transforms.length ? transforms.join(' ') : 'none';
 }
 
 /**
  * The matrix() CSS function specifies a homogeneous 2D transformation matrix comprised of the specified six values. The constant values of such matrices are implied and not passed as parameters; the other parameters are described in the column-major order.
- * 
+ *
  * matrix(a, b, c, d, tx, ty) is a shorthand for matrix3d(a, b, 0, 0, c, d, 0, 0, 0, 0, 1, 0, tx, ty, 0, 1).
  * @see https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/matrix
  */
 export function matrix(a: number, b: number, c: number, d: number, tx: number, ty: number): CSSTransformFunction {
-    return f('matrix', [a, b, c, d, tx, ty]);
+  return f('matrix', [a, b, c, d, tx, ty]);
 }
 
 /**
@@ -25,7 +27,7 @@ export function matrix(a: number, b: number, c: number, d: number, tx: number, t
  * @see https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/matrix3d
  */
 export function matrix3d(a1: number, b1: number, c1: number, d1: number, a2: number, b2: number, c2: number, d2: number, a3: number, b3: number, c3: number, d3: number, a4: number, b4: number, c4: number, d4: number): CSSTransformFunction {
-    return f('matrix3d', [a1, b1, c1, d1, a2, b2, c2, d2, a3, b3, c3, d3, a4, b4, c4, d4]);
+  return f('matrix3d', [a1, b1, c1, d1, a2, b2, c2, d2, a3, b3, c3, d3, a4, b4, c4, d4]);
 }
 
 /**
@@ -33,7 +35,7 @@ export function matrix3d(a1: number, b1: number, c1: number, d1: number, a2: num
  * @see https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/perspective
  */
 export function perspective(value: CSSLength): CSSTransformFunction {
-    return f('perspective', [value]);
+  return f('perspective', [value]);
 }
 
 /**
@@ -41,7 +43,7 @@ export function perspective(value: CSSLength): CSSTransformFunction {
  * @see https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/rotate
  */
 export function rotate(z: CSSPercentage): CSSTransformFunction {
-    return f('rotate', [z]);
+  return f('rotate', [z]);
 }
 
 /**
@@ -49,37 +51,37 @@ export function rotate(z: CSSPercentage): CSSTransformFunction {
  * @see https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/rotate3d
  */
 export function rotate3d(x: CSSPercentage, y: CSSPercentage, z: CSSPercentage): CSSTransformFunction {
-    return f('rotate3d', [x, y, z]);
+  return f('rotate3d', [x, y, z]);
 }
 
 /**
  * The rotateX()CSS function defines a transformation that moves the element around the abscissa without deforming it. The amount of movement is defined by the specified angle; if positive, the movement will be clockwise, if negative, it will be counter-clockwise. The axis of rotation passes by the origin, defined by transform-origin CSS property.
- * 
+ *
  * rotateX(a)is a shorthand for rotate3d(1, 0, 0, a).
  * @see https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/rotateX
  */
 export function rotateX(x: CSSPercentage): CSSTransformFunction {
-    return f('rotateX', [x]);
+  return f('rotateX', [x]);
 }
 
 /**
  * The rotateY()CSS function defines a transformation that moves the element around the ordinate without deforming it. The amount of movement is defined by the specified angle; if positive, the movement will be clockwise, if negative, it will be counter-clockwise. The axis of rotation passes by the origin, defined by transform-origin CSS property.
- * 
+ *
  * rotateY(a)is a shorthand for rotate3d(0, 1, 0, a).
  * @see https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/rotateY
  */
 export function rotateY(y: CSSPercentage): CSSTransformFunction {
-    return f('rotateY', [y]);
+  return f('rotateY', [y]);
 }
 
 /**
  * The rotateZ()CSS function defines a transformation that moves the element around the z-axis without deforming it. The amount of movement is defined by the specified angle; if positive, the movement will be clockwise, if negative, it will be counter-clockwise. The axis of rotation passes by the origin, defined by transform-origin CSS property.
- * 
+ *
  * rotateZ(a)is a shorthand for rotate3d(0, 0, 1, a).
  * @see https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/rotateZ
  */
 export function rotateZ(z: CSSPercentage): CSSTransformFunction {
-    return f('rotateZ', [z]);
+  return f('rotateZ', [z]);
 }
 
 /**
@@ -87,7 +89,7 @@ export function rotateZ(z: CSSPercentage): CSSTransformFunction {
  * @see https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/scale
  */
 export function scale(x: number, y?: number): CSSTransformFunction {
-    return f('scale', (y || y === 0) ? [x, y] : [x]);
+  return f('scale', (y || y === 0) ? [x, y] : [x]);
 }
 
 /**
@@ -95,37 +97,37 @@ export function scale(x: number, y?: number): CSSTransformFunction {
  * @see https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/scale3d
  */
 export function scale3d(x: number, y: number, z: number): CSSTransformFunction {
-    return f('scale3d', [x, y, z]);
+  return f('scale3d', [x, y, z]);
 }
 
 /**
  * The scaleX() CSS function modifies the abscissa of each element point by a constant factor, except if this scale factor is 1, in which case the function is the identity transform. The scaling is not isotropic and the angles of the element are not conserved. scaleX(-1) defines an axial symmetry with a vertical axis passing by the origin (as specified by the transform-origin property).
- * 
+ *
  * scaleX(sx) is a shorthand for scale(sx, 1) or for scale3d(sx, 1, 1).
  * @see https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/scaleX
  */
 export function scaleX(x: number): CSSTransformFunction {
-    return f('scaleX', [x]);
+  return f('scaleX', [x]);
 }
 
 /**
  * The scaleY() CSS function modifies the ordinate of each element point by a constant factor except if this scale factor is 1, in which case the function is the identity transform. The scaling is not isotropic and the angles of the element are not conserved. scaleY(-1) defines an axial symmetry with a horizontal axis passing by the origin (as specified by the transform-origin property).
- * 
+ *
  * scaleY(sy) is a shorthand for scale(1, sy) or for scale3d(1, sy, 1).
  * @see https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/scaleY
  */
 export function scaleY(y: number): CSSTransformFunction {
-    return f('scaleY', [y]);
+  return f('scaleY', [y]);
 }
 
 /**
  * The scaleZ() CSS function modifies the z-coordinate of each element point by a constant factor, except if this scale factor is 1, in which case the function is the identity transform. The scaling is not isotropic and the angles of the element are not conserved. scaleZ(-1) defines an axial symmetry along the z-axis passing by the origin (as specified by the transform-origin property).
- * 
+ *
  * scaleZ(sz) is a shorthand for scale3d(1, 1, sz).
  * @see https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/scaleZ
  */
 export function scaleZ(z: number): CSSTransformFunction {
-    return f('scaleZ', [z]);
+  return f('scaleZ', [z]);
 }
 
 /**
@@ -133,7 +135,7 @@ export function scaleZ(z: number): CSSTransformFunction {
  * @see https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/skew
  */
 export function skew(x: CSSPercentage, y?: CSSPercentage): CSSTransformFunction {
-    return f('skew', (y || y === 0) ? [x, y] : [x]);
+  return f('skew', (y || y === 0) ? [x, y] : [x]);
 }
 
 /**
@@ -141,7 +143,7 @@ export function skew(x: CSSPercentage, y?: CSSPercentage): CSSTransformFunction 
  * @see https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/skewX
  */
 export function skewX(x: CSSPercentage): CSSTransformFunction {
-    return f('skewX', [x]);
+  return f('skewX', [x]);
 }
 
 /**
@@ -149,7 +151,7 @@ export function skewX(x: CSSPercentage): CSSTransformFunction {
  * @see https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/skewY
  */
 export function skewY(y: CSSPercentage): CSSTransformFunction {
-    return f('skewY', [y]);
+  return f('skewY', [y]);
 }
 
 /**
@@ -157,7 +159,7 @@ export function skewY(y: CSSPercentage): CSSTransformFunction {
  * @see https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/translate
  */
 export function translate(x: CSSLength | CSSPercentage, y?: CSSLength | CSSPercentage): CSSTransformFunction {
-    return f('translate', (y || y === 0) ? [x, y] : [x]);
+  return f('translate', (y || y === 0) ? [x, y] : [x]);
 }
 
 /**
@@ -165,7 +167,7 @@ export function translate(x: CSSLength | CSSPercentage, y?: CSSLength | CSSPerce
  * @see https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/translate3d
  */
 export function translate3d(x: CSSLength | CSSPercentage, y: CSSLength | CSSPercentage, z: CSSLength | CSSPercentage): CSSTransformFunction {
-    return f('translate3d', [x, y, z]);
+  return f('translate3d', [x, y, z]);
 }
 
 /**
@@ -175,7 +177,7 @@ export function translate3d(x: CSSLength | CSSPercentage, y: CSSLength | CSSPerc
  * @see https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/translateX
  */
 export function translateX(x: CSSLength | CSSPercentage): CSSTransformFunction {
-    return f('translateX', [x]);
+  return f('translateX', [x]);
 }
 
 /**
@@ -185,15 +187,15 @@ export function translateX(x: CSSLength | CSSPercentage): CSSTransformFunction {
  * @see https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/translateY
  */
 export function translateY(y: CSSLength | CSSPercentage): CSSTransformFunction {
-    return f('translateY', [y]);
+  return f('translateY', [y]);
 }
 
 /**
  * The translateZ() CSS function moves the element along the z-axis of the 3D space. This transformation is characterized by a <length> defining how much it moves.
- * 
+ *
  * translateZ(tz) is a shorthand for translate3d(0, 0, tz).
  * @see https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/translateZ
  */
 export function translateZ(z: CSSLength | CSSPercentage): CSSTransformFunction {
-    return f('translateZ', [z]);
+  return f('translateZ', [z]);
 }

@@ -1,6 +1,6 @@
-import { StringType } from '../types';
-import { filter } from '../utils/index'
-import { px } from "./units";
+import {StringType} from '../types';
+import {filter}     from '../utils/index'
+import {px}         from "./units";
 
 const delimited = (delimiter: string) => {
   return function () {

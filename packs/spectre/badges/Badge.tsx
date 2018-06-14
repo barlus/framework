@@ -13,7 +13,7 @@ export class Badge extends React.PureComponent<BadgeProps, {}> {
       const props = {
         className,
         'data-badge': (label && label >= 0) ? label : ''
-      }
+      };
       return React.cloneElement(child, props)
     });
     return (badged)

@@ -1,5 +1,4 @@
-import * as CSS           from '@barlus/csstype';
-import {$, nest, percent} from "./index";
+import * as CSS from '@barlus/csstype';
 
 export type TLength = number | string;
 
@@ -16,7 +15,7 @@ export interface CSSProperties extends CSS.StandardPropertiesFallback<TLength>,
    * you get `.classA {same properties} .classB {same properties}`
    * This is needed for certain browser edge cases like placeholder styling
    **/
-  '*'?:CSSProperties;
+  '*'?: CSSProperties;
 
   $unique?: boolean;
 }
@@ -105,7 +104,7 @@ export type NestedCSSSelectors = {
   /**
    * Also cater for any other nested query you want
    */
-  [selector: string]: NestedCSSProperties | undefined;
+  [ selector: string ]: NestedCSSProperties | undefined;
 };
 
 /**
@@ -119,4 +118,5 @@ export interface KeyFrames {
     key: string
     ]: CSSProperties | string | undefined;
 }
-export interface FontFace extends CSS.FontFace {}
+export interface FontFace extends CSS.FontFace {
+}

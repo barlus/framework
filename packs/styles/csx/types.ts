@@ -21,7 +21,7 @@ export interface StringType<T extends string> {
 export type CSSAngle = WidthProperty<string | number>;
 export type CSSLength = WidthProperty<string | number>;
 
-export type CSSPercentage = WidthProperty<string | number >;
+export type CSSPercentage = WidthProperty<string | number>;
 export type CsxColorStop = [string | StringType<string>, CSSPercentage | CSSLength];
 export type CSSTransformFunction = string;
 export type CSSLineStyle = BorderBlockStartStyleProperty;

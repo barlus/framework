@@ -1,7 +1,7 @@
 /**
  * @module scroll helpers
  */
-import * as types from '../css';
+import * as types from '../types';
 
 export const scroll: types.CSSProperties = {
   '-webkit-overflow-scrolling': 'touch',

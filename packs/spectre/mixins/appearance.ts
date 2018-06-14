@@ -1,6 +1,4 @@
-import { CSSValue } from '../../styles/css';
-
-export function appearance(value:CSSValue<"none"|"auto">){
+export function appearance(value:"none"|"auto"):any{
     return {
         'appearance': value,
         '-webkit-appearance': value,

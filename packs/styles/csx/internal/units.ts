@@ -1,5 +1,7 @@
-import { formatUnit } from '../utils/index';
-import { CSSAngle, CSSLength, CSSPercentage } from '../../css';
+import {formatUnit}    from '../utils/index';
+import {CSSPercentage} from '../types';
+import {CSSAngle}      from '../types';
+import {CSSLength}     from '../types';
 
 /**
  * Returns the number with a suffix of %

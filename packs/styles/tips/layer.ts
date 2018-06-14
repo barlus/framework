@@ -2,7 +2,7 @@
  * @module Layers essentially allow you to create a new surface for layouts
  */
 import { extend } from '../styling';
-import * as types from '../css';
+import * as types from '../types';
 
 /**
  * New layer parent

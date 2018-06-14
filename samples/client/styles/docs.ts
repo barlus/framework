@@ -218,8 +218,6 @@ cssRule('.docs-content .example-tile-icon', {
         "flex",
         "-ms-flexbox"
     ],
-    "-ms-flex-align": "center",
-    "-ms-flex-line-pack": "distribute",
     "fontSize": "1.2rem",
     "height": "2rem",
     "width": "2rem"
@@ -256,7 +254,6 @@ cssRule('.docs-brand .docs-logo', {
         "inline-flex",
         "-ms-inline-flexbox"
     ],
-    "-ms-flex-align": "center",
     "height": "2rem",
     "padding": ".2rem",
     "width": "auto"

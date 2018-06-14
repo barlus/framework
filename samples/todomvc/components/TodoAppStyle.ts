@@ -43,7 +43,7 @@ cssRule('button',{
     appearance: 'none',
     '-webkit-font-smoothing' : 'antialiased',
     '-moz-osx-font-smoothing': 'grayscale',
-});
+} as any);
 cssRule('body', {
     font: "14px 'Helvetica Neue', Helvetica, Arial, sans-serif",
     lineHeight: '1.4em',
@@ -55,7 +55,7 @@ cssRule('body', {
     '-webkit-font-smoothing': 'antialiased',
     '-moz-osx-font-smoothing': 'grayscale',
     fontWeight: 300,
-});
+} as any);
 cssRule(':focus', {
     outline: 0
 });

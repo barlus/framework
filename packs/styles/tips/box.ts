@@ -2,7 +2,7 @@
  * @module Box helpers
  * Having top, left, bottom, right seperated makes it easier to override and maintain individual properties
  */
-import * as types from '../css';
+import * as types from '../types';
 /**
  * For `number` we assume pixels e.g. 5 => '5px'
  * For `string` *you* should provide the unit e.g. '5px'

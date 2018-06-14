@@ -7,7 +7,7 @@ export type PropertyValue = number | boolean | string
  * Input styles object.
  */
 export interface Styles {
-    [ selector: string ]: null | undefined | PropertyValue | PropertyValue[] | Styles
+  [selector: string]: null | undefined | PropertyValue | PropertyValue[] | Styles
 }
 
 /**
@@ -29,40 +29,45 @@ export const escape = (str: string) => str.replace(escapePattern, '\\$&');
  * Transform a JavaScript property into a CSS property.
  */
 export function hyphenate(propertyName: string): string {
-    return propertyName
-        .replace(upperCasePattern, propLower)
-        .replace(msPattern, '-ms-') // Internet Explorer vendor prefix.
+  return propertyName
+    .replace(upperCasePattern, propLower)
+    .replace(msPattern, '-ms-') // Internet Explorer vendor prefix.
 }
 
 /**
  * Generate a hash value from a string.
  */
 export function stringHash(str: string): string {
-    let value = 5381;
-    let len = str.length;
+  let value = 5381;
+  let len = str.length;
 
-    while (len--) value = (value * 33) ^ str.charCodeAt(len);
+  while (len--) value = (value * 33) ^ str.charCodeAt(len);
 
-    return (value >>> 0).toString(36)
+  return (value >>> 0).toString(36)
 }
 
 /**
  * Propagate change events.
  */
 export interface Changes {
-    add(style: Container<any>, index: number): void
-    change(style: Container<any>, oldIndex: number, newIndex: number): void
-    remove(style: Container<any>, index: number): void
+  add(style: Container<any>, index: number): void
+
+  change(style: Container<any>, oldIndex: number, newIndex: number): void
+
+  remove(style: Container<any>, index: number): void
 }
 
 /**
  * Cacheable interface.
  */
 export interface Container<T> {
-    id: string
-    clone(): T
-    getIdentifier(): string
-    getStyles(): string
+  id: string
+
+  clone(): T
+
+  getIdentifier(): string
+
+  getStyles(): string
 }
 
 /**
@@ -70,115 +75,115 @@ export interface Container<T> {
  */
 export class Cache<T extends Container<any>> {
 
-    sheet: string[] = [];
-    changeId = 0;
+  sheet: string[] = [];
+  changeId = 0;
 
-    private _keys: string[] = [];
-    private _children: { [ id: string ]: T } = Object.create(null);
-    private _counters: { [ id: string ]: number } = Object.create(null);
+  private _keys: string[] = [];
+  private _children: { [id: string]: T } = Object.create(null);
+  private _counters: { [id: string]: number } = Object.create(null);
 
-    constructor(public hash = stringHash, public changes: Changes = noopChanges) {
-    }
+  constructor(public hash = stringHash, public changes: Changes = noopChanges) {
+  }
 
-    add<U extends T>(style: U): U {
-        const count = this._counters[ style.id ] || 0;
-        const item = this._children[ style.id ] || style.clone();
+  add<U extends T>(style: U): U {
+    const count = this._counters[style.id] || 0;
+    const item = this._children[style.id] || style.clone();
 
-        this._counters[ style.id ] = count + 1;
+    this._counters[style.id] = count + 1;
 
-        if (count === 0) {
-            this._children[ item.id ] = item;
-            this._keys.push(item.id);
-            this.sheet.push(item.getStyles());
-            this.changeId++;
-            this.changes.add(item, this._keys.length - 1)
+    if (count === 0) {
+      this._children[item.id] = item;
+      this._keys.push(item.id);
+      this.sheet.push(item.getStyles());
+      this.changeId++;
+      this.changes.add(item, this._keys.length - 1)
+    } else {
+      // Check if contents are different.
+      if (item.getIdentifier() !== style.getIdentifier()) {
+        throw new TypeError(`Hash collision: ${style.getStyles()} === ${item.getStyles()}`)
+      }
+
+      const oldIndex = this._keys.indexOf(style.id);
+      const newIndex = this._keys.length - 1;
+      const prevChangeId = this.changeId;
+
+      if (oldIndex !== newIndex) {
+        this._keys.splice(oldIndex, 1);
+        this._keys.push(style.id);
+        this.changeId++
+      }
+
+      if (item instanceof Cache && style instanceof Cache) {
+        const prevChangeId = item.changeId;
+
+        item.merge(style);
+
+        if (item.changeId !== prevChangeId) {
+          this.changeId++
+        }
+      }
+
+      if (this.changeId !== prevChangeId) {
+        if (oldIndex === newIndex) {
+          this.sheet.splice(oldIndex, 1, item.getStyles())
         } else {
-            // Check if contents are different.
-            if (item.getIdentifier() !== style.getIdentifier()) {
-                throw new TypeError(`Hash collision: ${style.getStyles()} === ${item.getStyles()}`)
-            }
-
-            const oldIndex = this._keys.indexOf(style.id);
-            const newIndex = this._keys.length - 1;
-            const prevChangeId = this.changeId;
-
-            if (oldIndex !== newIndex) {
-                this._keys.splice(oldIndex, 1);
-                this._keys.push(style.id);
-                this.changeId++
-            }
-
-            if (item instanceof Cache && style instanceof Cache) {
-                const prevChangeId = item.changeId;
-
-                item.merge(style);
-
-                if (item.changeId !== prevChangeId) {
-                    this.changeId++
-                }
-            }
-
-            if (this.changeId !== prevChangeId) {
-                if (oldIndex === newIndex) {
-                    this.sheet.splice(oldIndex, 1, item.getStyles())
-                } else {
-                    this.sheet.splice(oldIndex, 1);
-                    this.sheet.splice(newIndex, 0, item.getStyles())
-                }
-
-                this.changes.change(item, oldIndex, newIndex)
-            }
+          this.sheet.splice(oldIndex, 1);
+          this.sheet.splice(newIndex, 0, item.getStyles())
         }
 
-        return item as U
+        this.changes.change(item, oldIndex, newIndex)
+      }
     }
 
-    remove(style: T): void {
-        const count = this._counters[ style.id ];
+    return item as U
+  }
 
-        if (count > 0) {
-            this._counters[ style.id ] = count - 1;
+  remove(style: T): void {
+    const count = this._counters[style.id];
 
-            const item = this._children[ style.id ];
-            const index = this._keys.indexOf(item.id);
+    if (count > 0) {
+      this._counters[style.id] = count - 1;
 
-            if (count === 1) {
-                delete this._counters[ style.id ];
-                delete this._children[ style.id ];
+      const item = this._children[style.id];
+      const index = this._keys.indexOf(item.id);
 
-                this._keys.splice(index, 1);
-                this.sheet.splice(index, 1);
-                this.changeId++;
-                this.changes.remove(item, index)
-            } else if (item instanceof Cache && style instanceof Cache) {
-                const prevChangeId = item.changeId;
+      if (count === 1) {
+        delete this._counters[style.id];
+        delete this._children[style.id];
 
-                item.unmerge(style);
+        this._keys.splice(index, 1);
+        this.sheet.splice(index, 1);
+        this.changeId++;
+        this.changes.remove(item, index)
+      } else if (item instanceof Cache && style instanceof Cache) {
+        const prevChangeId = item.changeId;
 
-                if (item.changeId !== prevChangeId) {
-                    this.sheet.splice(index, 1, item.getStyles());
-                    this.changeId++;
-                    this.changes.change(item, index, index)
-                }
-            }
+        item.unmerge(style);
+
+        if (item.changeId !== prevChangeId) {
+          this.sheet.splice(index, 1, item.getStyles());
+          this.changeId++;
+          this.changes.change(item, index, index)
         }
+      }
     }
+  }
 
-    merge(cache: Cache<any>) {
-        for (const id of cache._keys) this.add(cache._children[ id ])
+  merge(cache: Cache<any>) {
+    for (const id of cache._keys) this.add(cache._children[id])
 
-        return this
-    }
+    return this
+  }
 
-    unmerge(cache: Cache<any>) {
-        for (const id of cache._keys) this.remove(cache._children[ id ])
+  unmerge(cache: Cache<any>) {
+    for (const id of cache._keys) this.remove(cache._children[id])
 
-        return this
-    }
+    return this
+  }
 
-    clone() {
-        return new Cache(this.hash).merge(this)
-    }
+  clone() {
+    return new Cache(this.hash).merge(this)
+  }
 
 }
 
@@ -187,25 +192,25 @@ export class Cache<T extends Container<any>> {
  */
 export class Selector implements Container<Selector> {
 
-    constructor(
-        public selector: string,
-        public hash: HashFunction,
-        public id = `s${hash(selector)}`,
-        public pid = ''
-    ) {
-    }
+  constructor(
+    public selector: string,
+    public hash: HashFunction,
+    public id = `s${hash(selector)}`,
+    public pid = ''
+  ) {
+  }
 
-    getStyles() {
-        return this.selector
-    }
+  getStyles() {
+    return this.selector
+  }
 
-    getIdentifier() {
-        return `${this.pid}.${this.selector}`
-    }
+  getIdentifier() {
+    return `${this.pid}.${this.selector}`
+  }
 
-    clone() {
-        return new Selector(this.selector, this.hash, this.id, this.pid)
-    }
+  clone() {
+    return new Selector(this.selector, this.hash, this.id, this.pid)
+  }
 
 }
 
@@ -214,21 +219,21 @@ export class Selector implements Container<Selector> {
  */
 export class Style extends Cache<Selector> implements Container<Style> {
 
-    constructor(public style: string, public hash: HashFunction, public id = `c${hash(style)}`) {
-        super(hash)
-    }
+  constructor(public style: string, public hash: HashFunction, public id = `c${hash(style)}`) {
+    super(hash)
+  }
 
-    getStyles(): string {
-        return `${this.sheet.join(',\n')}{${this.style}}`
-    }
+  getStyles(): string {
+    return `${this.sheet.join(',\n')}{${this.style}}`
+  }
 
-    getIdentifier() {
-        return this.style
-    }
+  getIdentifier() {
+    return this.style
+  }
 
-    clone(): Style {
-        return new Style(this.style, this.hash, this.id).merge(this)
-    }
+  clone(): Style {
+    return new Style(this.style, this.hash, this.id).merge(this)
+  }
 
 }
 
@@ -237,27 +242,27 @@ export class Style extends Cache<Selector> implements Container<Style> {
  */
 export class Rule extends Cache<Rule | Style> implements Container<Rule> {
 
-    constructor(
-        public rule: string,
-        public style = '',
-        public hash: HashFunction,
-        public id = `a${hash(`${rule}.${style}`)}`,
-        public pid = ''
-    ) {
-        super(hash)
-    }
+  constructor(
+    public rule: string,
+    public style = '',
+    public hash: HashFunction,
+    public id = `a${hash(`${rule}.${style}`)}`,
+    public pid = ''
+  ) {
+    super(hash)
+  }
 
-    getStyles(): string {
-        return `${this.rule}{${this.style}${join(this.sheet, '\n')}}`
-    }
+  getStyles(): string {
+    return `${this.rule}{${this.style}${join(this.sheet, '\n')}}`
+  }
 
-    getIdentifier() {
-        return `${this.pid}.${this.rule}.${this.style}`
-    }
+  getIdentifier() {
+    return `${this.pid}.${this.rule}.${this.style}`
+  }
 
-    clone(): Rule {
-        return new Rule(this.rule, this.style, this.hash, this.id, this.pid).merge(this)
-    }
+  clone(): Rule {
+    return new Rule(this.rule, this.style, this.hash, this.id, this.pid).merge(this)
+  }
 
 }
 
@@ -265,63 +270,64 @@ export class Rule extends Cache<Rule | Style> implements Container<Rule> {
  * The FreeStyle class implements the API for everything else.
  */
 export class FreeStyle extends Cache<Rule | Style> implements Container<FreeStyle> {
-    static IS_UNIQUE = IS_UNIQUE;
-    static escape = escape;
-    static hash = stringHash;
-    /**
-     * Exports a simple function to create a new instance.
-     */
-    static create(hash?: HashFunction, debug?: boolean, changes?: Changes) {
-        return new FreeStyle(hash, debug, undefined, changes)
-    }
+  static IS_UNIQUE = IS_UNIQUE;
+  static escape = escape;
+  static hash = stringHash;
 
-    constructor(
-        public hash = stringHash,
-        public debug = false,
-        public id = `f${(++uniqueId).toString(36)}`,
-        changes?: Changes
-    ) {
-        super(hash, changes)
-    }
+  /**
+   * Exports a simple function to create a new instance.
+   */
+  static create(hash?: HashFunction, debug?: boolean, changes?: Changes) {
+    return new FreeStyle(hash, debug, undefined, changes)
+  }
 
-    registerStyle(styles: Styles, displayName?: string) {
-        const debugName = this.debug ? displayName : undefined;
-        const { cache, id } = composeStyles(this, '&', styles, true, debugName, this.debug);
-        this.merge(cache);
-        return id
-    }
+  constructor(
+    public hash = stringHash,
+    public debug = false,
+    public id = `f${(++uniqueId).toString(36)}`,
+    changes?: Changes
+  ) {
+    super(hash, changes)
+  }
 
-    registerKeyframes(keyframes: Styles, displayName?: string) {
-        return this.registerHashRule('@keyframes', keyframes, displayName)
-    }
+  registerStyle(styles: Styles, displayName?: string) {
+    const debugName = this.debug ? displayName : undefined;
+    const { cache, id } = composeStyles(this, '&', styles, true, debugName, this.debug);
+    this.merge(cache);
+    return id
+  }
 
-    registerHashRule(prefix: string, styles: Styles, displayName?: string) {
-        const debugName = this.debug ? displayName : undefined;
-        const { cache, pid, id } = composeStyles(this, '', styles, false, debugName, this.debug);
-        const rule = new Rule(`${prefix} ${escape(id)}`, undefined, this.hash, undefined, pid);
-        this.add(rule.merge(cache));
-        return id
-    }
+  registerKeyframes(keyframes: Styles, displayName?: string) {
+    return this.registerHashRule('@keyframes', keyframes, displayName)
+  }
 
-    registerRule(rule: string, styles: Styles) {
-        this.merge(composeStyles(this, rule, styles, false, undefined, this.debug).cache)
-    }
+  registerHashRule(prefix: string, styles: Styles, displayName?: string) {
+    const debugName = this.debug ? displayName : undefined;
+    const { cache, pid, id } = composeStyles(this, '', styles, false, debugName, this.debug);
+    const rule = new Rule(`${prefix} ${escape(id)}`, undefined, this.hash, undefined, pid);
+    this.add(rule.merge(cache));
+    return id
+  }
 
-    registerCss(styles: Styles) {
-        this.merge(composeStyles(this, '', styles, false, undefined, this.debug).cache)
-    }
+  registerRule(rule: string, styles: Styles) {
+    this.merge(composeStyles(this, rule, styles, false, undefined, this.debug).cache)
+  }
 
-    getStyles(): string {
-        return join(this.sheet, '\n')
-    }
+  registerCss(styles: Styles) {
+    this.merge(composeStyles(this, '', styles, false, undefined, this.debug).cache)
+  }
 
-    getIdentifier() {
-        return this.id
-    }
+  getStyles(): string {
+    return join(this.sheet, '\n')
+  }
 
-    clone(): FreeStyle {
-        return new FreeStyle(this.hash, this.debug, this.id, this.changes).merge(this)
-    }
+  getIdentifier() {
+    return this.id
+  }
+
+  clone(): FreeStyle {
+    return new FreeStyle(this.hash, this.debug, this.id, this.changes).merge(this)
+  }
 
 }
 
@@ -340,162 +346,162 @@ const propLower = (m: string) => `-${m.toLowerCase()}`;
 /**
  * Map of css number properties.
  */
-const CSS_NUMBER: { [ key: string ]: true } = Object.create(null);
+const CSS_NUMBER: { [key: string]: true } = Object.create(null);
 
 /**
  * Transform a style string to a CSS string.
  */
 function styleToString(key: string, value: PropertyValue) {
-    if (typeof value === 'number' && value !== 0 && !CSS_NUMBER[ key ]) {
-        return `${key}:${value}px`
-    }
+  if (typeof value === 'number' && value !== 0 && !CSS_NUMBER[key]) {
+    return `${key}:${value}px`
+  }
 
-    return `${key}:${value}`
+  return `${key}:${value}`
 }
 
 /**
  * Sort an array of tuples by first value.
  */
 function sortTuples<T extends any[]>(value: T[]): T[] {
-    return value.sort((a, b) => a[ 0 ] > b[ 0 ] ? 1 : -1)
+  return value.sort((a, b) => a[0] > b[0] ? 1 : -1)
 }
 
 /**
  * Categorize user styles.
  */
 function parseStyles(styles: Styles, hasNestedStyles: boolean, formatted = false) {
-    const properties: Array<[ string, PropertyValue | PropertyValue[] ]> = [];
-    const nestedStyles: Array<[ string, Styles ]> = [];
-    let isUnique = false;
+  const properties: Array<[string, PropertyValue | PropertyValue[]]> = [];
+  const nestedStyles: Array<[string, Styles]> = [];
+  let isUnique = false;
 
-    // Sort keys before adding to styles.
-    for (const key of Object.keys(styles)) {
-        const value = styles[ key ];
-        if (value !== null && value !== undefined) {
-            if (key === IS_UNIQUE) {
-                isUnique = true
-            } else if (typeof value === 'object' && !Array.isArray(value)) {
-                let selector = key.trim();
-                if (selector.includes(',')) {
-                    selector.split(',').forEach(key => {
-                        nestedStyles.push([ key.trim(), value ]);
-                    })
-                } else {
-                    nestedStyles.push([ key.trim(), value ])
-                }
-            } else {
-                properties.push([ hyphenate(key.trim()), value ])
-            }
+  // Sort keys before adding to styles.
+  for (const key of Object.keys(styles)) {
+    const value = styles[key];
+    if (value !== null && value !== undefined) {
+      if (key === IS_UNIQUE) {
+        isUnique = true
+      } else if (typeof value === 'object' && !Array.isArray(value)) {
+        let selector = key.trim();
+        if (selector.includes(',')) {
+          selector.split(',').forEach(key => {
+            nestedStyles.push([key.trim(), value]);
+          })
+        } else {
+          nestedStyles.push([key.trim(), value])
         }
+      } else {
+        properties.push([hyphenate(key.trim()), value])
+      }
     }
+  }
 
-    return {
-        styleString: stringifyProperties(sortTuples(properties), formatted),
-        nestedStyles: hasNestedStyles ? nestedStyles : sortTuples(nestedStyles),
-        isUnique
-    }
+  return {
+    styleString: stringifyProperties(sortTuples(properties), formatted),
+    nestedStyles: hasNestedStyles ? nestedStyles : sortTuples(nestedStyles),
+    isUnique
+  }
 }
 
 /**
  * Stringify an array of property tuples.
  */
-function stringifyProperties(properties: Array<[ string, PropertyValue | PropertyValue[] ]>, formatted: boolean = true) {
-    let props = properties.map(([ name, value ]) => {
-        if (!Array.isArray(value)) {
-            return styleToString(name, value);
-        }
-        return value.map(x => styleToString(name, x)).join(';')
-    });
-    if (formatted) {
-        if (props.length) {
-            return props.map(s => `\n    ${s}`).join(';') + '\n';
-        } else {
-            return '';
-        }
-    } else {
-        return props.join(';')
+function stringifyProperties(properties: Array<[string, PropertyValue | PropertyValue[]]>, formatted: boolean = true) {
+  let props = properties.map(([name, value]) => {
+    if (!Array.isArray(value)) {
+      return styleToString(name, value);
     }
+    return value.map(x => styleToString(name, x)).join(';')
+  });
+  if (formatted) {
+    if (props.length) {
+      return props.map(s => `\n    ${s}`).join(';') + '\n';
+    } else {
+      return '';
+    }
+  } else {
+    return props.join(';')
+  }
 }
 
 /**
  * Interpolate CSS selectors.
  */
 function interpolate(selector: string, parent: string) {
-    if (selector.indexOf('&') > -1) {
-        return selector.replace(interpolatePattern, parent)
-    }
+  if (selector.indexOf('&') > -1) {
+    return selector.replace(interpolatePattern, parent)
+  }
 
-    return `${parent} ${selector}`
+  return `${parent} ${selector}`
 }
 
 /**
  * Recursive loop building styles with deferred selectors.
  */
-function stylize(cache: Cache<any>, selector: string, styles: Styles, list: [ string, Style ][], parent?: string, formatted = false) {
-    const { styleString, nestedStyles, isUnique } = parseStyles(styles, !!selector, formatted);
-    let pid = styleString;
+function stylize(cache: Cache<any>, selector: string, styles: Styles, list: [string, Style][], parent?: string, formatted = false) {
+  const { styleString, nestedStyles, isUnique } = parseStyles(styles, !!selector, formatted);
+  let pid = styleString;
 
-    if (selector.charCodeAt(0) === 64 /* @ */) {
-        const rule = cache.add(new Rule(selector, parent ? undefined : styleString, cache.hash));
+  if (selector.charCodeAt(0) === 64 /* @ */) {
+    const rule = cache.add(new Rule(selector, parent ? undefined : styleString, cache.hash));
 
-        // Nested styles support (e.g. `.foo > @media > .bar`).
-        if (styleString && parent) {
-            const style = rule.add(new Style(styleString, rule.hash, isUnique ? `u${(++uniqueId).toString(36)}` : undefined));
-            list.push([ parent, style ])
-        }
-
-        for (const [ name, value ] of nestedStyles) {
-            pid += name + stylize(rule, name, value, list, parent, formatted)
-        }
-    } else {
-        const key = parent ? interpolate(selector, parent) : selector;
-
-        if (styleString) {
-            const style = cache.add(new Style(styleString, cache.hash, isUnique ? `u${(++uniqueId).toString(36)}` : undefined));
-            list.push([ key, style ])
-        }
-
-        for (const [ name, value ] of nestedStyles) {
-            pid += name + stylize(cache, name, value, list, key, formatted)
-        }
+    // Nested styles support (e.g. `.foo > @media > .bar`).
+    if (styleString && parent) {
+      const style = rule.add(new Style(styleString, rule.hash, isUnique ? `u${(++uniqueId).toString(36)}` : undefined));
+      list.push([parent, style])
     }
 
-    return pid
+    for (const [name, value] of nestedStyles) {
+      pid += name + stylize(rule, name, value, list, parent, formatted)
+    }
+  } else {
+    const key = parent ? interpolate(selector, parent) : selector;
+
+    if (styleString) {
+      const style = cache.add(new Style(styleString, cache.hash, isUnique ? `u${(++uniqueId).toString(36)}` : undefined));
+      list.push([key, style])
+    }
+
+    for (const [name, value] of nestedStyles) {
+      pid += name + stylize(cache, name, value, list, key, formatted)
+    }
+  }
+
+  return pid
 }
 
 /**
  * Register all styles, but collect for selector interpolation using the hash.
  */
 function composeStyles(container: FreeStyle, selector: string, styles: Styles, isStyle: boolean, displayName?: string, formatted = false) {
-    const cache = new Cache<Rule | Style>(container.hash);
-    const list: [ string, Style ][] = [];
-    const pid = stylize(cache, selector, styles, list, undefined, formatted);
+  const cache = new Cache<Rule | Style>(container.hash);
+  const list: [string, Style][] = [];
+  const pid = stylize(cache, selector, styles, list, undefined, formatted);
 
-    const hash = `f${cache.hash(pid)}`;
-    const id = displayName ? `${displayName}_${hash}` : hash;
+  const hash = `f${cache.hash(pid)}`;
+  const id = displayName ? `${displayName}_${hash}` : hash;
 
-    for (const [ selector, style ] of list) {
-        const key = isStyle ? interpolate(selector, `.${escape(id)}`) : selector;
-        style.add(new Selector(key, style.hash, undefined, pid))
-    }
+  for (const [selector, style] of list) {
+    const key = isStyle ? interpolate(selector, `.${escape(id)}`) : selector;
+    style.add(new Selector(key, style.hash, undefined, pid))
+  }
 
-    return { cache, pid, id }
+  return { cache, pid, id }
 }
 
 /**
  * Cache to list to styles.
  */
 function join(arr: string[], del = ''): string {
-    return arr.join(del)
+  return arr.join(del)
 }
 
 /**
  * Noop changes.
  */
 const noopChanges: Changes = {
-    add: () => undefined,
-    change: () => undefined,
-    remove: () => undefined
+  add: () => undefined,
+  change: () => undefined,
+  remove: () => undefined
 };
 
 /**
@@ -504,56 +510,56 @@ const noopChanges: Changes = {
  * Ref: https://github.com/facebook/react/blob/master/packages/react-dom/src/shared/CSSProperty.js
  */
 const CSS_NUMBER_PROPERTIES = [
-    'animation-iteration-count',
-    'border-image-outset',
-    'border-image-slice',
-    'border-image-width',
-    'box-flex',
-    'box-flex-group',
-    'box-ordinal-group',
-    'column-count',
-    'columns',
-    'counter-increment',
-    'counter-reset',
-    'flex',
-    'flex-grow',
-    'flex-positive',
-    'flex-shrink',
-    'flex-negative',
-    'flex-order',
-    'font-weight',
-    'grid-area',
-    'grid-column',
-    'grid-column-end',
-    'grid-column-span',
-    'grid-column-start',
-    'grid-row',
-    'grid-row-end',
-    'grid-row-span',
-    'grid-row-start',
-    'line-clamp',
-    'line-height',
-    'opacity',
-    'order',
-    'orphans',
-    'tab-size',
-    'widows',
-    'z-index',
-    'zoom',
-    // SVG properties.
-    'fill-opacity',
-    'flood-opacity',
-    'stop-opacity',
-    'stroke-dasharray',
-    'stroke-dashoffset',
-    'stroke-miterlimit',
-    'stroke-opacity',
-    'stroke-width'
+  'animation-iteration-count',
+  'border-image-outset',
+  'border-image-slice',
+  'border-image-width',
+  'box-flex',
+  'box-flex-group',
+  'box-ordinal-group',
+  'column-count',
+  'columns',
+  'counter-increment',
+  'counter-reset',
+  'flex',
+  'flex-grow',
+  'flex-positive',
+  'flex-shrink',
+  'flex-negative',
+  'flex-order',
+  'font-weight',
+  'grid-area',
+  'grid-column',
+  'grid-column-end',
+  'grid-column-span',
+  'grid-column-start',
+  'grid-row',
+  'grid-row-end',
+  'grid-row-span',
+  'grid-row-start',
+  'line-clamp',
+  'line-height',
+  'opacity',
+  'order',
+  'orphans',
+  'tab-size',
+  'widows',
+  'z-index',
+  'zoom',
+  // SVG properties.
+  'fill-opacity',
+  'flood-opacity',
+  'stop-opacity',
+  'stroke-dasharray',
+  'stroke-dashoffset',
+  'stroke-miterlimit',
+  'stroke-opacity',
+  'stroke-width'
 ];
 
 // Add vendor prefixes to all unit-less properties.
-for (const prefix of [ '-webkit-', '-ms-', '-moz-', '-o-', '' ]) {
-    for (const property of CSS_NUMBER_PROPERTIES) {
-        CSS_NUMBER[ prefix + property ] = true
-    }
+for (const prefix of ['-webkit-', '-ms-', '-moz-', '-o-', '']) {
+  for (const property of CSS_NUMBER_PROPERTIES) {
+    CSS_NUMBER[prefix + property] = true
+  }
 }

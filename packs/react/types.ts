@@ -19,7 +19,7 @@
 // Definitions: https://github.com/DefinitelyTyped/DefinitelyTyped
 // TypeScript Version: 2.6
 
-import * as CSS from '@barlus/styles/types';
+import * as CSS from '@barlus/csstype';
 import {Component} from './React';
 //
 // React Elements

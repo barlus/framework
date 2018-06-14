@@ -1,4 +1,4 @@
-import { CSSProperties } from '../../styles/css';
+import { CSSProperties } from '@barlus/styles/types';
 
 // Avatar mixin
 import {config} from '../config';

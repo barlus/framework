@@ -33,4 +33,4 @@ stylesheet(`styles/${Theme.TodoEntry}.tcss`)(`.${Theme.TodoEntry}`, {
             color: '#e6e6e6'
         }
     )
-});
+} as any);

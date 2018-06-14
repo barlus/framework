@@ -1,5 +1,5 @@
 import {cssFunction}     from '../utils/index';
-import {ColorProperty}   from '@barlus/csstype';
+import {ColorProperty}   from '@barlus/css';
 import {CsxColorStop}    from '../types';
 import {StringType}      from '../types';
 import {CSSAngle}        from '../types';

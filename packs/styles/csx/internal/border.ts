@@ -2,9 +2,9 @@ import {ensureLength}        from '../utils/index';
 import {BoxFunction}         from '../types';
 import {CSSLength}           from '../types';
 import {BorderOptions}       from '../types';
-import {BorderColorProperty} from '@barlus/csstype';
-import {BorderStyleProperty} from '@barlus/csstype';
-import {BorderWidthProperty} from '@barlus/csstype';
+import {BorderColorProperty} from '@barlus/css';
+import {BorderStyleProperty} from '@barlus/css';
+import {BorderWidthProperty} from '@barlus/css';
 import {list}                from './lists';
 
 /**

@@ -1,4 +1,4 @@
-import {ColorProperty}    from "@barlus/csstype";
+import {ColorProperty}    from "@barlus/css";
 import {ensurePercent}    from "../utils/index";
 import {formatPercent}    from "../utils/index";
 import {parseCSSFunction} from "../utils/index";

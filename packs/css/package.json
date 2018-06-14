@@ -1,5 +1,5 @@
 {
-  "name": "@barlus/csstype",
+  "name": "@barlus/css",
   "version": "0.1.10",
   "description": "Barlus NodeJs Wrapper",
   "main": "./index",

@@ -1,4 +1,4 @@
-import * as CSS from '@barlus/csstype';
+import * as CSS from '@barlus/css';
 
 export type TLength = number | string;
 

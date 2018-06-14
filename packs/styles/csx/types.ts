@@ -12,7 +12,7 @@ import {
   BorderStyleProperty,
   BorderWidthProperty,
   Globals
-} from '@barlus/csstype';
+} from '@barlus/css';
 
 export interface StringType<T extends string> {
   toString(): T;

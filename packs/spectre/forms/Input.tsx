@@ -33,7 +33,7 @@ export class Input extends React.PureComponent<InputProps, {}> {
     inputComp = (iconRight || iconLeft) ? (
       <div className={iconRight ? Theme.hasIconRight : Theme.hasIconLeft}>
         {inputComp}
-        {React.cloneElement(icon, { "className": classes(icon.props.class, Theme.formIcon) })}
+        {React.cloneElement(icon, { "className": classes(icon.props.className, Theme.formIcon) })}
       </div>
     ) : inputComp;
     return (label ? <FormGroup {...formGroupProps}>

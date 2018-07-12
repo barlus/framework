@@ -1,6 +1,6 @@
 {
   "name": "@barlus/redux",
-  "version": "0.1.11",
+  "version": "0.1.12",
   "description": "Barlus ui framework",
   "license": "MIT",
   "main": "./index",

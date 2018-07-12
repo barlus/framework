@@ -1,6 +1,6 @@
 {
   "name": "@barlus/spectre",
-  "version": "0.1.11",
+  "version": "0.1.12",
   "description": "Barlus NodeJs Wrapper",
   "main": "./index",
   "types": "./index",

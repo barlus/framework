@@ -25,7 +25,9 @@ export class HttpApplication extends HttpServer {
     callback() {
         this.handler = compose(this.handlers.map(m => m.handle.bind(m)));
         return async (req: ServerRequest, res: ServerResponse) => {
-            const url = HttpUrl.from(`http://${req.headers.host}${req.url}`);
+            const host = req.headers['x-forwarded-host']||req.headers.host;
+            const proto = req.headers['x-forwarded-proto']||'http';
+            const url = HttpUrl.from(`${proto}://${host}${req.url}`);
             const headers = HttpHeaders.from(req.headers);
             const body = AsyncStream.from(req);
             const request = new HttpRequest(req.method, url, headers, body);

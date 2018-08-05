@@ -118,7 +118,12 @@ export class RouteHandler implements Handler {
                             if(!cnx.response.headers.has('Content-Type')){
                                 cnx.response.headers.set('Content-Type','text/plain');
                             }
-                            cnx.response.setBody(JSON.stringify(result));
+                            if(result[Symbol.asyncIterator]){
+                                cnx.response.setBody(result);
+                            }else{
+                                cnx.response.setBody(JSON.stringify(result));
+                            }
+
                         }
                         return;
                     }

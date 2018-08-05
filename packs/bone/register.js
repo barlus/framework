@@ -4,7 +4,7 @@ const ts = require("typescript");
 const Crypto = require("crypto");
 const Module = require('module');
 
-require('v8').setFlagsFromString('--harmony_async_iteration --harmony_dynamic_import');
+require('v8').setFlagsFromString('--harmony');
 if(typeof Symbol.asyncIterator=='undefined'){
     const AsyncGenerator = eval(`Object.getPrototypeOf(async function * (){}).prototype`);
     Symbol.asyncIterator = Object.getOwnPropertySymbols(Object.getPrototypeOf(AsyncGenerator))[0]
@@ -94,7 +94,7 @@ function compile(source, filename) {
     if(ts.maps){
         ts.maps[filename] = new SourceMap(result.sourceMapText)
     }
-    result.outputText = result.outputText.replace(/^\/\/#\s+sourceMappingURL=.*$/m, `//# sourceMappingURL=data:application/json;base64,${new Buffer(result.sourceMapText, 'utf8').toString('base64')}`)
+    result.outputText = result.outputText.replace(/^\/\/#\s+sourceMappingURL=.*$/m, `//# sourceMappingURL=data:application/json;base64,${Buffer.from(result.sourceMapText, 'utf8').toString('base64')}`)
     //console.info(result.outputText);
     return result.outputText;
 }

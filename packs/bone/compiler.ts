@@ -193,9 +193,6 @@ export class File {
     toString() {
         return `File<${this.uri}>`;
     }
-    inspect() {
-        return this.toString();
-    }
 }
 export class Service {
     static get service(): Service {
@@ -217,7 +214,6 @@ export class Service {
     }
     public get compiler() {
         const service = this;
-        console.info( this.options.jsx);
         const options = {
             module: ts.ModuleKind.ESNext,
             target: ts.ScriptTarget.ESNext,
@@ -271,7 +267,7 @@ export class Service {
                         let file = new File(service,uri);
                         file.reload();
                         file.isLib = true;
-                        console.info(file);
+                        console.info(file.toString());
                         service.sources.set(file.path,file);
                         return file.snapshot;
                     }

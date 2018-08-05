@@ -1,6 +1,6 @@
 {
   "name": "@barlus/framework",
-  "version": "0.1.13",
+  "version": "0.1.14",
   "description": "Barlus Project",
   "author": "Mamble LLC",
   "repository": "https://github.com/barlus/framework.git",
@@ -20,27 +20,27 @@
     "versions": "node --harmony -r @barlus/bone/register ./tool/version.ts"
   },
   "devDependencies": {
-    "typescript": "next"
+    "typescript": "^3.1.0-dev.20180804"
   },
   "resolutions": {
-    "@barlus/bone": "0.1.13",
-    "@barlus/css": "0.1.13",
-    "@barlus/experimental": "0.1.13",
-    "@barlus/fsm": "0.1.13",
-    "@barlus/history": "0.1.13",
-    "@barlus/icons": "0.1.13",
-    "@barlus/mobx": "0.1.13",
-    "@barlus/nerv": "0.1.13",
-    "@barlus/react": "0.1.13",
-    "@barlus/redux": "0.1.13",
-    "@barlus/routex": "0.1.13",
-    "@barlus/runtime": "0.1.13",
-    "@barlus/spectre": "0.1.13",
-    "@barlus/storex": "0.1.13",
-    "@barlus/styles": "0.1.13",
-    "@barlus/tester": "0.1.13",
-    "@vendor/client": "0.1.13",
-    "@vendor/server": "0.1.13",
-    "@vendor/todomvc": "0.1.13"
+    "@barlus/bone": "0.1.14",
+    "@barlus/css": "0.1.14",
+    "@barlus/experimental": "0.1.14",
+    "@barlus/fsm": "0.1.14",
+    "@barlus/history": "0.1.14",
+    "@barlus/icons": "0.1.14",
+    "@barlus/mobx": "0.1.14",
+    "@barlus/nerv": "0.1.14",
+    "@barlus/react": "0.1.14",
+    "@barlus/redux": "0.1.14",
+    "@barlus/routex": "0.1.14",
+    "@barlus/runtime": "0.1.14",
+    "@barlus/spectre": "0.1.14",
+    "@barlus/storex": "0.1.14",
+    "@barlus/styles": "0.1.14",
+    "@barlus/tester": "0.1.14",
+    "@vendor/client": "0.1.14",
+    "@vendor/server": "0.1.14",
+    "@vendor/todomvc": "0.1.14"
   }
 }

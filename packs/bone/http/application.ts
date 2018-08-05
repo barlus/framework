@@ -33,6 +33,10 @@ export class HttpApplication extends HttpServer {
             const request = new HttpRequest(req.method, url, headers, body);
             const response = new HttpResponse();
             const context = new Context(request, response);
+            req.once('aborted',context.request.onAbort);
+            req.once('close',context.request.onClose);
+            res.once('close',context.response.onClose);
+            res.once('finish',context.response.onFinish);
             try {
                 await this.handler(context, null);
             }catch (e){

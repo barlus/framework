@@ -2,6 +2,7 @@ import * as React from "@barlus/react";
 import {Theme}    from './theme';
 import {classes}  from '../utils/classes';
 
+
 export class Tag extends React.PureComponent<TagProps, {}> {
   render() {
     const {
@@ -19,12 +20,12 @@ export class Tag extends React.PureComponent<TagProps, {}> {
     const Element = small ? 'small' : 'span';
 
     return (<Element {...otherProps} className={classes(Theme.tag, {
-      [Theme.tagError]: error,
-      [Theme.tagPrimary]: primary,
-      [Theme.tagRounded]: rounded,
-      [Theme.tagSecondary]: secondary,
-      [Theme.tagSuccess]: success,
-      [Theme.tagWarning]: warning,
+      [ Theme.tagError ]: error,
+      [ Theme.tagPrimary ]: primary,
+      [ Theme.tagRounded ]: rounded,
+      [ Theme.tagSecondary ]: secondary,
+      [ Theme.tagSuccess ]: success,
+      [ Theme.tagWarning ]: warning,
     }, className)}>
       {children}
     </Element>)

@@ -3,6 +3,7 @@ import {CSSPercentage}        from '../types';
 import {CSSTransformFunction} from '../types';
 import {cssFunction as f}     from '../utils/index';
 
+
 /**
  * The CSS transform property lets you modify the coordinate space of the CSS visual formatting model. Using it, elements can be translated, rotated, scaled, and skewed.
  * Returns the transforms as a delimited string by space or returns 'none' if no arguments are provided
@@ -19,7 +20,7 @@ export function transform(...transforms: CSSTransformFunction[]): CSSTransformFu
  * @see https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/matrix
  */
 export function matrix(a: number, b: number, c: number, d: number, tx: number, ty: number): CSSTransformFunction {
-  return f('matrix', [a, b, c, d, tx, ty]);
+  return f('matrix', [ a, b, c, d, tx, ty ]);
 }
 
 /**
@@ -27,7 +28,7 @@ export function matrix(a: number, b: number, c: number, d: number, tx: number, t
  * @see https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/matrix3d
  */
 export function matrix3d(a1: number, b1: number, c1: number, d1: number, a2: number, b2: number, c2: number, d2: number, a3: number, b3: number, c3: number, d3: number, a4: number, b4: number, c4: number, d4: number): CSSTransformFunction {
-  return f('matrix3d', [a1, b1, c1, d1, a2, b2, c2, d2, a3, b3, c3, d3, a4, b4, c4, d4]);
+  return f('matrix3d', [ a1, b1, c1, d1, a2, b2, c2, d2, a3, b3, c3, d3, a4, b4, c4, d4 ]);
 }
 
 /**
@@ -35,7 +36,7 @@ export function matrix3d(a1: number, b1: number, c1: number, d1: number, a2: num
  * @see https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/perspective
  */
 export function perspective(value: CSSLength): CSSTransformFunction {
-  return f('perspective', [value]);
+  return f('perspective', [ value ]);
 }
 
 /**
@@ -43,7 +44,7 @@ export function perspective(value: CSSLength): CSSTransformFunction {
  * @see https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/rotate
  */
 export function rotate(z: CSSPercentage): CSSTransformFunction {
-  return f('rotate', [z]);
+  return f('rotate', [ z ]);
 }
 
 /**
@@ -51,7 +52,7 @@ export function rotate(z: CSSPercentage): CSSTransformFunction {
  * @see https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/rotate3d
  */
 export function rotate3d(x: CSSPercentage, y: CSSPercentage, z: CSSPercentage): CSSTransformFunction {
-  return f('rotate3d', [x, y, z]);
+  return f('rotate3d', [ x, y, z ]);
 }
 
 /**
@@ -61,7 +62,7 @@ export function rotate3d(x: CSSPercentage, y: CSSPercentage, z: CSSPercentage): 
  * @see https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/rotateX
  */
 export function rotateX(x: CSSPercentage): CSSTransformFunction {
-  return f('rotateX', [x]);
+  return f('rotateX', [ x ]);
 }
 
 /**
@@ -71,7 +72,7 @@ export function rotateX(x: CSSPercentage): CSSTransformFunction {
  * @see https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/rotateY
  */
 export function rotateY(y: CSSPercentage): CSSTransformFunction {
-  return f('rotateY', [y]);
+  return f('rotateY', [ y ]);
 }
 
 /**
@@ -81,7 +82,7 @@ export function rotateY(y: CSSPercentage): CSSTransformFunction {
  * @see https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/rotateZ
  */
 export function rotateZ(z: CSSPercentage): CSSTransformFunction {
-  return f('rotateZ', [z]);
+  return f('rotateZ', [ z ]);
 }
 
 /**
@@ -89,7 +90,7 @@ export function rotateZ(z: CSSPercentage): CSSTransformFunction {
  * @see https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/scale
  */
 export function scale(x: number, y?: number): CSSTransformFunction {
-  return f('scale', (y || y === 0) ? [x, y] : [x]);
+  return f('scale', (y || y === 0) ? [ x, y ] : [ x ]);
 }
 
 /**
@@ -97,7 +98,7 @@ export function scale(x: number, y?: number): CSSTransformFunction {
  * @see https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/scale3d
  */
 export function scale3d(x: number, y: number, z: number): CSSTransformFunction {
-  return f('scale3d', [x, y, z]);
+  return f('scale3d', [ x, y, z ]);
 }
 
 /**
@@ -107,7 +108,7 @@ export function scale3d(x: number, y: number, z: number): CSSTransformFunction {
  * @see https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/scaleX
  */
 export function scaleX(x: number): CSSTransformFunction {
-  return f('scaleX', [x]);
+  return f('scaleX', [ x ]);
 }
 
 /**
@@ -117,7 +118,7 @@ export function scaleX(x: number): CSSTransformFunction {
  * @see https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/scaleY
  */
 export function scaleY(y: number): CSSTransformFunction {
-  return f('scaleY', [y]);
+  return f('scaleY', [ y ]);
 }
 
 /**
@@ -127,7 +128,7 @@ export function scaleY(y: number): CSSTransformFunction {
  * @see https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/scaleZ
  */
 export function scaleZ(z: number): CSSTransformFunction {
-  return f('scaleZ', [z]);
+  return f('scaleZ', [ z ]);
 }
 
 /**
@@ -135,7 +136,7 @@ export function scaleZ(z: number): CSSTransformFunction {
  * @see https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/skew
  */
 export function skew(x: CSSPercentage, y?: CSSPercentage): CSSTransformFunction {
-  return f('skew', (y || y === 0) ? [x, y] : [x]);
+  return f('skew', (y || y === 0) ? [ x, y ] : [ x ]);
 }
 
 /**
@@ -143,7 +144,7 @@ export function skew(x: CSSPercentage, y?: CSSPercentage): CSSTransformFunction 
  * @see https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/skewX
  */
 export function skewX(x: CSSPercentage): CSSTransformFunction {
-  return f('skewX', [x]);
+  return f('skewX', [ x ]);
 }
 
 /**
@@ -151,7 +152,7 @@ export function skewX(x: CSSPercentage): CSSTransformFunction {
  * @see https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/skewY
  */
 export function skewY(y: CSSPercentage): CSSTransformFunction {
-  return f('skewY', [y]);
+  return f('skewY', [ y ]);
 }
 
 /**
@@ -159,7 +160,7 @@ export function skewY(y: CSSPercentage): CSSTransformFunction {
  * @see https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/translate
  */
 export function translate(x: CSSLength | CSSPercentage, y?: CSSLength | CSSPercentage): CSSTransformFunction {
-  return f('translate', (y || y === 0) ? [x, y] : [x]);
+  return f('translate', (y || y === 0) ? [ x, y ] : [ x ]);
 }
 
 /**
@@ -167,7 +168,7 @@ export function translate(x: CSSLength | CSSPercentage, y?: CSSLength | CSSPerce
  * @see https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/translate3d
  */
 export function translate3d(x: CSSLength | CSSPercentage, y: CSSLength | CSSPercentage, z: CSSLength | CSSPercentage): CSSTransformFunction {
-  return f('translate3d', [x, y, z]);
+  return f('translate3d', [ x, y, z ]);
 }
 
 /**
@@ -177,7 +178,7 @@ export function translate3d(x: CSSLength | CSSPercentage, y: CSSLength | CSSPerc
  * @see https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/translateX
  */
 export function translateX(x: CSSLength | CSSPercentage): CSSTransformFunction {
-  return f('translateX', [x]);
+  return f('translateX', [ x ]);
 }
 
 /**
@@ -187,7 +188,7 @@ export function translateX(x: CSSLength | CSSPercentage): CSSTransformFunction {
  * @see https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/translateY
  */
 export function translateY(y: CSSLength | CSSPercentage): CSSTransformFunction {
-  return f('translateY', [y]);
+  return f('translateY', [ y ]);
 }
 
 /**
@@ -197,5 +198,5 @@ export function translateY(y: CSSLength | CSSPercentage): CSSTransformFunction {
  * @see https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/translateZ
  */
 export function translateZ(z: CSSLength | CSSPercentage): CSSTransformFunction {
-  return f('translateZ', [z]);
+  return f('translateZ', [ z ]);
 }

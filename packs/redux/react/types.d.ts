@@ -26,8 +26,9 @@
 // to update this type definitions for redux@4.x from redux@3.x.
 // https://github.com/DefinitelyTyped/DefinitelyTyped/issues/25321
 
-import * as React from '@barlus/react';
-import {ActionCreator,Dispatch,Store,Action,AnyAction} from '@barlus/redux';
+import * as React                                          from '@barlus/react';
+import {ActionCreator, Dispatch, Store, Action, AnyAction} from '@barlus/redux';
+
 
 type ComponentClass<P> = React.ComponentClass<P>;
 type StatelessComponent<P> = React.StatelessComponent<P>;
@@ -37,8 +38,7 @@ type ReactNode = React.ReactNode;
 //type ActionCreator<A> = Redux.ActionCreator<A>;
 
 // Diff / Omit taken from https://github.com/Microsoft/TypeScript/issues/12215#issuecomment-311923766
-type Omit<T, K extends keyof T> = Pick<T, ({ [P in keyof T]: P } & { [P in K]: never } & { [x: string]: never, [x: number]: never })[keyof T]>;
-
+type Omit<T, K extends keyof T> = Pick<T, ({ [P in keyof T]: P } & { [P in K]: never } & { [ x: string ]: never, [ x: number ]: never })[keyof T]>;
 
 export interface DispatchProp<A extends Action = AnyAction> {
   dispatch: Dispatch<A>;
@@ -58,10 +58,8 @@ interface AdvancedComponentDecorator<TProps, TOwnProps> {
  * required by the decorated (right hand side) component.
  * But any property required by the decorated component must extend the injected property
  */
-type Shared<
-  InjectedProps,
-  DecorationTargetProps extends Shared<InjectedProps, DecorationTargetProps>
-  > = {
+type Shared<InjectedProps,
+  DecorationTargetProps extends Shared<InjectedProps, DecorationTargetProps>> = {
   [P in Extract<keyof InjectedProps, keyof DecorationTargetProps>]?: DecorationTargetProps[P] extends InjectedProps[P] ? InjectedProps[P] : never;
 };
 
@@ -71,10 +69,10 @@ type Shared<
 export interface InferableComponentEnhancerWithProps<TInjectedProps, TNeedsProps> {
   (
     component: StatelessComponent<TInjectedProps>
-  ): ComponentClass<TNeedsProps> & {WrappedComponent: StatelessComponent<TInjectedProps>}
+  ): ComponentClass<TNeedsProps> & { WrappedComponent: StatelessComponent<TInjectedProps> }
   <P extends Shared<TInjectedProps, P>>(
     component: Component<P>
-  ): ComponentClass<Omit<P, keyof Shared<TInjectedProps, P>> & TNeedsProps> & {WrappedComponent: Component<P>}
+  ): ComponentClass<Omit<P, keyof Shared<TInjectedProps, P>> & TNeedsProps> & { WrappedComponent: Component<P> }
 }
 
 // Injects props and removes them from the prop requirements.
@@ -82,8 +80,6 @@ export interface InferableComponentEnhancerWithProps<TInjectedProps, TNeedsProps
 // render.
 export type InferableComponentEnhancer<TInjectedProps> =
   InferableComponentEnhancerWithProps<TInjectedProps, {}>
-
-
 
 interface MapStateToProps<TStateProps, TOwnProps, State> {
   (state: State, ownProps: TOwnProps): TStateProps;
@@ -93,7 +89,11 @@ interface MapStateToPropsFactory<TStateProps, TOwnProps, State> {
   (initialState: State, ownProps: TOwnProps): MapStateToProps<TStateProps, TOwnProps, State>;
 }
 
-type MapStateToPropsParam<TStateProps, TOwnProps, State> = MapStateToPropsFactory<TStateProps, TOwnProps, State> | MapStateToProps<TStateProps, TOwnProps, State> | null | undefined;
+type MapStateToPropsParam<TStateProps, TOwnProps, State> =
+  MapStateToPropsFactory<TStateProps, TOwnProps, State>
+  | MapStateToProps<TStateProps, TOwnProps, State>
+  | null
+  | undefined;
 
 interface MapDispatchToPropsFunction<TDispatchProps, TOwnProps> {
   (dispatch: Dispatch, ownProps: TOwnProps): TDispatchProps;
@@ -106,7 +106,9 @@ interface MapDispatchToPropsFactory<TDispatchProps, TOwnProps> {
   (dispatch: Dispatch, ownProps: TOwnProps): MapDispatchToProps<TDispatchProps, TOwnProps>;
 }
 
-type MapDispatchToPropsParam<TDispatchProps, TOwnProps> = MapDispatchToPropsFactory<TDispatchProps, TOwnProps> | MapDispatchToProps<TDispatchProps, TOwnProps>;
+type MapDispatchToPropsParam<TDispatchProps, TOwnProps> =
+  MapDispatchToPropsFactory<TDispatchProps, TOwnProps>
+  | MapDispatchToProps<TDispatchProps, TOwnProps>;
 
 interface MergeProps<TStateProps, TDispatchProps, TOwnProps, TMergedProps> {
   (stateProps: TStateProps, dispatchProps: TDispatchProps, ownProps: TOwnProps): TMergedProps;
@@ -146,8 +148,6 @@ interface Options<State = {}, TStateProps = {}, TOwnProps = {}, TMergedProps = {
    */
   areMergedPropsEqual?: (nextMergedProps: TMergedProps, prevMergedProps: TMergedProps) => boolean;
 }
-
-
 
 /**
  * Initializes a selector function (during each instance's constructor). That selector function is called any time the

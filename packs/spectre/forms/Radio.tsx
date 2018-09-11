@@ -3,6 +3,7 @@ import {Theme}    from './theme';
 import {classes}  from '../utils/classes';
 import {Label}    from "./Label";
 
+
 export class Radio extends React.Component<RadioProps, {}> {
   render() {
     const {
@@ -20,10 +21,10 @@ export class Radio extends React.Component<RadioProps, {}> {
 
     return <Label className={
       classes(Theme.formRadio, {
-        [Theme.inputSm]: small,
-        [Theme.inputLg]: large,
-        [Theme.isSuccess]: success,
-        [Theme.isError]: error,
+        [ Theme.inputSm ]: small,
+        [ Theme.inputLg ]: large,
+        [ Theme.isSuccess ]: success,
+        [ Theme.isError ]: error,
       }, className)
     }>
       <input {...otherProps} type="radio"/>

@@ -66,7 +66,6 @@ export type ReducersMapObject<S = any, A extends Action = Action> = {
   [K in keyof S]: Reducer<S[K], A>;
 }
 
-
 /* store */
 
 /**

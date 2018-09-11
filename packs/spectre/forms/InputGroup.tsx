@@ -2,6 +2,7 @@ import * as React from "@barlus/react";
 import {Theme}    from './theme';
 import {classes}  from '../utils/classes';
 
+
 export class InputGroup extends React.PureComponent<InputGroupProps, {}> {
   render() {
     const {
@@ -15,9 +16,9 @@ export class InputGroup extends React.PureComponent<InputGroupProps, {}> {
     } = this.props;
     return (<div className={
         classes(Theme.inputGroup, {
-          [Theme.hasSuccess]: success,
-          [Theme.inputInline]: inline,
-          [Theme.hasError]: error,
+          [ Theme.hasSuccess ]: success,
+          [ Theme.inputInline ]: inline,
+          [ Theme.hasError ]: error,
         }, className)
       }{...otherProps}>
         {children}

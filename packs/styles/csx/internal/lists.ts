@@ -2,6 +2,7 @@ import {StringType} from '../types';
 import {filter}     from '../utils/index'
 import {px}         from "./units";
 
+
 const delimited = (delimiter: string) => {
   return function () {
     return filter(arguments, s => s || s === 0)

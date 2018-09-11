@@ -2,6 +2,7 @@ import * as React from "@barlus/react";
 import {Theme}    from './theme';
 import {classes}  from '../utils/classes';
 
+
 export class PaginationItem extends React.PureComponent<PaginationItemProps, {}> {
   render() {
     const {
@@ -12,10 +13,10 @@ export class PaginationItem extends React.PureComponent<PaginationItemProps, {}>
       ...otherProps
     } = this.props;
     return (<li {...otherProps} className={classes(Theme.pageItem, {
-      [Theme.pagePrev]: prev,
-      [Theme.pageNext]: next,
-      [Theme.disabled]: disabled,
-      [Theme.active]: active,
+      [ Theme.pagePrev ]: prev,
+      [ Theme.pageNext ]: next,
+      [ Theme.disabled ]: disabled,
+      [ Theme.active ]: active,
     }, className)}>
       {children}
     </li>)

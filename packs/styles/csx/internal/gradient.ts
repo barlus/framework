@@ -6,12 +6,13 @@ import {CSSAngle}        from '../types';
 import {CSSSideOrCorner} from '../types';
 import {CSSGradient}     from '../types';
 
+
 /**
  * Helper for the linear-gradient function in CSS
  * https://drafts.csswg.org/css-images-3/#funcdef-linear-gradient
  */
 export function linearGradient(position: CSSAngle | CSSSideOrCorner, ...colors: (ColorProperty | StringType<ColorProperty> | CsxColorStop)[]): CSSGradient {
-  return cssFunction('linear-gradient', [position, ...colors.map(flattenColorStops)])
+  return cssFunction('linear-gradient', [ position, ...colors.map(flattenColorStops) ])
 }
 
 /**
@@ -19,7 +20,7 @@ export function linearGradient(position: CSSAngle | CSSSideOrCorner, ...colors: 
  * https://drafts.csswg.org/css-images-3/#funcdef-repeating-linear-gradient
  */
 export function repeatingLinearGradient(position: CSSSideOrCorner, ...colors: (ColorProperty | StringType<ColorProperty> | CsxColorStop)[]): CSSGradient {
-  return cssFunction('repeating-linear-gradient', [position, ...colors.map(flattenColorStops)]);
+  return cssFunction('repeating-linear-gradient', [ position, ...colors.map(flattenColorStops) ]);
 }
 
 /**

@@ -2,6 +2,7 @@ import * as React from "@barlus/react";
 import {Theme}    from './theme';
 import {classes}  from '../utils/classes';
 
+
 export class Popover extends React.PureComponent<PopoverProps, {}> {
   render() {
     const {
@@ -12,9 +13,9 @@ export class Popover extends React.PureComponent<PopoverProps, {}> {
       ...otherProps
     } = this.props;
     return <div {...otherProps} className={classes(Theme.popover, {
-      [Theme.popoverLeft]: left,
-      [Theme.popoverRight]: right,
-      [Theme.popoverBottom]: bottom
+      [ Theme.popoverLeft ]: left,
+      [ Theme.popoverRight ]: right,
+      [ Theme.popoverBottom ]: bottom
     }, className)}>{children}</div>
   }
 }

@@ -18,7 +18,7 @@ import {subscriptionShape}                                           from '../ut
  * @param options If specified, further customizes the behavior of the connector. Additionally, any extra
  *     options will be passed through to your <code>selectorFactory</code> in the <code>factoryOptions</code> argument.
  */
-export function connectAdvanced<S, TP, TOP, TFP = {}>(selectorFactory: SelectorFactory<S, TP, TOP, TFP>, options?: ConnectOptions & TFP): AdvancedComponentDecorator<TP, TOP>{
+export function connectAdvanced<S, TP, TOP, TFP = {}>(selectorFactory: SelectorFactory<S, TP, TOP, TFP>, options?: ConnectOptions & TFP): AdvancedComponentDecorator<TP, TOP> {
   /*
     selectorFactory is a func that is responsible for returning the selector function used to
     compute new props from state, props, and dispatch. For example:

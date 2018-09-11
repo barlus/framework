@@ -14,11 +14,11 @@ export class Toast extends React.PureComponent<ToastProps, {}> {
     } = this.props;
     return <div {...otherProps} className={
       classes(Theme.toast, {
-        [Theme.toastSuccess]: success,
-        [Theme.toastPrimary]: primary,
-        [Theme.toastError]: error,
-        [Theme.toastSuccess]: success,
-        [Theme.toastWarning]: warning,
+        [ Theme.toastSuccess ]: success,
+        [ Theme.toastPrimary ]: primary,
+        [ Theme.toastError ]: error,
+        [ Theme.toastSuccess ]: success,
+        [ Theme.toastWarning ]: warning,
       }, className)
     }>{children}</div>
   }

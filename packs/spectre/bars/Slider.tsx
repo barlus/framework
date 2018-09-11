@@ -6,6 +6,7 @@ import {BarItem}      from "./BarItem";
 import {BarItemProps} from "./BarItem";
 import {SliderButton} from "./SliderButton";
 
+
 export class Slider extends React.PureComponent<SliderProps, {}> {
   render() {
     const {

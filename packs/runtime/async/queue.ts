@@ -1,126 +1,126 @@
-import {internal} from '../internal';
+import {internal}   from '../internal';
 import {AsyncDefer} from './defer';
 
 
 export abstract class AsyncQueue<P, C> implements AsyncIterable<P> {
-    [Symbol.asyncIterator](): AsyncIterator<P> {
+  [ Symbol.asyncIterator ](): AsyncIterator<P> {
+    return {
+      next: async (value: C) => {
         return {
-            next: async (value: C) => {
-                return {
-                    done: false,
-                    value: await this.dequeue(value)
-                }
-            }
+          done: false,
+          value: await this.dequeue(value)
         }
+      }
     }
+  }
 
-    readonly done: Promise<void>;
-    abstract close(): Promise<void>;
-    abstract error(reason: Error): Promise<void>;
+  readonly done: Promise<void>;
+  abstract close(): Promise<void>;
+  abstract error(reason: Error): Promise<void>;
 
-    abstract enqueue(payload: P): Promise<C> | void;
-    abstract dequeue(payload?: C): Promise<P>
+  abstract enqueue(payload: P): Promise<C> | void;
+  abstract dequeue(payload?: C): Promise<P>
 }
 
 export class BlockingQueue<P, C = void> extends AsyncQueue<P, C> {
-    @internal '#': {
-        barriers: {
-            consumer: AsyncDefer<C>,
-            producer: AsyncDefer<P>
-        }[]
+  @internal '#': {
+    barriers: {
+      consumer: AsyncDefer<C>,
+      producer: AsyncDefer<P>
+    }[]
+  };
+  get done(): Promise<void> {
+    return;
+  }
+  public constructor() {
+    super();
+    Object.assign(internal.of(this), {
+      barriers: []
+    })
+  }
+  public enqueue(payload: P): Promise<C> {
+    const my = internal.of(this);
+    let record = this.barrier(my.barriers.length && my.barriers[ 0 ].consumer.accepted);
+    record.producer.accept(payload);
+    return record.consumer.promise;
+  }
+  public dequeue(payload?: C): Promise<P> {
+    const my = internal.of(this);
+    let record = this.barrier(my.barriers.length && my.barriers[ 0 ].producer.accepted);
+    record.consumer.accept(payload);
+    return record.producer.promise;
+  }
+  public close(): Promise<void> {
+    return
+  }
+  public error(reason: Error): Promise<void> {
+    return
+  }
+  purge() {
+    const my = internal.of(this);
+    while (my.barriers.length && my.barriers[ 0 ].producer.accepted) {
+      my.barriers.shift()
+    }
+  }
+  get position() {
+    let barriers = internal.of(this).barriers;
+    if (barriers.length && barriers[ 0 ].consumer.accepted) {
+      return -barriers.length
+    }
+    return barriers.length
+  }
+  //
+  private barrier(late: boolean) {
+    const my = internal.of(this);
+    if (late) {
+      return my.barriers.shift();
+    }
+    let barrier = {
+      consumer: new AsyncDefer<C>(),
+      producer: new AsyncDefer<P>()
     };
-    get done(): Promise<void>{
-        return;
-    }
-    public constructor() {
-        super();
-        Object.assign(internal.of(this), {
-            barriers: []
-        })
-    }
-    public enqueue(payload: P): Promise<C> {
-        const my = internal.of(this);
-        let record = this.barrier(my.barriers.length && my.barriers[0].consumer.accepted);
-        record.producer.accept(payload);
-        return record.consumer.promise;
-    }
-    public dequeue(payload?: C): Promise<P> {
-        const my = internal.of(this);
-        let record = this.barrier(my.barriers.length && my.barriers[0].producer.accepted);
-        record.consumer.accept(payload);
-        return record.producer.promise;
-    }
-    public close(): Promise<void> {
-        return
-    }
-    public error(reason: Error): Promise<void> {
-        return
-    }
-    purge(){
-        const my = internal.of(this);
-        while(my.barriers.length && my.barriers[0].producer.accepted){
-            my.barriers.shift()
-        }
-    }
-    get position() {
-        let barriers = internal.of(this).barriers;
-        if (barriers.length && barriers[0].consumer.accepted) {
-            return -barriers.length
-        }
-        return barriers.length
-    }
-    //
-    private barrier(late: boolean) {
-        const my = internal.of(this);
-        if (late) {
-            return my.barriers.shift();
-        }
-        let barrier = {
-            consumer: new AsyncDefer<C>(),
-            producer: new AsyncDefer<P>()
-        };
-        my.barriers.push(barrier);
-        return barrier;
-    }
+    my.barriers.push(barrier);
+    return barrier;
+  }
 
 }
 export class BufferedQueue<P> extends AsyncQueue<P, never> {
-    @internal '#': {
-        barriers: AsyncDefer<P>[]
-    };
-    public get done(): Promise<void>{
-        return;
+  @internal '#': {
+    barriers: AsyncDefer<P>[]
+  };
+  public get done(): Promise<void> {
+    return;
+  }
+  public constructor() {
+    super();
+    Object.assign(internal.of(this), {
+      barriers: []
+    })
+  }
+  public enqueue(payload: P): void {
+    const my = internal.of(this);
+    let record = this.barrier(my.barriers.length && !my.barriers[ 0 ].accepted);
+    record.accept(payload);
+  }
+  public dequeue(): Promise<P> {
+    const my = internal.of(this);
+    return this.barrier(my.barriers.length && my.barriers[ 0 ].accepted).promise;
+  }
+  public close(): Promise<void> {
+    return
+  }
+  public error(reason: Error): Promise<void> {
+    return
+  }
+  private barrier(late: boolean) {
+    const my = internal.of(this);
+    if (late) {
+      return my.barriers.shift();
     }
-    public constructor() {
-        super();
-        Object.assign(internal.of(this), {
-            barriers: []
-        })
-    }
-    public enqueue(payload: P): void {
-        const my = internal.of(this);
-        let record = this.barrier(my.barriers.length && !my.barriers[0].accepted);
-        record.accept(payload);
-    }
-    public dequeue(): Promise<P> {
-        const my = internal.of(this);
-        return this.barrier(my.barriers.length && my.barriers[0].accepted).promise;
-    }
-    public close(): Promise<void> {
-        return
-    }
-    public error(reason: Error): Promise<void> {
-        return
-    }
-    private barrier(late: boolean) {
-        const my = internal.of(this);
-        if (late) {
-            return my.barriers.shift();
-        }
-        const barrier = new AsyncDefer<P>();
-        my.barriers.push(barrier);
-        return barrier;
-    }
+    const barrier = new AsyncDefer<P>();
+    my.barriers.push(barrier);
+    return barrier;
+  }
 }
 
 // class AsyncResult<T> implements IteratorResult<T>{

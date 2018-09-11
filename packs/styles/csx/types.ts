@@ -14,6 +14,7 @@ import {
   Globals
 } from '@barlus/css';
 
+
 export interface StringType<T extends string> {
   toString(): T;
 }
@@ -22,7 +23,7 @@ export type CSSAngle = WidthProperty<string | number>;
 export type CSSLength = WidthProperty<string | number>;
 
 export type CSSPercentage = WidthProperty<string | number>;
-export type CsxColorStop = [string | StringType<string>, CSSPercentage | CSSLength];
+export type CsxColorStop = [ string | StringType<string>, CSSPercentage | CSSLength ];
 export type CSSTransformFunction = string;
 export type CSSLineStyle = BorderBlockStartStyleProperty;
 
@@ -59,7 +60,7 @@ export interface BoxFunction<T> {
 export interface List<T> {
   length: number;
 
-  [index: number]: T;
+  [ index: number ]: T;
 }
 export type NamedColor
   = 'aliceblue'

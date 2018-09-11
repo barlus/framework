@@ -7,6 +7,7 @@ import {BorderStyleProperty} from '@barlus/css';
 import {BorderWidthProperty} from '@barlus/css';
 import {list}                from './lists';
 
+
 /**
  * Returns the value with '' around it.  Any 's will be escaped \' in the output
  */

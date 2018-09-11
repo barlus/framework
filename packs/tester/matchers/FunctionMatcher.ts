@@ -1,153 +1,154 @@
 import {ErrorMatchError, FunctionCallMatchError} from "../errors";
-import {Any, FunctionSpy, TypeMatcher} from "../spying";
-import {FunctionSpyMatcher} from "./FunctionSpyMatcher";
-import {Matcher} from "./Matcher";
+import {Any, FunctionSpy, TypeMatcher}           from "../spying";
+import {FunctionSpyMatcher}                      from "./FunctionSpyMatcher";
+import {Matcher}                                 from "./Matcher";
+
 
 /**
  * Checks whether functions have performed as expected
  */
 export class FunctionMatcher extends Matcher<FunctionSpy | any> {
 
-    /**
-     * Checks that a function throws an error when executed
-     */
-    public toThrow() {
+  /**
+   * Checks that a function throws an error when executed
+   */
+  public toThrow() {
 
-        if (this.actualValue instanceof Function === false) {
-            throw new TypeError("toThrow requires value passed in to Expect to be a function.");
-        }
-
-        let errorThrown: Error | null = null;
-
-        try {
-            this.actualValue();
-        } catch (error) {
-            errorThrown = error;
-        }
-
-        if (errorThrown === null === this.shouldMatch) {
-            throw new ErrorMatchError(errorThrown, this.shouldMatch);
-        }
+    if (this.actualValue instanceof Function === false) {
+      throw new TypeError("toThrow requires value passed in to Expect to be a function.");
     }
 
-    public async toThrowAsync() {
+    let errorThrown: Error | null = null;
 
-        if (this.actualValue instanceof Function === false) {
-            throw new TypeError("toThrowAsync requires value passed in to Expect to be a function.");
-        }
-
-        let errorThrown: Error | null = null;
-
-        try {
-            await this.actualValue();
-        } catch (error) {
-            errorThrown = error;
-        }
-
-        if (errorThrown === null === this.shouldMatch) {
-            throw new ErrorMatchError(errorThrown, this.shouldMatch);
-        }
+    try {
+      this.actualValue();
+    } catch (error) {
+      errorThrown = error;
     }
 
-    /**
-     * Checks that a function throws a specific error
-     * @param errorType - the type of error that should be thrown
-     * @param errorMessage - the message that the error should have
-     */
-    public toThrowError(errorType: new (...args: any[]) => Error, errorMessage: string) {
+    if (errorThrown === null === this.shouldMatch) {
+      throw new ErrorMatchError(errorThrown, this.shouldMatch);
+    }
+  }
 
-        if (this.actualValue instanceof Function === false) {
-            throw new TypeError("toThrowError requires value passed in to Expect to be a function.");
-        }
+  public async toThrowAsync() {
 
-        let threwRightError = false;
-        let actualError: Error | null = null;
-
-        try {
-            this.actualValue();
-        } catch (error) {
-            actualError = error;
-
-            if (error instanceof errorType && error.message === errorMessage) {
-                threwRightError = true;
-            }
-        }
-
-        if (threwRightError !== this.shouldMatch) {
-            throw new ErrorMatchError(actualError, this.shouldMatch, errorType, errorMessage);
-        }
+    if (this.actualValue instanceof Function === false) {
+      throw new TypeError("toThrowAsync requires value passed in to Expect to be a function.");
     }
 
-    /**
-     * Checks that a function throws a specific error asynchronously
-     * @param errorType - the type of error that should be thrown
-     * @param errorMessage - the message that the error should have
-     */
-    public async toThrowErrorAsync(errorType: new (...args: any[]) => Error, errorMessage: string) {
+    let errorThrown: Error | null = null;
 
-        if (this.actualValue instanceof Function === false) {
-            throw new TypeError("toThrowErrorAsync requires value passed to Expect to be a function.");
-        }
-
-        let threwRightError = false;
-        let actualError: Error | null = null;
-
-        try {
-            await this.actualValue();
-        } catch (error) {
-            actualError = error;
-
-            if (error instanceof errorType && error.message === errorMessage) {
-                threwRightError = true;
-            }
-        }
-
-        if (threwRightError !== this.shouldMatch) {
-            throw new ErrorMatchError(actualError, this.shouldMatch, errorType, errorMessage);
-        }
+    try {
+      await this.actualValue();
+    } catch (error) {
+      errorThrown = error;
     }
 
-    /**
-     * Checks that a spy has been called
-     */
-    public toHaveBeenCalled(): FunctionSpyMatcher {
-        if (_isFunctionSpyOrSpiedOnFunction(this.actualValue) === false) {
-            throw new TypeError("toHaveBeenCalled requires value passed in to Expect to be a FunctionSpy or a spied on function.");
-        }
+    if (errorThrown === null === this.shouldMatch) {
+      throw new ErrorMatchError(errorThrown, this.shouldMatch);
+    }
+  }
 
-        if (this.actualValue.calls.length === 0 === this.shouldMatch) {
-            throw new FunctionCallMatchError(this.actualValue, this.shouldMatch);
-        }
+  /**
+   * Checks that a function throws a specific error
+   * @param errorType - the type of error that should be thrown
+   * @param errorMessage - the message that the error should have
+   */
+  public toThrowError(errorType: new (...args: any[]) => Error, errorMessage: string) {
 
-        return new FunctionSpyMatcher(this.actualValue);
+    if (this.actualValue instanceof Function === false) {
+      throw new TypeError("toThrowError requires value passed in to Expect to be a function.");
     }
 
-    /**
-     * Checks that a spy has been called with the specified arguments
-     * @param expectedArguments - a list of arguments that the spy should have been called with
-     */
-    public toHaveBeenCalledWith(...expectedArguments: any[]): FunctionSpyMatcher {
-        if (_isFunctionSpyOrSpiedOnFunction(this.actualValue) === false) {
-            throw new TypeError("toHaveBeenCalledWith requires value passed in to Expect to be a FunctionSpy or a spied on function.");
-        }
+    let threwRightError = false;
+    let actualError: Error | null = null;
 
-        if (this.actualValue.calls.filter((call: any) => {
-                return call.args.length === expectedArguments.length && // the call has the same amount of arguments
-                    call.args.filter((arg: any, index: number) => {
-                        const expectedArgument = expectedArguments[index];
-                        return arg === expectedArgument ||
-                            expectedArgument === Any ||
-                            (expectedArgument instanceof TypeMatcher && expectedArgument.test(arg));
-                    }).length === expectedArguments.length; // and all call arguments match expected arguments
-            }).length === 0 === this.shouldMatch) {
-            throw new FunctionCallMatchError(this.actualValue, this.shouldMatch, expectedArguments);
-        }
+    try {
+      this.actualValue();
+    } catch (error) {
+      actualError = error;
 
-        return new FunctionSpyMatcher(this.actualValue, expectedArguments);
+      if (error instanceof errorType && error.message === errorMessage) {
+        threwRightError = true;
+      }
     }
+
+    if (threwRightError !== this.shouldMatch) {
+      throw new ErrorMatchError(actualError, this.shouldMatch, errorType, errorMessage);
+    }
+  }
+
+  /**
+   * Checks that a function throws a specific error asynchronously
+   * @param errorType - the type of error that should be thrown
+   * @param errorMessage - the message that the error should have
+   */
+  public async toThrowErrorAsync(errorType: new (...args: any[]) => Error, errorMessage: string) {
+
+    if (this.actualValue instanceof Function === false) {
+      throw new TypeError("toThrowErrorAsync requires value passed to Expect to be a function.");
+    }
+
+    let threwRightError = false;
+    let actualError: Error | null = null;
+
+    try {
+      await this.actualValue();
+    } catch (error) {
+      actualError = error;
+
+      if (error instanceof errorType && error.message === errorMessage) {
+        threwRightError = true;
+      }
+    }
+
+    if (threwRightError !== this.shouldMatch) {
+      throw new ErrorMatchError(actualError, this.shouldMatch, errorType, errorMessage);
+    }
+  }
+
+  /**
+   * Checks that a spy has been called
+   */
+  public toHaveBeenCalled(): FunctionSpyMatcher {
+    if (_isFunctionSpyOrSpiedOnFunction(this.actualValue) === false) {
+      throw new TypeError("toHaveBeenCalled requires value passed in to Expect to be a FunctionSpy or a spied on function.");
+    }
+
+    if (this.actualValue.calls.length === 0 === this.shouldMatch) {
+      throw new FunctionCallMatchError(this.actualValue, this.shouldMatch);
+    }
+
+    return new FunctionSpyMatcher(this.actualValue);
+  }
+
+  /**
+   * Checks that a spy has been called with the specified arguments
+   * @param expectedArguments - a list of arguments that the spy should have been called with
+   */
+  public toHaveBeenCalledWith(...expectedArguments: any[]): FunctionSpyMatcher {
+    if (_isFunctionSpyOrSpiedOnFunction(this.actualValue) === false) {
+      throw new TypeError("toHaveBeenCalledWith requires value passed in to Expect to be a FunctionSpy or a spied on function.");
+    }
+
+    if (this.actualValue.calls.filter((call: any) => {
+      return call.args.length === expectedArguments.length && // the call has the same amount of arguments
+        call.args.filter((arg: any, index: number) => {
+          const expectedArgument = expectedArguments[ index ];
+          return arg === expectedArgument ||
+            expectedArgument === Any ||
+            (expectedArgument instanceof TypeMatcher && expectedArgument.test(arg));
+        }).length === expectedArguments.length; // and all call arguments match expected arguments
+    }).length === 0 === this.shouldMatch) {
+      throw new FunctionCallMatchError(this.actualValue, this.shouldMatch, expectedArguments);
+    }
+
+    return new FunctionSpyMatcher(this.actualValue, expectedArguments);
+  }
 
 }
 
 function _isFunctionSpyOrSpiedOnFunction(value: any) {
-    return value instanceof FunctionSpy || (value instanceof Function && value.calls !== undefined);
+  return value instanceof FunctionSpy || (value instanceof Function && value.calls !== undefined);
 }

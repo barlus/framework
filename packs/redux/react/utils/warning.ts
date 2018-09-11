@@ -16,6 +16,7 @@ export function warning(message) {
     // it would pause the execution at this line.
     throw new Error(message)
     /* eslint-disable no-empty */
-  } catch (e) {}
+  } catch (e) {
+  }
   /* eslint-enable no-empty */
 }

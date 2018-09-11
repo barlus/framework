@@ -2,6 +2,7 @@ import * as React from "@barlus/react";
 import {Theme}    from './theme';
 import {classes}  from '../utils/classes';
 
+
 export class Tile extends React.PureComponent<TileProps, {}> {
   render() {
     const {
@@ -11,7 +12,7 @@ export class Tile extends React.PureComponent<TileProps, {}> {
       children,
       ...otherProps
     } = this.props;
-    return <div {...otherProps} className={classes(Theme.tile, { [Theme.tileCentered]: centered }, className)}>
+    return <div {...otherProps} className={classes(Theme.tile, { [ Theme.tileCentered ]: centered }, className)}>
       {children}
     </div>
   }

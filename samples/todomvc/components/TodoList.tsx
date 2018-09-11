@@ -1,8 +1,8 @@
-import * as React           from '@barlus/react'
-import {connected}          from '@barlus/redux';
-import {Actions}            from '../actions/index'
-import {getVisibleTodos}    from '../selectors/index'
-import {TodoItem}           from './TodoItem'
+import * as React        from '@barlus/react'
+import {connected}       from '@barlus/redux';
+import {Actions}         from '../actions/index'
+import {getVisibleTodos} from '../selectors/index'
+import {TodoItem}        from './TodoItem'
 
 
 @connected
@@ -21,7 +21,7 @@ export class TodoList extends React.PureComponent<TodoListProps> {
     const { filteredTodos } = this.store;
     return <ul className="todo-list">
       {filteredTodos.map(todo =>
-        <TodoItem key={todo.id} todo={todo} />
+        <TodoItem key={todo.id} todo={todo}/>
       )}
     </ul>
   }

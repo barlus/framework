@@ -1,10 +1,10 @@
 {
-    "compilerOptions": {
-        "module": "commonjs",
-        "target": "esnext",
-        "noEmit": true,
-        "jsx": "react",
-        "experimentalDecorators": true,
-        "emitDecoratorMetadata": true
-    }
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "esnext",
+    "noEmit": true,
+    "jsx": "react",
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true
+  }
 }

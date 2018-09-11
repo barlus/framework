@@ -1,7 +1,8 @@
-import * as React       from "@barlus/react";
-import {Theme}          from './theme';
-import {classes}        from '../utils/classes';
-import {AvatarIcon}     from "./AvatarIcon";
+import * as React   from "@barlus/react";
+import {Theme}      from './theme';
+import {classes}    from '../utils/classes';
+import {AvatarIcon} from "./AvatarIcon";
+
 
 export class Avatar extends React.PureComponent<AvatarProps, {}> {
   render() {
@@ -14,10 +15,10 @@ export class Avatar extends React.PureComponent<AvatarProps, {}> {
     } = this.props;
     return <figure {...otherProps} data-initial={initial} className={
       classes(Theme.avatar, {
-        [Theme.avatarXl]: xl,
-        [Theme.avatarLg]: lg,
-        [Theme.avatarSm]: sm,
-        [Theme.avatarXs]: xs,
+        [ Theme.avatarXl ]: xl,
+        [ Theme.avatarLg ]: lg,
+        [ Theme.avatarSm ]: sm,
+        [ Theme.avatarXs ]: xs,
       }, className)
     }>
       {children}

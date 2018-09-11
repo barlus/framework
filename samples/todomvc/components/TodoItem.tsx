@@ -1,16 +1,17 @@
-import * as React      from '@barlus/react'
-import {connected}     from '@barlus/redux';
+import * as React  from '@barlus/react'
+import {connected} from '@barlus/redux';
 
 import {Actions}       from '../actions/index';
 import {Todo}          from '../state/State';
 import {classes}       from '../utils/classes'
 import {TodoTextInput} from './TodoTextInput'
 
+
 @connected
-export class TodoItem extends React.PureComponent<{ todo:Todo }> {
+export class TodoItem extends React.PureComponent<{ todo: Todo }> {
 
   @connected
-  get actions(){
+  get actions() {
     return connected.actions(Actions)
   }
 

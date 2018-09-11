@@ -1,11 +1,12 @@
 import * as React from "@barlus/react";
-import {Theme}   from './theme';
-import {classes} from '../utils/classes';
+import {Theme}    from './theme';
+import {classes}  from '../utils/classes';
+
 
 export class Column extends React.PureComponent<ColumnProps, {}> {
   private static getColumnClasses(componentProps) {
     const { all, offset, hide, show } = componentProps;
-    const colSizes = ['xs', 'sm', 'md', 'lg', 'xl'];
+    const colSizes = [ 'xs', 'sm', 'md', 'lg', 'xl' ];
     const classesNames = [];
     const colPrefix = 'col';
     if (all) {
@@ -13,10 +14,10 @@ export class Column extends React.PureComponent<ColumnProps, {}> {
     } else {
       classesNames.push(
         colSizes.reduce((sizes, size) => {
-          if (!componentProps[size]) {
+          if (!componentProps[ size ]) {
             return sizes
           }
-          return classes(sizes, `${colPrefix}-${size}-${componentProps[size]}`)
+          return classes(sizes, `${colPrefix}-${size}-${componentProps[ size ]}`)
         }, '')
       )
     }

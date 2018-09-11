@@ -2,6 +2,7 @@ import * as React from "@barlus/react";
 import {Theme}    from './theme';
 import {classes}  from '../utils/classes';
 
+
 export class CardTitle extends React.PureComponent<CardTitleProps, {}> {
   render() {
     const {
@@ -12,12 +13,12 @@ export class CardTitle extends React.PureComponent<CardTitleProps, {}> {
       ...otherProps
     } = this.props;
     return (<div {...otherProps} className={classes(Theme.cardTitle, {
-      [Theme.h1]: h1,
-      [Theme.h2]: h2,
-      [Theme.h3]: h3,
-      [Theme.h4]: h4,
-      [Theme.h5]: h5,
-      [Theme.h6]: h6
+      [ Theme.h1 ]: h1,
+      [ Theme.h2 ]: h2,
+      [ Theme.h3 ]: h3,
+      [ Theme.h4 ]: h4,
+      [ Theme.h5 ]: h5,
+      [ Theme.h6 ]: h6
     }, className)}>
       {children}
     </div>)

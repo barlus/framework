@@ -4,6 +4,7 @@ import {classes}              from '../utils/classes';
 import {FormGroup}            from "./FormGroup";
 import {SelectHTMLAttributes} from "../../react/types";
 
+
 export class Select extends React.PureComponent<SelectProps, {}> {
   render() {
     const {
@@ -23,10 +24,10 @@ export class Select extends React.PureComponent<SelectProps, {}> {
     const inputProps = { id, ...otherProps };
     const selectComp = (<select {...inputProps} className={
       classes(Theme.formSelect, {
-        [Theme.isSuccess]: success,
-        [Theme.isError]: error,
-        [Theme.selectSm]: small,
-        [Theme.selectLg]: large,
+        [ Theme.isSuccess ]: success,
+        [ Theme.isError ]: error,
+        [ Theme.selectSm ]: small,
+        [ Theme.selectLg ]: large,
       }, className)}>
       {children}
     </select>);
@@ -36,7 +37,7 @@ export class Select extends React.PureComponent<SelectProps, {}> {
   }
 }
 
-export interface SelectProps extends React.SelectHTMLAttributes<HTMLSelectElement>{
+export interface SelectProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
   success?: boolean
   error?: boolean
   label?: string,

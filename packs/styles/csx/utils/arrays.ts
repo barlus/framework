@@ -1,5 +1,6 @@
 import {List} from '../types';
 
+
 export const filter = <T>(args: List<T>, condition: (item: T) => boolean): T[] => {
   return Array.prototype.filter.call(args, condition);
 };

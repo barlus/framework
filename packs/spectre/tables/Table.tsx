@@ -2,6 +2,7 @@ import * as React from "@barlus/react";
 import {Theme}    from './theme';
 import {classes}  from '../utils/classes';
 
+
 export class Table extends React.PureComponent<TableProps, {}> {
   render() {
     const {
@@ -16,9 +17,9 @@ export class Table extends React.PureComponent<TableProps, {}> {
 
     return <table {...otherProps} className={
       classes(Theme.table, {
-        [Theme.tableStriped]: striped,
-        [Theme.tableScroll]: scroll,
-        [Theme.tableHover]: hover,
+        [ Theme.tableStriped ]: striped,
+        [ Theme.tableScroll ]: scroll,
+        [ Theme.tableHover ]: hover,
       }, className)
     }>{children}</table>
   }

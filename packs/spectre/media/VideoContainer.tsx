@@ -2,6 +2,7 @@ import * as React from "@barlus/react";
 import {Theme}    from './theme';
 import {classes}  from '../utils/classes';
 
+
 export class VideoContainer extends React.PureComponent<VideoContainerProps, {}> {
   render() {
     const {
@@ -13,11 +14,11 @@ export class VideoContainer extends React.PureComponent<VideoContainerProps, {}>
     } = this.props;
     return <div {...otherProps} className={
       classes({
-        [Theme.videoResponsive]: responsive,
-        [Theme.videoResponsive11]: responsive == '1:1',
-        [Theme.videoResponsive43]: responsive == '4:3',
-        [Theme.imgFitContain]: contain,
-        [Theme.imgFitCover]: cover,
+        [ Theme.videoResponsive ]: responsive,
+        [ Theme.videoResponsive11 ]: responsive == '1:1',
+        [ Theme.videoResponsive43 ]: responsive == '4:3',
+        [ Theme.imgFitContain ]: contain,
+        [ Theme.imgFitCover ]: cover,
       }, className)
     }>{children}/></div>
   }

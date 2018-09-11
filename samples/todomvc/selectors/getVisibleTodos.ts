@@ -7,7 +7,7 @@ import {getVisibilityFilter} from './getVisibilityFilter';
 
 export const getVisibleTodos: (state: State) => Todo[] = createSelector(
   [ getVisibilityFilter, getTodos ],
-  (visibilityFilter:Show, todos:Todo[]) => {
+  (visibilityFilter: Show, todos: Todo[]) => {
     switch (visibilityFilter) {
       case Show.ALL:
         return todos;

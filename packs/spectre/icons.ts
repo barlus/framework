@@ -1,4 +1,6 @@
-import { cssRule, fontFace } from '@barlus/styles';
+import {cssRule, fontFace} from '@barlus/styles';
+
+
 cssRule('.icon', {
   "boxSizing": "border-box",
   "display": "inline-block",

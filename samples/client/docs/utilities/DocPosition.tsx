@@ -1,18 +1,19 @@
-import * as React from "@barlus/react"
-import { Code } from "../../comps/Code";
-import { DocNote, DocPage, DocSection } from "../../comps/DocPage";
+import * as React                     from "@barlus/react"
+import {Code}                         from "../../comps/Code";
+import {DocNote, DocPage, DocSection} from "../../comps/DocPage";
+
 
 export class DocPosition extends DocPage {
-    static title = 'Position';
-    render() {
-        return <DocSection id={this.id} title={this.title}>
-            <DocNote>
-                Position utilities are used for useful layout and position things, including clearfix, float,
-                position and margin/padding utilities.
-            </DocNote>
-            <Code className="HTML">{E1}</Code>
-        </DocSection>
-    }
+  static title = 'Position';
+  render() {
+    return <DocSection id={this.id} title={this.title}>
+      <DocNote>
+        Position utilities are used for useful layout and position things, including clearfix, float,
+        position and margin/padding utilities.
+      </DocNote>
+      <Code className="HTML">{E1}</Code>
+    </DocSection>
+  }
 }
 
 const E1 = `<!-- clear float -->

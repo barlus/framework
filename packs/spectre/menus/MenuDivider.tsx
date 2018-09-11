@@ -3,6 +3,7 @@ import {Theme}            from './theme';
 import {classes}          from '../utils/classes';
 import {LiHTMLAttributes} from "../../react/types";
 
+
 export class MenuDivider extends React.PureComponent<MenuDividerProps, {}> {
   render() {
     const {

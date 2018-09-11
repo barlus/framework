@@ -1,8 +1,9 @@
 import * as React from '@barlus/react'
-import { Theme } from '../styles/TodoEntry';
-import { classes } from '../utils/classes'
+import {Theme}    from '../styles/TodoEntry';
+import {classes}  from '../utils/classes'
 
-export class TodoTextInput extends React.Component<{onSave?,newTodo?,editing?,placeholder?,text?}> {
+
+export class TodoTextInput extends React.Component<{ onSave?, newTodo?, editing?, placeholder?, text? }> {
 
   state = {
     text: this.props.text || ''
@@ -33,15 +34,15 @@ export class TodoTextInput extends React.Component<{onSave?,newTodo?,editing?,pl
       <input className={
         classes({
           edit: this.props.editing,
-          [Theme.TodoEntry]: this.props.newTodo
+          [ Theme.TodoEntry ]: this.props.newTodo
         })}
-        type="text"
-        placeholder={this.props.placeholder}
-        autoFocus={true}
-        value={this.state.text}
-        onBlur={this.handleBlur}
-        onChange={this.handleChange}
-        onKeyDown={this.handleSubmit} />
+             type="text"
+             placeholder={this.props.placeholder}
+             autoFocus={true}
+             value={this.state.text}
+             onBlur={this.handleBlur}
+             onChange={this.handleChange}
+             onKeyDown={this.handleSubmit}/>
     )
   }
 }

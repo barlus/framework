@@ -3,6 +3,7 @@ import {Theme}                                         from './theme';
 import {classes}                                       from '../utils/classes';
 import {Badge, Button, Navbar, NavbarSection, Tooltip} from "../index";
 
+
 export class Calendar extends React.PureComponent<CalendarProps, CalendarState> {
   static defaultProps = {
     activeDate: new Date(),
@@ -16,7 +17,7 @@ export class Calendar extends React.PureComponent<CalendarProps, CalendarState> 
     "July", "August", "September", "October", "November", "December"
   ];
 
-  static weekdayNames = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+  static weekdayNames = [ "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun" ];
 
   constructor(props?: CalendarProps, context?: any) {
     super(props, context);
@@ -25,7 +26,6 @@ export class Calendar extends React.PureComponent<CalendarProps, CalendarState> 
       selected: props.selected
     };
   };
-
 
   componentWillReceiveProps(nextProps: CalendarProps) {
 
@@ -56,9 +56,8 @@ export class Calendar extends React.PureComponent<CalendarProps, CalendarState> 
     return new Date(activeDate.getFullYear(), activeDate.getMonth() - 1, activeDate.getDate());
   };
 
-
   get activeMonth() {
-    return Calendar.monthNames[this.state.activeDate.getMonth()]
+    return Calendar.monthNames[ this.state.activeDate.getMonth() ]
   };
 
   get activeYear() {
@@ -224,12 +223,12 @@ export class Calendar extends React.PureComponent<CalendarProps, CalendarState> 
     const range = this.props.range;
     if (range) {
       const selected = this.state.selected;
-      if (!selected || !selected['start']) {
+      if (!selected || !selected[ 'start' ]) {
         this.setState({ selected: { start: date } });
       } else {
-        if (!selected['end']) {
+        if (!selected[ 'end' ]) {
 
-          let start: Date = selected['start'];
+          let start: Date = selected[ 'start' ];
           let end: Date = date;
           let s = { start, end };
           if (this.greaterThan(start, start.getDate(), end, false)) {
@@ -284,8 +283,8 @@ export class Calendar extends React.PureComponent<CalendarProps, CalendarState> 
           {this.previousMonthDays.map((day, index) => (<div key={index}
                                                             className={classes(Theme.calendarDate, Theme.prevMonth, Theme.disabled, range && this.rangeClasses(Calendar.previousMonthDate(this.state.activeDate), day))}>
             <Button className={classes(Theme.dateItem, {
-              [Theme.dateToday]: this.isToday(Calendar.previousMonthDate(this.state.activeDate), day),
-              [Theme.active]: this.isSelectedDay(Calendar.previousMonthDate(this.state.activeDate), day)
+              [ Theme.dateToday ]: this.isToday(Calendar.previousMonthDate(this.state.activeDate), day),
+              [ Theme.active ]: this.isSelectedDay(Calendar.previousMonthDate(this.state.activeDate), day)
             })}>
               {day.toString()}
             </Button>
@@ -299,9 +298,9 @@ export class Calendar extends React.PureComponent<CalendarProps, CalendarState> 
               <Button onClick={() => {
                 this.onDayClick(day)
               }} data-badge="" className={classes(Theme.dateItem, tooltipLabel && "badge", {
-                [Theme.dateToday]: this.isToday(this.state.activeDate, day),
-                [Theme.active]: this.isSelectedDay(this.state.activeDate, day),
-                [Theme.disabled]: this.isDisabledDay(this.state.activeDate, day)
+                [ Theme.dateToday ]: this.isToday(this.state.activeDate, day),
+                [ Theme.active ]: this.isSelectedDay(this.state.activeDate, day),
+                [ Theme.disabled ]: this.isDisabledDay(this.state.activeDate, day)
               })}>
                 {day.toString()}
               </Button>
@@ -320,8 +319,8 @@ export class Calendar extends React.PureComponent<CalendarProps, CalendarState> 
           {this.nextMonthDays.map((day, index) => (<div key={index}
                                                         className={classes(Theme.calendarDate, Theme.nextMonth, Theme.disabled, range && this.rangeClasses(Calendar.nextMonthDate(this.state.activeDate), day))}>
             <Button className={classes(Theme.dateItem, {
-              [Theme.dateToday]: this.isToday(Calendar.nextMonthDate(this.state.activeDate), day),
-              [Theme.active]: this.isSelectedDay(Calendar.nextMonthDate(this.state.activeDate), day)
+              [ Theme.dateToday ]: this.isToday(Calendar.nextMonthDate(this.state.activeDate), day),
+              [ Theme.active ]: this.isSelectedDay(Calendar.nextMonthDate(this.state.activeDate), day)
             })}>
               {day.toString()}
             </Button>

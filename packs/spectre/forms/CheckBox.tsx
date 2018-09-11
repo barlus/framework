@@ -5,6 +5,7 @@ import {FormGroup}           from "./FormGroup";
 import {Label}               from "./Label";
 import {InputHTMLAttributes} from "../../react/types";
 
+
 export class CheckBox extends React.Component<CheckBoxProps, {}> {
   render() {
     const {
@@ -22,10 +23,10 @@ export class CheckBox extends React.Component<CheckBoxProps, {}> {
 
     return <Label className={
       classes(Theme.formCheckbox, {
-        [Theme.inputLg]: large,
-        [Theme.inputSm]: small,
-        [Theme.isSuccess]: success,
-        [Theme.isError]: error,
+        [ Theme.inputLg ]: large,
+        [ Theme.inputSm ]: small,
+        [ Theme.isSuccess ]: success,
+        [ Theme.isError ]: error,
       }, className)
     }>
       <input {...otherProps} type="checkbox"/>

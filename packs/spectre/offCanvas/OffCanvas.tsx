@@ -3,6 +3,7 @@ import {Theme}            from './theme';
 import {classes}          from '../utils/classes';
 import {OffCanvasOverlay} from "./OffCanvasOverlay";
 
+
 export class OffCanvas extends React.PureComponent<OffCanvasProps, { active: boolean }> {
 
   static defaultProps = {
@@ -40,8 +41,8 @@ export class OffCanvas extends React.PureComponent<OffCanvasProps, { active: boo
     } = this.props;
     return (
       <div {...otherProps} className={classes(Theme.offCanvas, {
-        [Theme.offCanvasSidebarShow]: showOnLarge,
-        [Theme.active]: this.state.active
+        [ Theme.offCanvasSidebarShow ]: showOnLarge,
+        [ Theme.active ]: this.state.active
       }, className)}>
         {children}
         <OffCanvasOverlay onClick={this.onClose}/>

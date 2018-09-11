@@ -1,4 +1,5 @@
-import { wrapMapToPropsConstant, wrapMapToPropsFunc } from './wrapMapToProps'
+import {wrapMapToPropsConstant, wrapMapToPropsFunc} from './wrapMapToProps'
+
 
 export function whenMapStateToPropsIsFunction(mapStateToProps) {
   return (typeof mapStateToProps === 'function')

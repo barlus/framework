@@ -3,6 +3,7 @@ import {Theme}          from './theme';
 import {classes}        from '../utils/classes';
 import {HTMLAttributes} from "../../react/types";
 
+
 export class EmptySubtitle extends React.PureComponent<EmptySubtitleProps, {}> {
   render() {
     const {

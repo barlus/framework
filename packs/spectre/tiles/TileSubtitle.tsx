@@ -2,6 +2,7 @@ import * as React from "@barlus/react";
 import {Theme}    from './theme';
 import {classes}  from '../utils/classes';
 
+
 export class TileSubtitle extends React.PureComponent<TileSubtitleProps, {}> {
   render() {
     const {

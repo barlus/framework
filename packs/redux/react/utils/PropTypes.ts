@@ -1,5 +1,6 @@
 import {PropTypes} from '@barlus/react'
 
+
 export const subscriptionShape = PropTypes.shape({
   trySubscribe: PropTypes.func.isRequired,
   tryUnsubscribe: PropTypes.func.isRequired,

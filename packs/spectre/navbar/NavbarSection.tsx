@@ -3,6 +3,7 @@ import {Theme}          from './theme';
 import {classes}        from '../utils/classes';
 import {HTMLAttributes} from "../../react/types";
 
+
 export class NavbarSection extends React.PureComponent<NavbarSectionProps, {}> {
   render() {
     const {
@@ -13,8 +14,8 @@ export class NavbarSection extends React.PureComponent<NavbarSectionProps, {}> {
     } = this.props;
 
     return <section {...otherProps} className={classes({
-      [Theme.navbarSection]: !center,
-      [Theme.navbarCenter]: center
+      [ Theme.navbarSection ]: !center,
+      [ Theme.navbarCenter ]: center
     }, className)}>
       {children}
     </section>

@@ -2,6 +2,7 @@ import * as React from "@barlus/react";
 import {Theme}    from './theme';
 import {classes}  from '../utils/classes';
 
+
 export class ButtonGroup extends React.PureComponent<GroupProps, {}> {
   static defaultProps = {
     className: '' as string,
@@ -13,7 +14,7 @@ export class ButtonGroup extends React.PureComponent<GroupProps, {}> {
     return (
       <div {...otherProps} className={
         classes(Theme.ButtonGroup, {
-          [Theme.block]: block
+          [ Theme.block ]: block
         }, className)
       }>{children}</div>
     )

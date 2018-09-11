@@ -1,5 +1,6 @@
 import * as React from "@barlus/react";
 
+
 export class TableCell extends React.PureComponent<TableCellProps, {}> {
   render() {
     const {

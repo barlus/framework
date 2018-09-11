@@ -1,5 +1,6 @@
 import {List} from '../types';
 
+
 const functionExpression = /[\s]*([a-z-]+)[\s]*\([\s]*([^\)]+)[\s]*\)[\s]*/i;
 const floatExpression = /^(\-?\d+\.?\d{0,5})/;
 
@@ -25,7 +26,7 @@ export function formatPercent(value: number): string {
  * Returns a number formatted to a max number of 5 decimal places
  */
 export function formatFloat(n: number) {
-  return floatExpression.exec(n.toString())![1]
+  return floatExpression.exec(n.toString())![ 1 ]
 }
 
 export function ensureLength(value: number | string | undefined): string | undefined {
@@ -47,7 +48,7 @@ export function parseCSSFunction(stringValue: string): string[] | undefined {
   if (!matches || !matches.length) {
     return undefined;
   }
-  return [matches[1]].concat(matches[2].split(','));
+  return [ matches[ 1 ] ].concat(matches[ 2 ].split(','));
 }
 
 export function cssFunction(functionName: string, params: List<string | number>): string {

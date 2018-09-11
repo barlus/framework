@@ -1,16 +1,16 @@
-import {connectAdvanced}                                                            from '../components/connectAdvanced'
+import {connectAdvanced}                    from '../components/connectAdvanced'
 import {
   DispatchProp,
   InferableComponentEnhancer,
   InferableComponentEnhancerWithProps,
   MapDispatchToPropsParam, MapStateToPropsParam, MergeProps,
   Options
-} from '../types';
-import {shallowEqual}                                                               from '../utils/shallowEqual'
-import {defaultMapDispatchToPropsFactories}                                         from './mapDispatchToProps'
-import {defaultMapStateToPropsFactories}                                            from './mapStateToProps'
-import {defaultMergePropsFactories}                                                 from './mergeProps'
-import {defaultSelectorFactory}                                                     from './selectorFactory'
+}                                           from '../types';
+import {shallowEqual}                       from '../utils/shallowEqual'
+import {defaultMapDispatchToPropsFactories} from './mapDispatchToProps'
+import {defaultMapStateToPropsFactories}    from './mapStateToProps'
+import {defaultMergePropsFactories}         from './mergeProps'
+import {defaultSelectorFactory}             from './selectorFactory'
 
 /*
   connect is a facade over connectAdvanced. It turns its args into a compatible
@@ -49,13 +49,13 @@ function strictEqual(a, b) {
 // createConnect with default args builds the 'official' connect behavior. Calling it with
 // different options opens up some testing and extensibility scenarios
 export function createConnect({
-  connectHOC = connectAdvanced,
-  mapStateToPropsFactories = defaultMapStateToPropsFactories,
-  mapDispatchToPropsFactories = defaultMapDispatchToPropsFactories,
-  mergePropsFactories = defaultMergePropsFactories,
-  selectorFactory = defaultSelectorFactory,
-} = {}):Connect {
-  return function connect(mapStateToProps,mapDispatchToProps?,mergeProps?,options = {} as any) {
+                                connectHOC = connectAdvanced,
+                                mapStateToPropsFactories = defaultMapStateToPropsFactories,
+                                mapDispatchToPropsFactories = defaultMapDispatchToPropsFactories,
+                                mergePropsFactories = defaultMergePropsFactories,
+                                selectorFactory = defaultSelectorFactory,
+                              } = {}): Connect {
+  return function connect(mapStateToProps, mapDispatchToProps?, mergeProps?, options = {} as any) {
     const {
       pure = true,
       areStatesEqual = strictEqual,
@@ -187,4 +187,4 @@ export interface Connect {
  * The connect function. See {@type Connect} for details.
  */
 
-export const connect:Connect = createConnect();
+export const connect: Connect = createConnect();

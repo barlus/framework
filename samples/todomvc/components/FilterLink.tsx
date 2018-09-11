@@ -22,7 +22,7 @@ export class FilterLink extends React.Component<LinkProps> {
 
   @connected
   private get store() {
-    return connected.state((state, ownProps:LinkProps) => {
+    return connected.state((state, ownProps: LinkProps) => {
       return {
         active: ownProps.filter === state.visibilityFilter
       }

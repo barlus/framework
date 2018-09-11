@@ -491,7 +491,7 @@ Component.prototype.isReactComponent = {};
 /**
  * Convenience component with default shallow equality check for sCU.
  */
-export class PureComponent<P=any, S=any> extends Component<P, S> {
+export class PureComponent<P = any, S = any> extends Component<P, S> {
   constructor(props, context, updater?) {
     super(props, context, updater);
   }
@@ -1726,7 +1726,7 @@ export {
   createFactoryWithValidation as createFactory,
 }
 
-export const Fragment:ComponentType = REACT_FRAGMENT_TYPE as any;
+export const Fragment: ComponentType = REACT_FRAGMENT_TYPE as any;
 
 export const React = {
   Timeout: undefined,

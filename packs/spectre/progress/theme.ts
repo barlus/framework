@@ -7,6 +7,7 @@ import {rem}        from "@barlus/styles";
 import {stylesheet} from "@barlus/styles";
 import {appearance} from "../mixins/appearance";
 
+
 export default Theme;
 export const enum Theme {
   progress = 'progress',

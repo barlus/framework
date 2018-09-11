@@ -12,3 +12,4 @@ declare module "path";
 declare module "process";
 declare module "typescript";
 declare module "child_process";
+declare module "zlib";

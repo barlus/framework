@@ -62,7 +62,7 @@ export class DocCards extends DocPage {
     return <DocSection id={this.id} title={this.title}>
       <DocText text='Cards are flexible content containers.'/>
       <DocSample columns={2}>
-        <MyCard theme={{card:style({backgroundColor:'#c8fff7'})}}/>
+        <MyCard theme={{ card: style({ backgroundColor: '#c8fff7' }) }}/>
         <Card>
           <CardHeader>
             <CardTitle h5>Apple</CardTitle>

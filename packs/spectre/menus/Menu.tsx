@@ -2,6 +2,7 @@ import * as React from "@barlus/react";
 import {Theme}    from './theme';
 import {classes}  from '../utils/classes';
 
+
 export class Menu extends React.PureComponent<MenuProps, {}> {
   render() {
     const {

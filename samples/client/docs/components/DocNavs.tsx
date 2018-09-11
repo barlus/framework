@@ -1,45 +1,46 @@
 import * as React from "@barlus/react"
 
-import { DocExample,  DocPage, DocSample, DocSection, DocText } from "../../comps/DocPage";
-import { Nav, NavItem } from "@barlus/spectre";
+import {DocExample, DocPage, DocSample, DocSection, DocText} from "../../comps/DocPage";
+import {Nav, NavItem}                                        from "@barlus/spectre";
+
 
 export class DocNavs extends DocPage {
-    static title = "Navs";
-    static ready = true;
-    render() {
-        return <DocSection id={this.id} title={this.title}>
-            <DocSample columns={2}>
-                <Nav>
-                    <NavItem>
-                        <a href="#nav">Elements</a>
-                    </NavItem>
-                    <NavItem active>
-                        <a href="#nav">Layout</a>
-                        <Nav>
-                            <NavItem>
-                                <a href="#nav">Flexbox grid</a>
-                            </NavItem>
-                            <NavItem>
-                                <a href="#nav">Responsive</a>
-                            </NavItem>
-                            <NavItem>
-                                <a href="#nav">Navbar</a>
-                            </NavItem>
-                        </Nav>
-                    </NavItem>
-                    <NavItem>
-                        <a href="#nav">Components</a>
-                    </NavItem>
-                    <NavItem>
-                        <a href="#nav">Utilities</a>
-                    </NavItem>
-                </Nav>
-            </DocSample>
-            <DocText text={`
+  static title = "Navs";
+  static ready = true;
+  render() {
+    return <DocSection id={this.id} title={this.title}>
+      <DocSample columns={2}>
+        <Nav>
+          <NavItem>
+            <a href="#nav">Elements</a>
+          </NavItem>
+          <NavItem active>
+            <a href="#nav">Layout</a>
+            <Nav>
+              <NavItem>
+                <a href="#nav">Flexbox grid</a>
+              </NavItem>
+              <NavItem>
+                <a href="#nav">Responsive</a>
+              </NavItem>
+              <NavItem>
+                <a href="#nav">Navbar</a>
+              </NavItem>
+            </Nav>
+          </NavItem>
+          <NavItem>
+            <a href="#nav">Components</a>
+          </NavItem>
+          <NavItem>
+            <a href="#nav">Utilities</a>
+          </NavItem>
+        </Nav>
+      </DocSample>
+      <DocText text={`
                 Add a container component ~Nav~. And add child elements with
                 the ~NavItem~. The ~NavItem~ with the ~active~ attribute will be highlighted.
             `}/>
-            <DocExample content={`
+      <DocExample content={`
                 <Nav>
                     <NavItem>
                         <a href="#nav">Elements</a>
@@ -66,8 +67,8 @@ export class DocNavs extends DocPage {
                     </NavItem>
                 </Nav>
             `}/>
-        </DocSection>
-    }
+    </DocSection>
+  }
 }
 
 const E1 = `<ul className="nav">

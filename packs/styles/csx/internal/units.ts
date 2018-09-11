@@ -3,6 +3,7 @@ import {CSSPercentage} from '../types';
 import {CSSAngle}      from '../types';
 import {CSSLength}     from '../types';
 
+
 /**
  * Returns the number with a suffix of %
  */

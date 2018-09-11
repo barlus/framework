@@ -10,14 +10,14 @@ export class HttpQuery extends URLSearchParams {
     return q;
   }
   patch(object: {}) {
-    Object.keys(object).forEach(key=>{
-      const value = object[key];
-      if(Array.isArray(value)){
-        value.forEach(item=>{
-          this.append(key,item);
+    Object.keys(object).forEach(key => {
+      const value = object[ key ];
+      if (Array.isArray(value)) {
+        value.forEach(item => {
+          this.append(key, item);
         })
-      }else{
-        this.set(key,value);
+      } else {
+        this.set(key, value);
       }
     })
   }

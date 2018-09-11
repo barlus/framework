@@ -2,6 +2,7 @@ import * as React from "@barlus/react";
 import {Theme}    from './theme';
 import {classes}  from '../utils/classes';
 
+
 export class Form extends React.PureComponent<FormProps, {}> {
   render() {
     const {
@@ -12,7 +13,7 @@ export class Form extends React.PureComponent<FormProps, {}> {
     } = this.props;
     return <form {...otherProps} className={
       classes({
-        [Theme.formHorizontal]: horizontal,
+        [ Theme.formHorizontal ]: horizontal,
       }, className)
     }>{children}</form>
   }

@@ -1,5 +1,6 @@
-import { bindActionCreators } from '../../core/index'
-import { wrapMapToPropsConstant, wrapMapToPropsFunc } from './wrapMapToProps'
+import {bindActionCreators}                         from '../../core/index'
+import {wrapMapToPropsConstant, wrapMapToPropsFunc} from './wrapMapToProps'
+
 
 export function whenMapDispatchToPropsIsFunction(mapDispatchToProps) {
   return (typeof mapDispatchToProps === 'function')

@@ -1,7 +1,8 @@
-import * as React       from "@barlus/react";
-import {Theme}          from './theme';
-import {classes}        from '../utils/classes';
-import {BarItem}        from "./BarItem";
+import * as React from "@barlus/react";
+import {Theme}    from './theme';
+import {classes}  from '../utils/classes';
+import {BarItem}  from "./BarItem";
+
 
 export class Bar extends React.PureComponent<BarProps, {}> {
   render() {
@@ -15,7 +16,7 @@ export class Bar extends React.PureComponent<BarProps, {}> {
     const childrenCount = React.Children.count(children);
     return <div {...otherProps} className={
       classes(Theme.bar, {
-        [Theme.barSm]: small,
+        [ Theme.barSm ]: small,
       }, className)}>
       {(progress === undefined || childrenCount != 0)
         ? (children)

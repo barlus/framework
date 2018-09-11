@@ -2,6 +2,7 @@ import * as React from "@barlus/react";
 import {Theme}    from './theme';
 import {classes}  from '../utils/classes';
 
+
 export class Button extends React.PureComponent<ButtonProps, {}> {
   render() {
     const {
@@ -19,19 +20,19 @@ export class Button extends React.PureComponent<ButtonProps, {}> {
     } = this.props;
     return <button {...otherProps} className={
       classes(Theme.Button, {
-        [Theme.primary]: primary,
-        [Theme.link]: link,
-        [Theme.success]: success,
-        [Theme.error]: error,
-        [Theme.warning]: warning,
-        [Theme.block]: block,
-        [Theme.small]: small,
-        [Theme.large]: large,
-        [Theme.action]: action || circle,
-        [Theme.circle]: circle,
-        [Theme.clear]: clear,
-        [Theme.active]: active,
-        [Theme.loading]: loading
+        [ Theme.primary ]: primary,
+        [ Theme.link ]: link,
+        [ Theme.success ]: success,
+        [ Theme.error ]: error,
+        [ Theme.warning ]: warning,
+        [ Theme.block ]: block,
+        [ Theme.small ]: small,
+        [ Theme.large ]: large,
+        [ Theme.action ]: action || circle,
+        [ Theme.circle ]: circle,
+        [ Theme.clear ]: clear,
+        [ Theme.active ]: active,
+        [ Theme.loading ]: loading
       }, className)
     }>{children}</button>
   }

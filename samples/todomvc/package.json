@@ -1,6 +1,6 @@
 {
   "name": "@vendor/todomvc",
-  "version": "0.1.14",
+  "version": "0.1.15",
   "description": "Barlus Tar Library",
   "types": "./index",
   "license": "MIT",

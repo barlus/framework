@@ -3735,7 +3735,8 @@ export interface StandardShorthandProperties<TLength = string | 0> {
   transition?: TransitionProperty;
 }
 
-export interface StandardProperties<TLength = string | 0> extends StandardLonghandProperties<TLength>, StandardShorthandProperties<TLength> {}
+export interface StandardProperties<TLength = string | 0> extends StandardLonghandProperties<TLength>, StandardShorthandProperties<TLength> {
+}
 
 export interface VendorLonghandProperties<TLength = string | 0> {
   /** **Initial value**: `0s` */
@@ -4211,7 +4212,8 @@ export interface VendorShorthandProperties<TLength = string | 0> {
   WebkitTransition?: TransitionProperty;
 }
 
-export interface VendorProperties<TLength = string | 0> extends VendorLonghandProperties<TLength>, VendorShorthandProperties<TLength> {}
+export interface VendorProperties<TLength = string | 0> extends VendorLonghandProperties<TLength>, VendorShorthandProperties<TLength> {
+}
 
 export interface ObsoleteProperties<TLength = string | 0> {
   /**
@@ -4655,7 +4657,8 @@ export interface SvgProperties<TLength = string | 0> {
   writingMode?: WritingModeProperty;
 }
 
-export interface Properties<TLength = string | 0> extends StandardProperties<TLength>, VendorProperties<TLength>, ObsoleteProperties<TLength>, SvgProperties<TLength> {}
+export interface Properties<TLength = string | 0> extends StandardProperties<TLength>, VendorProperties<TLength>, ObsoleteProperties<TLength>, SvgProperties<TLength> {
+}
 
 export interface StandardLonghandPropertiesHyphen<TLength = string | 0> {
   /**
@@ -8394,7 +8397,8 @@ export interface StandardShorthandPropertiesHyphen<TLength = string | 0> {
   transition?: TransitionProperty;
 }
 
-export interface StandardPropertiesHyphen<TLength = string | 0> extends StandardLonghandPropertiesHyphen<TLength>, StandardShorthandPropertiesHyphen<TLength> {}
+export interface StandardPropertiesHyphen<TLength = string | 0> extends StandardLonghandPropertiesHyphen<TLength>, StandardShorthandPropertiesHyphen<TLength> {
+}
 
 export interface VendorLonghandPropertiesHyphen<TLength = string | 0> {
   /** **Initial value**: `0s` */
@@ -8870,7 +8874,8 @@ export interface VendorShorthandPropertiesHyphen<TLength = string | 0> {
   "-webkit-transition"?: TransitionProperty;
 }
 
-export interface VendorPropertiesHyphen<TLength = string | 0> extends VendorLonghandPropertiesHyphen<TLength>, VendorShorthandPropertiesHyphen<TLength> {}
+export interface VendorPropertiesHyphen<TLength = string | 0> extends VendorLonghandPropertiesHyphen<TLength>, VendorShorthandPropertiesHyphen<TLength> {
+}
 
 export interface ObsoletePropertiesHyphen<TLength = string | 0> {
   /**
@@ -9318,7 +9323,8 @@ export interface PropertiesHyphen<TLength = string | 0>
   extends StandardPropertiesHyphen<TLength>,
     VendorPropertiesHyphen<TLength>,
     ObsoletePropertiesHyphen<TLength>,
-    SvgPropertiesHyphen<TLength> {}
+    SvgPropertiesHyphen<TLength> {
+}
 
 export interface StandardLonghandPropertiesFallback<TLength = string | 0> {
   /**
@@ -13057,7 +13063,8 @@ export interface StandardShorthandPropertiesFallback<TLength = string | 0> {
   transition?: TransitionProperty | TransitionProperty[];
 }
 
-export interface StandardPropertiesFallback<TLength = string | 0> extends StandardLonghandPropertiesFallback<TLength>, StandardShorthandPropertiesFallback<TLength> {}
+export interface StandardPropertiesFallback<TLength = string | 0> extends StandardLonghandPropertiesFallback<TLength>, StandardShorthandPropertiesFallback<TLength> {
+}
 
 export interface VendorLonghandPropertiesFallback<TLength = string | 0> {
   /** **Initial value**: `0s` */
@@ -13533,7 +13540,8 @@ export interface VendorShorthandPropertiesFallback<TLength = string | 0> {
   WebkitTransition?: TransitionProperty | TransitionProperty[];
 }
 
-export interface VendorPropertiesFallback<TLength = string | 0> extends VendorLonghandPropertiesFallback<TLength>, VendorShorthandPropertiesFallback<TLength> {}
+export interface VendorPropertiesFallback<TLength = string | 0> extends VendorLonghandPropertiesFallback<TLength>, VendorShorthandPropertiesFallback<TLength> {
+}
 
 export interface ObsoletePropertiesFallback<TLength = string | 0> {
   /**
@@ -13981,7 +13989,8 @@ export interface PropertiesFallback<TLength = string | 0>
   extends StandardPropertiesFallback<TLength>,
     VendorPropertiesFallback<TLength>,
     ObsoletePropertiesFallback<TLength>,
-    SvgPropertiesFallback<TLength> {}
+    SvgPropertiesFallback<TLength> {
+}
 
 export interface StandardLonghandPropertiesHyphenFallback<TLength = string | 0> {
   /**
@@ -17722,7 +17731,8 @@ export interface StandardShorthandPropertiesHyphenFallback<TLength = string | 0>
 
 export interface StandardPropertiesHyphenFallback<TLength = string | 0>
   extends StandardLonghandPropertiesHyphenFallback<TLength>,
-    StandardShorthandPropertiesHyphenFallback<TLength> {}
+    StandardShorthandPropertiesHyphenFallback<TLength> {
+}
 
 export interface VendorLonghandPropertiesHyphenFallback<TLength = string | 0> {
   /** **Initial value**: `0s` */
@@ -18198,7 +18208,8 @@ export interface VendorShorthandPropertiesHyphenFallback<TLength = string | 0> {
   "-webkit-transition"?: TransitionProperty | TransitionProperty[];
 }
 
-export interface VendorPropertiesHyphenFallback<TLength = string | 0> extends VendorLonghandPropertiesHyphenFallback<TLength>, VendorShorthandPropertiesHyphenFallback<TLength> {}
+export interface VendorPropertiesHyphenFallback<TLength = string | 0> extends VendorLonghandPropertiesHyphenFallback<TLength>, VendorShorthandPropertiesHyphenFallback<TLength> {
+}
 
 export interface ObsoletePropertiesHyphenFallback<TLength = string | 0> {
   /**
@@ -18646,7 +18657,8 @@ export interface PropertiesHyphenFallback<TLength = string | 0>
   extends StandardPropertiesHyphenFallback<TLength>,
     VendorPropertiesHyphenFallback<TLength>,
     ObsoletePropertiesHyphenFallback<TLength>,
-    SvgPropertiesHyphenFallback<TLength> {}
+    SvgPropertiesHyphenFallback<TLength> {
+}
 
 export interface CounterStyle {
   additiveSymbols?: string;
@@ -19052,9 +19064,25 @@ export type BackgroundOriginProperty = Globals | Box | string;
 
 export type BackgroundPositionProperty<TLength> = Globals | BgPosition<TLength> | string;
 
-export type BackgroundPositionXProperty<TLength> = Globals | TLength | "center" | "left" | "right" | "x-end" | "x-start" | string;
+export type BackgroundPositionXProperty<TLength> =
+  Globals
+  | TLength
+  | "center"
+  | "left"
+  | "right"
+  | "x-end"
+  | "x-start"
+  | string;
 
-export type BackgroundPositionYProperty<TLength> = Globals | TLength | "bottom" | "center" | "top" | "y-end" | "y-start" | string;
+export type BackgroundPositionYProperty<TLength> =
+  Globals
+  | TLength
+  | "bottom"
+  | "center"
+  | "top"
+  | "y-end"
+  | "y-start"
+  | string;
 
 export type BackgroundRepeatProperty = Globals | RepeatStyle | string;
 
@@ -19062,7 +19090,15 @@ export type BackgroundSizeProperty<TLength> = Globals | BgSize<TLength> | string
 
 export type BlockOverflowProperty = Globals | "clip" | "ellipsis" | string;
 
-export type BlockSizeProperty<TLength> = Globals | TLength | "auto" | "available" | "fit-content" | "max-content" | "min-content" | string;
+export type BlockSizeProperty<TLength> =
+  Globals
+  | TLength
+  | "auto"
+  | "available"
+  | "fit-content"
+  | "max-content"
+  | "min-content"
+  | string;
 
 export type BorderProperty<TLength> = Globals | BrWidth<TLength> | BrStyle | Color | string;
 
@@ -19180,13 +19216,46 @@ export type BoxShadowProperty = Globals | "none" | string;
 
 export type BoxSizingProperty = Globals | "border-box" | "content-box";
 
-export type BreakAfterProperty = Globals | "auto" | "avoid" | "avoid-column" | "avoid-page" | "avoid-region" | "column" | "left" | "page" | "recto" | "region" | "right" | "verso";
+export type BreakAfterProperty =
+  Globals
+  | "auto"
+  | "avoid"
+  | "avoid-column"
+  | "avoid-page"
+  | "avoid-region"
+  | "column"
+  | "left"
+  | "page"
+  | "recto"
+  | "region"
+  | "right"
+  | "verso";
 
-export type BreakBeforeProperty = Globals | "auto" | "avoid" | "avoid-column" | "avoid-page" | "avoid-region" | "column" | "left" | "page" | "recto" | "region" | "right" | "verso";
+export type BreakBeforeProperty =
+  Globals
+  | "auto"
+  | "avoid"
+  | "avoid-column"
+  | "avoid-page"
+  | "avoid-region"
+  | "column"
+  | "left"
+  | "page"
+  | "recto"
+  | "region"
+  | "right"
+  | "verso";
 
 export type BreakInsideProperty = Globals | "auto" | "avoid" | "avoid-column" | "avoid-page" | "avoid-region";
 
-export type CaptionSideProperty = Globals | "block-end" | "block-start" | "bottom" | "inline-end" | "inline-start" | "top";
+export type CaptionSideProperty =
+  Globals
+  | "block-end"
+  | "block-start"
+  | "bottom"
+  | "inline-end"
+  | "inline-start"
+  | "top";
 
 export type CaretColorProperty = Globals | Color | "auto";
 
@@ -19272,25 +19341,72 @@ export type CursorProperty =
 
 export type DirectionProperty = Globals | "ltr" | "rtl";
 
-export type DisplayProperty = Globals | DisplayOutside | DisplayInside | DisplayInternal | DisplayLegacy | "contents" | "list-item" | "none" | string;
+export type DisplayProperty =
+  Globals
+  | DisplayOutside
+  | DisplayInside
+  | DisplayInternal
+  | DisplayLegacy
+  | "contents"
+  | "list-item"
+  | "none"
+  | string;
 
 export type EmptyCellsProperty = Globals | "hide" | "show";
 
 export type FilterProperty = Globals | "none" | string;
 
-export type FlexProperty<TLength> = Globals | TLength | "auto" | "available" | "content" | "fit-content" | "max-content" | "min-content" | "none" | string | number;
+export type FlexProperty<TLength> =
+  Globals
+  | TLength
+  | "auto"
+  | "available"
+  | "content"
+  | "fit-content"
+  | "max-content"
+  | "min-content"
+  | "none"
+  | string
+  | number;
 
-export type FlexBasisProperty<TLength> = Globals | TLength | "-webkit-auto" | "auto" | "available" | "content" | "fit-content" | "max-content" | "min-content" | string;
+export type FlexBasisProperty<TLength> =
+  Globals
+  | TLength
+  | "-webkit-auto"
+  | "auto"
+  | "available"
+  | "content"
+  | "fit-content"
+  | "max-content"
+  | "min-content"
+  | string;
 
 export type FlexDirectionProperty = Globals | "column" | "column-reverse" | "row" | "row-reverse";
 
-export type FlexFlowProperty = Globals | "column" | "column-reverse" | "nowrap" | "row" | "row-reverse" | "wrap" | "wrap-reverse" | string;
+export type FlexFlowProperty =
+  Globals
+  | "column"
+  | "column-reverse"
+  | "nowrap"
+  | "row"
+  | "row-reverse"
+  | "wrap"
+  | "wrap-reverse"
+  | string;
 
 export type FlexWrapProperty = Globals | "nowrap" | "wrap" | "wrap-reverse";
 
 export type FloatProperty = Globals | "inline-end" | "inline-start" | "left" | "none" | "right";
 
-export type FontProperty = Globals | "caption" | "icon" | "menu" | "message-box" | "small-caption" | "status-bar" | string;
+export type FontProperty =
+  Globals
+  | "caption"
+  | "icon"
+  | "menu"
+  | "message-box"
+  | "small-caption"
+  | "status-bar"
+  | string;
 
 export type FontFamilyProperty = Globals | GenericFamily | string;
 
@@ -19357,9 +19473,24 @@ export type FontVariantProperty =
 
 export type FontVariantAlternatesProperty = Globals | "historical-forms" | "normal" | string;
 
-export type FontVariantCapsProperty = Globals | "all-petite-caps" | "all-small-caps" | "normal" | "petite-caps" | "small-caps" | "titling-caps" | "unicase";
+export type FontVariantCapsProperty =
+  Globals
+  | "all-petite-caps"
+  | "all-small-caps"
+  | "normal"
+  | "petite-caps"
+  | "small-caps"
+  | "titling-caps"
+  | "unicase";
 
-export type FontVariantEastAsianProperty = Globals | EastAsianVariantValues | "full-width" | "normal" | "proportional-width" | "ruby" | string;
+export type FontVariantEastAsianProperty =
+  Globals
+  | EastAsianVariantValues
+  | "full-width"
+  | "normal"
+  | "proportional-width"
+  | "ruby"
+  | string;
 
 export type FontVariantLigaturesProperty =
   | Globals
@@ -19392,7 +19523,21 @@ export type FontVariantPositionProperty = Globals | "normal" | "sub" | "super";
 
 export type FontVariationSettingsProperty = Globals | "normal" | string;
 
-export type FontWeightProperty = Globals | "bold" | "bolder" | "lighter" | "normal" | 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900;
+export type FontWeightProperty =
+  Globals
+  | "bold"
+  | "bolder"
+  | "lighter"
+  | "normal"
+  | 100
+  | 200
+  | 300
+  | 400
+  | 500
+  | 600
+  | 700
+  | 800
+  | 900;
 
 export type GapProperty<TLength> = Globals | TLength | "normal" | string;
 
@@ -19434,13 +19579,28 @@ export type GridTemplateRowsProperty<TLength> = Globals | TrackBreadth<TLength> 
 
 export type HangingPunctuationProperty = Globals | "allow-end" | "first" | "force-end" | "last" | "none" | string;
 
-export type HeightProperty<TLength> = Globals | TLength | "auto" | "available" | "fit-content" | "max-content" | "min-content" | string;
+export type HeightProperty<TLength> =
+  Globals
+  | TLength
+  | "auto"
+  | "available"
+  | "fit-content"
+  | "max-content"
+  | "min-content"
+  | string;
 
 export type HyphensProperty = Globals | "auto" | "manual" | "none";
 
 export type ImageOrientationProperty = Globals | "flip" | "from-image" | string;
 
-export type ImageRenderingProperty = Globals | "-moz-crisp-edges" | "-o-crisp-edges" | "-webkit-optimize-contrast" | "auto" | "crisp-edges" | "pixelated";
+export type ImageRenderingProperty =
+  Globals
+  | "-moz-crisp-edges"
+  | "-o-crisp-edges"
+  | "-webkit-optimize-contrast"
+  | "auto"
+  | "crisp-edges"
+  | "pixelated";
 
 export type ImageResolutionProperty = Globals | "from-image" | string;
 
@@ -19450,15 +19610,48 @@ export type InitialLetterProperty = Globals | "normal" | string | number;
 
 export type InitialLetterAlignProperty = Globals | "alphabetic" | "auto" | "hanging" | "ideographic";
 
-export type InlineSizeProperty<TLength> = Globals | TLength | "auto" | "available" | "fit-content" | "max-content" | "min-content" | string;
+export type InlineSizeProperty<TLength> =
+  Globals
+  | TLength
+  | "auto"
+  | "available"
+  | "fit-content"
+  | "max-content"
+  | "min-content"
+  | string;
 
 export type IsolationProperty = Globals | "auto" | "isolate";
 
-export type JustifyContentProperty = Globals | ContentDistribution | ContentPosition | "left" | "normal" | "right" | string;
+export type JustifyContentProperty =
+  Globals
+  | ContentDistribution
+  | ContentPosition
+  | "left"
+  | "normal"
+  | "right"
+  | string;
 
-export type JustifyItemsProperty = Globals | SelfPosition | "baseline" | "left" | "legacy" | "normal" | "right" | "stretch" | string;
+export type JustifyItemsProperty =
+  Globals
+  | SelfPosition
+  | "baseline"
+  | "left"
+  | "legacy"
+  | "normal"
+  | "right"
+  | "stretch"
+  | string;
 
-export type JustifySelfProperty = Globals | SelfPosition | "auto" | "baseline" | "left" | "normal" | "right" | "stretch" | string;
+export type JustifySelfProperty =
+  Globals
+  | SelfPosition
+  | "auto"
+  | "baseline"
+  | "left"
+  | "normal"
+  | "right"
+  | "stretch"
+  | string;
 
 export type LeftProperty<TLength> = Globals | TLength | "auto" | string;
 
@@ -19500,7 +19693,17 @@ export type MarginTopProperty<TLength> = Globals | TLength | "auto" | string;
 
 export type MaskProperty<TLength> = Globals | MaskLayer<TLength> | string;
 
-export type MaskBorderProperty = Globals | "alpha" | "luminance" | "none" | "repeat" | "round" | "space" | "stretch" | string | number;
+export type MaskBorderProperty =
+  Globals
+  | "alpha"
+  | "luminance"
+  | "none"
+  | "repeat"
+  | "round"
+  | "space"
+  | "stretch"
+  | string
+  | number;
 
 export type MaskBorderModeProperty = Globals | "alpha" | "luminance";
 
@@ -19532,23 +19735,88 @@ export type MaskSizeProperty<TLength> = Globals | BgSize<TLength> | string;
 
 export type MaskTypeProperty = Globals | "alpha" | "luminance";
 
-export type MaxBlockSizeProperty<TLength> = Globals | TLength | "fill-available" | "fit-content" | "max-content" | "min-content" | "none" | string;
+export type MaxBlockSizeProperty<TLength> =
+  Globals
+  | TLength
+  | "fill-available"
+  | "fit-content"
+  | "max-content"
+  | "min-content"
+  | "none"
+  | string;
 
-export type MaxHeightProperty<TLength> = Globals | TLength | "fill-available" | "fit-content" | "max-content" | "min-content" | "none" | string;
+export type MaxHeightProperty<TLength> =
+  Globals
+  | TLength
+  | "fill-available"
+  | "fit-content"
+  | "max-content"
+  | "min-content"
+  | "none"
+  | string;
 
-export type MaxInlineSizeProperty<TLength> = Globals | TLength | "fill-available" | "fit-content" | "max-content" | "min-content" | "none" | string;
+export type MaxInlineSizeProperty<TLength> =
+  Globals
+  | TLength
+  | "fill-available"
+  | "fit-content"
+  | "max-content"
+  | "min-content"
+  | "none"
+  | string;
 
 export type MaxLinesProperty = Globals | "none" | number;
 
-export type MaxWidthProperty<TLength> = Globals | TLength | "fill-available" | "fit-content" | "max-content" | "min-content" | "none" | string;
+export type MaxWidthProperty<TLength> =
+  Globals
+  | TLength
+  | "fill-available"
+  | "fit-content"
+  | "max-content"
+  | "min-content"
+  | "none"
+  | string;
 
-export type MinBlockSizeProperty<TLength> = Globals | TLength | "auto" | "fill-available" | "fit-content" | "max-content" | "min-content" | string;
+export type MinBlockSizeProperty<TLength> =
+  Globals
+  | TLength
+  | "auto"
+  | "fill-available"
+  | "fit-content"
+  | "max-content"
+  | "min-content"
+  | string;
 
-export type MinHeightProperty<TLength> = Globals | TLength | "auto" | "fill-available" | "fit-content" | "max-content" | "min-content" | string;
+export type MinHeightProperty<TLength> =
+  Globals
+  | TLength
+  | "auto"
+  | "fill-available"
+  | "fit-content"
+  | "max-content"
+  | "min-content"
+  | string;
 
-export type MinInlineSizeProperty<TLength> = Globals | TLength | "auto" | "fill-available" | "fit-content" | "max-content" | "min-content" | string;
+export type MinInlineSizeProperty<TLength> =
+  Globals
+  | TLength
+  | "auto"
+  | "fill-available"
+  | "fit-content"
+  | "max-content"
+  | "min-content"
+  | string;
 
-export type MinWidthProperty<TLength> = Globals | TLength | "-webkit-fill-available" | "auto" | "fill-available" | "fit-content" | "max-content" | "min-content" | string;
+export type MinWidthProperty<TLength> =
+  Globals
+  | TLength
+  | "-webkit-fill-available"
+  | "auto"
+  | "fill-available"
+  | "fit-content"
+  | "max-content"
+  | "min-content"
+  | string;
 
 export type MixBlendModeProperty = Globals | BlendMode;
 
@@ -19640,7 +19908,19 @@ export type PerspectiveOriginProperty<TLength> = Globals | Position<TLength>;
 
 export type PlaceContentProperty = Globals | ContentDistribution | ContentPosition | "baseline" | "normal" | string;
 
-export type PointerEventsProperty = Globals | "all" | "auto" | "fill" | "inherit" | "none" | "painted" | "stroke" | "visible" | "visibleFill" | "visiblePainted" | "visibleStroke";
+export type PointerEventsProperty =
+  Globals
+  | "all"
+  | "auto"
+  | "fill"
+  | "inherit"
+  | "none"
+  | "painted"
+  | "stroke"
+  | "visible"
+  | "visibleFill"
+  | "visiblePainted"
+  | "visibleStroke";
 
 export type PositionProperty = Globals | "-webkit-sticky" | "absolute" | "fixed" | "relative" | "static" | "sticky";
 
@@ -19692,23 +19972,73 @@ export type TextAlignLastProperty = Globals | "auto" | "center" | "end" | "justi
 
 export type TextCombineUprightProperty = Globals | "all" | "digits" | "none" | string;
 
-export type TextDecorationProperty = Globals | Color | "blink" | "dashed" | "dotted" | "double" | "line-through" | "none" | "overline" | "solid" | "underline" | "wavy" | string;
+export type TextDecorationProperty =
+  Globals
+  | Color
+  | "blink"
+  | "dashed"
+  | "dotted"
+  | "double"
+  | "line-through"
+  | "none"
+  | "overline"
+  | "solid"
+  | "underline"
+  | "wavy"
+  | string;
 
 export type TextDecorationColorProperty = Globals | Color;
 
-export type TextDecorationLineProperty = Globals | "blink" | "line-through" | "none" | "overline" | "underline" | string;
+export type TextDecorationLineProperty =
+  Globals
+  | "blink"
+  | "line-through"
+  | "none"
+  | "overline"
+  | "underline"
+  | string;
 
-export type TextDecorationSkipProperty = Globals | "box-decoration" | "edges" | "leading-spaces" | "none" | "objects" | "spaces" | "trailing-spaces" | string;
+export type TextDecorationSkipProperty =
+  Globals
+  | "box-decoration"
+  | "edges"
+  | "leading-spaces"
+  | "none"
+  | "objects"
+  | "spaces"
+  | "trailing-spaces"
+  | string;
 
 export type TextDecorationSkipInkProperty = Globals | "auto" | "none";
 
 export type TextDecorationStyleProperty = Globals | "dashed" | "dotted" | "double" | "solid" | "wavy";
 
-export type TextEmphasisProperty = Globals | Color | "circle" | "dot" | "double-circle" | "filled" | "none" | "open" | "sesame" | "triangle" | string;
+export type TextEmphasisProperty =
+  Globals
+  | Color
+  | "circle"
+  | "dot"
+  | "double-circle"
+  | "filled"
+  | "none"
+  | "open"
+  | "sesame"
+  | "triangle"
+  | string;
 
 export type TextEmphasisColorProperty = Globals | Color;
 
-export type TextEmphasisStyleProperty = Globals | "circle" | "dot" | "double-circle" | "filled" | "none" | "open" | "sesame" | "triangle" | string;
+export type TextEmphasisStyleProperty =
+  Globals
+  | "circle"
+  | "dot"
+  | "double-circle"
+  | "filled"
+  | "none"
+  | "open"
+  | "sesame"
+  | "triangle"
+  | string;
 
 export type TextIndentProperty<TLength> = Globals | TLength | string;
 
@@ -19750,7 +20080,15 @@ export type TransformProperty = Globals | "none" | string;
 
 export type TransformBoxProperty = Globals | "border-box" | "fill-box" | "view-box";
 
-export type TransformOriginProperty<TLength> = Globals | TLength | "bottom" | "center" | "left" | "right" | "top" | string;
+export type TransformOriginProperty<TLength> =
+  Globals
+  | TLength
+  | "bottom"
+  | "center"
+  | "left"
+  | "right"
+  | "top"
+  | string;
 
 export type TransformStyleProperty = Globals | "flat" | "preserve-3d";
 
@@ -19777,7 +20115,18 @@ export type UnicodeBidiProperty =
 
 export type UserSelectProperty = Globals | "-moz-none" | "all" | "auto" | "contain" | "element" | "none" | "text";
 
-export type VerticalAlignProperty<TLength> = Globals | TLength | "baseline" | "bottom" | "middle" | "sub" | "super" | "text-bottom" | "text-top" | "top" | string;
+export type VerticalAlignProperty<TLength> =
+  Globals
+  | TLength
+  | "baseline"
+  | "bottom"
+  | "middle"
+  | "sub"
+  | "super"
+  | "text-bottom"
+  | "text-top"
+  | "top"
+  | string;
 
 export type VisibilityProperty = Globals | "collapse" | "hidden" | "visible";
 
@@ -19810,7 +20159,13 @@ export type WordSpacingProperty<TLength> = Globals | TLength | "normal" | string
 
 export type WordWrapProperty = Globals | "break-word" | "normal";
 
-export type WritingModeProperty = Globals | "horizontal-tb" | "sideways-lr" | "sideways-rl" | "vertical-lr" | "vertical-rl";
+export type WritingModeProperty =
+  Globals
+  | "horizontal-tb"
+  | "sideways-lr"
+  | "sideways-rl"
+  | "vertical-lr"
+  | "vertical-rl";
 
 export type ZIndexProperty = Globals | "auto" | number;
 
@@ -19939,7 +20294,14 @@ export type MozBorderRightColorsProperty = Globals | Color | "none" | string;
 
 export type MozBorderTopColorsProperty = Globals | Color | "none" | string;
 
-export type MozContextPropertiesProperty = Globals | "fill" | "fill-opacity" | "none" | "stroke" | "stroke-opacity" | string;
+export type MozContextPropertiesProperty =
+  Globals
+  | "fill"
+  | "fill-opacity"
+  | "none"
+  | "stroke"
+  | "stroke-opacity"
+  | string;
 
 export type MozFloatEdgeProperty = Globals | "border-box" | "content-box" | "margin-box" | "padding-box";
 
@@ -19961,7 +20323,16 @@ export type MozStackSizingProperty = Globals | "ignore" | "stretch-to-fit";
 
 export type MozTextBlinkProperty = Globals | "blink" | "none";
 
-export type MozUserFocusProperty = Globals | "ignore" | "none" | "normal" | "select-after" | "select-all" | "select-before" | "select-menu" | "select-same";
+export type MozUserFocusProperty =
+  Globals
+  | "ignore"
+  | "none"
+  | "normal"
+  | "select-after"
+  | "select-all"
+  | "select-before"
+  | "select-menu"
+  | "select-same";
 
 export type MozUserInputProperty = Globals | "auto" | "disabled" | "enabled" | "none";
 
@@ -20031,7 +20402,13 @@ export type MsScrollbarShadowColorProperty = Globals | Color;
 
 export type MsScrollbarTrackColorProperty = Globals | Color;
 
-export type MsTextAutospaceProperty = Globals | "ideograph-alpha" | "ideograph-numeric" | "ideograph-parenthesis" | "ideograph-space" | "none";
+export type MsTextAutospaceProperty =
+  Globals
+  | "ideograph-alpha"
+  | "ideograph-numeric"
+  | "ideograph-parenthesis"
+  | "ideograph-space"
+  | "none";
 
 export type MsTouchSelectProperty = Globals | "grippers" | "none";
 
@@ -20106,7 +20483,17 @@ export type WebkitBoxReflectProperty<TLength> = Globals | TLength | "above" | "b
 
 export type WebkitLineClampProperty = Globals | "none" | number;
 
-export type WebkitMaskProperty<TLength> = Globals | Position<TLength> | RepeatStyle | Box | "border" | "content" | "none" | "padding" | "text" | string;
+export type WebkitMaskProperty<TLength> =
+  Globals
+  | Position<TLength>
+  | RepeatStyle
+  | Box
+  | "border"
+  | "content"
+  | "none"
+  | "padding"
+  | "text"
+  | string;
 
 export type WebkitMaskAttachmentProperty = Globals | Attachment | string;
 
@@ -20400,7 +20787,17 @@ type DeprecatedSystemColor =
   | "WindowFrame"
   | "WindowText";
 
-type DisplayInside = "-ms-flexbox" | "-ms-grid" | "-webkit-flex" | "flex" | "flow" | "flow-root" | "grid" | "ruby" | "subgrid" | "table";
+type DisplayInside =
+  "-ms-flexbox"
+  | "-ms-grid"
+  | "-webkit-flex"
+  | "flex"
+  | "flow"
+  | "flow-root"
+  | "grid"
+  | "ruby"
+  | "subgrid"
+  | "table";
 
 type DisplayInternal =
   | "ruby-base"
@@ -20416,7 +20813,15 @@ type DisplayInternal =
   | "table-row"
   | "table-row-group";
 
-type DisplayLegacy = "-ms-inline-flexbox" | "-ms-inline-grid" | "-webkit-inline-flex" | "inline-block" | "inline-flex" | "inline-grid" | "inline-list-item" | "inline-table";
+type DisplayLegacy =
+  "-ms-inline-flexbox"
+  | "-ms-inline-grid"
+  | "-webkit-inline-flex"
+  | "inline-block"
+  | "inline-flex"
+  | "inline-grid"
+  | "inline-list-item"
+  | "inline-table";
 
 type DisplayOutside = "block" | "inline" | "run-in";
 
@@ -20430,7 +20835,15 @@ type GeometryBox = Box | "fill-box" | "margin-box" | "stroke-box" | "view-box";
 
 type GridLine = "auto" | string | number;
 
-type MaskLayer<TLength> = Position<TLength> | RepeatStyle | GeometryBox | CompositingOperator | MaskingMode | "no-clip" | "none" | string;
+type MaskLayer<TLength> =
+  Position<TLength>
+  | RepeatStyle
+  | GeometryBox
+  | CompositingOperator
+  | MaskingMode
+  | "no-clip"
+  | "none"
+  | string;
 
 type MaskingMode = "alpha" | "luminance" | "match-source";
 
@@ -20595,7 +21008,16 @@ type RepeatStyle = "no-repeat" | "repeat" | "repeat-x" | "repeat-y" | "round" | 
 
 type SelfPosition = "center" | "end" | "flex-end" | "flex-start" | "self-end" | "self-start" | "start";
 
-type SingleAnimation = SingleTimingFunction | SingleAnimationDirection | SingleAnimationFillMode | "infinite" | "none" | "paused" | "running" | string | number;
+type SingleAnimation =
+  SingleTimingFunction
+  | SingleAnimationDirection
+  | SingleAnimationFillMode
+  | "infinite"
+  | "none"
+  | "paused"
+  | "running"
+  | string
+  | number;
 
 type SingleAnimationDirection = "alternate" | "alternate-reverse" | "normal" | "reverse";
 

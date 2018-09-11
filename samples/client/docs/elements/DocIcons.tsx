@@ -28,7 +28,7 @@ export class DocIcons extends DocPage {
       <DocTitle>Svg icons</DocTitle>
       <DocSample columns={4}>
         {this.state.icons ? Object.keys(this.state.icons).map((name, i) => {
-          let Ic = this.state.icons[name];
+          let Ic = this.state.icons[ name ];
           return <div key={i} style={{ 'display': 'flex', 'alignItems': "center" }}>
             <Ic/>
             <code style={{ 'flexBasis': '150', 'overflow': 'scroll' }}>{`<${name}/>`}</code>
@@ -116,10 +116,10 @@ export class DocIcons extends DocPage {
   }
 }
 
-const E1 = [`
+const E1 = [ `
 <i className="icon icon-arrow-up"/>
 <i className="icon icon-arrow-right"/>
-`];
-const E2 = [`
+` ];
+const E2 = [ `
 <i className="icon icon-2x icon-mail"/>
-`];
+` ];

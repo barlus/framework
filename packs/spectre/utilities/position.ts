@@ -1,55 +1,56 @@
-import {$,nest,stylesheet} from "@barlus/styles"
-import { clearfix } from '../mixins/clearfix';
-import { paddingVariant,marginVariant } from '../mixins/position';
+import {$, nest, stylesheet}           from "@barlus/styles"
+import {clearfix}                      from '../mixins/clearfix';
+import {paddingVariant, marginVariant} from '../mixins/position';
+
 
 export default Theme;
 export const enum Theme {
-    absolute='absolute',
-    centered='centered',
-    clearfix='clearfix',
-    fixed='fixed',
-    flexCentered='flex-centered',
-    floatLeft='float-left',
-    floatRight='float-right',
-    relative='relative',
+  absolute = 'absolute',
+  centered = 'centered',
+  clearfix = 'clearfix',
+  fixed = 'fixed',
+  flexCentered = 'flex-centered',
+  floatLeft = 'float-left',
+  floatRight = 'float-right',
+  relative = 'relative',
 }
 
-stylesheet('position.ts')('',{
-    ...nest([`.${Theme.clearfix}`],{
-        ...clearfix(),
-    }),
-    ...nest([`.${Theme.floatLeft}`],{
-        float:'left',
-    }),
-    ...nest([`.${Theme.floatRight}`],{
-        float:'right',
-    }),
-    ...nest([`.${Theme.relative}`],{
-        position:'relative',
-    }),
-    ...nest([`.${Theme.absolute}`],{
-        position:'absolute',
-    }),
-    ...nest([`.${Theme.fixed}`],{
-        position:'fixed',
-    }),
-    ...nest([`.${Theme.centered}`],{
-        display:'block',
-        float:'none',
-        marginLeft:'auto',
-        marginRight:'auto',
-    }),
-    ...nest([`.${Theme.flexCentered}`],{
-        alignItems:'center',
-        display:'flex',
-        justifyContent:'center',
-    }),
-    ...marginVariant(0,0),
-    ...marginVariant(1,$.unit1),
-    ...marginVariant(2,$.unit2),
-    ...paddingVariant(0,0),
-    ...paddingVariant(1,$.unit1),
-    ...paddingVariant(2,$.unit2),
+stylesheet('position.ts')('', {
+  ...nest([ `.${Theme.clearfix}` ], {
+    ...clearfix(),
+  }),
+  ...nest([ `.${Theme.floatLeft}` ], {
+    float: 'left',
+  }),
+  ...nest([ `.${Theme.floatRight}` ], {
+    float: 'right',
+  }),
+  ...nest([ `.${Theme.relative}` ], {
+    position: 'relative',
+  }),
+  ...nest([ `.${Theme.absolute}` ], {
+    position: 'absolute',
+  }),
+  ...nest([ `.${Theme.fixed}` ], {
+    position: 'fixed',
+  }),
+  ...nest([ `.${Theme.centered}` ], {
+    display: 'block',
+    float: 'none',
+    marginLeft: 'auto',
+    marginRight: 'auto',
+  }),
+  ...nest([ `.${Theme.flexCentered}` ], {
+    alignItems: 'center',
+    display: 'flex',
+    justifyContent: 'center',
+  }),
+  ...marginVariant(0, 0),
+  ...marginVariant(1, $.unit1),
+  ...marginVariant(2, $.unit2),
+  ...paddingVariant(0, 0),
+  ...paddingVariant(1, $.unit1),
+  ...paddingVariant(2, $.unit2),
 });
 
 // cssRule('.float-left', {

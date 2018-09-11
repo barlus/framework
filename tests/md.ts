@@ -1,5 +1,4 @@
-
-import { suite, test } from '@barlus/tester/decorators';
+import {suite, test} from '@barlus/tester/decorators';
 
 
 const EXAMPLE = `## Snarkdown
@@ -53,11 +52,10 @@ function codeBlocks() {
 2. Lists
 4. Numbers are ignored`;
 
-
 @suite
 class BasicTest {
-    @test
-    testBasicSum() {
+  @test
+  testBasicSum() {
 
-    }
+  }
 }

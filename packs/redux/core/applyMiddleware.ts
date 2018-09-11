@@ -3,6 +3,7 @@ import {Reducer}       from './types';
 import {StoreEnhancer} from './types';
 import {compose}       from './compose';
 
+
 export function applyMiddleware(): StoreEnhancer;
 export function applyMiddleware<Ext1, S>(middleware1: Middleware<Ext1, S, any>): StoreEnhancer<{ dispatch: Ext1 }>;
 export function applyMiddleware<Ext1, Ext2, S>(middleware1: Middleware<Ext1, S, any>, middleware2: Middleware<Ext2, S, any>): StoreEnhancer<{ dispatch: Ext1 & Ext2 }>;

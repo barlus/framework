@@ -1,7 +1,7 @@
 import * as React from '@barlus/react'
 
-import {FilterLink}  from './FilterLink'
-import {Show} from '../state/State'
+import {FilterLink} from './FilterLink'
+import {Show}       from '../state/State'
 
 
 const FILTER_TITLES = {
@@ -19,7 +19,7 @@ export class Footer extends React.Component<FooterProps> {
                 <strong>{activeCount || 'No'}</strong> {itemWord} left
             </span>
       <ul className="filters">
-        {Object.keys(FILTER_TITLES).map((filter:Show) =>
+        {Object.keys(FILTER_TITLES).map((filter: Show) =>
           <li key={filter}>
             <FilterLink filter={filter}>
               {FILTER_TITLES[ filter ]}

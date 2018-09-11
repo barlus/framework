@@ -5,15 +5,16 @@
  * -ms- is needed for IE
  */
 import * as types from '../types';
-import { extend } from '../styling';
+import {extend}   from '../styling';
+
 
 /**
  * If you have more than one child prefer horizontal,vertical
  */
 export var flexRoot: types.CSSProperties = {
-    display: [
-        'flex',
-    ]
+  display: [
+    'flex',
+  ]
 };
 
 /**
@@ -25,26 +26,26 @@ export var flexRoot: types.CSSProperties = {
  * </vertical>
  */
 export var pass: types.CSSProperties = {
-    display: 'inherit',
-    flexDirection: 'inherit',
-    flexGrow: 1,
+  display: 'inherit',
+  flexDirection: 'inherit',
+  flexGrow: 1,
 };
 
 export var inlineRoot: types.CSSProperties = {
-    display: [
-        'inline-flex'
-    ]
+  display: [
+    'inline-flex'
+  ]
 };
 
 export const horizontal: types.CSSProperties = extend(flexRoot, {
-    flexDirection: 'row'
+  flexDirection: 'row'
 });
 export const vertical: types.CSSProperties = extend(flexRoot, {
-    flexDirection: 'column'
+  flexDirection: 'column'
 });
 
 export var wrap: types.CSSProperties = {
-    flexWrap: 'wrap'
+  flexWrap: 'wrap'
 };
 
 /**
@@ -53,47 +54,47 @@ export var wrap: types.CSSProperties = {
  * Specifically bug 1 : https://github.com/philipwalton/flexbugs#1-minimum-content-sizing-of-flex-items-not-honored
  */
 export var content: types.CSSProperties = {
-    flexShrink: 0,
-    flexBasis: 'auto',
+  flexShrink: 0,
+  flexBasis: 'auto',
 };
 
 export var flex: types.CSSProperties = {
-    flex: 1
+  flex: 1
 };
 
 export var flex1: types.CSSProperties = flex;
 export var flex2: types.CSSProperties = {
-    flex: 2
+  flex: 2
 };
 export var flex3: types.CSSProperties = {
-    flex: 3
+  flex: 3
 };
 export var flex4: types.CSSProperties = {
-    flex: 4
+  flex: 4
 };
 export var flex5: types.CSSProperties = {
-    flex: 5
+  flex: 5
 };
 export var flex6: types.CSSProperties = {
-    flex: 6
+  flex: 6
 };
 export var flex7: types.CSSProperties = {
-    flex: 7
+  flex: 7
 };
 export var flex8: types.CSSProperties = {
-    flex: 8
+  flex: 8
 };
 export var flex9: types.CSSProperties = {
-    flex: 9
+  flex: 9
 };
 export var flex10: types.CSSProperties = {
-    flex: 10
+  flex: 10
 };
 export var flex11: types.CSSProperties = {
-    flex: 11
+  flex: 11
 };
 export var flex12: types.CSSProperties = {
-    flex: 12
+  flex: 12
 };
 
 /////////////////////////////
@@ -101,13 +102,13 @@ export var flex12: types.CSSProperties = {
 /////////////////////////////
 
 export var start: types.CSSProperties = {
-    alignItems: 'flex-start'
+  alignItems: 'flex-start'
 };
 export var center: types.CSSProperties = {
-    alignItems: 'center'
+  alignItems: 'center'
 };
 export var end: types.CSSProperties = {
-    alignItems: 'flex-end'
+  alignItems: 'flex-end'
 };
 
 ////////////////////////////
@@ -115,23 +116,23 @@ export var end: types.CSSProperties = {
 ////////////////////////////
 
 export var startJustified: types.CSSProperties = {
-    justifyContent: 'flex-start'
+  justifyContent: 'flex-start'
 };
 export var centerJustified: types.CSSProperties = {
-    justifyContent: 'center'
+  justifyContent: 'center'
 };
 
 export var endJustified: types.CSSProperties = {
-    justifyContent: 'flex-end'
+  justifyContent: 'flex-end'
 };
 export var aroundJustified: types.CSSProperties = {
-    justifyContent: 'space-around'
+  justifyContent: 'space-around'
 };
 export var betweenJustified: types.CSSProperties = {
-    justifyContent: 'space-between'
+  justifyContent: 'space-between'
 };
 export var evenlyJustified: types.CSSProperties = {
-    justifyContent: 'space-evenly'
+  justifyContent: 'space-evenly'
 };
 ////////////////////////////
 // Alignment in both axes //
@@ -144,14 +145,14 @@ export var centerCenter: types.CSSProperties = extend(flexRoot, center, centerJu
 ////////////////////
 
 export var selfStart: types.CSSProperties = {
-    alignSelf: 'flex-start'
+  alignSelf: 'flex-start'
 };
 export var selfCenter: types.CSSProperties = {
-    alignSelf: 'center'
+  alignSelf: 'center'
 };
 export var selfEnd: types.CSSProperties = {
-    alignSelf: 'flex-end'
+  alignSelf: 'flex-end'
 };
 export var selfStretch: types.CSSProperties = {
-    alignSelf: 'stretch',
+  alignSelf: 'stretch',
 };

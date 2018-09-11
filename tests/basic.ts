@@ -1,13 +1,26 @@
-import {suite, test, expect} from '@barlus/tester';
+import {spyOnProperty} from '@barlus/tester';
+import {suite}         from '@barlus/tester';
+import {test}          from '@barlus/tester';
+import {expect}        from '@barlus/tester';
 
+
+class Model {
+  private _hello;
+  get hello() {
+    return this._hello
+  }
+  set hello(value) {
+    this._hello = value;
+  }
+}
 
 @suite
 class BasicTest {
-    @test("example test")
-    @test.timeout(2000)
-    @test.case([1, 2, 3, 4], ["Start", "C1", "C2", "C3", "Hello"])
-    @test.case([1, 2, 4], ["Start", "C1", "C2", "C4", "Hello"])
-    async testBasicSum(a: number[], b: number[]) {
-
-    }
+  @test
+  async testBasicSum() {
+    let object = new Model();
+    let spy = spyOnProperty(object, 'hello');
+    object.hello = 'Hello';
+    expect(spy).toHaveBeenSetTo('Hello');
+  }
 }

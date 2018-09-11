@@ -1,5 +1,7 @@
 import {createSelector} from '@barlus/redux/index';
-import {getTodos} from './getTodos';
+import {getTodos}       from './getTodos';
+
+
 export const getCompletedTodoCount: any = createSelector(
   [ getTodos ],
   todos => (

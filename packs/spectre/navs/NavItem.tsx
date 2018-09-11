@@ -2,6 +2,7 @@ import * as React from "@barlus/react";
 import {Theme}    from './theme';
 import {classes}  from '../utils/classes';
 
+
 export class NavItem extends React.PureComponent<NavItemProps, {}> {
   render() {
     const {
@@ -11,7 +12,7 @@ export class NavItem extends React.PureComponent<NavItemProps, {}> {
       active,
       ...otherProps
     } = this.props;
-    return (<li {...otherProps} className={classes(Theme.navItem, { [Theme.active]: active }, className)}>
+    return (<li {...otherProps} className={classes(Theme.navItem, { [ Theme.active ]: active }, className)}>
       {children}
     </li>)
   }

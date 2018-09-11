@@ -3,6 +3,7 @@
  */
 import * as types from '../types';
 
+
 export const scroll: types.CSSProperties = {
   '-webkit-overflow-scrolling': 'touch',
   overflow: 'auto'
@@ -23,5 +24,5 @@ export const scrollY: types.CSSProperties = {
  * you need to tell the browser to prevent a scroll bar here
  */
 export var someChildWillScroll: types.NestedCSSProperties = {
-    overflow: 'hidden'
+  overflow: 'hidden'
 }

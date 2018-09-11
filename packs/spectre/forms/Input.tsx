@@ -3,6 +3,7 @@ import {Theme}     from './theme';
 import {classes}   from '../utils/classes';
 import {FormGroup} from "./FormGroup";
 
+
 export class Input extends React.PureComponent<InputProps, {}> {
   render() {
     const {
@@ -23,10 +24,10 @@ export class Input extends React.PureComponent<InputProps, {}> {
 
     let inputComp = <input {...inputProps} className={
       classes(Theme.formInput, {
-        [Theme.isSuccess]: success,
-        [Theme.isError]: error,
-        [Theme.inputSm]: small,
-        [Theme.inputLg]: large,
+        [ Theme.isSuccess ]: success,
+        [ Theme.isError ]: error,
+        [ Theme.inputSm ]: small,
+        [ Theme.inputLg ]: large,
       }, className)
     }/>;
     const icon = (iconLeft || iconRight);

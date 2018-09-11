@@ -6,6 +6,7 @@ import {KeyFrames}           from './types';
 import {MediaQuery}          from './types';
 import {NestedCSSProperties} from './types';
 
+
 export type StylesTarget = { textContent: string | null };
 
 export interface TypeStyleOptions {
@@ -66,7 +67,7 @@ export function media(mediaQuery: MediaQuery, ...objects: NestedCSSProperties[])
   const stringMediaQuery = `@media ${mediaQuerySections.join(' and ')}`;
   const object: NestedCSSProperties = {
     $nest: {
-      [stringMediaQuery]: extend(...objects)
+      [ stringMediaQuery ]: extend(...objects)
     }
   };
   return object;
@@ -85,22 +86,22 @@ export function extend(...objects: (NestedCSSProperties | undefined | null | fal
     }
     for (let key in object) {
       /** Falsy values except a explicit 0 is ignored */
-      let val: any = (object as any)[key];
+      let val: any = (object as any)[ key ];
       if (!val && val !== 0) {
         continue;
       }
 
       /** if nested media or pseudo selector */
       if (key === '$nest' && val) {
-        result[key] = result['$nest'] ? extend(result['$nest'], val) : val;
+        result[ key ] = result[ '$nest' ] ? extend(result[ '$nest' ], val) : val;
       }
 
       /** if freestyle sub key that needs merging. We come here due to our recursive calls */
       else if ((key.indexOf('&') !== -1 || key.indexOf('@media') === 0)) {
-        result[key] = result[key] ? extend(result[key], val) : val;
+        result[ key ] = result[ key ] ? extend(result[ key ], val) : val;
       }
       else {
-        result[key] = val;
+        result[ key ] = val;
       }
     }
   }
@@ -113,11 +114,11 @@ export const cssRule = master.cssRule;
 export const style = master.style;
 export const fontFace = master.fontFace;
 
-export function theme<T extends { defaultTheme, name }, K extends keyof T['defaultTheme']>(type: T): {[P in K]: string} {
-  return Object.keys(type.defaultTheme).reduce((o, k) => (o[k] = style(extend(
+export function theme<T extends { defaultTheme, name }, K extends keyof T['defaultTheme']>(type: T): { [P in K]: string } {
+  return Object.keys(type.defaultTheme).reduce((o, k) => (o[ k ] = style(extend(
     { $debugName: type.name + '_' + k },
-    type.defaultTheme[k]
-  )), o), {}) as {[P in K]: string};
+    type.defaultTheme[ k ]
+  )), o), {}) as { [P in K]: string };
 }
 
 export function stylesheet(sourceName: string) {
@@ -154,23 +155,23 @@ function ensureStringObj(object: NestedCSSProperties): { result: any, debugName:
 
   for (const key in object) {
     /** Grab the value upfront */
-    const val: any = (object as any)[key];
+    const val: any = (object as any)[ key ];
     /** TypeStyle configuration options */
     if (key === '$unique') {
-      result[FreeStyle.IS_UNIQUE] = val;
+      result[ FreeStyle.IS_UNIQUE ] = val;
     }
     else if (key === '$nest') {
       const nested = val!;
       for (let selector in nested) {
-        const subproperties = nested[selector]!;
-        result[selector] = ensureStringObj(subproperties).result;
+        const subproperties = nested[ selector ]!;
+        result[ selector ] = ensureStringObj(subproperties).result;
       }
     }
     else if (key === '$debugName') {
       debugName = val;
     }
     else {
-      result[key] = val
+      result[ key ] = val
     }
   }
 
@@ -181,11 +182,11 @@ function ensureStringObj(object: NestedCSSProperties): { result: any, debugName:
 function explodeKeyframes(frames: KeyFrames): { $debugName?: string, keyframes: KeyFrames } {
   const result = { $debugName: undefined, keyframes: {} as KeyFrames };
   for (const offset in frames) {
-    const val: any = (frames as any)[offset];
+    const val: any = (frames as any)[ offset ];
     if (offset === '$debugName') {
       result.$debugName = val;
     } else {
-      result.keyframes[offset] = val;
+      result.keyframes[ offset ] = val;
     }
   }
   return result;

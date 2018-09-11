@@ -1,9 +1,9 @@
 import {Child, Parent} from './internals';
-import {internal} from '@barlus/runtime';
+import {internal}      from '@barlus/runtime';
 
-const parent:Parent = new Parent();
-const child:Child = new Child();
 
+const parent: Parent = new Parent();
+const child: Child = new Child();
 
 internal.of(parent).__veryUnsafeFunction();
 internal.of(child);

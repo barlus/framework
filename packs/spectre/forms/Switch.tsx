@@ -1,7 +1,8 @@
-import * as React  from "@barlus/react";
-import {Theme}     from './theme';
-import {classes}   from '../utils/classes';
-import {Label}     from "./Label";
+import * as React from "@barlus/react";
+import {Theme}    from './theme';
+import {classes}  from '../utils/classes';
+import {Label}    from "./Label";
+
 
 export class Switch extends React.Component<SwitchProps, {}> {
   render() {
@@ -19,10 +20,10 @@ export class Switch extends React.Component<SwitchProps, {}> {
 
     return <Label className={
       classes(Theme.formSwitch, {
-        [Theme.inputSm]: small,
-        [Theme.inputLg]: large,
-        [Theme.isSuccess]: success,
-        [Theme.isError]: error,
+        [ Theme.inputSm ]: small,
+        [ Theme.inputLg ]: large,
+        [ Theme.isSuccess ]: success,
+        [ Theme.isError ]: error,
       }, className)
     }>
       <input {...otherProps} type="checkbox"/>

@@ -7,7 +7,7 @@ export type PropertyValue = number | boolean | string
  * Input styles object.
  */
 export interface Styles {
-  [selector: string]: null | undefined | PropertyValue | PropertyValue[] | Styles
+  [ selector: string ]: null | undefined | PropertyValue | PropertyValue[] | Styles
 }
 
 /**
@@ -79,20 +79,20 @@ export class Cache<T extends Container<any>> {
   changeId = 0;
 
   private _keys: string[] = [];
-  private _children: { [id: string]: T } = Object.create(null);
-  private _counters: { [id: string]: number } = Object.create(null);
+  private _children: { [ id: string ]: T } = Object.create(null);
+  private _counters: { [ id: string ]: number } = Object.create(null);
 
   constructor(public hash = stringHash, public changes: Changes = noopChanges) {
   }
 
   add<U extends T>(style: U): U {
-    const count = this._counters[style.id] || 0;
-    const item = this._children[style.id] || style.clone();
+    const count = this._counters[ style.id ] || 0;
+    const item = this._children[ style.id ] || style.clone();
 
-    this._counters[style.id] = count + 1;
+    this._counters[ style.id ] = count + 1;
 
     if (count === 0) {
-      this._children[item.id] = item;
+      this._children[ item.id ] = item;
       this._keys.push(item.id);
       this.sheet.push(item.getStyles());
       this.changeId++;
@@ -139,17 +139,17 @@ export class Cache<T extends Container<any>> {
   }
 
   remove(style: T): void {
-    const count = this._counters[style.id];
+    const count = this._counters[ style.id ];
 
     if (count > 0) {
-      this._counters[style.id] = count - 1;
+      this._counters[ style.id ] = count - 1;
 
-      const item = this._children[style.id];
+      const item = this._children[ style.id ];
       const index = this._keys.indexOf(item.id);
 
       if (count === 1) {
-        delete this._counters[style.id];
-        delete this._children[style.id];
+        delete this._counters[ style.id ];
+        delete this._children[ style.id ];
 
         this._keys.splice(index, 1);
         this.sheet.splice(index, 1);
@@ -170,13 +170,17 @@ export class Cache<T extends Container<any>> {
   }
 
   merge(cache: Cache<any>) {
-    for (const id of cache._keys) this.add(cache._children[id])
+    for (const id of cache._keys) {
+      this.add(cache._children[ id ])
+    }
 
     return this
   }
 
   unmerge(cache: Cache<any>) {
-    for (const id of cache._keys) this.remove(cache._children[id])
+    for (const id of cache._keys) {
+      this.remove(cache._children[ id ])
+    }
 
     return this
   }
@@ -346,13 +350,13 @@ const propLower = (m: string) => `-${m.toLowerCase()}`;
 /**
  * Map of css number properties.
  */
-const CSS_NUMBER: { [key: string]: true } = Object.create(null);
+const CSS_NUMBER: { [ key: string ]: true } = Object.create(null);
 
 /**
  * Transform a style string to a CSS string.
  */
 function styleToString(key: string, value: PropertyValue) {
-  if (typeof value === 'number' && value !== 0 && !CSS_NUMBER[key]) {
+  if (typeof value === 'number' && value !== 0 && !CSS_NUMBER[ key ]) {
     return `${key}:${value}px`
   }
 
@@ -363,20 +367,20 @@ function styleToString(key: string, value: PropertyValue) {
  * Sort an array of tuples by first value.
  */
 function sortTuples<T extends any[]>(value: T[]): T[] {
-  return value.sort((a, b) => a[0] > b[0] ? 1 : -1)
+  return value.sort((a, b) => a[ 0 ] > b[ 0 ] ? 1 : -1)
 }
 
 /**
  * Categorize user styles.
  */
 function parseStyles(styles: Styles, hasNestedStyles: boolean, formatted = false) {
-  const properties: Array<[string, PropertyValue | PropertyValue[]]> = [];
-  const nestedStyles: Array<[string, Styles]> = [];
+  const properties: Array<[ string, PropertyValue | PropertyValue[] ]> = [];
+  const nestedStyles: Array<[ string, Styles ]> = [];
   let isUnique = false;
 
   // Sort keys before adding to styles.
   for (const key of Object.keys(styles)) {
-    const value = styles[key];
+    const value = styles[ key ];
     if (value !== null && value !== undefined) {
       if (key === IS_UNIQUE) {
         isUnique = true
@@ -384,13 +388,13 @@ function parseStyles(styles: Styles, hasNestedStyles: boolean, formatted = false
         let selector = key.trim();
         if (selector.includes(',')) {
           selector.split(',').forEach(key => {
-            nestedStyles.push([key.trim(), value]);
+            nestedStyles.push([ key.trim(), value ]);
           })
         } else {
-          nestedStyles.push([key.trim(), value])
+          nestedStyles.push([ key.trim(), value ])
         }
       } else {
-        properties.push([hyphenate(key.trim()), value])
+        properties.push([ hyphenate(key.trim()), value ])
       }
     }
   }
@@ -405,8 +409,8 @@ function parseStyles(styles: Styles, hasNestedStyles: boolean, formatted = false
 /**
  * Stringify an array of property tuples.
  */
-function stringifyProperties(properties: Array<[string, PropertyValue | PropertyValue[]]>, formatted: boolean = true) {
-  let props = properties.map(([name, value]) => {
+function stringifyProperties(properties: Array<[ string, PropertyValue | PropertyValue[] ]>, formatted: boolean = true) {
+  let props = properties.map(([ name, value ]) => {
     if (!Array.isArray(value)) {
       return styleToString(name, value);
     }
@@ -437,7 +441,7 @@ function interpolate(selector: string, parent: string) {
 /**
  * Recursive loop building styles with deferred selectors.
  */
-function stylize(cache: Cache<any>, selector: string, styles: Styles, list: [string, Style][], parent?: string, formatted = false) {
+function stylize(cache: Cache<any>, selector: string, styles: Styles, list: [ string, Style ][], parent?: string, formatted = false) {
   const { styleString, nestedStyles, isUnique } = parseStyles(styles, !!selector, formatted);
   let pid = styleString;
 
@@ -447,10 +451,10 @@ function stylize(cache: Cache<any>, selector: string, styles: Styles, list: [str
     // Nested styles support (e.g. `.foo > @media > .bar`).
     if (styleString && parent) {
       const style = rule.add(new Style(styleString, rule.hash, isUnique ? `u${(++uniqueId).toString(36)}` : undefined));
-      list.push([parent, style])
+      list.push([ parent, style ])
     }
 
-    for (const [name, value] of nestedStyles) {
+    for (const [ name, value ] of nestedStyles) {
       pid += name + stylize(rule, name, value, list, parent, formatted)
     }
   } else {
@@ -458,10 +462,10 @@ function stylize(cache: Cache<any>, selector: string, styles: Styles, list: [str
 
     if (styleString) {
       const style = cache.add(new Style(styleString, cache.hash, isUnique ? `u${(++uniqueId).toString(36)}` : undefined));
-      list.push([key, style])
+      list.push([ key, style ])
     }
 
-    for (const [name, value] of nestedStyles) {
+    for (const [ name, value ] of nestedStyles) {
       pid += name + stylize(cache, name, value, list, key, formatted)
     }
   }
@@ -474,13 +478,13 @@ function stylize(cache: Cache<any>, selector: string, styles: Styles, list: [str
  */
 function composeStyles(container: FreeStyle, selector: string, styles: Styles, isStyle: boolean, displayName?: string, formatted = false) {
   const cache = new Cache<Rule | Style>(container.hash);
-  const list: [string, Style][] = [];
+  const list: [ string, Style ][] = [];
   const pid = stylize(cache, selector, styles, list, undefined, formatted);
 
   const hash = `f${cache.hash(pid)}`;
   const id = displayName ? `${displayName}_${hash}` : hash;
 
-  for (const [selector, style] of list) {
+  for (const [ selector, style ] of list) {
     const key = isStyle ? interpolate(selector, `.${escape(id)}`) : selector;
     style.add(new Selector(key, style.hash, undefined, pid))
   }
@@ -558,8 +562,8 @@ const CSS_NUMBER_PROPERTIES = [
 ];
 
 // Add vendor prefixes to all unit-less properties.
-for (const prefix of ['-webkit-', '-ms-', '-moz-', '-o-', '']) {
+for (const prefix of [ '-webkit-', '-ms-', '-moz-', '-o-', '' ]) {
   for (const property of CSS_NUMBER_PROPERTIES) {
-    CSS_NUMBER[prefix + property] = true
+    CSS_NUMBER[ prefix + property ] = true
   }
 }

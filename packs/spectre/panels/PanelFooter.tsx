@@ -2,6 +2,7 @@ import * as React from "@barlus/react";
 import {Theme}    from './theme';
 import {classes}  from '../utils/classes';
 
+
 export class PanelFooter extends React.PureComponent<PanelFooterProps, {}> {
   render() {
     const {

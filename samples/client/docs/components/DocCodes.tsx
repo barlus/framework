@@ -1,25 +1,24 @@
-import * as React from "@barlus/react"
-import { Code } from "../../comps/Code";
+import * as React                     from "@barlus/react"
+import {Code}                         from "../../comps/Code";
 import {DocNote, DocPage, DocSection} from "../../comps/DocPage";
 
 
-
 export class DocCodes extends DocPage {
-    static title = "Codes";
-    render() {
-        return  <DocSection id={this.id} title={this.title}>
-            <DocNote>
-                Codes are inline and multiline code snippets.<br/><br/>
-                For inline code, you can use the element <code>{'<code>'}</code>. For multiline code
-                snippet
-                blocks, you can use {'<pre>'} with the <code>code</code> class as a container, and
-                add {'<code>'} inside it. The <code>data-lang</code> attribute is rendered as the language name in the top
-                right.
-            </DocNote>
-            <Code className="HTML">{E1}</Code>
-            <Code className="HTML">{E2}</Code>
-        </DocSection>
-    }
+  static title = "Codes";
+  render() {
+    return <DocSection id={this.id} title={this.title}>
+      <DocNote>
+        Codes are inline and multiline code snippets.<br/><br/>
+        For inline code, you can use the element <code>{'<code>'}</code>. For multiline code
+        snippet
+        blocks, you can use {'<pre>'} with the <code>code</code> class as a container, and
+        add {'<code>'} inside it. The <code>data-lang</code> attribute is rendered as the language name in the top
+        right.
+      </DocNote>
+      <Code className="HTML">{E1}</Code>
+      <Code className="HTML">{E2}</Code>
+    </DocSection>
+  }
 }
 
 const E1 = `<!-- code snippets -->

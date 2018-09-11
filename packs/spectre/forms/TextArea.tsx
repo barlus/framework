@@ -3,6 +3,7 @@ import {Theme}     from './theme';
 import {classes}   from '../utils/classes';
 import {FormGroup} from "./FormGroup";
 
+
 export class TextArea extends React.PureComponent<TextAreaProps, {}> {
   render() {
     const {
@@ -20,8 +21,8 @@ export class TextArea extends React.PureComponent<TextAreaProps, {}> {
     return <FormGroup {...formGroupProps}>
       <textarea {...inputProps} className={
         classes(Theme.formInput, {
-          [Theme.isSuccess]: success,
-          [Theme.isError]: error,
+          [ Theme.isSuccess ]: success,
+          [ Theme.isError ]: error,
         }, className)
       }>
         {children}

@@ -1,10 +1,10 @@
 {
-    "compilerOptions": {
-        "module": "esnext",
-        "target": "esnext",
-        "noEmit": true,
-        "moduleResolution": "node",
-        "experimentalDecorators": true,
-        "emitDecoratorMetadata": true
-    }
+  "compilerOptions": {
+    "module": "esnext",
+    "target": "esnext",
+    "noEmit": true,
+    "moduleResolution": "node",
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true
+  }
 }

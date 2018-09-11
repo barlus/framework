@@ -1,34 +1,35 @@
-import * as React from "@barlus/react"
-import { DocExample, DocPage, DocSample, DocSection, DocText, DocTitle } from "../../comps/DocPage";
-import { Calendar } from "@barlus/spectre";
+import * as React                                                      from "@barlus/react"
+import {DocExample, DocPage, DocSample, DocSection, DocText, DocTitle} from "../../comps/DocPage";
+import {Calendar}                                                      from "@barlus/spectre";
+
 
 export class DocCalendars extends DocPage {
 
-    static title = "Calendars";
-    static ready = true;
+  static title = "Calendars";
+  static ready = true;
 
-    render() {
-        const tooltips = new Map<Date, string>();
-        tooltips.set(new Date(2018, 4, 18), "You have appointment");
-        tooltips.set(new Date(2018, 4, 28), "You have appointment");
-        const calendarEvents = new Map<Date, any>();
-        calendarEvents.set(new Date(2018, 4, 22), [ <div>Product launch event</div> ]);
-        const selected = {
-            start: new Date(2018, 4, 11),
-            end: new Date(2018, 4, 20)
-        };
-        return <DocSection id={this.id} title={this.title}>
-            <DocSample columns={3}>
-                <Calendar activeDate={new Date(2018, 4, 11)} tooltips={tooltips} onDateSelect={(selction) => {
-                    console.log("on single Select, ", selction)
-                }}/>
-                {" "}
-                <Calendar activeDate={new Date(2018, 4, 11)} selected={selected} tooltips={tooltips} range
-                          onDateSelect={(selction) => {
-                              console.log("on range Select, ", selction)
-                          }}/>
-            </DocSample>
-            <DocExample content={`
+  render() {
+    const tooltips = new Map<Date, string>();
+    tooltips.set(new Date(2018, 4, 18), "You have appointment");
+    tooltips.set(new Date(2018, 4, 28), "You have appointment");
+    const calendarEvents = new Map<Date, any>();
+    calendarEvents.set(new Date(2018, 4, 22), [ <div>Product launch event</div> ]);
+    const selected = {
+      start: new Date(2018, 4, 11),
+      end: new Date(2018, 4, 20)
+    };
+    return <DocSection id={this.id} title={this.title}>
+      <DocSample columns={3}>
+        <Calendar activeDate={new Date(2018, 4, 11)} tooltips={tooltips} onDateSelect={(selction) => {
+          console.log("on single Select, ", selction)
+        }}/>
+        {" "}
+        <Calendar activeDate={new Date(2018, 4, 11)} selected={selected} tooltips={tooltips} range
+                  onDateSelect={(selction) => {
+                    console.log("on range Select, ", selction)
+                  }}/>
+      </DocSample>
+      <DocExample content={`
                const tooltips = new Map<Date,string>();
                     tooltips.set(new Date(2018, 4, 18),"You have appointment");
                     tooltips.set(new Date(2018, 4, 28),"You have appointment");
@@ -39,13 +40,13 @@ export class DocCalendars extends DocPage {
                 <Calendar activeDate={new Date(2018, 4, 11)} tooltips={tooltips} onDateSelect={(selction)=>{console.log("on single Select, ", selction)}}/>
                 <Calendar activeDate={new Date(2018, 4, 11)} selected={selected} tooltips={tooltips} range onDateSelect={(selction)=>{console.log("on range Select, ", selction)}}/>
             `}/>
-            <DocSample>
-                <Calendar activeDate={new Date(2018, 4, 11)} large calendarEvents={calendarEvents} selected={selected}
-                          range tooltips={tooltips} onDateSelect={(selction) => {
-                    console.log("on single Select, ", selction)
-                }}/>
-            </DocSample>
-            <DocExample content={`
+      <DocSample>
+        <Calendar activeDate={new Date(2018, 4, 11)} large calendarEvents={calendarEvents} selected={selected}
+                  range tooltips={tooltips} onDateSelect={(selction) => {
+          console.log("on single Select, ", selction)
+        }}/>
+      </DocSample>
+      <DocExample content={`
                const tooltips = new Map<Date,string>();
                     tooltips.set(new Date(2018, 4, 18),"You have appointment");
                     tooltips.set(new Date(2018, 4, 28),"You have appointment");
@@ -57,13 +58,13 @@ export class DocCalendars extends DocPage {
                     calendarEvents.set(new Date(2018, 4, 22),[<div >Product launch event</div>]);
                 <Calendar activeDate={new Date(2018, 4, 11)} large calendarEvents={calendarEvents} selected={selected} range tooltips={tooltips} onDateSelect={(selction)=>{console.log("on single Select, ", selction)}}/>
             `}/>
-            <DocText text={`
+      <DocText text={`
                 ~calendarEvents~ attribute can be used only with ~large~ attribute
             `}/>
 
 
-        </DocSection>
-    }
+    </DocSection>
+  }
 }
 
 const E1 = `<div className="calendar">

@@ -2,6 +2,7 @@ import * as React from "@barlus/react";
 import {Theme}    from './theme';
 import {classes}  from '../utils/classes';
 
+
 export class InputGroupAddon extends React.PureComponent<InputGroupAddonProp, {}> {
   render() {
     const {
@@ -14,8 +15,8 @@ export class InputGroupAddon extends React.PureComponent<InputGroupAddonProp, {}
     } = this.props;
     return (<span className={
         classes(Theme.inputGroupAddon, {
-          [Theme.addonSm]: small,
-          [Theme.addonLg]: large,
+          [ Theme.addonSm ]: small,
+          [ Theme.addonLg ]: large,
         }, className)
       }{...otherProps}>
             {children}

@@ -3,6 +3,7 @@ import {Theme}                from './theme';
 import {classes}              from '../utils/classes';
 import {AnchorHTMLAttributes} from "../../react/types";
 
+
 export class NavbarBrand extends React.PureComponent<NavbarBrandProps, {}> {
   render() {
     const {

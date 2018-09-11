@@ -11,7 +11,6 @@ class Portal extends React.PureComponent<any, any> {
     this.el = document.createElement('div');
   }
 
-
   componentDidMount() {
     document.body.appendChild(this.el);
   }
@@ -50,15 +49,15 @@ export class Modal extends React.PureComponent<ModalProps, { close: boolean }> {
     } = this.props;
 
     return (open && <Portal>
-        <div {...otherProps} className={classes(Theme.modal, Theme.active, {
-          [Theme.modalSm]: small,
-          [Theme.modalLg]: large
-        }, className)}>
-            <a className={Theme.modalOverlay} onClick={this.handleOnBackgroundClick}/>
-            <div className={Theme.modalContainer}>
-              {children}
-            </div>
+      <div {...otherProps} className={classes(Theme.modal, Theme.active, {
+        [ Theme.modalSm ]: small,
+        [ Theme.modalLg ]: large
+      }, className)}>
+        <a className={Theme.modalOverlay} onClick={this.handleOnBackgroundClick}/>
+        <div className={Theme.modalContainer}>
+          {children}
         </div>
+      </div>
     </Portal>)
   }
 

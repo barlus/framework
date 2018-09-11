@@ -2,6 +2,7 @@ import * as React from "@barlus/react";
 import {Theme}    from './theme';
 import {classes}  from '../utils/classes';
 
+
 export class Image extends React.PureComponent<ImageProps, {}> {
   render() {
     const {
@@ -13,9 +14,9 @@ export class Image extends React.PureComponent<ImageProps, {}> {
     } = this.props;
     return <img {...otherProps} className={
       classes({
-        [Theme.imgResponsive]: responsive,
-        [Theme.imgFitContain]: contain,
-        [Theme.imgFitCover]: cover,
+        [ Theme.imgResponsive ]: responsive,
+        [ Theme.imgFitContain ]: contain,
+        [ Theme.imgFitCover ]: cover,
       }, className)
     }/>
   }

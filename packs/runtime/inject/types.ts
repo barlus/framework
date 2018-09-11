@@ -1,35 +1,34 @@
-
 export type InjectionToken<T> = Constructor<T> | string;
 /** Constructor type */
 export interface Constructor<T> {
-    new(...args: any[]): T;
-    prototype:T;
+  new(...args: any[]): T;
+  prototype: T;
 }
 
-export type Dictionary<T> = { [key: string]: T };
+export type Dictionary<T> = { [ key: string ]: T };
 
 export interface DependencyContainer {
-    register<T>(provider: Provider<T>): void;
-    resolve<T>(token: InjectionToken<T>): T;
-    isRegistered<T>(token: InjectionToken<T>): boolean;
+  register<T>(provider: Provider<T>): void;
+  resolve<T>(token: InjectionToken<T>): T;
+  isRegistered<T>(token: InjectionToken<T>): boolean;
 }
 
 export type Provider<T> = Constructor<T> | ClassProvider<T> | ValueProvider<T> | TokenProvider<T> | FactoryProvider<T>;
 
 export interface BaseProvider {
-    token: InjectionToken<any>;
+  token: InjectionToken<any>;
 }
 
 export interface ClassProvider<T> extends BaseProvider {
-    useClass: Constructor<T>;
+  useClass: Constructor<T>;
 }
 
 export interface ValueProvider<T> extends BaseProvider {
-    useValue: T;
+  useValue: T;
 }
 
 export interface TokenProvider<T> extends BaseProvider {
-    useToken: InjectionToken<T>;
+  useToken: InjectionToken<T>;
 }
 
 /**
@@ -38,5 +37,5 @@ export interface TokenProvider<T> extends BaseProvider {
  * you need instance caching, your factory method must implement it.
  */
 export interface FactoryProvider<T> extends BaseProvider {
-    useFactory: (dependencyContainer: DependencyContainer) => T;
+  useFactory: (dependencyContainer: DependencyContainer) => T;
 }

@@ -2,7 +2,8 @@ import "../Reflect";
 
 import injection from "./injection";
 
-import { Constructor, Dictionary, InjectionToken, Provider } from "./types";
+import {Constructor, Dictionary, InjectionToken, Provider} from "./types";
+
 
 const injectionTokenMetadataKey = "injectionTokens";
 const reservedNames = [ "length", "name", "arguments", "caller", "prototype" ];
@@ -13,18 +14,18 @@ const reservedNames = [ "length", "name", "arguments", "caller", "prototype" ];
  *
  * @return {Function} The class decorator
  */
-export function injectable<T extends any, C extends Constructor<T>>(target:C): C {
-    const params: any[] = Reflect.getMetadata("design:paramtypes", target) || [];
-    const injectionTokens: Dictionary<InjectionToken<any>> = Reflect.getOwnMetadata(injectionTokenMetadataKey, target) || {};
-    Object.keys(injectionTokens).forEach(key => {
-        params[ +key ] = injectionTokens[ key ];
-    });
-    const DecoratedClass = Class(params, injection, target);
-    Object.defineProperty(DecoratedClass, 'name', {
-        configurable: true,
-        value: target.name
-    });
-    return DecoratedClass as C;
+export function injectable<T extends any, C extends Constructor<T>>(target: C): C {
+  const params: any[] = Reflect.getMetadata("design:paramtypes", target) || [];
+  const injectionTokens: Dictionary<InjectionToken<any>> = Reflect.getOwnMetadata(injectionTokenMetadataKey, target) || {};
+  Object.keys(injectionTokens).forEach(key => {
+    params[ +key ] = injectionTokens[ key ];
+  });
+  const DecoratedClass = Class(params, injection, target);
+  Object.defineProperty(DecoratedClass, 'name', {
+    configurable: true,
+    value: target.name
+  });
+  return DecoratedClass as C;
 }
 
 /**
@@ -33,40 +34,40 @@ export function injectable<T extends any, C extends Constructor<T>>(target:C): C
  * @return The parameter decorator
  */
 export function inject(target: any, _propertyKey: string | symbol, parameterIndex?: number | PropertyDescriptor): any {
-    if (typeof parameterIndex == 'number') {
-        const injectionToken = Reflect.getOwnMetadata("design:paramtypes", target)[ parameterIndex as number ];
-        const injectionTokens = Reflect.getOwnMetadata(injectionTokenMetadataKey, target) || {};
-        injectionTokens[ parameterIndex as number ] = injectionToken;
-        Reflect.defineMetadata(injectionTokenMetadataKey, injectionTokens, target);
-    } else {
-        const injectionToken = Reflect.getOwnMetadata("design:type", target, _propertyKey);
+  if (typeof parameterIndex == 'number') {
+    const injectionToken = Reflect.getOwnMetadata("design:paramtypes", target)[ parameterIndex as number ];
+    const injectionTokens = Reflect.getOwnMetadata(injectionTokenMetadataKey, target) || {};
+    injectionTokens[ parameterIndex as number ] = injectionToken;
+    Reflect.defineMetadata(injectionTokenMetadataKey, injectionTokens, target);
+  } else {
+    const injectionToken = Reflect.getOwnMetadata("design:type", target, _propertyKey);
+    Reflect.defineProperty(target, _propertyKey, {
+      configurable: true,
+      enumerable: false,
+      get() {
+        const value = injection.resolve(injectionToken);
         Reflect.defineProperty(target, _propertyKey, {
-            configurable: true,
-            enumerable: false,
-            get() {
-                const value= injection.resolve(injectionToken);
-                Reflect.defineProperty(target, _propertyKey, {
-                    configurable: true,
-                    enumerable: false,
-                    value
-                });
-                return value;
-            }
-        })
-    }
+          configurable: true,
+          enumerable: false,
+          value
+        });
+        return value;
+      }
+    })
+  }
 }
 
 export function token(token: string): ParameterDecorator & PropertyDecorator {
-    return function (target: any, _propertyKey: string | symbol, parameterIndex?: number | PropertyDescriptor): any {
-        if (typeof parameterIndex == 'number') {
-            const injectionToken = token;
-            const injectionTokens = Reflect.getOwnMetadata(injectionTokenMetadataKey, target) || {};
-            injectionTokens[ parameterIndex as number ] = injectionToken;
-            Reflect.defineMetadata(injectionTokenMetadataKey, injectionTokens, target);
-        } else {
-            Reflect.defineMetadata("design:type", token, target, _propertyKey);
-        }
+  return function (target: any, _propertyKey: string | symbol, parameterIndex?: number | PropertyDescriptor): any {
+    if (typeof parameterIndex == 'number') {
+      const injectionToken = token;
+      const injectionTokens = Reflect.getOwnMetadata(injectionTokenMetadataKey, target) || {};
+      injectionTokens[ parameterIndex as number ] = injectionToken;
+      Reflect.defineMetadata(injectionTokenMetadataKey, injectionTokens, target);
+    } else {
+      Reflect.defineMetadata("design:type", token, target, _propertyKey);
     }
+  }
 }
 
 /**
@@ -75,29 +76,29 @@ export function token(token: string): ParameterDecorator & PropertyDecorator {
  * @return {Function} The class decorator
  */
 export function registry(providers: Provider<any>[] = []): (target: any) => any {
-    return function (target: any): any {
-        providers.forEach(provider => injection.register(provider));
-        return target;
-    };
+  return function (target: any): any {
+    providers.forEach(provider => injection.register(provider));
+    return target;
+  };
 }
 
 export function singleton<T>(target: Constructor<T>) {
-    let instance = null;
-    injection.register({
-        token: target,
-        useFactory: () => {
-            if (instance == null) {
-                instance = new target();
-            }
-            return instance;
-        }
-    })
-    return target;
+  let instance = null;
+  injection.register({
+    token: target,
+    useFactory: () => {
+      if (instance == null) {
+        instance = new target();
+      }
+      return instance;
+    }
+  })
+  return target;
 }
 
 const Class = (params, injection, Parent) => new Function(
-    'params', 'injection', 'Parent',
-    `return class ${Parent.name}ᴵ extends Parent {
+  'params', 'injection', 'Parent',
+  `return class ${Parent.name}ᴵ extends Parent {
         constructor(...args) {
             const resolvedArgs = args.slice();
             params.slice(args.length).forEach(param => {

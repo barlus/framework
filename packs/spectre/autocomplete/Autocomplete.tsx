@@ -1,9 +1,10 @@
 import * as React           from "@barlus/react";
 import {Theme}              from './theme';
 import {Theme as FormTheme} from '../forms/theme';
-import {classes}        from '../utils/classes';
-import {Chip, Input}    from "../index";
-import {Menu, MenuItem} from "../index";
+import {classes}            from '../utils/classes';
+import {Chip, Input}        from "../index";
+import {Menu, MenuItem}     from "../index";
+
 
 export class Autocomplete extends React.PureComponent<AutocompleteProps, AutocompleteState> {
 
@@ -38,7 +39,7 @@ export class Autocomplete extends React.PureComponent<AutocompleteProps, Autocom
   }
 
   get inputDom() {
-    return React.findDOMNode(this.refs['input'])
+    return React.findDOMNode(this.refs[ 'input' ])
   }
 
   get items() {
@@ -123,7 +124,7 @@ export class Autocomplete extends React.PureComponent<AutocompleteProps, Autocom
       case 'Enter':
         event.preventDefault()
         if (highlighted > -1) {
-          this.handleSelectItem(this.items[highlighted])(event)
+          this.handleSelectItem(this.items[ highlighted ])(event)
         }
         return
 
@@ -132,7 +133,7 @@ export class Autocomplete extends React.PureComponent<AutocompleteProps, Autocom
         this.inputDom.blur();
         return
       case 'Backspace':
-        (this.props.multiple && value.length == 0) && this.handleDeSelectItem(this.props.selected[this.props.selected.length - 1])
+        (this.props.multiple && value.length == 0) && this.handleDeSelectItem(this.props.selected[ this.props.selected.length - 1 ])
         return;
 
     }
@@ -190,7 +191,7 @@ export class Autocomplete extends React.PureComponent<AutocompleteProps, Autocom
     console.log("Value", value);
     return <div className={classes(Theme.formAutocomplete, className)} {...otherProps}>
       <div
-        className={classes(Theme.formAutocompleteInput, FormTheme.formInput, { [Theme.isFocused]: this.state.open })}>
+        className={classes(Theme.formAutocompleteInput, FormTheme.formInput, { [ Theme.isFocused ]: this.state.open })}>
         {multiple && this.renderSelected()}
         <Input ref={(("input") as any)} value={value} placeholder={placeholder} onChange={this.handleOnChange}
                onKeyDown={this.handleKeyDown} onFocus={this.handleFocus} onBlur={this.handleBlur}/>
@@ -208,7 +209,7 @@ export interface AutocompleteState {
 
 export type AutocompleteProps = MultipleProps | SearchableProps;
 
-interface Common extends React.HTMLProps<HTMLDivElement>{
+interface Common extends React.HTMLProps<HTMLDivElement> {
   value: string,
   className?: string,
   options: any[],

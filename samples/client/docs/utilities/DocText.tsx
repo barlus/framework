@@ -1,34 +1,34 @@
-import * as React from "@barlus/react"
-import { Code } from "../../comps/Code";
-import { DocNote, DocPage, DocSample, DocSection } from "../../comps/DocPage";
+import * as React                                from "@barlus/react"
+import {Code}                                    from "../../comps/Code";
+import {DocNote, DocPage, DocSample, DocSection} from "../../comps/DocPage";
 
 
 export class DocText extends DocPage {
-    static title = "Text";
-    render() {
-        return <DocSection id={this.id} title={this.title}>
-            <DocNote>
-                Text utilities are used for text alignment, styles and overflow things.
-            </DocNote>
-            <DocSample>
-                <div className="text-left">left-aligned text</div>
-                <div className="text-center">center-aligned tex</div>
-                <div className="text-right">right-aligned text</div>
-                <div className="text-justify">justified text</div>
-                <div className="text-lowercase">Lowercased text</div>
-                <div className="text-uppercase">Uppercased text</div>
-                <div className="text-capitalize"> Capitalized text</div>
-                <div className="text-normal">Normal weight text</div>
-                <div className="text-bold">Bold text</div>
-                <div className="text-italic">Italicized text</div>
-                <div className="text-large">Larger text (120%)</div>
-                <div className="text-ellipsis">Overflow behavior: display an ellipsis to represent clipped text</div>
-                <div className="text-clip">Overflow behavior: truncate the text</div>
-                <div className="text-break">Text may be broken at arbitrary points</div>
-            </DocSample>
-            <Code className="HTML">{E1}</Code>
-        </DocSection>
-    }
+  static title = "Text";
+  render() {
+    return <DocSection id={this.id} title={this.title}>
+      <DocNote>
+        Text utilities are used for text alignment, styles and overflow things.
+      </DocNote>
+      <DocSample>
+        <div className="text-left">left-aligned text</div>
+        <div className="text-center">center-aligned tex</div>
+        <div className="text-right">right-aligned text</div>
+        <div className="text-justify">justified text</div>
+        <div className="text-lowercase">Lowercased text</div>
+        <div className="text-uppercase">Uppercased text</div>
+        <div className="text-capitalize"> Capitalized text</div>
+        <div className="text-normal">Normal weight text</div>
+        <div className="text-bold">Bold text</div>
+        <div className="text-italic">Italicized text</div>
+        <div className="text-large">Larger text (120%)</div>
+        <div className="text-ellipsis">Overflow behavior: display an ellipsis to represent clipped text</div>
+        <div className="text-clip">Overflow behavior: truncate the text</div>
+        <div className="text-break">Text may be broken at arbitrary points</div>
+      </DocSample>
+      <Code className="HTML">{E1}</Code>
+    </DocSection>
+  }
 }
 
 const E1 = `<!-- left-aligned text -->

@@ -14,52 +14,12 @@
   ],
   "scripts": {
     "test": "tester ./tests/index.ts",
-    "serve": "node --harmony -r @barlus/bone/register ./samples/server/index.ts",
-    "release": "node --harmony -r @barlus/bone/register ./tool/publish.ts",
-    "list": "node --harmony -r @barlus/bone/register ./tool/list.ts",
-    "versions": "node --harmony -r @barlus/bone/register ./tool/version.ts"
-  },
-  "nyc": {
-    "check-coverage": true,
-    "lines": 80,
-    "statements": 80,
-    "functions": 80,
-    "branches": 80,
-    "extension": [
-      ".ts",
-      ".tsx"
-    ],
-    "exclude": [
-      "**/register.js"
-    ],
-    "reporter": [
-      "html",
-      "text-summary"
-    ]
+    "serve": "node -r @barlus/bone/register ./samples/server/index.ts",
+    "release": "node -r @barlus/bone/register ./tool/publish.ts",
+    "list": "node -r @barlus/bone/register ./tool/list.ts",
+    "versions": "node -r @barlus/bone/register ./tool/version.ts"
   },
   "devDependencies": {
-    "typescript": "^3.1.0-dev.20180804"
-  },
-  "resolutions": {
-    "@barlus/bone": "0.1.15",
-    "@barlus/css": "0.1.15",
-    "@barlus/experimental": "0.1.15",
-    "@barlus/fsm": "0.1.15",
-    "@barlus/history": "0.1.15",
-    "@barlus/icons": "0.1.14",
-    "@barlus/mobx": "0.1.14",
-    "@barlus/nerv": "0.1.14",
-    "@barlus/react": "0.1.15",
-    "@barlus/redux": "0.1.15",
-    "@barlus/routex": "0.1.14",
-    "@barlus/runtime": "0.1.15",
-    "@barlus/spectre": "0.1.15",
-    "@barlus/storex": "0.1.14",
-    "@barlus/styles": "0.1.15",
-    "@barlus/tester": "0.1.15",
-    "@vendor/client": "0.1.15",
-    "@vendor/server": "0.1.15",
-    "@vendor/todomvc": "0.1.15",
-    "@barlus/router": "0.1.15"
+    "typescript": "^3.1.0-dev.20180907"
   }
 }

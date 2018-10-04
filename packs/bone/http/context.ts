@@ -26,11 +26,11 @@ export class Context {
     }
     return this.state.form;
   }
-  async json() {
+  async json(reviver?:(key:string,value:any)=>any) {
     if (typeof this.state.json == 'undefined') {
       let body = await this.text();
       if (body !== null) {
-        this.state.json = JSON.parse(body)
+        this.state.json = JSON.parse(body,reviver)
       } else {
         this.state.json = null;
       }
@@ -44,7 +44,7 @@ export class Context {
         for await(const chunk of this.request.body) {
           chunks.push(chunk);
         }
-        this.state.body = Buffer.concat(chunks);
+        this.state.body = chunks.length ? Buffer.concat(chunks) : null;
       } else {
         this.state.body = null;
       }

@@ -151,7 +151,7 @@ export type route = ClassDecorator & {
   post: MethodDecorator & {
     (path: string): MethodDecorator;
   }
-  detete: MethodDecorator & {
+  delete: MethodDecorator & {
     (path: string): MethodDecorator;
   }
 };
@@ -204,7 +204,7 @@ export const route: route = Object.assign<any, any>(routeDecorator, {
       throw new TypeError('Invalid argument for route decorator');
     }
   },
-  detete(target: Function | string, key?: string, desc?: PropertyDescriptor) {
+  delete(target: Function | string, key?: string, desc?: PropertyDescriptor) {
     const method = 'DELETE';
     if (typeof target == 'object') {
       return routeDecoratorForMethod(method, '/')(target, key, desc)

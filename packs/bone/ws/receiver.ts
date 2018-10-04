@@ -390,12 +390,10 @@ export class Receiver extends Writable {
    */
   decompress(data, cb) {
     const perMessageDeflate = this._extensions[ PerMessageDeflate.extensionName ];
-
     perMessageDeflate.decompress(data, this._fin, (err, buf) => {
       if (err) {
         return cb(err);
       }
-
       if (buf.length) {
         this._messageLength += buf.length;
         if (this._messageLength > this._maxPayload && this._maxPayload > 0) {
@@ -404,12 +402,11 @@ export class Receiver extends Writable {
 
         this._fragments.push(buf);
       }
-
-      const er = this.dataMessage();
-      if (er) {
-        return cb(er);
+      try{
+        this.dataMessage();
+      }catch (e) {
+        return cb(e);
       }
-
       this.startLoop(cb);
     });
   }

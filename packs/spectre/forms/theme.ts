@@ -162,13 +162,13 @@ stylesheet('forms.ts')('', {
     height: rem($.controlSize),
     lineHeight: rem($.lineHeight),
     outline: 'none',
-    padding: list(rem($.controlPaddingY), rem($.controlPaddingX)),
+    padding: 0,
     verticalAlign: 'middle',
     width: percent(100),
     ...nest([ `&[size]`, `&[multiple]` ], {
       height: 'auto',
       ...nest([ `option` ], {
-        padding: list(rem($.unitH), rem($.unit1)),
+        padding: list(rem($.unit1), rem($.unit1)),
       }),
     }),
     ...nest([ `&:not([multiple]):not([size])` ], {

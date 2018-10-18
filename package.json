@@ -1,6 +1,6 @@
 {
   "name": "@barlus/framework",
-  "version": "0.1.16",
+  "version": "0.1.17",
   "description": "Barlus Project",
   "author": "Mamble LLC",
   "repository": "https://github.com/barlus/framework.git",
@@ -23,20 +23,20 @@
     "typescript": "^3.1.0-dev.20180907"
   },
   "resolutions": {
-    "@barlus/bone": "0.1.16",
-    "@barlus/css": "0.1.16",
-    "@barlus/experimental": "0.1.16",
-    "@barlus/fsm": "0.1.16",
-    "@barlus/history": "0.1.16",
-    "@barlus/react": "0.1.16",
-    "@barlus/redux": "0.1.16",
-    "@barlus/router": "0.1.16",
-    "@barlus/runtime": "0.1.16",
-    "@barlus/spectre": "0.1.16",
-    "@barlus/styles": "0.1.16",
-    "@barlus/tester": "0.1.16",
-    "@vendor/client": "0.1.16",
-    "@vendor/server": "0.1.16",
-    "@vendor/todomvc": "0.1.16"
+    "@barlus/bone": "0.1.17",
+    "@barlus/css": "0.1.17",
+    "@barlus/experimental": "0.1.17",
+    "@barlus/fsm": "0.1.17",
+    "@barlus/history": "0.1.17",
+    "@barlus/react": "0.1.17",
+    "@barlus/redux": "0.1.17",
+    "@barlus/router": "0.1.17",
+    "@barlus/runtime": "0.1.17",
+    "@barlus/spectre": "0.1.17",
+    "@barlus/styles": "0.1.17",
+    "@barlus/tester": "0.1.17",
+    "@vendor/client": "0.1.17",
+    "@vendor/server": "0.1.17",
+    "@vendor/todomvc": "0.1.17"
   }
 }

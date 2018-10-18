@@ -1,6 +1,6 @@
 {
   "name": "@barlus/experimental",
-  "version": "0.1.16",
+  "version": "0.1.17",
   "description": "Barlus Experimental Utilities",
   "main": "./index",
   "types": "./index",

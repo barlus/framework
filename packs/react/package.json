@@ -1,12 +1,12 @@
 {
   "name": "@barlus/react",
-  "version": "0.1.16",
+  "version": "0.1.17",
   "description": "Barlus ui framework",
   "license": "MIT",
   "main": "./index",
   "types": "./index",
   "dependencies": {
-    "@barlus/runtime": "^0.1.1"
+    "@barlus/css": "^0.1.16"
   },
   "repository": "https://github.com/ecmal/elp.git",
   "author": "Mamble LLC"

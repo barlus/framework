@@ -32,8 +32,29 @@ Object.defineProperty(String.prototype, 'css', {
 /**
  * Utility to join classes conditionally
  */
-export function classes(...classes: (string | false | undefined | null)[]): string {
-  return classes.filter(c => !!c).join(' ');
+export function classes(...args: (Function | number | string | object | (number | string | object | Function)[])[]): string {
+  const list = [];
+  for (let i = 0; i < arguments.length; i++) {
+    let arg = arguments[ i ];
+    if (!arg) {
+      continue;
+    }
+    const argType = typeof arg;
+    if (argType === 'function') {
+      list.push(String(arg.displayName || arg.name));
+    }else if (argType === 'string' || argType === 'number') {
+      list.push(arg);
+    } else if (Array.isArray(arg)) {
+      list.push(classes.apply(null, arg));
+    } else if (argType === 'object') {
+      for (let key in arg) {
+        if (arg.hasOwnProperty(key) && arg[ key ]) {
+          list.push(key);
+        }
+      }
+    }
+  }
+  return list.map(s=>s.replace(/[^a-zA-Z0-9_\-]/,'')).join(' ');
 }
 
 /**
@@ -99,8 +120,7 @@ export function extend(...objects: (NestedCSSProperties | undefined | null | fal
       /** if freestyle sub key that needs merging. We come here due to our recursive calls */
       else if ((key.indexOf('&') !== -1 || key.indexOf('@media') === 0)) {
         result[ key ] = result[ key ] ? extend(result[ key ], val) : val;
-      }
-      else {
+      } else {
         result[ key ] = val;
       }
     }
@@ -159,18 +179,15 @@ function ensureStringObj(object: NestedCSSProperties): { result: any, debugName:
     /** TypeStyle configuration options */
     if (key === '$unique') {
       result[ FreeStyle.IS_UNIQUE ] = val;
-    }
-    else if (key === '$nest') {
+    } else if (key === '$nest') {
       const nested = val!;
       for (let selector in nested) {
         const subproperties = nested[ selector ]!;
         result[ selector ] = ensureStringObj(subproperties).result;
       }
-    }
-    else if (key === '$debugName') {
+    } else if (key === '$debugName') {
       debugName = val;
-    }
-    else {
+    } else {
       result[ key ] = val
     }
   }

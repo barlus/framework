@@ -126,7 +126,6 @@ export class Route extends React.Component<{
     const { history, route, staticContext } = this.context.router;
     const location = this.props.location || route.location;
     const props = { match, location, history, staticContext };
-    console.info(props);
     if (component) {
       return match ? React.createElement(component, props) : null;
     }
@@ -136,7 +135,7 @@ export class Route extends React.Component<{
     }
 
     if (typeof children === "function") {
-      return children(props);
+      return (children as any)(props);
     }
 
     if (children && !isEmptyChildren(children)) {

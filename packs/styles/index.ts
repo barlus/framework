@@ -5,7 +5,6 @@ export * from "./types";
 export * from "./csx/index";
 export * from "./tips/index";
 export * from './styling';
-export * from './classnames';
 
 export class Settings {
 }
@@ -23,3 +22,9 @@ export function when(cond: boolean, value: object, other = {}): object {
     return other
   }
 }
+
+export class Theme {
+
+}
+
+export const theme = new Theme();

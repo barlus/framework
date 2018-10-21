@@ -55,7 +55,10 @@ export function hoistStatics(targetComponent, sourceComponent, blacklist?) {
         }
       }
     }
-
+    Object.defineProperty(targetComponent, 'name', {
+      configurable: true,
+      value: sourceComponent.name
+    })
     return targetComponent;
   }
 

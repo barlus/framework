@@ -27,7 +27,6 @@ export class Location implements LocationDescriptorObject {
     } else {
       // One-arg form: push(location)
       Object.assign(this, path);
-      location = { ...path };
 
       if (this.pathname === undefined) {
         this.pathname = "";
